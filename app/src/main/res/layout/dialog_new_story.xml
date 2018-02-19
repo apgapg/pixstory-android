@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin_extra_large"
+    android:background="@drawable/bg_round_dialog"
+    android:minHeight="450dp"
+    android:minWidth="1000dp"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_small">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_normal">
+
+        <EditText
+            android:id="@+id/etYourTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:background="@android:color/transparent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:hint="@string/title"
+            android:maxLength="100"
+            android:maxLines="3"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/tvClose"
+            style="@style/textViewStyle.line_1"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:gravity="end"
+            android:text="@string/x"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".8">
+
+        <EditText
+            android:id="@+id/edPostStory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="start"
+            android:hint="@string/write_your_story_here"
+            android:maxLength="1000"
+            android:padding="@dimen/padding_tiny"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvSaveAsDraft"
+            style="@style/textViewStyle.line_1"
+            android:layout_width="160dip"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/save_as_draft"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPublish"
+            style="@style/textViewStyle.line_1"
+            android:layout_width="160dip"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/tvSaveAsDraft"
+            android:gravity="center"
+            android:text="@string/publish"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">Jullae</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email_username">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="your_name">Full Name</string>
+    <string name="loginFacebook">Sign in with facebook</string>
+    <string name="loginGoogle">Sign in with Google</string>
+    <string name="forgotPassword"><a style='text-decoration:none' href="#">Forgot Password?</a></string>
+    <string name="Or">Or</string>
+    <string name="signUp">Dont have an account? <a style='text-decoration:none' href="#">Sign Up</a></string>
+    <string name="registerLogin">Already a member? <a style='text-decoration:none' href="#">Login</a></string>
+    <string name="termsConditions">By signing in, you are agreeing to the PixStory terms of service and privacy policy</string>
+    <string name="facebook_app_id">1476433195726339</string>
+    <string name="fb_login_protocol_scheme">fb1476433195726339</string>
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="empty_password">Password cant be empty</string>
+    <string name="error_valid_email_password">Wrong Email or Password</string>
+    <string name="error_message_name">Enter Full Name</string>
+    <string name="error_password_match">Password Does Not Matches</string>
+    <string name="success_message">Registration Successful</string>
+    <string name="error_email_exists">Email Already Exists</string>
+    <string name="error_email_not_exists">Please enter the email id registered with us</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="enterEmailForgotPassword">Enter email id to reset password</string>
+    <string name="forgotPasswordEmailSuccessfullySent">Password recovery link sent successfully to your email</string>
+    <!--HomeFeedsActivity-->
+    <string name="title_home">Home</string>
+    <string name="title_shape">Shape</string>
+    <string name="title_profile">Profile</string>
+    <string name="plus">+</string>
+    <!--SearchView-->
+    <string name="search">Search</string>
+    <!--Dialog text strings-->
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="error">ERROR</string>
+    <string name="error_check_connection">Please check your\nconnection</string>
+    <string name="error_no_internet">No Internet Connection</string>
+    <!--dialog_new_story-->
+    <string name="title">Your Title</string>
+    <string name="x">X</string>
+    <string name="save_as_draft">Save as draft</string>
+    <string name="publish">Publish</string>
+    <string name="write_your_story_here">Write your story here...</string>
+    <!--dialog_likes-->
+    <string name="follow">Follow</string>
+    <string name="see_all">See All</string>
+    <string name="comment.">Comment...</string>
+    <string name="comment">comment</string>
+    <string name="hide_all">Hide All</string>
+    <string name="comments"> comments</string>
+    <string name="like">like</string>
+    <string name="likes">likes</string>
+    <string name="story">story</string>
+    <string name="stories">stories</string>
+    <string name="loading">Loading</string>
+    <string name="at_the_rate">\@</string>
+    <string name="add_story">Add Story</string>
+    <string name="no_story_posted_yet">No story posted yet.....!</string>
+    <string name="unable_to_load_image">Unable to upload image.Please try again later.</string>
+    <!--Array for more options-->
+    <string-array name="more_array">
+        <item>Report Picture</item>
+        <item>Follow this User</item>
+        <item>Save Post</item>
+        <item>Cancel</item>
+    </string-array>
+    <!--Array for more options-->
+    <string-array name="edit_array">
+        <item>Add Picture</item>
+        <item>Add Story</item>
+        <item>Cancel</item>
+    </string-array>
+    <!--Array for more options-->
+    <string-array name="detail_story_array">
+        <item>Report Story</item>
+        <item>Save Story</item>
+        <item>Cancel</item>
+    </string-array>
+
+    <!-- Image Chooser -->
+    <string name="text_camera">Camera</string>
+    <string name="text_setting">Settings</string>
+    <string name="text_gallery">Gallery</string>
+    <string name="text_choose_image">Choose Image</string>
+    <string name="permission_camera_storage_msg">Permissions are required for camera &amp; storage.</string>
+    <string name="permission_camera_storage_denied_msg">Permissions denied. Please grant permission for camera &amp; storage in setting.</string>
+    <string name="error_not_a_valid_image_file">File is not a valid image.</string>
+    <string name="no_comment">No Comment...!</string>
+    <string name="add_comment">Add Comment</string>
+
+
+</resources>

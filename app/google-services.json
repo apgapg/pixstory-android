@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "133928718773",
+    "project_id": "firebase-jullae"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133928718773:android:0145851299ab5de4",
+        "android_client_info": {
+          "package_name": "com.jullae"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133928718773-ll8f8lgngbm4c2mjibvruvnq58dhfsnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jullae",
+            "certificate_hash": "4ec083189aad8491c2c2430df7eac291ac90d5a7"
+          }
+        },
+        {
+          "client_id": "133928718773-8cmr3sfijk14jcvfod1tvkn6q41lj4dv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqU4fypqXC-kd-zX9O6FTiz_d_GfxHe-c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

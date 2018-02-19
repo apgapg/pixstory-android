@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin_large"
+    android:background="@drawable/bg_round_dialog"
+    android:maxHeight="@dimen/max_dialog_height"
+    android:minHeight="@dimen/max_dialog_height"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvLikes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".9"
+        android:scrollbars="none" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light" />
+
+    <TextView
+        android:id="@+id/tvClose"
+        style="@style/textViewStyle.line_1"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="@dimen/padding_normal"
+        android:text="@string/x"
+        android:textStyle="bold" />
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:gravity="center"
+    android:padding="@dimen/padding_small">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivLikeUserPic"
+            android:layout_width="@dimen/height_50"
+            android:layout_height="@dimen/height_50"
+            android:layout_marginEnd="@dimen/margin_very_tiny"
+            android:background="@drawable/ripple_effect"
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/user_icon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_very_tiny"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvLikeName"
+                style="@style/textViewStyle.line_1"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                tools:text="Ankit sharma" />
+
+            <TextView
+                android:id="@+id/tvLikeUserName"
+                style="@style/textViewStyle.line_1"
+                android:ellipsize="end"
+                android:textColor="@color/grey_light4"
+                android:textSize="@dimen/text_size_small"
+                tools:text='"@rahulabrol2211"' />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:gravity="end|center_vertical">
+
+        <TextView
+            android:id="@+id/tvLikeFollow"
+            style="@style/textViewStyle.line_1"
+            android:background="@drawable/button_border"
+            android:padding="@dimen/padding_small"
+            android:text="@string/follow"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/grey_light9"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivLoading"
+        android:layout_width="@dimen/image_45"
+        android:layout_height="@dimen/image_45"
+        android:contentDescription="@null" />
+
+    <!--<com.skeleton.util.customview.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/progress_bar_wheel"
+        android:visibility="visible"
+        wheel:matProg_barColor="@color/splash_fill"
+        wheel:matProg_barWidth="2dp"
+        wheel:matProg_fillRadius="false"
+        wheel:matProg_progressIndeterminate="false" />
+
+
+    <TextView
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/splash_fill"
+        android:textSize="20sp" />
+-->
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_very_tiny"
+        android:text="@string/loading"
+        android:textColor="@color/grey_light4"
+        android:textDirection="anyRtl"
+        android:textSize="@dimen/text_size_small" />
+
+</LinearLayout>

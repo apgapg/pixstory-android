@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/white</color>
+    <!--#303F9F-->
+    <color name="colorPrimaryDark">#d8d8d8</color>
+    <color name="colorAccent">#47515D</color>
+    <color name="colorAppName">#47515D</color>
+    <color name="facebookButtonBackground">#3C589E</color>
+    <color name="white">#FFFFFF</color>
+    <color name="appBackground">#FAFAFA</color>
+    <color name="buttonBorder">#E0E0E0</color>
+    <color name="invalidWarning">#FF0000</color>
+
+    <color name="white_light">#CCFFFFFF</color>
+    <color name="white_very_light">#90FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="black_opa_10">#90000000</color>
+    <color name="main">#373646</color>
+    <color name="blue_dark">#1c1c1c</color>
+    <color name="blue_light">#0070c2</color>
+    <color name="grey_light">#d8d8d8</color>
+    <color name="grey_light2">#4e4e4e</color>
+    <color name="grey_light3">#efefef</color>
+    <color name="grey_light4">#9b9b9b</color>
+    <color name="grey_light5">#979797</color>
+    <color name="grey_light6">#d6d6d6</color>
+    <color name="grey_light7">#b2b2b2</color>
+    <color name="grey_light8">#707070</color>
+    <color name="grey_light9">#fafafa</color>
+    <color name="grey_very_light">#616161</color>
+    <color name="text_hint">#7f7f7f</color>
+    <color name="ed_bg">#292839</color>
+    <color name="red_light">#ff0028</color>
+    <color name="red_dark">#d0021b</color>
+    <color name="red_dark1">#d0011b</color>
+    <color name="cyan">#34ceaa</color>
+    <color name="cyan1">#33bbcd</color>
+    <color name="green">#1cbc64</color>
+    <color name="yellow_dark">#f5a623</color>
+    <color name="blue_dark2">#232323</color>
+    <color name="fb">#475993</color>
+    <color name="twitter">#55acee</color>
+    <color name="radio_btn_color">#bdc6cf</color>
+</resources>
+

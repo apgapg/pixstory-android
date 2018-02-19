@@ -1,0 +1,72 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!--========================Common dimensions==========================-->
+    <!--text_size-->
+    <dimen name="text_size_xx_large">30sp</dimen>
+    <dimen name="text_size_x_large">24sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_small_large">18sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_small_medium">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_tiny_small">10sp</dimen>
+    <dimen name="text_size_tiny">8sp</dimen>
+
+    <!--padding-->
+    <dimen name="padding_extra_large">50dp</dimen>
+    <dimen name="padding_large">40dp</dimen>
+    <dimen name="padding_large_med">30dp</dimen>
+    <dimen name="padding_medium">20dp</dimen>
+    <dimen name="padding_normal">15dp</dimen>
+    <dimen name="padding_small_normal">12dp</dimen>
+    <dimen name="padding_small">10dp</dimen>
+    <dimen name="padding_tiny">7dp</dimen>
+    <dimen name="padding_very_tiny">5dp</dimen>
+
+    <!--margin-->
+    <dimen name="margin_xxx_large">85dp</dimen>
+    <dimen name="margin_xx_large">80dp</dimen>
+    <dimen name="margin_xm_large">70dp</dimen>
+    <dimen name="margin_x_large">60dp</dimen>
+    <dimen name="margin_extra_large">50dp</dimen>
+    <dimen name="margin_large">40dp</dimen>
+    <dimen name="margin_med_large">30dp</dimen>
+    <dimen name="margin_medium">20dp</dimen>
+    <dimen name="margin_small_medium">15dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_tiny">5dp</dimen>
+    <dimen name="margin_very_tiny">2dp</dimen>
+
+    <!--heights-->
+    <dimen name="max_height_width">200dp</dimen>
+    <dimen name="view_pager_height">150dp</dimen>
+    <dimen name="max_dialog_height">500dp</dimen>
+    <dimen name="height_20">20dp</dimen>
+    <dimen name="dimens_200">200dp</dimen>
+    <dimen name="dimens_250">250dp</dimen>
+    <dimen name="dimens_300">300dp</dimen>
+    <dimen name="image_45">45dp</dimen>
+    <dimen name="height_40">40dp</dimen>
+    <dimen name="height_80">80dp</dimen>
+    <dimen name="height_50">50dp</dimen>
+    <dimen name="height_10">10dp</dimen>
+    <dimen name="height_25">25dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="dimens_180">180dp</dimen>
+    <dimen name="dimens_150">150dp</dimen>
+
+    <!--corner_radius-->
+    <dimen name="corner_radius_4">4dp</dimen>
+    <dimen name="corner_radius_10">10dp</dimen>
+    <!--cardview_elevation-->
+    <dimen name="cardview_elevation_2">2dp</dimen>
+    <dimen name="cardview_elevation_4">4dp</dimen>
+    <dimen name="cardview_elevation_8">8dp</dimen>
+    <dimen name="cardview_elevation_16">16dp</dimen>
+    <dimen name="height_30">30dp</dimen>
+</resources>
