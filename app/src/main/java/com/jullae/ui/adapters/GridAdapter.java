@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -211,7 +212,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     class AddFeedHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView tvAddStory;
+        private Button tvAddStory;
 
         /**
          * Constructor to initialize the view Attribute.

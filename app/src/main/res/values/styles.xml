@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -50,5 +50,546 @@
     <!--Size of text on tabs-->
     <style name="CustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/text_size_small_medium</item>
+    </style>
+
+    <!--Material Desgining style starts here-->
+
+    <style name="padding16">
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="padding8">
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="padding4">
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <style name="padding12">
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="padding12LeftRight">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+    </style>
+
+    <style name="padding8All">
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="padding10All">
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="padding8TopBottom1">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+    </style>
+
+    <style name="padding8LeftRight">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+
+    <style name="padding50LeftRight8TopBottom">
+        <item name="android:paddingLeft">50dp</item>
+        <item name="android:paddingRight">50dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+
+    <style name="margin8LeftRight">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="margin16LeftRight">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="margin5LeftRight">
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="margin8TopBottom">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+
+    <style name="margin2TopBottom">
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="margin8">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="margin8LeftRightTop">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="margin16">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+
+    <style name="padding8LeftRight12TopBottom" parent="padding12TopBottom">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="padding12TopBottom">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="padding16_8_0_0">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="padding8TopBottom">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+
+    <style name="padding10TopBottom">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="padding16LeftRight">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="padding16TopBottom">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="padding20TopBottom">
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+
+    <style name="padding_10_16_10_16">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="padding_16_12_16_12">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="padding_16_16_16_12">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="padding_0_12_12_12">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="padding_12_12_12_0">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="padding_0_8_8_8">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="padding_16_8_16_8">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+
+    <style name="padding_6_12_6_12">
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+
+    <style name="padding_12_8_12_8">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="padding_8_12_8_0">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="padding_12_10_12_10">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="padding_16_12_0_12_header">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+
+    <style name="txt_14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="txt_medium">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_14_medium" parent="txt_medium">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="text_15_medium" parent="txt_medium">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="text_12_medium" parent="txt_medium">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="text_10_medium" parent="txt_medium">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="text_12_regular" parent="txt_regular">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="text_tab_medium" parent="txt_medium">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="txt_12_light" parent="txt_light">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="txt_10_light" parent="txt_light">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="txt_16_light" parent="txt_light">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="txt_12_regular" parent="txt_regular">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="txt_12_regular_white" parent="txt_12_regular">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_14_light" parent="txt_light">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="txt_12_light_gray" parent="txt_12_light">
+        <item name="android:textColor">@color/grey_light5</item>
+    </style>
+
+    <style name="txt_8_light_gray" parent="txt_8_regular">
+        <item name="android:textColor">@color/grey_light5</item>
+    </style>
+
+    <style name="txt_10_light_gray" parent="txt_10_light">
+        <item name="android:textColor">@color/grey_light5</item>
+    </style>
+
+    <style name="txt_14_regular_gray" parent="txt_14_regular">
+        <item name="android:textColor">@color/grey_light5</item>
+    </style>
+
+
+    <style name="txt_12_light_white" parent="txt_12_light">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_16_medium" parent="txt_medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="txt_32_medium" parent="txt_medium">
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="txt_18_medium" parent="txt_medium">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="txt_18_req" parent="txt_regular">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="txt_15_medium" parent="txt_medium">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="txt_14_medium" parent="txt_medium">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="txt_20_medium" parent="txt_medium">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="txt_20_medium_white" parent="txt_20_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_22_medium" parent="txt_medium">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="txt_24_medium" parent="txt_medium">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="txt_16_regular" parent="txt_regular">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="txt_22_light" parent="txt_light">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="txt_22_regular" parent="txt_regular">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="txt_24_regular" parent="txt_regular">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="txt_14_regular" parent="txt_regular">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="txt_15_regular" parent="txt_regular">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="txt_8_regular" parent="txt_regular">
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="txt_10_regular" parent="txt_regular">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="txt_17_medium_primaryText" parent="txt_16_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_22_medium_primaryText" parent="txt_22_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_24_medium_primaryText" parent="txt_24_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="txt_22_regular_white" parent="txt_22_regular">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_20_regular" parent="txt_regular">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+    <style name="txt_22_regular_primaryText" parent="txt_22_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_22_medium_white" parent="txt_22_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_17_regular_primaryText" parent="txt_16_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_17_regular_white" parent="txt_16_regular">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_17_medium_white" parent="txt_16_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_32_medium_white" parent="txt_32_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_14_regular_white" parent="txt_14_regular">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="txt_17_light_primaryText" parent="txt_16_light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_17_regular_black" parent="txt_16_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_22_light_black" parent="txt_22_light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--All 17sp text style refers to 16sp-->
+
+
+
+    <style name="txt_14_regular_primaryText" parent="txt_14_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="txt_15_regular_primaryText" parent="txt_15_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_8_regular_primaryText" parent="txt_8_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_10_regular_primaryText" parent="txt_10_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_14_regular_black" parent="txt_14_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_14_regular_green" parent="txt_14_regular">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+
+    <style name="txt_14_medium_primaryText" parent="text_14_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_15_medium_primaryText" parent="text_15_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="txt_12_small_light_primaryText" parent="txt_12_light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_10_small_white" parent="txt_10_regular">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_8_small_white" parent="txt_8_regular">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_14_medium_black" parent="text_14_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="txt_14_medium_white" parent="text_14_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="txt_12_medium_primaryText" parent="text_12_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_12_medium_white" parent="text_12_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="txt_10_medium_white" parent="text_10_medium">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="txt_10_medium_primaryText" parent="text_10_medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="txt_12_regular_black" parent="txt_12_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_12_regular_primaryText" parent="txt_12_regular">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_12_light_primaryText" parent="txt_12_light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="txt_10_light_primaryText" parent="txt_10_light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_14_light_primaryText" parent="txt_14_light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="txt_light">
+        <item name="android:fontFamily" tools:targetApi="16">sans-serif-light</item>
+    </style>
+
+    <style name="txt_regular">
+        <item name="android:fontFamily" tools:targetApi="16">sans-serif-regular</item>
     </style>
 </resources>

@@ -1,15 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'checkstyle'
-
-preBuild.dependsOn('checkstyle')
 assemble.dependsOn('lint')
-check.dependsOn('checkstyle')
-
-
-checkstyle {
-    toolVersion "7.6.1"
-}
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"

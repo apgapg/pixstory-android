@@ -157,9 +157,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(final JSONObject jsonObject, final GraphResponse response) {
-                           /*Intent intent = new Intent(this, HomeActivity.class);
-                            intent.putExtra("userProfile", jsonObject.toString());
-                            startActivity(intent);*/
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.putExtra("userProfile", jsonObject.toString());
+                        startActivity(intent);
                     }
 
                 });

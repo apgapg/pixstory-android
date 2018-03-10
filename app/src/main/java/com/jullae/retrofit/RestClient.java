@@ -3,6 +3,7 @@ package com.jullae.retrofit;
 
 import com.jullae.BuildConfig;
 import com.jullae.constant.AppConstant;
+import com.jullae.ui.fragments.HomeFeedFragments;
 import com.jullae.utils.Log;
 
 import java.io.IOException;
@@ -143,7 +144,7 @@ public final class RestClient {
             @Override
             public Response intercept(final Chain chain) throws IOException {
                 String basic = "%s";
-                String authToken = "BEARER eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTc3MzA5NzgsImlhdCI6MTUxNzY0NDU3OCwiaXNzIjoianVsbGFlLmNvbSIsInNjb3BlcyI6W10sInVzZXIiOnsidXNlcl9pZCI6NH19.uCRPMZKfKm8LFc9kJ0Hyb2SkCm46B2sIAk5U8lVfz3U";
+                String authToken = "BEARER "+ HomeFeedFragments.token;
                 Request request = chain.request().newBuilder()
                         .header(AppConstant.AUTH, String.format(basic, authToken))
                         .build();

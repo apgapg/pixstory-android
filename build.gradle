@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url "http://jcenter.bintray.com"}
         google()
         mavenCentral()
     }
@@ -17,11 +18,9 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        maven { url "https://jitpack.io" }
         task checkstyle(type: Checkstyle) {
             showViolations = true
             configFile file("../checkStyleConfig/checkstyle.xml")

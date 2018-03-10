@@ -47,6 +47,7 @@ public class HomeFeedFragments extends BaseFragment {
     private FeedListener listener;
     private ArrayList<FeedModel.Feed> feedList;
     private ApiInterface client;
+    public static final String token ="eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjA3NTkwOTUsImlhdCI6MTUyMDY3MjY5NSwiaXNzIjoianVsbGFlLmNvbSIsInNjb3BlcyI6W10sInVzZXIiOnsidXNlcl9pZCI6NH19.Cj3LeNQRoJ2EgRodiB_ULhrD3JEKBNPPAIl7_MwwKuw";
 
     @Override
     public void onAttach(final Context context) {
@@ -245,6 +246,9 @@ public class HomeFeedFragments extends BaseFragment {
                 tvUserName.setOnClickListener(clickListener);
                 tvLocation.setOnClickListener(clickListener);
 
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(0, 0, 16, 16);
+                itemView.setLayoutParams(layoutParams);
                 linearLayout.addView(itemView);
             }
         }

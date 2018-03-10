@@ -7,7 +7,7 @@
     <color name="colorAppName">#47515D</color>
     <color name="facebookButtonBackground">#3C589E</color>
     <color name="white">#FFFFFF</color>
-    <color name="appBackground">#FAFAFA</color>
+    <color name="appBackground">#f8f8f8</color>
     <color name="buttonBorder">#E0E0E0</color>
     <color name="invalidWarning">#FF0000</color>
 

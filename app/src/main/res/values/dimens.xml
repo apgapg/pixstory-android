@@ -59,6 +59,7 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="dimens_180">180dp</dimen>
     <dimen name="dimens_150">150dp</dimen>
+    <dimen name="dimens_100">100dp</dimen>
 
     <!--corner_radius-->
     <dimen name="corner_radius_4">4dp</dimen>
@@ -69,4 +70,10 @@
     <dimen name="cardview_elevation_8">8dp</dimen>
     <dimen name="cardview_elevation_16">16dp</dimen>
     <dimen name="height_30">30dp</dimen>
+
+
+    <dimen name="iconTextMargin">10dp</dimen>
+    <dimen name="headingSubHeadingMargin">2dp</dimen>
+
+
 </resources>
