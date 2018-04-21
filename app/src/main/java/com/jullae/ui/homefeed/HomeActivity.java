@@ -5,31 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.constant.AppConstant;
-import com.jullae.retrofit.APIError;
 import com.jullae.retrofit.ApiInterface;
-import com.jullae.retrofit.CommonResponse;
 import com.jullae.retrofit.MultipartParams;
-import com.jullae.retrofit.ResponseResolver;
 import com.jullae.retrofit.RestClient;
 import com.jullae.ui.adapters.GridAdapter;
-import com.jullae.ui.adapters.ViewPagerAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.AddPostDialogFragment;
 import com.jullae.ui.fragments.EditPostFragment;
-import com.jullae.ui.fragments.HomeFeedFragments;
+import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.fragments.LikeDialogFragment;
-import com.jullae.ui.fragments.ProfileFragment;
-import com.jullae.ui.fragments.ShapeFragment;
+import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.fragments.StoryDialogFragment;
+import com.jullae.ui.homefeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.storydetails.StoryDetailsActivity;
 import com.jullae.utils.Utils;
 import com.jullae.utils.imagepicker.ImageChooser;
@@ -38,7 +35,6 @@ import com.kbeanie.multipicker.api.entity.ChosenImage;
 import java.io.File;
 import java.util.List;
 
-import retrofit2.Call;
 
 /**
  * Created by Rahul Abrol on 12/13/17.
@@ -46,21 +42,22 @@ import retrofit2.Call;
  * Class @{@link HomeActivity} used to hold the
  * feed items, add, edit stories,images,remove etc.
  */
-public class HomeActivity extends BaseActivity implements HomeFeedFragments.FeedListener,
+public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.FeedListener,
         GridAdapter.StoryClickListener, StoryDialogFragment.UpdateFeed,
         AddPostDialogFragment.PicListner, ImageChooser.OnImageSelectListener {
 
     private BottomSheetDialogFragment bottomSheetDialogFragment;
     private Button addButton;
-    private ViewPager viewPager;
     private ApiInterface client;
     private File photoFile;
     private ImageChooser imageChooser;
+    private ImageView tab_home, tab_explore, tab_profile;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_feed);
+        showFragment(new HomeFragment(), false);
         //client
         client = RestClient.getApiInterface();
 
@@ -68,76 +65,41 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragments.Feed
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
 
-        //Setup pager and its adapter.
-        pagerSetup();
+        tab_explore = findViewById(R.id.tab_explore);
+        tab_profile = findViewById(R.id.tab_profile);
+        tab_home = findViewById(R.id.tab_home);
+
+        tab_explore.setOnClickListener(this);
+        tab_profile.setOnClickListener(this);
+        tab_home.setOnClickListener(this);
 
         //Find bottom Sheet ID
         View bottomSheet = findViewById(R.id.bottom_sheet);
         BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mBottomSheetBehavior.setPeekHeight(0);
+
+
     }
 
-    /**
-     * pager setup;
-     */
-    private void pagerSetup() {
-        viewPager = findViewById(R.id.viewPager);
-        //load all pages only once.
-        viewPager.setOffscreenPageLimit(3);
-        //set Adapter.
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        // add all fragment name into the key.
-        adapter.addFrag(new HomeFeedFragments());
-        adapter.addFrag(new ShapeFragment());
-        adapter.addFrag(new ProfileFragment());
 
-        //set Adapter of pager.
-        viewPager.setAdapter(adapter);
+    private void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+           /* if (b)
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+           */
+        if (shouldAddToBackStack)
+            fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
+        else fragmentTransaction.replace(R.id.container, fragment).commit();
 
-        final TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            int iconId = -1;
-            switch (i) {
-                case 0:
-                    iconId = R.drawable.ic_home_black_24dp;
-                    break;
-                case 1:
-                    iconId = R.drawable.ic_language_black_24dp;
-                    break;
-                case 2:
-                    iconId = R.drawable.ic_profile;
-                    break;
-                default:
-                    break;
-            }
-            tabLayout.getTabAt(i).setIcon(iconId);
-        }
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-            @Override
-            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(final int state) {
-
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                //if Fragment 0 is opened then show Button else hide.
-                if (position == 0) {
-                    addButton.setVisibility(View.VISIBLE);
-                } else {
-                    addButton.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
+
+    public void showSearchFragment() {
+        showFragment(new SearchFragment(), true);
+    }
     @Override
     public void onClick(final View v) {
         super.onClick(v);
@@ -147,8 +109,37 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragments.Feed
                 bottomSheetDialogFragment = new AddPostDialogFragment();
                 bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getClass().getSimpleName());
                 break;
+            case R.id.tab_explore:
+                showHomeFragment(1);
+                break;
+            case R.id.tab_home:
+                showHomeFragment(0);
+                break;
+            case R.id.tab_profile:
+                showHomeFragment(2);
+                break;
             default:
                 break;
+        }
+    }
+
+    private void showHomeFragment(int i) {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment instanceof HomeFragment && fragment.isVisible())
+            ((HomeFragment) getSupportFragmentManager().findFragmentById(R.id.container)).showFragment(i);
+        else {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentManager.popBackStackImmediate();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", i);
+            HomeFragment homeFragment = new HomeFragment();
+            homeFragment.setArguments(bundle);
+
+            fragmentTransaction.replace(R.id.container, homeFragment).commit();
+
         }
     }
 
@@ -210,8 +201,12 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragments.Feed
 
     @Override
     public void onBackPressed() {
-        if (viewPager.getCurrentItem() != 0) {
-            viewPager.setCurrentItem(0);
+
+        if (getSupportFragmentManager().findFragmentById(R.id.container) instanceof HomeFragment && getSupportFragmentManager().findFragmentById(R.id.container).isVisible()) {
+            HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+            if (!homeFragment.onBackPressByUser())
+                super.onBackPressed();
+
         } else {
             super.onBackPressed();
         }
@@ -264,7 +259,8 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragments.Feed
     }
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode,
+                                    final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imageChooser.onActivityResult(requestCode, resultCode, data);
     }
@@ -296,7 +292,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragments.Feed
                 .add("picture_title", title)
                 .addFile("image", photoFile);
 
-        Call<CommonResponse> data = client.uploadPic(multipartParams.build().getMap());
+       /* Call<CommonResponse> data = client.uploadPic(multipartParams.build().getMap());
         data.enqueue(new ResponseResolver<CommonResponse>(HomeActivity.this, false, false) {
             @Override
             public void success(final CommonResponse feedModel) {
@@ -307,25 +303,32 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragments.Feed
             public void failure(final APIError error) {
                 Utils.showSnackbar(HomeActivity.this, addButton, error.getMessage());
             }
-        });
+        });*/
     }
 
     /**
      * Method used to update the feed.
      */
-    private void updateFeedFragment() {
+   /* private void updateFeedFragment() {
         Fragment page = getSupportFragmentManager()
                 .findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.getCurrentItem());
         // based on the current position you can then cast the page to the correct
         // class and call the method:
         if (viewPager.getCurrentItem() == 0 && page != null) {
-            ((HomeFeedFragments) page).updateList();
+            ((HomeFeedFragmentold) page).updateList();
         }
-    }
-
+    }*/
     @Override
     public void updateFeed() {
 //        after successfully get the response in storyDialogFragment update feed data
-        updateFeedFragment();
+        // updateFeedFragment();
+    }
+
+    public void showFreshFeedFragment(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        FreshFeedFragment freshFeedFragment = new FreshFeedFragment();
+        freshFeedFragment.setArguments(bundle);
+        showFragment(freshFeedFragment, true);
     }
 }

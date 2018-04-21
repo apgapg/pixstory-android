@@ -105,9 +105,9 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         CommentHolder(final View itemView) {
             super(itemView);
 
-            tvCmntUserName = itemView.findViewById(R.id.tvCmntUserName);
+            tvCmntUserName = itemView.findViewById(R.id.user_name);
             tvCmntTime = itemView.findViewById(R.id.tvCmntTime);
-            tvCmntStory = itemView.findViewById(R.id.tvCmntStory);
+            tvCmntStory = itemView.findViewById(R.id.story_text);
             //Listeners Initializations
             tvCmntStory.setOnClickListener(this);
         }
@@ -117,7 +117,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //            int pos = getAdapterPosition();
 //            int id = list.get(getAdapterPosition()).getId();
             switch (v.getId()) {
-                case R.id.tvCmntStory:
+                case R.id.story_text:
 
                     break;
                 default:

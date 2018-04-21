@@ -3,9 +3,9 @@ package com.jullae.retrofit;
 
 import com.jullae.constant.AppConstant;
 import com.jullae.model.AllLikeModel;
-import com.jullae.model.FeedModel;
 import com.jullae.model.LikeResponseModel;
 import com.jullae.model.PostRequestModel;
+import com.jullae.ui.homefeed.HomeFeedModel;
 
 import java.util.HashMap;
 
@@ -33,7 +33,7 @@ public interface ApiInterface {
 //    Call<User> userLogin(@FieldMap Map<String, String> map);
 
     @GET(AppConstant.ApiEndPoints.API_FEEDS)
-    Call<FeedModel> getFeeds();
+    Call<HomeFeedModel> getFeeds();
 
     @FormUrlEncoded
     @POST(AppConstant.ApiEndPoints.API_PICTURE_LIKE)

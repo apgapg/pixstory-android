@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.jullae.helpers.AppDataManager;
+import com.jullae.helpers.AppPrefsHelper;
 
 /**
  * Created by macbunny on 22/11/17.
@@ -15,10 +18,13 @@ import com.android.volley.toolbox.Volley;
 
 public class AppController extends Application {
 
+    public static final String PACKAGE_NAME = "com.jullae";
+
     public static final String TAG = AppController.class.getSimpleName();
     //private ImageLoader mImageLoader;
     private static AppController mInstance;
     private RequestQueue mRequestQueue;
+    private AppDataManager mAppDataManager;
 
     /**
      * Get the instance og this class.
@@ -35,6 +41,14 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        AndroidNetworking.initialize(getApplicationContext());
+        AppPrefsHelper appPrefsHelper = new AppPrefsHelper(getApplicationContext());
+        mAppDataManager = new AppDataManager(appPrefsHelper);
+
+    }
+
+    public AppDataManager getmAppDataManager() {
+        return mAppDataManager;
     }
 
     /**

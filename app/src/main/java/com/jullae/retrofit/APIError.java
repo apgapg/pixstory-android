@@ -10,12 +10,7 @@ import static com.jullae.retrofit.ResponseResolver.UNEXPECTED_ERROR_OCCURRED;
 
 public class APIError {
     private final int statusCode;
-    //    private final int code;
     private final String message;
-//    private final String error;
-//    private final String status;
-//    private final Object data;
-
     /**
      * @param statusCode status code of api error response
      * @param message    message of api error response
@@ -30,14 +25,13 @@ public class APIError {
      * @return status code of api error response
      */
     public int getStatusCode() {
-        if (statusCode == 0) {
-//            if (code != 0) {
-//                return code;
-//            } else {
+        if (statusCode != 0) {
+            return statusCode;
+
+        } else
             return DEFAULT_STATUS_CODE;
-//            }
-        }
-        return statusCode;
+
+
     }
 
 
@@ -46,11 +40,7 @@ public class APIError {
      */
     public String getMessage() {
         if (message == null) {
-//            if (error != null) {
-//                return error;
-//            } else {
             return UNEXPECTED_ERROR_OCCURRED;
-//            }
         } else {
             return message;
         }

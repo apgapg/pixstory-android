@@ -7,14 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jullae.R;
-import com.jullae.constant.AppConstant;
-import com.jullae.model.FeedModel;
-import com.jullae.utils.DateTimeUtil;
+import com.jullae.ui.homefeed.HomeFeedModel;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +24,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_ADD_STORY_BUTTON = 1;
     private static final int VIEW_SHOW_STORY = 2;
     private final LayoutInflater inflater;
-    private ArrayList<FeedModel.Story> list;
+    private ArrayList<HomeFeedModel.Story> list;
     private Context context;
     private StoryClickListener listener;
 
@@ -40,7 +36,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * @param context  context
      * @param feedList list items;
      */
-    public GridAdapter(final Context context, final ArrayList<FeedModel.Story> feedList) {
+    public GridAdapter(final Context context, final ArrayList<HomeFeedModel.Story> feedList) {
         this.list = feedList;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
@@ -55,7 +51,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .inflate(R.layout.fragment_add_feed, parent, false));
             case VIEW_SHOW_STORY:
                 return new FeedHolder(inflater
-                        .inflate(R.layout.fragment_slider, parent, false));
+                        .inflate(R.layout.item_story, parent, false));
             default:
                 return new AddFeedHolder(inflater
                         .inflate(R.layout.fragment_add_feed, parent, false));
@@ -64,7 +60,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        final FeedModel.Story feedModel = list.get(position);
+        final HomeFeedModel.Story feedModel = list.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_ADD_STORY_BUTTON:
@@ -73,19 +69,19 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case VIEW_SHOW_STORY:
                 FeedHolder feedHolder = (FeedHolder) holder;
 
-                feedHolder.tvCmntUserName.setText(feedModel.getWriterName());
+              /*  feedHolder.tvCmntUserName.setText(feedModel.getWriterName());
                 try {
                     //convert UTc date into milliseconds and the get relative time.
                     long date = DateTimeUtil.getDateInMilliSec(feedModel.getStoryCreatedAt());
                     feedHolder.tvCmntTime.setText(DateTimeUtil.getTimeAgo(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
                 feedHolder.tvCmntStory.setText(feedModel.getContent());
 
                 String comments;
                 String likes;
-                if (feedModel.getStoryCommentCount() > 1) {
+                /*if (feedModel.getStoryCommentCount() > 1) {
                     comments = String.valueOf(feedModel.getStoryCommentCount())
                             + AppConstant.SPACE_STRING + context.getString(R.string.comments);
                 } else {
@@ -99,8 +95,8 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } else {
                     likes = String.valueOf(feedModel.getStoryLikeCount())
                             + AppConstant.SPACE_STRING + context.getString(R.string.like);
-                }
-                feedHolder.tvCmntLikes.setText(likes);
+                }*/
+                //  feedHolder.tvCmntLikes.setText(likes);
                 break;
             default:
                 break;
@@ -111,11 +107,11 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(final int position) {
         //If id is equal to 007 then return view type 2 else 1.
         if (list != null && list.size() > 0) {
-            if (list.get(position).getId() == AppConstant.HEX_ID) {
+          /*  if (list.get(position).getId() == AppConstant.HEX_ID) {
                 return VIEW_ADD_STORY_BUTTON;
             } else {
                 return VIEW_SHOW_STORY;
-            }
+            }*/
         }
         return -1;
     }
@@ -165,11 +161,11 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         FeedHolder(final View itemView) {
             super(itemView);
 
-            tvCmntUserName = itemView.findViewById(R.id.tvCmntUserName);
+            tvCmntUserName = itemView.findViewById(R.id.user_name);
             tvCmntTime = itemView.findViewById(R.id.tvCmntTime);
-            tvCmntStory = itemView.findViewById(R.id.tvCmntStory);
-            tvCmntLikes = itemView.findViewById(R.id.tvCmntLikes);
-            tvCmntComments = itemView.findViewById(R.id.tvCmntComments);
+            tvCmntStory = itemView.findViewById(R.id.story_text);
+          /*  tvCmntLikes = itemView.findViewById(R.id.likes);
+            tvCmntComments = itemView.findViewById(R.id.comments);*/
             //Listeners Initializations
             tvCmntStory.setOnClickListener(this);
             tvCmntLikes.setOnClickListener(this);
@@ -179,21 +175,21 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(final View v) {
             int pos = getAdapterPosition();
-            int id = list.get(pos).getId();
-            int countLike = list.get(pos).getStoryLikeCount();
-            int countComment = list.get(pos).getStoryCommentCount();
-            switch (v.getId()) {
-                case R.id.tvCmntStory:
+            // int id = list.get(pos).getId();
+            /**/          /*  int countLike = list.get(pos).getStoryLikeCount();
+            int countComment = list.get(pos).getStoryCommentCount();*/
+           /* switch (v.getId()) {
+                case R.id.story_text:
                     listener.onStoryClick(pos, id, AppConstant.TAG_STORY);
                     break;
-                case R.id.tvCmntLikes:
+                case R.id.likes:
                     if (countLike > 0) {
                         listener.onStoryClick(pos, id, AppConstant.TAG_LIKE);
                     } else {
                         Toast.makeText(context, "0 like", Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case R.id.tvCmntComments:
+                case R.id.comments:
                     if (countComment > 0) {
                         listener.onStoryClick(pos, id, AppConstant.TAG_COMMENT);
                     } else {
@@ -202,7 +198,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     break;
                 default:
                     break;
-            }
+            }*/
         }
     }
 
@@ -229,10 +225,10 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(final View v) {
             int pos = getAdapterPosition();
-            int id = list.get(getAdapterPosition()).getId();
+            // int id = list.get(getAdapterPosition()).getId();
             switch (v.getId()) {
                 case R.id.tvAddStory:
-                    listener.onAddFeed(pos, id);
+                    // listener.onAddFeed(pos, id);
                     break;
                 default:
                     break;

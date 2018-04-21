@@ -1,0 +1,80 @@
+package com.jullae.ui.homefeed;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.jullae.R;
+import com.jullae.app.AppController;
+import com.jullae.customView.ItemOffTBsetDecoration;
+import com.jullae.ui.base.BaseFragment;
+import com.jullae.ui.homefeed.freshfeed.HomeFeedAdapter;
+
+public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
+
+    private static final String TAG = HomeFeedFragment.class.getName();
+    private View view;
+    private HomeFeedPresentor homeFeedPresentor;
+    private HomeFeedAdapter homeFeedAdapter;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
+        if (view != null) {
+            if (view.getParent() != null)
+                ((ViewGroup) view.getParent()).removeView(view);
+            return view;
+        }
+        view = inflater.inflate(R.layout.fragment_home_feed, container, false);
+
+        homeFeedPresentor = new HomeFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        homeFeedPresentor.setView(this);
+
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        homeFeedAdapter = new HomeFeedAdapter(getmContext());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset);
+        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(homeFeedAdapter);
+
+        homeFeedPresentor.loadFeeds();
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated: ");
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG, "onDestroyView: ");
+        super.onDestroyView();
+        homeFeedPresentor.removeView();
+    }
+
+    @Override
+    public void onFetchFeedSuccess(HomeFeedModel homeFeedModel) {
+        homeFeedAdapter.add(homeFeedModel.getFeedList());
+    }
+
+    @Override
+    public void onFetchFeedFail() {
+
+    }
+}

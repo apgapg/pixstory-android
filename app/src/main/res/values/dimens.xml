@@ -74,6 +74,8 @@
 
     <dimen name="iconTextMargin">10dp</dimen>
     <dimen name="headingSubHeadingMargin">2dp</dimen>
+    <dimen name="tab_icon">36dp</dimen>
+    <dimen name="item_offset">4dp</dimen>
 
 
 </resources>

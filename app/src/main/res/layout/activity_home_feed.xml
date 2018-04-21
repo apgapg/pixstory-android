@@ -13,24 +13,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:elevation="0dp">
 
-        <include
-            android:id="@+id/toolbar_home"
-            layout="@layout/toolbar" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:text="PixStory"
+            android:textColor="#424242"
+            android:textSize="24dp"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey_light6" />
+            android:layout_height="0.7dp"
+            android:background="@color/divider" />
 
-        <android.support.design.widget.TabLayout
+        <LinearLayout
             android:id="@+id/tabLayout"
-            style="@style/CustomTabText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed" />
+            android:layout_height="44dp">
+
+            <ImageView
+                android:id="@+id/tab_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_home" />
+
+            <ImageView
+                android:id="@+id/tab_explore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_explore" />
+
+            <ImageView
+                android:id="@+id/tab_profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_profile_tab" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/divider" />
 
     </android.support.design.widget.AppBarLayout>
 

@@ -39,7 +39,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.loginscreen.LoginActivity"/>
+        <activity android:name=".ui.loginscreen.LoginActivity">
+
+        </activity>
         <activity android:name=".ui.storydetails.StoryDetailsActivity" />
         <activity android:name=".ui.loginscreen.RegisterActivity" />
         <activity android:name=".ui.loginscreen.ForgotPasswordActivity" />

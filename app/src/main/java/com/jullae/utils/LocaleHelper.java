@@ -13,7 +13,8 @@ import java.util.Locale;
  * Created by Rahul Abrol on 13/12/17.
  * Class used to handle language configuraton.
  */
-public class LocaleHelper extends ContextWrapper {
+public class
+LocaleHelper extends ContextWrapper {
     /**
      * Constructor.
      *

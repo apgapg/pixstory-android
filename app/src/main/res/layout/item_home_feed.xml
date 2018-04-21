@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="442dp"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/divider" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:paddingBottom="6dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="4dp"
+        android:paddingTop="6dp">
+
+        <com.jullae.customView.CircularImageView
+            android:id="@+id/user_image"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:src="#99bdbdbd" />
+
+        <LinearLayout
+            android:id="@+id/titleLyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/iconTextMargin"
+            android:layout_toLeftOf="@+id/timeLyt"
+            android:layout_toRightOf="@+id/user_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name"
+                style="@style/txt_14_regular_primaryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ankit sharma" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                style="@style/txt_10_light_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Men from Clouds" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeLyt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/iconTextMargin"
+            android:gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/tvTimeInDays"
+                style="@style/txt_12_light_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                tools:text="2 days ago" />
+
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/ripple_effect"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/divider" />
+
+    <ImageView
+        android:id="@+id/image"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_200"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <LinearLayout
+            style="@style/padding8TopBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/ivLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                app:srcCompat="@drawable/favorite_outline" />
+
+            <TextView
+                android:id="@+id/like_count"
+                style="@style/textView.feed_secondary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/headingSubHeadingMargin"
+
+                android:gravity="center_vertical"
+                tools:text="12 likes" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/padding8TopBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical|end">
+
+            <ImageView
+                android:id="@+id/ivEditStory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shape" />
+
+            <TextView
+                android:id="@+id/story_count"
+                style="@style/textView.feed_secondary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/headingSubHeadingMargin"
+                tools:text="30 Stories" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/divider" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_story"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:paddingTop="4dp" />
+</LinearLayout>

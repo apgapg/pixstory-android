@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvCmntUserName"
+                android:id="@+id/user_name"
                 style="@style/textViewStyle.line_1"
                 android:textSize="@dimen/text_size_small"
                 android:textStyle="bold"
@@ -34,7 +34,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tvCmntStory"
+            android:id="@+id/story_text"
             style="@style/textViewStyle"
             android:layout_marginTop="@dimen/margin_small"
             android:ellipsize="end"
