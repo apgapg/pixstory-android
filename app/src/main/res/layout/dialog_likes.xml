@@ -3,30 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/margin_large"
     android:background="@drawable/bg_round_dialog"
-    android:maxHeight="@dimen/max_dialog_height"
-    android:minHeight="@dimen/max_dialog_height"
+
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvLikes"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".9"
+        android:layout_weight="1"
         android:scrollbars="none" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey_light" />
+    <include layout="@layout/vertical_divider" />
 
     <TextView
-        android:id="@+id/tvClose"
-        style="@style/textViewStyle.line_1"
+        android:id="@+id/close"
+        android:layout_height="40dp"
         android:layout_width="match_parent"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:padding="@dimen/padding_normal"
-        android:text="@string/x"
+        android:text="CLOSE"
+        android:textColor="#424242"
+        android:textSize="12dp"
         android:textStyle="bold" />
 </LinearLayout>

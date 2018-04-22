@@ -14,7 +14,7 @@
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/shape_rectangle_grey"
-        android:hint="search for tag..."
+        android:hint="Search for a tag..."
         android:lines="1"
         android:paddingLeft="8dp"
 

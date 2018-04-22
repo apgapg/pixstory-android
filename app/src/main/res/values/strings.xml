@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jullae</string>
+    <string name="app_name">PixStory</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="email_username">Email</string>
@@ -91,6 +91,8 @@
     <string name="error_not_a_valid_image_file">File is not a valid image.</string>
     <string name="no_comment">No Comment...!</string>
     <string name="add_comment">Add Comment</string>
+    <string name="title_activity_story_detail">StoryDetailActivity</string>
+    <string name="network_error">couldn\'t connect!</string>
 
 
 </resources>

@@ -107,7 +107,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(final int position) {
         //If id is equal to 007 then return view type 2 else 1.
         if (list != null && list.size() > 0) {
-          /*  if (list.get(position).getId() == AppConstant.HEX_ID) {
+          /*  if (list.get(position).getStory_id() == AppConstant.HEX_ID) {
                 return VIEW_ADD_STORY_BUTTON;
             } else {
                 return VIEW_SHOW_STORY;
@@ -175,10 +175,10 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(final View v) {
             int pos = getAdapterPosition();
-            // int id = list.get(pos).getId();
+            // int id = list.get(pos).getStory_id();
             /**/          /*  int countLike = list.get(pos).getStoryLikeCount();
             int countComment = list.get(pos).getStoryCommentCount();*/
-           /* switch (v.getId()) {
+           /* switch (v.getStory_id()) {
                 case R.id.story_text:
                     listener.onStoryClick(pos, id, AppConstant.TAG_STORY);
                     break;
@@ -225,7 +225,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(final View v) {
             int pos = getAdapterPosition();
-            // int id = list.get(getAdapterPosition()).getId();
+            // int id = list.get(getAdapterPosition()).getStory_id();
             switch (v.getId()) {
                 case R.id.tvAddStory:
                     // listener.onAddFeed(pos, id);

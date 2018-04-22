@@ -3,11 +3,14 @@ package com.jullae.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jullae.model.CommentModel;
 import com.jullae.model.FreshFeedModel;
+import com.jullae.model.LikesModel;
 import com.jullae.ui.homefeed.HomeFeedModel;
 import com.jullae.ui.homefeed.HomeFeedPresentor;
 import com.jullae.ui.homefeed.freshfeed.FreshFeedPresentor;
 import com.jullae.ui.search.SearchFeedPresentor;
+import com.jullae.ui.storydetails.StoryDetailPresentor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,6 +160,115 @@ public class AppDataManager {
             @Override
             public void onFail() {
                 feedFetchListener.onFail();
+            }
+        });
+    }
+
+    public void setlike(String id, final ApiHelper.ReqListener.StringReqListener stringReqListener, String isLiked, int likeType) {
+        getmApiHelper().setlikeReq(id, new ApiHelper.ReqListener.StringReqListener() {
+            @Override
+            public void onSuccess(String string) {
+                stringReqListener.onSuccess(string);
+            }
+
+            @Override
+            public void onFail() {
+                stringReqListener.onFail();
+            }
+        }, isLiked, likeType);
+    }
+
+    public void getLikeslist(String id, final HomeFeedPresentor.LikesFetchListener likesFetchListener, int like_type) {
+        getmApiHelper().getLikesList(id, new ApiHelper.ReqListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.serializeNulls();
+                    Gson gson = gsonBuilder.create();
+                    LikesModel likesModelList = gson.fromJson(response.toString(), LikesModel.class);
+
+                    likesFetchListener.onSuccess(likesModelList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    likesFetchListener.onFail();
+                }
+            }
+
+            @Override
+            public void onFail() {
+                likesFetchListener.onFail();
+
+            }
+        }, like_type);
+    }
+
+    public void makeFollowReq(String user_id, final ApiHelper.ReqListener.StringReqListener stringReqListener) {
+        getmApiHelper().makeFollowReq(user_id, new ApiHelper.ReqListener.StringReqListener() {
+            @Override
+            public void onSuccess(String string) {
+                stringReqListener.onSuccess(string);
+            }
+
+            @Override
+            public void onFail() {
+                stringReqListener.onFail();
+
+            }
+        });
+    }
+
+    public void loadComments(String story_id, final StoryDetailPresentor.CommentsListener commentsListener) {
+        getmApiHelper().loadComments(story_id, new ApiHelper.ReqListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.serializeNulls();
+                    Gson gson = gsonBuilder.create();
+                    CommentModel commentModel = gson.fromJson(response.toString(), CommentModel.class);
+
+                    commentsListener.onSuccess(commentModel);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    commentsListener.onFail();
+                }
+            }
+
+            @Override
+            public void onFail() {
+                commentsListener.onFail();
+
+            }
+        });
+    }
+
+    public void sendCommentReq(String comment, String story_id, final StoryDetailPresentor.ReqListener reqListener) {
+        getmApiHelper().sendCommentReq(comment, story_id, new ApiHelper.ReqListener.StringReqListener() {
+            @Override
+            public void onSuccess(String string) {
+                Gson gson = new Gson();
+                CommentModel.Comment commentModel = gson.fromJson(string, CommentModel.Comment.class);
+                reqListener.onSuccess(commentModel);
+            }
+
+            @Override
+            public void onFail() {
+                reqListener.onFail();
+            }
+        });
+    }
+
+    public void reportStory(String report, String id, int reportTypeStory, final ApiHelper.ReqListener.StringReqListener stringReqListener) {
+        getmApiHelper().reportStory(report, id, reportTypeStory, new ApiHelper.ReqListener.StringReqListener() {
+            @Override
+            public void onSuccess(String string) {
+                stringReqListener.onSuccess(string);
+            }
+
+            @Override
+            public void onFail() {
+                stringReqListener.onFail();
             }
         });
     }

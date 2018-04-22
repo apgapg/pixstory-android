@@ -1,3 +1,4 @@
+/*
 package com.jullae.ui.fragments;
 
 import android.annotation.SuppressLint;
@@ -31,22 +32,26 @@ import java.util.Arrays;
 
 import retrofit2.Call;
 
+*/
 /**
  * Created by Rahul Abrol on 12/26/17.
  * <p>
  * Detail story options.
- */
+ *//*
+
 public class DetailSheetFragment extends BottomSheetDialogFragment {
 
     private ApiInterface client;
     private int id;
 
-    /**
-     * Instance of this class.
-     *
-     * @param bundle extra data
-     * @return instance of Dialog.
-     */
+    */
+/**
+ * Instance of this class.
+ *
+ * @param bundle extra data
+ * @return instance of Dialog.
+ *//*
+
     public static BottomSheetDialogFragment getInstance(final Bundle bundle) {
         BottomSheetDialogFragment dialogFragment = new DetailSheetFragment();
         dialogFragment.setArguments(bundle);
@@ -125,9 +130,11 @@ public class DetailSheetFragment extends BottomSheetDialogFragment {
         }
     }
 
-    /**
-     * Save the user post.
-     */
+    */
+/**
+ * Save the user post.
+ *//*
+
     private void savePost() {
         Call<CommonResponse> data = client.savePost(id);
         data.enqueue(new ResponseResolver<CommonResponse>(getContext(), true, false) {
@@ -145,9 +152,11 @@ public class DetailSheetFragment extends BottomSheetDialogFragment {
         });
     }
 
-    /**
-     * Follow user api hit.
-     */
+    */
+/**
+ * Follow user api hit.
+ *//*
+
     private void followUser() {
         Call<CommonResponse> data = client.followUser(id);
         data.enqueue(new ResponseResolver<CommonResponse>(getContext(), true, false) {
@@ -165,9 +174,11 @@ public class DetailSheetFragment extends BottomSheetDialogFragment {
         });
     }
 
-    /**
-     * Report user api hit.
-     */
+    */
+/**
+ * Report user api hit.
+ *//*
+
     private void reportUser() {
         Call<CommonResponse> data = client.reportStory(id);
         data.enqueue(new ResponseResolver<CommonResponse>(getContext(), true, false) {
@@ -184,4 +195,4 @@ public class DetailSheetFragment extends BottomSheetDialogFragment {
             }
         });
     }
-}
+}*/

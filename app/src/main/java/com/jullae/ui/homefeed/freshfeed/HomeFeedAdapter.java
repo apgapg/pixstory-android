@@ -1,6 +1,10 @@
 package com.jullae.ui.homefeed.freshfeed;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,14 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.customView.ItemOffLRsetDecoration;
+import com.jullae.model.LikesModel;
+import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.homefeed.HomeFeedModel;
+import com.jullae.ui.homefeed.HomeFeedPresentor;
 import com.jullae.ui.homefeed.StoryAdapter;
+import com.jullae.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,23 +40,27 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final String TAG = HomeFeedAdapter.class.getName();
     private final Activity mContext;
     private final RequestOptions picOptions;
+    private final HomeFeedPresentor mPresentor;
 
     List<HomeFeedModel.Feed> messagelist = new ArrayList<HomeFeedModel.Feed>();
 
-    public HomeFeedAdapter(Activity activity) {
+    public HomeFeedAdapter(Activity activity, HomeFeedPresentor homeFeedPresentor) {
         this.mContext = activity;
+
+        this.mPresentor = homeFeedPresentor;
 
         picOptions = new RequestOptions();
         picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new HomeFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_feed, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
         Glide.with(mContext).load(messagelist.get(position).getPicture_url()).apply(picOptions).into(viewHolder.image);
@@ -59,6 +72,46 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.story_count.setText(messagelist.get(position).getStory_count() + " stories");
         viewHolder.storyAdapter.add(messagelist.get(position).getStories());
 
+        if (messagelist.get(position).getPic_is_liked().equals("false")) {
+            viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);
+            viewHolder.like_count.setTextColor(Color.parseColor("#9e9e9e"));
+            viewHolder.like_count.setTypeface(Typeface.DEFAULT);
+        } else {
+            viewHolder.btn_like.setImageResource(R.drawable.ic_like);
+            viewHolder.like_count.setTextColor(Color.parseColor("#424242"));
+            viewHolder.like_count.setTypeface(Typeface.DEFAULT_BOLD);
+
+        }
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
+
+        if (payloads.contains("like")) {
+            messagelist.get(position).setPic_is_liked("true");
+            viewHolder.btn_like.setImageResource(R.drawable.ic_like);
+            viewHolder.like_count.setText(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) + 1) + " likes");
+            messagelist.get(position).setLike_count(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) + 1));
+            viewHolder.like_count.setTextColor(Color.parseColor("#424242"));
+            viewHolder.like_count.setTypeface(Typeface.DEFAULT_BOLD);
+
+
+        } else if (payloads.contains("unlike")) {
+            messagelist.get(position).setPic_is_liked("false");
+            viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);
+            if (Integer.parseInt(messagelist.get(position).getLike_count()) != 0) {
+                viewHolder.like_count.setText(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) - 1) + " likes");
+                messagelist.get(position).setLike_count(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) - 1));
+
+            }
+            viewHolder.like_count.setTextColor(Color.parseColor("#9e9e9e"));
+            viewHolder.like_count.setTypeface(Typeface.DEFAULT);
+
+
+        } else
+            super.onBindViewHolder(holder, position, payloads);
     }
 
 
@@ -74,11 +127,56 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+    private void showLikesDialog(String id) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        View view = mContext.getLayoutInflater().inflate(R.layout.dialog_likes, null);
+
+        setupRecyclerView(view, id);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+
+    }
+
+    private void setupRecyclerView(View view, String id) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        final LikeAdapter likeAdapter = new LikeAdapter(mContext, mPresentor);
+        recyclerView.setAdapter(likeAdapter);
+
+        mPresentor.getLikeslist(id, new HomeFeedPresentor.LikesFetchListener() {
+            @Override
+            public void onSuccess(LikesModel likesModel) {
+                likeAdapter.add(likesModel.getLikes());
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        }, Constants.LIKE_TYPE_PICTURE);
+    }
+
+    public interface ReqListener {
+        void onSuccess();
+
+        void onFail();
+    }
 
     private class HomeFeedViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView user_image, image, ivStoryPic, ivEditStory, ivLike, ivMore;
+        private ImageView user_image, image, ivStoryPic, ivEditStory, btn_like, ivMore;
         private TextView user_name, tvLocation, tvTimeInDays, like_count, story_count;
         private RecyclerView recycler_view_story;
         private StoryAdapter storyAdapter;
@@ -90,7 +188,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             image = itemView.findViewById(R.id.image);
             ivMore = itemView.findViewById(R.id.ivMore);
             ivStoryPic = itemView.findViewById(R.id.image);
-            ivLike = itemView.findViewById(R.id.ivLike);
+            btn_like = itemView.findViewById(R.id.btn_like);
             ivEditStory = itemView.findViewById(R.id.ivEditStory);
             user_name = itemView.findViewById(R.id.user_name);
             tvLocation = itemView.findViewById(R.id.tvLocation);
@@ -101,11 +199,50 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             recycler_view_story = itemView.findViewById(R.id.recycler_view_story);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             recycler_view_story.setLayoutManager(linearLayoutManager);
+
             ItemOffLRsetDecoration itemDecoration = new ItemOffLRsetDecoration(mContext, R.dimen.item_offset);
             recycler_view_story.addItemDecoration(itemDecoration);
+
             storyAdapter = new StoryAdapter(mContext);
             recycler_view_story.setAdapter(storyAdapter);
 
+            btn_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String isLiked = messagelist.get(getAdapterPosition()).getPic_is_liked();
+                    if (isLiked.equals("false"))
+                        notifyItemChanged(getAdapterPosition(), "like");
+                    else notifyItemChanged(getAdapterPosition(), "unlike");
+
+
+                    mPresentor.setlike(messagelist.get(getAdapterPosition()).getPicture_id(), new ReqListener() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFail() {
+                            if (messagelist.get(getAdapterPosition()).getPic_is_liked().equals("false"))
+                                notifyItemChanged(getAdapterPosition(), "like");
+                            else notifyItemChanged(getAdapterPosition(), "unlike");
+                            Toast.makeText(mContext.getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
+                        }
+                    }, isLiked);
+                }
+            });
+
+            like_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showLikesDialog(messagelist.get(getAdapterPosition()).getPicture_id());
+                }
+            });
+
+
         }
+
+
     }
 }

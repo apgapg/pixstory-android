@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.constant.AppConstant;
-import com.jullae.model.AllLikeModel;
+import com.jullae.model.LikesModel;
 import com.jullae.retrofit.APIError;
 import com.jullae.retrofit.ApiInterface;
 import com.jullae.retrofit.CommonResponse;
@@ -33,13 +33,12 @@ import retrofit2.Call;
  * Class @{@link LikeDialogFragment} used to show the list
  * of users who like the story.
  */
-public class LikeDialogFragment extends DialogFragment implements View.OnClickListener,
-        LikeAdapter.LikeListener {
+public class LikeDialogFragment extends DialogFragment implements View.OnClickListener {
 
     //private Activity mActivity;
     private ApiInterface client;
     private TextView tvClose;
-    private AllLikeModel model;
+    private LikesModel model;
     private LikeAdapter adapter;
     private boolean itemType;
     private int userId;
@@ -75,7 +74,7 @@ public class LikeDialogFragment extends DialogFragment implements View.OnClickLi
         //add root view for dialog.
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_likes, null, false);
         tvClose = rootView.findViewById(R.id.tvClose);
-        recyclerView = rootView.findViewById(R.id.rvLikes);
+        // recyclerView = rootView.findViewById(R.id.rvLikes);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
@@ -84,7 +83,7 @@ public class LikeDialogFragment extends DialogFragment implements View.OnClickLi
 //        JSONObject jsonObject;
 //        try {
 //            jsonObject = Utils.readTextFile(getResources().openRawResource(R.raw.all_likes));
-//            model = new Gson().fromJson(jsonObject.toString(), AllLikeModel.class);
+//            model = new Gson().fromJson(jsonObject.toString(), LikesModel.class);
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
@@ -116,17 +115,7 @@ public class LikeDialogFragment extends DialogFragment implements View.OnClickLi
         dismiss();
     }
 
-    @Override
-    public void onClick(final int position, final String tag, final int clickedId) {
-        switch (tag) {
-            case AppConstant.FOLLOW:
-                followUser(position, clickedId);
-                break;
-            default:
-                break;
-        }
-        dismiss();
-    }
+
 
     /**
      * Follow user api hit.
@@ -158,20 +147,20 @@ public class LikeDialogFragment extends DialogFragment implements View.OnClickLi
     private void getFeeds(final int id, final boolean isStoryUser) {
 //        CommonParams.Builder params = new CommonParams.Builder();
 //        params.build().getMap()
-        Call<AllLikeModel> data;
+        Call<LikesModel> data;
         if (isStoryUser) {
             data = client.getAllStoryLike(id + "");
         } else {
             data = client.getAllPicLike(id + "");
         }
-        data.enqueue(new ResponseResolver<AllLikeModel>(getActivity(), true, false) {
+        data.enqueue(new ResponseResolver<LikesModel>(getActivity(), true, false) {
             @Override
-            public void success(final AllLikeModel likeModel) {
-                if (likeModel != null && likeModel.getLikes().size() > 0) {
-                    model = likeModel;
+            public void success(final LikesModel likesModel) {
+                if (likesModel != null && likesModel.getLikes().size() > 0) {
+                    model = likesModel;
                     if (model.getLikes() != null && model.getLikes().size() > 0) {
-                        ArrayList<AllLikeModel.Like> arrayList = (ArrayList<AllLikeModel.Like>) model.getLikes();
-                        adapter = new LikeAdapter(getActivity(), arrayList, LikeDialogFragment.this);
+                        ArrayList<LikesModel.Like> arrayList = (ArrayList<LikesModel.Like>) model.getLikes();
+                        // adapter = new LikeAdapter(getActivity(), arrayList, LikeDialogFragment.this);
                         recyclerView.setAdapter(adapter);
                     }
                 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
+    android:id="@+id/rootview"
     android:layout_width="@dimen/dimens_250"
-    android:layout_height="match_parent"
+    android:layout_height="148dp"
     android:layout_marginTop="4dp"
+
     android:background="@drawable/shape_round_rectangle_grey"
     android:orientation="vertical"
     android:paddingBottom="4dp"
@@ -56,12 +57,13 @@
         <TextView
             android:id="@+id/story_text"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
+            android:lines="6"
             android:textColor="#757575"
             android:textSize="12dp"
-            tools:text="although in recent years other new attractions have begun to emerge Most casinos emerge casinos recent years other attract ...  " />
+            tools:text="although in recedwjqqwdfejkfnwkjenfjkwenfkjwenfkjewfnjkwenfkjweffjfnwekjfnewkjfnwejnfwekjfnwekjfnewfkjkfnewjkfnkewkjnfenwnfwejkfwejnwefwekfnkwefnjwekfknwefjwekfwnwqjdwqnt years other new attractions have begun to emerge Most casinos emerge casinos recent years other attract ...  " />
 
 
     </LinearLayout>

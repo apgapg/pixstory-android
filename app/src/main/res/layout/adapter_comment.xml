@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,17 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="24dp">
+
+            <com.jullae.customView.CircularImageView
+                android:id="@+id/user_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="2dp"
+                android:paddingTop="2dp" />
 
             <TextView
                 android:id="@+id/user_name"
                 style="@style/textViewStyle.line_1"
-                android:textSize="@dimen/text_size_small"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/user_image"
+                android:textSize="14dp"
                 android:textStyle="bold"
                 tools:text="Suketu Balaji" />
 
@@ -26,6 +41,7 @@
                 android:id="@+id/tvCmntTime"
                 style="@style/textViewStyle.line_1"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:textColor="@color/grey_light7"
@@ -33,14 +49,21 @@
                 tools:text="6 days ago" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/story_text"
-            style="@style/textViewStyle"
-            android:layout_marginTop="@dimen/margin_small"
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/comment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:ellipsize="end"
-            android:lines="3"
-            android:textSize="@dimen/text_size_small"
+
+            android:paddingLeft="2dp"
+            android:textSize="14dp"
+            app:trimLines="3"
+            app:trimMode="trimModeLine"
             tools:text="The major attractions in Las Vegas are the casinos and the hotels, although in recent years other new attractions have begun to emerge Most casinos emerge casinos recent years other attract ...  " />
+
     </LinearLayout>
+
+    <include layout="@layout/vertical_divider" />
 
 </LinearLayout>

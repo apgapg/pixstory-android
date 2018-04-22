@@ -7,6 +7,6 @@
         android:topLeftRadius="@dimen/margin_x_large"
         android:topRightRadius="@dimen/margin_x_large" />
     <size
-        android:width="@dimen/height_50"
+        android:width="4dp"
         android:height="@dimen/height_20" />
 </shape>

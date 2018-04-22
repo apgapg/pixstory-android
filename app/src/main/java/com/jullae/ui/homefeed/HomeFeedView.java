@@ -6,4 +6,9 @@ public interface HomeFeedView extends BaseView {
     void onFetchFeedSuccess(HomeFeedModel homeFeedModel);
 
     void onFetchFeedFail();
+
+
+    void showProgress();
+
+    void hideProgress();
 }

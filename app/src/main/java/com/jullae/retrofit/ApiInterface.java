@@ -2,8 +2,8 @@ package com.jullae.retrofit;
 
 
 import com.jullae.constant.AppConstant;
-import com.jullae.model.AllLikeModel;
 import com.jullae.model.LikeResponseModel;
+import com.jullae.model.LikesModel;
 import com.jullae.model.PostRequestModel;
 import com.jullae.ui.homefeed.HomeFeedModel;
 
@@ -44,10 +44,10 @@ public interface ApiInterface {
     Call<LikeResponseModel> feedUnLike(@Path("id") String id);
 
     @GET(AppConstant.ApiEndPoints.API_ALL_PICTURE_LIKE)
-    Call<AllLikeModel> getAllPicLike(@Path("id") String id);
+    Call<LikesModel> getAllPicLike(@Path("id") String id);
 
     @GET(AppConstant.ApiEndPoints.API_ALL_STORY_LIKE)
-    Call<AllLikeModel> getAllStoryLike(@Path("id") String id);
+    Call<LikesModel> getAllStoryLike(@Path("id") String id);
 
     @POST(AppConstant.ApiEndPoints.API_FOLLOW)
     Call<CommonResponse> followUser(@Path("id") int clickedId);

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="442dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <View
@@ -101,35 +101,36 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:background="#fff"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="12dp"
+        android:paddingLeft="6dp"
         android:paddingRight="12dp">
 
         <LinearLayout
-            style="@style/padding8TopBottom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/ivLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.jullae.customView.SquareImageView
+                android:id="@+id/btn_like"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
-                app:srcCompat="@drawable/favorite_outline" />
+                android:paddingTop="2dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_unlike" />
 
             <TextView
                 android:id="@+id/like_count"
                 style="@style/textView.feed_secondary_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/headingSubHeadingMargin"
-
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:padding="2dp"
                 tools:text="12 likes" />
         </LinearLayout>
 
@@ -166,7 +167,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_story"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="156dp"
         android:clipToPadding="false"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"

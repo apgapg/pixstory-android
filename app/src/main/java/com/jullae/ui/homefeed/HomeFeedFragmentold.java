@@ -75,7 +75,7 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
         super.onViewCreated(view, savedInstanceState);
         client = RestClient.getApiInterface();
 
-        //  linearLayout = view.findViewById(R.id.linearLayout);
+        //  linearLayout = view.findViewById(R.story_id.linearLayout);
         NestedScrollView nestedScrollView = view.findViewById(R.id.nestedScrollView);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -134,16 +134,16 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
             for (int i = 0; i < feedList.size(); i++) {
                 assert inflater != null;
                 View itemView = inflater.inflate(R.layout.item_home_feed, null, false);
-                ImageView ivUserPic = itemView.findViewById(R.id.user_image);
-                ImageView ivMore = itemView.findViewById(R.id.ivMore);
-                ImageView ivStoryPic = itemView.findViewById(R.id.image);
-                ImageView ivLike = itemView.findViewById(R.id.ivLike);
-                ImageView ivEditStory = itemView.findViewById(R.id.ivEditStory);
-                TextView tvUserName = itemView.findViewById(R.id.user_name);
-                TextView tvLocation = itemView.findViewById(R.id.tvLocation);
-                TextView tvTimeInDays = itemView.findViewById(R.id.tvTimeInDays);
-                TextView tvLikes = itemView.findViewById(R.id.like_count);
-                TextView tvComments = itemView.findViewById(R.id.story_count);
+                ImageView ivUserPic = itemView.findViewById(R.story_id.user_image);
+                ImageView ivMore = itemView.findViewById(R.story_id.ivMore);
+                ImageView ivStoryPic = itemView.findViewById(R.story_id.image);
+                ImageView ivLike = itemView.findViewById(R.story_id.ivLike);
+                ImageView ivEditStory = itemView.findViewById(R.story_id.ivEditStory);
+                TextView tvUserName = itemView.findViewById(R.story_id.user_name);
+                TextView tvLocation = itemView.findViewById(R.story_id.tvLocation);
+                TextView tvTimeInDays = itemView.findViewById(R.story_id.tvTimeInDays);
+                TextView tvLikes = itemView.findViewById(R.story_id.like_count);
+                TextView tvComments = itemView.findViewById(R.story_id.story_count);
 
 
                 final HomeFeedModel.Feed modelData = feedList.get(i);
@@ -182,7 +182,7 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
                 tvLikes.setText(likes);
 
                 ArrayList<HomeFeedModel.Story> storyList = new ArrayList<>();
-                RecyclerView rvStories = itemView.findViewById(R.id.recycler_view_story);
+                RecyclerView rvStories = itemView.findViewById(R.story_id.recycler_view_story);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
                 rvStories.setLayoutManager(mLayoutManager);
 
@@ -200,36 +200,36 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
                 adapter.notifyDataSetChanged();
 
                 final int finalI = i;
-                final int id = modelData.getId();
+                final int story_id = modelData.getStory_id();
                 View.OnClickListener clickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        switch (v.getId()) {
-                            case R.id.story_count:
-                                listener.onFeedClick(finalI, AppConstant.ITEM_EDIT, id);
+                        switch (v.getStory_id()) {
+                            case R.story_id.story_count:
+                                listener.onFeedClick(finalI, AppConstant.ITEM_EDIT, story_id);
                                 break;
-                            case R.id.user_image:
-                                listener.onFeedClick(finalI, AppConstant.ITEM_USER_PIC, id);
+                            case R.story_id.user_image:
+                                listener.onFeedClick(finalI, AppConstant.ITEM_USER_PIC, story_id);
                                 break;
-                            case R.id.ivMore:
-                                listener.onFeedClick(finalI, AppConstant.ITEM_MORE, id);
+                            case R.story_id.ivMore:
+                                listener.onFeedClick(finalI, AppConstant.ITEM_MORE, story_id);
                                 break;
-                            case R.id.image:
-                                listener.onFeedClick(finalI, AppConstant.ITEM_STORY_PIC, id);
+                            case R.story_id.image:
+                                listener.onFeedClick(finalI, AppConstant.ITEM_STORY_PIC, story_id);
                                 break;
-                            case R.id.user_name:
-                                listener.onFeedClick(finalI, AppConstant.ITEM_USER_NAME, id);
+                            case R.story_id.user_name:
+                                listener.onFeedClick(finalI, AppConstant.ITEM_USER_NAME, story_id);
                                 break;
-                            case R.id.tvLocation:
-                                listener.onFeedClick(finalI, AppConstant.ITEM_LOC, id);
+                            case R.story_id.tvLocation:
+                                listener.onFeedClick(finalI, AppConstant.ITEM_LOC, story_id);
                                 break;
-                            case R.id.ivLike:
-//                                likeApi(modelData.getId() + "");
+                            case R.story_id.ivLike:
+//                                likeApi(modelData.getStory_id() + "");
                                 break;
-                            case R.id.ivEditStory:
+                            case R.story_id.ivEditStory:
 
                                 break;
-//                            case R.id.tvLikes:
+//                            case R.story_id.tvLikes:
 //                                listener.onFeedClick(modelData.get, AppConstant.ITEM_LIKE);
 //                                break;
                             default:
@@ -259,7 +259,7 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
     /**
      * Get all the feeds.
      *
-     * @param id id.
+     * @param id story_id.
      */
     private void likeApi(final String id) {
 //        CommonParams.Builder params = new CommonParams.Builder();
@@ -297,7 +297,7 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
          *
          * @param position   position of clicked item.
          * @param clickedTag clicked item tag.
-         * @param id         id of item
+         * @param id         story_id of item
          */
         void onFeedClick(int position, String clickedTag, int id);
 

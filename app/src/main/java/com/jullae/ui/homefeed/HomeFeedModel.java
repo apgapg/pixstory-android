@@ -37,6 +37,9 @@ public class HomeFeedModel {
 
         String picture_url;
 
+        String is_followed;
+        String pic_is_liked;
+
         String like_count;
 
         String story_count;
@@ -44,6 +47,14 @@ public class HomeFeedModel {
         String nav_story_id;
 
         List<Story> stories;
+
+        public String getIs_followed() {
+            return is_followed;
+        }
+
+        public String getPic_is_liked() {
+            return pic_is_liked;
+        }
 
         public String getCreated_at() {
             return created_at;
@@ -89,30 +100,58 @@ public class HomeFeedModel {
         public List<Story> getStories() {
             return stories;
         }
+
+        public void setPic_is_liked(String pic_is_liked) {
+            this.pic_is_liked = pic_is_liked;
+        }
+
+        public void setLike_count(String like_count) {
+            this.like_count = like_count;
+        }
     }
 
     public class Story {
 
 
-        String id;
+        String story_id;
+        String writer_id;
+        String story_is_liked;
 
         String writer_name;
 
         String story_created_at;
+        String is_followed;
+
+        public String getWriter_id() {
+            return writer_id;
+        }
 
         String content;
 
         String story_like_count;
+
+        public String getStory_is_liked() {
+            return story_is_liked;
+        }
+
         String story_comment_count;
 
         String story_count;
 
         String story_title;
 
+        public void setStory_is_liked(String story_is_liked) {
+            this.story_is_liked = story_is_liked;
+        }
+
+        public void setStory_like_count(String story_like_count) {
+            this.story_like_count = story_like_count;
+        }
+
         String writer_dp_Url;
 
-        public String getId() {
-            return id;
+        public String getIs_followed() {
+            return is_followed;
         }
 
         public String getWriter_name() {
@@ -145,6 +184,14 @@ public class HomeFeedModel {
 
         public String getWriter_dp_Url() {
             return writer_dp_Url;
+        }
+
+        public void setIs_followed(String is_followed) {
+            this.is_followed = is_followed;
+        }
+
+        public String getStory_id() {
+            return story_id;
         }
     }
 }

@@ -14,75 +14,54 @@ import java.util.List;
 public class CommentModel {
     @SerializedName("comments")
     @Expose
-    private List<Comment> comments = null;
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
 
     public class Comment {
 
-        @SerializedName("id")
-        @Expose
+
         private int id;
-        @SerializedName("story_id")
-        @Expose
-        private int storyId;
-        @SerializedName("comment")
-        @Expose
+
+        private int story_id;
+
         private String comment;
-        @SerializedName("user_name")
-        @Expose
-        private String userName;
-        @SerializedName("user_dp_url")
-        @Expose
-        private String userDpUrl;
-        @SerializedName("created_at")
-        @Expose
-        private String createdAt;
+
+        private String user_name;
+        private String user_penname;
+
+        private String user_dp_url;
+
+        private String created_at;
 
         public int getId() {
             return id;
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getStoryId() {
-            return storyId;
-        }
-
-        public void setStoryId(int storyId) {
-            this.storyId = storyId;
+        public int getStory_id() {
+            return story_id;
         }
 
         public String getComment() {
             return comment;
         }
 
-        public void setComment(String comment) {
-            this.comment = comment;
+        public String getUser_name() {
+            return user_name;
         }
 
-        public String getUserName() {
-            return userName;
+        public String getUser_penname() {
+            return user_penname;
         }
 
-        public void setUserName(String userName) {
-            this.userName = userName;
+        public String getUser_dp_url() {
+            return user_dp_url;
         }
 
-        public String getUserDpUrl() {
-            return userDpUrl;
-        }
-
-        public void setUserDpUrl(String userDpUrl) {
-            this.userDpUrl = userDpUrl;
-        }
-
-        public String getCreatedAt() {
-            return createdAt;
-        }
-
-        public void setCreatedAt(String createdAt) {
-            this.createdAt = createdAt;
+        public String getCreated_at() {
+            return created_at;
         }
     }
 

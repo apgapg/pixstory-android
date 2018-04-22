@@ -3,6 +3,7 @@ package com.jullae.ui.homefeed;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
@@ -20,8 +21,6 @@ import com.jullae.retrofit.MultipartParams;
 import com.jullae.retrofit.RestClient;
 import com.jullae.ui.adapters.GridAdapter;
 import com.jullae.ui.base.BaseActivity;
-import com.jullae.ui.fragments.AddPostDialogFragment;
-import com.jullae.ui.fragments.EditPostFragment;
 import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.fragments.LikeDialogFragment;
 import com.jullae.ui.fragments.SearchFragment;
@@ -44,7 +43,7 @@ import java.util.List;
  */
 public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.FeedListener,
         GridAdapter.StoryClickListener, StoryDialogFragment.UpdateFeed,
-        AddPostDialogFragment.PicListner, ImageChooser.OnImageSelectListener {
+        ImageChooser.OnImageSelectListener {
 
     private BottomSheetDialogFragment bottomSheetDialogFragment;
     private Button addButton;
@@ -52,6 +51,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     private File photoFile;
     private ImageChooser imageChooser;
     private ImageView tab_home, tab_explore, tab_profile;
+    private BottomSheetBehavior<View> mBottomSheetBehavior;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -75,11 +75,48 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
 
         //Find bottom Sheet ID
         View bottomSheet = findViewById(R.id.bottom_sheet);
-        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        mBottomSheetBehavior.setPeekHeight(0);
 
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                    findViewById(R.id.bg).setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                findViewById(R.id.bg).setVisibility(View.VISIBLE);
+                findViewById(R.id.bg).setAlpha(slideOffset);
+            }
+        });
+
+        findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+        findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            }
+        });
+        findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            }
+        });
     }
 
 
@@ -100,15 +137,12 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     public void showSearchFragment() {
         showFragment(new SearchFragment(), true);
     }
+
     @Override
     public void onClick(final View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.addButton:
-                //Show the Bottom Sheet Fragment
-                bottomSheetDialogFragment = new AddPostDialogFragment();
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getClass().getSimpleName());
-                break;
+
             case R.id.tab_explore:
                 showHomeFragment(1);
                 break;
@@ -146,7 +180,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     /**
      * Show dialog.
      *
-     * @param id id of the user.
+     * @param id story_id of the user.
      */
     public void showStoryDialog(final int id) {
         // Create an instance of the dialog fragment and show it.
@@ -182,8 +216,9 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
                 //Show the Bottom Sheet Fragment
                 Bundle bundle = new Bundle();
                 bundle.putInt(EXTRA_ID, id);
-                bottomSheetDialogFragment = EditPostFragment.getInstance(bundle);
+                /*bottomSheetDialogFragment = EditPostFragment.getInstance(bundle);
                 bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getClass().getSimpleName());
+                */
                 break;
             default:
                 break;
@@ -235,7 +270,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     /**
      * Show like dialog.
      *
-     * @param id           id of item
+     * @param id           story_id of item
      * @param isStoryLikes identify user.
      */
     private void showLikeDialog(final int id, final boolean isStoryLikes) {
@@ -252,11 +287,11 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
         showStoryDialog(id);
     }
 
-    @Override
+   /* @Override
     public void addPicture() {
         imageChooser = new ImageChooser.Builder(HomeActivity.this).build();
         imageChooser.selectImage(HomeActivity.this);
-    }
+    }*/
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode,
@@ -285,7 +320,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     /**
      * Get all the feeds.
      *
-     * @param title id.
+     * @param title story_id.
      */
     private void uploadPicApi(final String title) {
         MultipartParams.Builder multipartParams = new MultipartParams.Builder()
@@ -311,7 +346,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
      */
    /* private void updateFeedFragment() {
         Fragment page = getSupportFragmentManager()
-                .findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.getCurrentItem());
+                .findFragmentByTag("android:switcher:" + R.story_id.viewPager + ":" + viewPager.getCurrentItem());
         // based on the current position you can then cast the page to the correct
         // class and call the method:
         if (viewPager.getCurrentItem() == 0 && page != null) {

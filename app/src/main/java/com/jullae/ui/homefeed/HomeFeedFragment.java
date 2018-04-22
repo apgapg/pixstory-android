@@ -39,7 +39,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        homeFeedAdapter = new HomeFeedAdapter(getmContext());
+        homeFeedAdapter = new HomeFeedAdapter(getmContext(), homeFeedPresentor);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -75,6 +75,17 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     @Override
     public void onFetchFeedFail() {
+
+    }
+
+    @Override
+    public void showProgress() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
 
     }
 }

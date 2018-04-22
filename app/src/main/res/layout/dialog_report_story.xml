@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_round_dialog"
+
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="6dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+
+        android:paddingRight="16dp"
+        android:text="Can you tell us in more details what is the cause of reporting this story?"
+        android:textColor="#424242"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <include layout="@layout/vertical_divider" />
+
+    <EditText
+        android:id="@+id/field_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="top"
+        android:hint="please write here..."
+        android:lines="5"
+        android:padding="10dp"
+        android:textColor="#757575"
+        android:textSize="14dp" />
+
+    <include layout="@layout/vertical_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/report"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="REPORT"
+            android:textColor="#424242"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
+    </RelativeLayout>
+</LinearLayout>

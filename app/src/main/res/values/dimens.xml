@@ -45,7 +45,7 @@
     <!--heights-->
     <dimen name="max_height_width">200dp</dimen>
     <dimen name="view_pager_height">150dp</dimen>
-    <dimen name="max_dialog_height">500dp</dimen>
+    <dimen name="max_dialog_height">200dp</dimen>
     <dimen name="height_20">20dp</dimen>
     <dimen name="dimens_200">200dp</dimen>
     <dimen name="dimens_250">250dp</dimen>
