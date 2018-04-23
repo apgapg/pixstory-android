@@ -45,7 +45,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        SearchFeedViewHolder viewHolder = (SearchFeedViewHolder) holder;
+      /*  SearchFeedViewHolder viewHolder = (SearchFeedViewHolder) holder;
 
         Glide.with(mContext).load(messagelist.get(position).pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
 
@@ -53,10 +53,10 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.story_text.setText(messagelist.get(position).story.getStory_text());
         setUserNamesandAvatar(viewHolder, position);
 
-        setLikeCommentCount(viewHolder, position);
+        setLikeCommentCount(viewHolder, position);*/
     }
 
-    private void setUserNamesandAvatar(SearchFeedViewHolder viewHolder, int position) {
+  /*  private void setUserNamesandAvatar(SearchFeedViewHolder viewHolder, int position) {
         viewHolder.writer_name.setText(messagelist.get(position).story.getWriter_penname().trim());
 
     }
@@ -64,7 +64,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void setLikeCommentCount(SearchFeedViewHolder viewHolder, int position) {
         viewHolder.story_like_count.setText(messagelist.get(position).story.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(messagelist.get(position).story.getComment_count() + " comments");
-    }
+    }*/
 
     @Override
     public int getItemCount() {

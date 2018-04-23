@@ -1,6 +1,6 @@
 package com.jullae.ui.search;
 
-import com.jullae.BasePresentor;
+import com.jullae.ui.base.BasePresentor;
 import com.jullae.helpers.AppDataManager;
 import com.jullae.model.FreshFeedModel;
 

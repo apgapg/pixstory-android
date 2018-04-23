@@ -19,7 +19,7 @@ import com.jullae.R;
 import com.jullae.model.LikesModel;
 import com.jullae.ui.homefeed.HomeFeedPresentor;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
-import com.jullae.ui.storydetails.StoryDetailsActivity;
+import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,7 +178,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
                             }
                         });
                     else if (mStoryPresentor != null) {
-                        mStoryPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new StoryDetailsActivity.FollowReqListener() {
+                        mStoryPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new StoryDetailActivity.FollowReqListener() {
 
                             @Override
                             public void onSuccess() {

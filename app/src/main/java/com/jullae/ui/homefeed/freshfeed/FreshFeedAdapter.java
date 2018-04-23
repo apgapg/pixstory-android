@@ -29,7 +29,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final Activity mContext;
     private final RequestOptions picOptions;
 
-    List<FreshFeedModel> messagelist = new ArrayList<>();
+    List<FreshFeedModel.FreshFeed> messagelist = new ArrayList<FreshFeedModel.FreshFeed>();
 
     public FreshFeedAdapter(Activity activity) {
         this.mContext = activity;
@@ -47,38 +47,40 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         FreshFeedsViewHolder viewHolder = (FreshFeedsViewHolder) holder;
 
-        Glide.with(mContext).load(messagelist.get(position).pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
-        if (messagelist.get(position).pictureModel.getPicture_title() != null && messagelist.get(position).pictureModel.getPicture_title().isEmpty()) {
-            viewHolder.pic_text_buy.setText("by");
+        FreshFeedModel.PictureModel pictureModel = messagelist.get(position).getPictureModel();
+        FreshFeedModel.Story storyModel = messagelist.get(position).getStory();
 
+        Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
+        if (pictureModel.getPicture_title() != null && pictureModel.getPicture_title().isEmpty()) {
+            viewHolder.pic_text_buy.setText("by");
             viewHolder.pic_title.setVisibility(View.VISIBLE);
-            viewHolder.pic_title.setText(messagelist.get(position).pictureModel.getPicture_title().trim());
+            viewHolder.pic_title.setText(pictureModel.getPicture_title().trim());
 
         } else {
             viewHolder.pic_title.setVisibility(View.GONE);
             viewHolder.pic_text_buy.setText(" By");
         }
 
-        viewHolder.story_title.setText(messagelist.get(position).story.getStory_title());
-        viewHolder.story_text.setText(messagelist.get(position).story.getStory_text());
-        setUserNamesandAvatar(viewHolder, position);
+        viewHolder.story_title.setText(storyModel.getStory_title());
+        viewHolder.story_text.setText(storyModel.getStory_text());
+        setUserNamesandAvatar(viewHolder, pictureModel, storyModel);
 
-        setLikeCommentCount(viewHolder, position);
+        setLikeCommentCount(viewHolder, pictureModel, storyModel);
     }
 
-    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, int position) {
-        viewHolder.user_name.setText(messagelist.get(position).pictureModel.getPhotographer_penname().trim());
-        viewHolder.writer_name.setText(messagelist.get(position).story.getWriter_penname().trim());
-        Glide.with(mContext).load(messagelist.get(position).pictureModel.getPhotographer_avatar()).into(viewHolder.user_photo);
-        Glide.with(mContext).load(messagelist.get(position).story.getWriter_avatar()).into(viewHolder.writer_photo);
+    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, FreshFeedModel.PictureModel pictureModel, FreshFeedModel.Story storyModel) {
+        viewHolder.user_name.setText(pictureModel.getPhotographer_penname().trim());
+        viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
+        Glide.with(mContext).load(pictureModel.getPhotographer_avatar()).into(viewHolder.user_photo);
+        Glide.with(mContext).load(storyModel.getWriter_avatar()).into(viewHolder.writer_photo);
 
     }
 
-    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, int position) {
-        viewHolder.story_like_count.setText(messagelist.get(position).story.getLike_count() + " likes");
-        viewHolder.story_comment_count.setText(messagelist.get(position).story.getComment_count() + " comments");
-        viewHolder.pic_like_count.setText(messagelist.get(position).pictureModel.getLike_count() + " likes");
-        viewHolder.pic_story_count.setText(messagelist.get(position).pictureModel.getStory_count() + " stories");
+    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, FreshFeedModel.PictureModel pictureModel, FreshFeedModel.Story storyModel) {
+        viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
+        viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
+        viewHolder.pic_like_count.setText(pictureModel.getLike_count() + " likes");
+        viewHolder.pic_story_count.setText(pictureModel.getStory_count() + " stories");
     }
 
     @Override
@@ -86,7 +88,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return messagelist.size();
     }
 
-    public void add(List<FreshFeedModel> list) {
+    public void add(List<FreshFeedModel.FreshFeed> list) {
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());

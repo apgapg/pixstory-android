@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jullae.R;
-import com.jullae.ui.storydetails.StoryDetailsActivity;
+import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +97,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(mContext, StoryDetailsActivity.class);
+                    Intent i = new Intent(mContext, StoryDetailActivity.class);
                     Gson gson = new Gson();
                     String object = gson.toJson(messagelist.get(getAdapterPosition()));
                     i.putExtra("object", object);

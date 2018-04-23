@@ -43,6 +43,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final HomeFeedPresentor mPresentor;
 
     List<HomeFeedModel.Feed> messagelist = new ArrayList<HomeFeedModel.Feed>();
+    private LikeAdapter likeAdapter;
 
     public HomeFeedAdapter(Activity activity, HomeFeedPresentor homeFeedPresentor) {
         this.mContext = activity;
@@ -151,20 +152,18 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
-        final LikeAdapter likeAdapter = new LikeAdapter(mContext, mPresentor);
+        likeAdapter = new LikeAdapter(mContext, mPresentor);
         recyclerView.setAdapter(likeAdapter);
 
-        mPresentor.getLikeslist(id, new HomeFeedPresentor.LikesFetchListener() {
-            @Override
-            public void onSuccess(LikesModel likesModel) {
-                likeAdapter.add(likesModel.getLikes());
-            }
+        mPresentor.getLikeslist(id, Constants.LIKE_TYPE_PICTURE);
+    }
 
-            @Override
-            public void onFail() {
+    public void onLikesListFetchSuccess(LikesModel likesModel) {
+        likeAdapter.add(likesModel.getLikes());
+    }
 
-            }
-        }, Constants.LIKE_TYPE_PICTURE);
+    public void onLikesListFetchFail() {
+
     }
 
     public interface ReqListener {
@@ -187,7 +186,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             user_image = itemView.findViewById(R.id.user_image);
             image = itemView.findViewById(R.id.image);
             ivMore = itemView.findViewById(R.id.ivMore);
-            ivStoryPic = itemView.findViewById(R.id.image);
             btn_like = itemView.findViewById(R.id.btn_like);
             ivEditStory = itemView.findViewById(R.id.ivEditStory);
             user_name = itemView.findViewById(R.id.user_name);
@@ -215,8 +213,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         notifyItemChanged(getAdapterPosition(), "like");
                     else notifyItemChanged(getAdapterPosition(), "unlike");
 
-
-                    mPresentor.setlike(messagelist.get(getAdapterPosition()).getPicture_id(), new ReqListener() {
+                    mPresentor.setLike(messagelist.get(getAdapterPosition()).getPicture_id(), new ReqListener() {
                         @Override
                         public void onSuccess() {
 

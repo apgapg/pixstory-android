@@ -1,10 +1,10 @@
 package com.jullae.helpers;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 
@@ -29,7 +29,7 @@ public class ApiHelper {
         headers.put("Authorization", TOKEN);
     }
 
-    public void loadFreshFeeds(int position, final ReqListener reqListener) {
+    public ANRequest loadFreshFeeds(int position) {
         String end_point;
         switch (position) {
             case 0:
@@ -47,41 +47,12 @@ public class ApiHelper {
             default:
                 end_point = Constants.FRESH_FEEDS;
         }
-        AndroidNetworking.get(BASE_URL + end_point)
+        return AndroidNetworking.get(BASE_URL + end_point)
                 .addHeaders(headers)
                 /*.addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")*/
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        reqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        reqListener.onFail();
-                    }
-                });
-
-               /* .getAsObjectList(FreshFeedModel.class, new ParsedRequestListener<List<FreshFeedModel>>() {
-
-
-                    @Override
-                    public void onResponse(List<FreshFeedModel> response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        reqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        reqListener.onFail();
-                    }
-                })*/
+                .build();
     }
 
     public void loadsearchfeeds(final ReqListener reqListener) {
@@ -107,31 +78,17 @@ public class ApiHelper {
                 });
     }
 
-    public void loadHomeFeeds(final ReqListener reqListener) {
-        AndroidNetworking.get(BASE_URL + Constants.HOME_FEEDS)
+    public ANRequest loadHomeFeeds() {
+        return AndroidNetworking.get(BASE_URL + Constants.HOME_FEEDS)
                 .addHeaders(headers)
                 .addQueryParameter("term", "karakoram")
                 /*.addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")*/
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        reqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        reqListener.onFail();
-                    }
-                });
-
+                .build();
     }
 
-    public void setlikeReq(String id, final ReqListener.StringReqListener stringReqListener, String isLiked, int likeType) {
+    public ANRequest setlikeReq(String id, String isLiked, int likeType) {
         String url;
         if (isLiked.equals("false")) {
             if (likeType == Constants.LIKE_TYPE_PICTURE)
@@ -143,122 +100,59 @@ public class ApiHelper {
             else url = Constants.UNLIKE_STORY_URL;
         }
 
-        AndroidNetworking.post(BASE_URL + url)
+        return AndroidNetworking.post(BASE_URL + url)
                 .addHeaders(headers)
                 .addPathParameter("id", id)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        stringReqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        stringReqListener.onFail();
-                    }
-                });
+                .build();
     }
 
-    public void getLikesList(String id, final ReqListener reqListener, int likesStory) {
+    public ANRequest getLikesList(String id, int likesListType) {
 
         String endpoint = null;
-        if (likesStory == Constants.LIKE_TYPE_STORY)
+        if (likesListType == Constants.LIKE_TYPE_STORY)
             endpoint = Constants.STORY_LIKES_LIST;
-        else if (likesStory == Constants.LIKE_TYPE_PICTURE)
+        else if (likesListType == Constants.LIKE_TYPE_PICTURE)
             endpoint = Constants.PICTURE_LIKES_LIST;
 
 
-        AndroidNetworking.get(BASE_URL + endpoint)
+        return AndroidNetworking.get(BASE_URL + endpoint)
                 .addHeaders(headers)
                 .addPathParameter("id", id)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        reqListener.onSuccess(response);
-                    }
+                .build();
 
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        reqListener.onFail();
-                    }
-                });
 
     }
 
-    public void makeFollowReq(String user_id, final ReqListener.StringReqListener stringReqListener) {
-        AndroidNetworking.post(BASE_URL + Constants.FOLLOW)
+    public ANRequest makeFollowReq(String user_id) {
+        return AndroidNetworking.post(BASE_URL + Constants.FOLLOW)
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        stringReqListener.onSuccess(response);
-                    }
+                .build();
 
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        stringReqListener.onFail();
-                    }
-                });
 
     }
 
-    public void loadComments(String story_id, final ReqListener reqListener) {
-        AndroidNetworking.get(BASE_URL + Constants.COMMENTS)
+    public ANRequest loadComments(String story_id) {
+        return AndroidNetworking.get(BASE_URL + Constants.COMMENTS)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        reqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        reqListener.onFail();
-                    }
-                });
+                .build();
     }
 
-    public void sendCommentReq(String comment, String story_id, final ReqListener.StringReqListener stringReqListener) {
-        AndroidNetworking.post(BASE_URL + Constants.WRITE_COMMENTS)
+    public ANRequest sendCommentReq(String comment, String story_id) {
+        return AndroidNetworking.post(BASE_URL + Constants.WRITE_COMMENTS)
                 .addHeaders(headers)
                 .addBodyParameter("comment", comment)
                 .addBodyParameter("story_id", story_id)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        stringReqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        stringReqListener.onFail();
-                    }
-                });
+                .build();
     }
 
-    public void reportStory(String report, String id, int reportTypeStory, final ReqListener.StringReqListener stringReqListener) {
+    public ANRequest reportStory(String report, String id, int reportTypeStory) {
         String url = null;
         String reportType = null;
         if (reportTypeStory == Constants.REPORT_TYPE_STORY) {
@@ -267,26 +161,13 @@ public class ApiHelper {
 
         }
 
-        AndroidNetworking.post(BASE_URL + url)
+        return AndroidNetworking.post(BASE_URL + url)
                 .addHeaders(headers)
                 .addBodyParameter("reportable_type", reportType)
                 .addBodyParameter("reportable_id", id)
                 .addBodyParameter("reason", report)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        stringReqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        stringReqListener.onFail();
-                    }
-                });
+                .build();
 
 
     }

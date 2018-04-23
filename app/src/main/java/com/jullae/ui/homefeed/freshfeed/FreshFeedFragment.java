@@ -19,7 +19,7 @@ import java.util.List;
 public class FreshFeedFragment extends BaseFragment implements FreshFeedContract.View {
 
     private FreshFeedAdapter freshFeedAdapter;
-    private FreshFeedPresentor freshFeedPresentor;
+    private FreshFeedPresentor mPresentor;
     private View view;
     private int position;
     private View progressBar;
@@ -48,20 +48,27 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(freshFeedAdapter);
 
-        freshFeedPresentor = new FreshFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
-        freshFeedPresentor.setView(this);
-        freshFeedPresentor.loadFeeds(position);
+        mPresentor = new FreshFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+
         return view;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        freshFeedPresentor.removeView();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresentor.attachView(this);
+        mPresentor.loadFeeds(position);
     }
 
     @Override
-    public void onFetchFeeds(List<FreshFeedModel> list) {
+    public void onDestroyView() {
+        mPresentor.detachView();
+
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onFetchFeeds(List<FreshFeedModel.FreshFeed> list) {
         freshFeedAdapter.add(list);
     }
 

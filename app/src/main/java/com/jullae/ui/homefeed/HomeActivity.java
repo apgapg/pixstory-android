@@ -26,7 +26,7 @@ import com.jullae.ui.fragments.LikeDialogFragment;
 import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.fragments.StoryDialogFragment;
 import com.jullae.ui.homefeed.freshfeed.FreshFeedFragment;
-import com.jullae.ui.storydetails.StoryDetailsActivity;
+import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.utils.Utils;
 import com.jullae.utils.imagepicker.ImageChooser;
 import com.kbeanie.multipicker.api.entity.ChosenImage;
@@ -259,7 +259,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
             case AppConstant.TAG_STORY:
                 Bundle bundle = new Bundle();
                 bundle.putInt(EXTRA_ID, id);
-                launchScreen(StoryDetailsActivity.class, bundle);
+                launchScreen(StoryDetailActivity.class, bundle);
                 break;
             default:
                 break;

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.jullae.R;
 import com.jullae.app.AppController;
 import com.jullae.customView.ItemOffTBsetDecoration;
+import com.jullae.model.LikesModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.homefeed.freshfeed.HomeFeedAdapter;
 
@@ -35,7 +36,6 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
         homeFeedPresentor = new HomeFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
-        homeFeedPresentor.setView(this);
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -48,8 +48,6 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(homeFeedAdapter);
 
-        homeFeedPresentor.loadFeeds();
-
 
         return view;
     }
@@ -57,15 +55,16 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated: ");
+        homeFeedPresentor.attachView(this);
+        homeFeedPresentor.loadFeeds();
 
     }
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView: ");
+        homeFeedPresentor.detachView();
+
         super.onDestroyView();
-        homeFeedPresentor.removeView();
     }
 
     @Override
@@ -86,6 +85,17 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     @Override
     public void hideProgress() {
         view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onLikesListFetchSuccess(LikesModel likesModel) {
+        homeFeedAdapter.onLikesListFetchSuccess(likesModel);
+    }
+
+    @Override
+    public void onLikesListFetchFail() {
+        homeFeedAdapter.onLikesListFetchFail();
 
     }
 }

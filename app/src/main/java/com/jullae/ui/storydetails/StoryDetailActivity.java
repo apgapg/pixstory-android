@@ -29,18 +29,17 @@ import com.jullae.ui.adapters.CommentsAdapter;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.homefeed.HomeFeedModel;
-import com.jullae.ui.homefeed.HomeFeedPresentor;
 import com.jullae.utils.Constants;
 
 /**
  * Created by Rahul Abrol on 12/20/17.
  * <p>
- * Class @{@link StoryDetailsActivity} used to show the
+ * Class @{@link StoryDetailActivity} used to show the
  * details of the comments and story that user wrote on the
  * picture.
  */
 
-public class StoryDetailsActivity extends BaseActivity implements StoryDetailContract.View {
+public class StoryDetailActivity extends BaseActivity implements StoryDetailView {
 
 
     private static final int ACTIVATE = 1;
@@ -59,6 +58,7 @@ public class StoryDetailsActivity extends BaseActivity implements StoryDetailCon
     private BottomSheetBehavior<View> mBottomSheetBehavior;
     private EditText field_report;
     private TextView btn_report;
+    private LikeAdapter likeAdapter;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class StoryDetailsActivity extends BaseActivity implements StoryDetailCon
         setContentView(R.layout.content_story_details);
 
         mPresentor = new StoryDetailPresentor(((AppController) getApplication()).getmAppDataManager());
-        mPresentor.setView(this);
+        mPresentor.attachView(this);
 
         TextView story_tag = findViewById(R.id.tvYourTitle);
         ImageView btn_close = findViewById(R.id.tvClose);
@@ -448,7 +448,7 @@ public class StoryDetailsActivity extends BaseActivity implements StoryDetailCon
     }
 
     private void makeLikeRequest(String isLiked) {
-        mPresentor.setlike(storyModel.getStory_id(), new ReqListener() {
+        mPresentor.setLike(storyModel.getStory_id(), new ReqListener() {
             @Override
             public void onSuccess() {
             }
@@ -480,33 +480,27 @@ public class StoryDetailsActivity extends BaseActivity implements StoryDetailCon
         });
         dialog.show();
 
-
     }
 
     private void setupRecyclerView(View view, String id) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        final LikeAdapter likeAdapter = new LikeAdapter(this, mPresentor);
+        likeAdapter = new LikeAdapter(this, mPresentor);
         recyclerView.setAdapter(likeAdapter);
 
-        mPresentor.getLikeslist(id, new HomeFeedPresentor.LikesFetchListener() {
-            @Override
-            public void onSuccess(LikesModel likesModel) {
-                likeAdapter.add(likesModel.getLikes());
-            }
+        mPresentor.getLikeslist(id, Constants.LIKE_TYPE_STORY);
+    }
 
-            @Override
-            public void onFail() {
 
-            }
-        }, Constants.LIKE_TYPE_STORY);
+    @Override
+    public void onLikesListFetchSuccess(LikesModel likesModel) {
+        likeAdapter.add(likesModel.getLikes());
     }
 
     @Override
-    protected void onDestroy() {
-        mPresentor.removeView();
-        super.onDestroy();
+    public void onLikesListFetchFail() {
+
     }
 
     @Override
@@ -516,6 +510,13 @@ public class StoryDetailsActivity extends BaseActivity implements StoryDetailCon
         else
             super.onBackPressed();
     }
+
+    @Override
+    protected void onDestroy() {
+        mPresentor.detachView();
+        super.onDestroy();
+    }
+
 
     public interface FollowReqListener {
         void onSuccess();

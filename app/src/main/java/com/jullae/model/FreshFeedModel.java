@@ -3,6 +3,8 @@ package com.jullae.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Rahul Abrol on 12/21/17.
  * <p>
@@ -10,66 +12,35 @@ import com.google.gson.annotations.SerializedName;
  */
 public class FreshFeedModel {
 
-    @SerializedName("picture")
+
+    @SerializedName("posts")
     @Expose
-    public PictureModel pictureModel;
-    @SerializedName("story")
-    @Expose
-    public Story story;
+    private List<FreshFeed> list;
 
-    public static class Story {
-        private String story_id;
-        private String story_title;
-        private String writer_id;
-        private String writer_name;
-        private String writer_penname;
-        private String writer_avatar;
-        private String story_text;
-        private String like_count;
-        private String comment_count;
-        private String created_at;
+    public List<FreshFeed> getList() {
+        return list;
+    }
 
 
-        public String getLike_count() {
-            return like_count;
+    public class FreshFeed {
+        @SerializedName("picture")
+        @Expose
+        private PictureModel pictureModel;
+        @SerializedName("story")
+        @Expose
+        private Story story;
+
+        public PictureModel getPictureModel() {
+            return pictureModel;
         }
 
-        public String getCreated_at() {
-            return created_at;
-        }
-
-        public String getComment_count() {
-            return comment_count;
-        }
-
-        public String getStory_id() {
-            return story_id;
-        }
-
-        public String getStory_title() {
-            return story_title;
-        }
-
-        public String getStory_text() {
-            return story_text;
-        }
-
-        public String getWriter_avatar() {
-            return writer_avatar;
-        }
-
-        public String getWriter_id() {
-            return writer_id;
-        }
-
-        public String getWriter_name() {
-            return writer_name;
-        }
-
-        public String getWriter_penname() {
-            return writer_penname;
+        public Story getStory() {
+            return story;
         }
     }
+
+
+
 
     public class PictureModel {
 
@@ -92,15 +63,15 @@ public class FreshFeedModel {
             return photographer_avatar;
         }
 
-        public String getPhotographer_name() {
+        private String getPhotographer_name() {
             return photographer_name;
         }
 
-        public String getCreated_at() {
+        private String getCreated_at() {
             return created_at;
         }
 
-        public String getIs_followed() {
+        private String getIs_followed() {
             return is_followed;
         }
 
@@ -112,19 +83,19 @@ public class FreshFeedModel {
             return photographer_penname;
         }
 
-        public String getPicture_id() {
+        private String getPicture_id() {
             return picture_id;
         }
 
-        public String getIs_liked() {
+        private String getIs_liked() {
             return is_liked;
         }
 
-        public String getIs_self() {
+        private String getIs_self() {
             return is_self;
         }
 
-        public String getPicture_medium() {
+        private String getPicture_medium() {
             return picture_medium;
         }
 
@@ -138,6 +109,60 @@ public class FreshFeedModel {
 
         public String getStory_count() {
             return story_count;
+        }
+    }
+
+    public class Story {
+        private String story_id;
+        private String story_title;
+        private String writer_id;
+        private String writer_name;
+        private String writer_penname;
+        private String writer_avatar;
+        private String story_text;
+        private String like_count;
+        private String comment_count;
+        private String created_at;
+
+
+        public String getLike_count() {
+            return like_count;
+        }
+
+        private String getCreated_at() {
+            return created_at;
+        }
+
+        public String getComment_count() {
+            return comment_count;
+        }
+
+        private String getStory_id() {
+            return story_id;
+        }
+
+        public String getStory_title() {
+            return story_title;
+        }
+
+        public String getStory_text() {
+            return story_text;
+        }
+
+        public String getWriter_avatar() {
+            return writer_avatar;
+        }
+
+        private String getWriter_id() {
+            return writer_id;
+        }
+
+        private String getWriter_name() {
+            return writer_name;
+        }
+
+        public String getWriter_penname() {
+            return writer_penname;
         }
     }
 }

@@ -1,16 +1,20 @@
 package com.jullae.ui.homefeed;
 
-import com.jullae.BasePresentor;
-import com.jullae.helpers.ApiHelper;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.helpers.AppDataManager;
 import com.jullae.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
+import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.homefeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.Constants;
+import com.jullae.utils.NetworkUtils;
 
-public class HomeFeedPresentor extends BasePresentor {
+public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
 
+    private static final String TAG = HomeFeedPresentor.class.getName();
     private HomeFeedView view;
 
     public HomeFeedPresentor(AppDataManager appDataManager) {
@@ -22,97 +26,89 @@ public class HomeFeedPresentor extends BasePresentor {
     }
 
     public void loadFeeds() {
-        view.showProgress();
-        getmAppDataManager().loadHomeFeeds(new FeedFetchListener() {
+        checkViewAttached();
+        getMvpView().showProgress();
+        getmAppDataManager().getmApiHelper().loadHomeFeeds().getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
             @Override
-            public void onSuccess(HomeFeedModel homeFeedModel) {
-                if (view != null) {
-                    view.hideProgress();
-                    view.onFetchFeedSuccess(homeFeedModel);
+            public void onResponse(HomeFeedModel homeFeedModel) {
+                NetworkUtils.parseResponse(TAG, homeFeedModel);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onFetchFeedSuccess(homeFeedModel);
                 }
             }
 
             @Override
-            public void onFail() {
-                if (view != null) {
-                    view.hideProgress();
-
-                    view.onFetchFeedFail();
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onFetchFeedFail();
                 }
             }
         });
     }
 
-    public void removeView() {
-        view = null;
-    }
 
-    public void setlike(String id, final HomeFeedAdapter.ReqListener reqListener, String isLiked) {
-        getmAppDataManager().setlike(id, new ApiHelper.ReqListener.StringReqListener() {
+    public void setLike(String id, final HomeFeedAdapter.ReqListener reqListener, String isLiked) {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().setlikeReq(id, isLiked, Constants.LIKE_TYPE_PICTURE).getAsString(new StringRequestListener() {
             @Override
-            public void onSuccess(String string) {
-                if (view != null) {
+            public void onResponse(String response) {
+                if (isViewAttached())
                     reqListener.onSuccess();
-                }
+
             }
 
             @Override
-            public void onFail() {
-                if (view != null) {
+            public void onError(ANError anError) {
+                if (isViewAttached())
                     reqListener.onFail();
-                }
-
             }
-        }, isLiked, Constants.LIKE_TYPE_PICTURE);
+        });
     }
 
-    public void getLikeslist(String id, final LikesFetchListener likesFetchListener, int pictureLike) {
-        getmAppDataManager().getLikeslist(id, new LikesFetchListener() {
-            @Override
-            public void onSuccess(LikesModel likesModel) {
-                if (view != null)
+    public void getLikeslist(String id, int pictureLike) {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().getLikesList(id, pictureLike).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
 
-                    likesFetchListener.onSuccess(likesModel);
+            @Override
+            public void onResponse(LikesModel likesModel) {
+                NetworkUtils.parseResponse(TAG, likesModel);
+                if (isViewAttached()) {
+                    getMvpView().onLikesListFetchSuccess(likesModel);
+                }
             }
 
             @Override
-            public void onFail() {
-                if (view != null)
-
-                    likesFetchListener.onFail();
-
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().onLikesListFetchFail();
+                }
             }
-        }, pictureLike);
+        });
+
     }
 
     public void makeFollowUserReq(String user_id, final LikeAdapter.FollowReqListener followReqListener) {
-        getmAppDataManager().makeFollowReq(user_id, new ApiHelper.ReqListener.StringReqListener() {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().makeFollowReq(user_id).getAsString(new StringRequestListener() {
             @Override
-            public void onSuccess(String string) {
-                if (view != null)
+            public void onResponse(String response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached())
                     followReqListener.onSuccess();
             }
 
             @Override
-            public void onFail() {
-                if (view != null)
-
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached())
                     followReqListener.onFail();
-
             }
         });
-    }
 
-    public interface FeedFetchListener {
-        void onSuccess(HomeFeedModel homeFeedModel);
-
-        void onFail();
-    }
-
-    public interface LikesFetchListener {
-        void onSuccess(LikesModel likesModelList);
-
-        void onFail();
     }
 
 }
