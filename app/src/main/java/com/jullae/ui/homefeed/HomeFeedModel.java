@@ -2,6 +2,7 @@ package com.jullae.ui.homefeed;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.jullae.model.StoryModel;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class HomeFeedModel {
 
         String photographer_name;
 
-        String photographer_dp_url;
+        String photographer_avatar;
 
         String picture_title;
 
@@ -37,23 +38,27 @@ public class HomeFeedModel {
 
         String picture_url;
 
-        String is_followed;
-        String pic_is_liked;
-
         String like_count;
 
         String story_count;
 
         String nav_story_id;
 
-        List<Story> stories;
+        String is_liked;
+
+        String is_followed;
+
+        String is_self;
+
+
+        List<StoryModel> stories;
 
         public String getIs_followed() {
             return is_followed;
         }
 
-        public String getPic_is_liked() {
-            return pic_is_liked;
+        public String getIs_liked() {
+            return is_liked;
         }
 
         public String getCreated_at() {
@@ -88,112 +93,32 @@ public class HomeFeedModel {
             return story_count;
         }
 
-        public Object getPhotographer_dp_url() {
-            return photographer_dp_url;
+        public void setIs_liked(String is_liked) {
+            this.is_liked = is_liked;
         }
 
         public String getPicture_url() {
             return picture_url;
         }
 
-
-        public List<Story> getStories() {
-            return stories;
+        public Object getPhotographer_avatar() {
+            return photographer_avatar;
         }
 
-        public void setPic_is_liked(String pic_is_liked) {
-            this.pic_is_liked = pic_is_liked;
+        public List<StoryModel> getStories() {
+            return stories;
         }
 
         public void setLike_count(String like_count) {
             this.like_count = like_count;
         }
-    }
 
-    public class Story {
-
-
-        String story_id;
-        String writer_id;
-        String story_is_liked;
-
-        String writer_name;
-
-        String story_created_at;
-        String is_followed;
-
-        public String getWriter_id() {
-            return writer_id;
-        }
-
-        String content;
-
-        String story_like_count;
-
-        public String getStory_is_liked() {
-            return story_is_liked;
-        }
-
-        String story_comment_count;
-
-        String story_count;
-
-        String story_title;
-
-        public void setStory_is_liked(String story_is_liked) {
-            this.story_is_liked = story_is_liked;
-        }
-
-        public void setStory_like_count(String story_like_count) {
-            this.story_like_count = story_like_count;
-        }
-
-        String writer_dp_Url;
-
-        public String getIs_followed() {
-            return is_followed;
-        }
-
-        public String getWriter_name() {
-            return writer_name;
-        }
-
-        public String getStory_title() {
-            return story_title;
-        }
-
-        public String getStory_count() {
-            return story_count;
-        }
-
-        public String getStory_like_count() {
-            return story_like_count;
-        }
-
-        public String getStory_comment_count() {
-            return story_comment_count;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public String getStory_created_at() {
-            return story_created_at;
-        }
-
-        public String getWriter_dp_Url() {
-            return writer_dp_Url;
-        }
-
-        public void setIs_followed(String is_followed) {
-            this.is_followed = is_followed;
-        }
-
-        public String getStory_id() {
-            return story_id;
+        public String getIs_self() {
+            return is_self;
         }
     }
+
+
 }
 
 

@@ -31,4 +31,13 @@ public class Constants {
     public static final int LIKE_TYPE_STORY = 0;
     public static final int LIKE_TYPE_PICTURE = 1;
     public static final int REPORT_TYPE_STORY = 2;
+
+    public static final int SHOW_SIGNUP = 1;
+    public static final int SHOW_LOGIN = 0;
+    public static final String EMAIL_SIGNUP = "/custom_registration";
+    public static final String EMAIL_LOGIN = "/custom_authentication";
+
+    public static final String PROFILE_TAB_PICTURES = "/profile/{penname}/pictures";
+    public static final String PROFILE_TAB_STORIES = "/profile/{penname}/stories";
+    public static final String PROFILE_TAB_BOOKMARKS = "/profile/{penname}/bookmarks";
 }

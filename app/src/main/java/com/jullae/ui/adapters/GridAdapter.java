@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jullae.R;
-import com.jullae.ui.homefeed.HomeFeedModel;
+import com.jullae.model.StoryModel;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_ADD_STORY_BUTTON = 1;
     private static final int VIEW_SHOW_STORY = 2;
     private final LayoutInflater inflater;
-    private ArrayList<HomeFeedModel.Story> list;
+    private ArrayList<StoryModel> list;
     private Context context;
     private StoryClickListener listener;
 
@@ -36,7 +36,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * @param context  context
      * @param feedList list items;
      */
-    public GridAdapter(final Context context, final ArrayList<HomeFeedModel.Story> feedList) {
+    public GridAdapter(final Context context, final ArrayList<StoryModel> feedList) {
         this.list = feedList;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
@@ -60,7 +60,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        final HomeFeedModel.Story feedModel = list.get(position);
+        final StoryModel feedModel = list.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_ADD_STORY_BUTTON:
@@ -77,7 +77,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }*/
-                feedHolder.tvCmntStory.setText(feedModel.getContent());
+                feedHolder.tvCmntStory.setText(feedModel.getStory_text());
 
                 String comments;
                 String likes;
@@ -122,7 +122,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     /**
-     * Story Click Listener for click on
+     * StoryModel Click Listener for click on
      * like,comments and story.
      */
     public interface StoryClickListener {
@@ -161,7 +161,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         FeedHolder(final View itemView) {
             super(itemView);
 
-            tvCmntUserName = itemView.findViewById(R.id.user_name);
+            tvCmntUserName = itemView.findViewById(R.id.text_name);
             tvCmntTime = itemView.findViewById(R.id.tvCmntTime);
             tvCmntStory = itemView.findViewById(R.id.story_text);
           /*  tvCmntLikes = itemView.findViewById(R.id.likes);

@@ -181,7 +181,7 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
                 }
                 tvLikes.setText(likes);
 
-                ArrayList<HomeFeedModel.Story> storyList = new ArrayList<>();
+                ArrayList<HomeFeedModel.StoryModel> storyList = new ArrayList<>();
                 RecyclerView rvStories = itemView.findViewById(R.story_id.recycler_view_story);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
                 rvStories.setLayoutManager(mLayoutManager);
@@ -192,8 +192,8 @@ public class HomeFeedFragmentold extends BaseFragment implements HomeFeedContrac
                 if (modelData.getStories().size() > 0) {
                     storyList.addAll(modelData.getStories());
                 }
-                HomeFeedModel.Story story = new HomeFeedModel.Story();
-                story.setWriterName("Add Story");
+                HomeFeedModel.StoryModel story = new HomeFeedModel.StoryModel();
+                story.setWriterName("Add StoryModel");
                 story.setId(007);
                 storyList.add(story);
 

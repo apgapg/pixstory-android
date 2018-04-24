@@ -366,4 +366,21 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
         freshFeedFragment.setArguments(bundle);
         showFragment(freshFeedFragment, true);
     }
+
+    public void getUserData() {
+
+    }
+
+    private void showProfileTabFragment(Fragment fragment, boolean shouldAddToBackStack) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+           /* if (b)
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+           */
+        if (shouldAddToBackStack)
+            fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
+        else fragmentTransaction.replace(R.id.container, fragment).commit();
+
+
+    }
 }

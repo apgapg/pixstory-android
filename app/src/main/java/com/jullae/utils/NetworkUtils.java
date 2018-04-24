@@ -10,15 +10,26 @@ import java.util.List;
 
 public class NetworkUtils {
 
-    public static void parseError(String TAG, ANError error) {
+
+    public static final int PASSWORD_WRONG = 703;
+    public static final int EMAIL_NOT_REGISTERED = 703;
+    public static final int PENNAME_ALREADY_TAKEN = 717;
+
+    public static ErrorResponseModel parseError(String TAG, ANError error) {
         if (error.getErrorCode() != 0) {
             Log.d(TAG, "onError errorCode : " + error.getErrorCode());
             Log.d(TAG, "onError errorBody : " + error.getErrorBody());
             Log.d(TAG, "onError errorDetail : " + error.getErrorDetail());
             // ApiError apiError = error.getErrorAsObject(ApiError.class);
+            ErrorResponseModel errorResponseModel = error.getErrorAsObject(ErrorResponseModel.class);
+            return errorResponseModel;
         } else {
             Log.d(TAG, "onError errorDetail : " + error.getErrorDetail());
+            if (error.getErrorDetail().equals("connectionError")) {
+                return new ErrorResponseModel("false", -20, "couldn't connect!");
+            }
         }
+        return null;
     }
 
     public static void parseResponse(String TAG, Object response) {
@@ -30,6 +41,8 @@ public class NetworkUtils {
             Log.d(TAG, "parseResponse: " + response.toString());
         } else if (response instanceof List) {
             Log.d(TAG, "parseResponse: " + new Gson().toJson(response));
+        } else {
+            Log.d(TAG, "parseResponse: " + response.toString());
         }
     }
 }

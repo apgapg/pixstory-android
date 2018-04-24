@@ -3,14 +3,8 @@ package com.jullae.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jullae.model.CommentModel;
 import com.jullae.model.FreshFeedModel;
-import com.jullae.model.LikesModel;
-import com.jullae.ui.homefeed.HomeFeedModel;
-import com.jullae.ui.homefeed.HomeFeedPresentor;
-import com.jullae.ui.homefeed.freshfeed.FreshFeedPresentor;
 import com.jullae.ui.search.SearchFeedPresentor;
-import com.jullae.ui.storydetails.StoryDetailPresentor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +25,6 @@ public class AppDataManager {
     public AppDataManager(AppPrefsHelper appPrefsHelper) {
         mAppPrefsHelper = appPrefsHelper;
         mApiHelper = new ApiHelper();
-
     }
 
     public AppPrefsHelper getmAppPrefsHelper() {
@@ -40,42 +33,6 @@ public class AppDataManager {
 
     public ApiHelper getmApiHelper() {
         return mApiHelper;
-    }
-
-
-    public void saveUserDetails(String uid, String authtoken, String number) {
-        mAppPrefsHelper.saveUserDetails(uid, authtoken, number);
-
-    }
-
-    public void clear() {
-        mAppPrefsHelper.clear();
-    }
-
-
-    public boolean getLoggedInMode() {
-        return mAppPrefsHelper.getLoggedInMode();
-    }
-
-    public String getUid() {
-        return mAppPrefsHelper.getUid();
-    }
-
-    public String getAuthToken() {
-        return mAppPrefsHelper.getAuthToken();
-    }
-
-    public String getNumber() {
-        return mAppPrefsHelper.getNumber();
-    }
-
-    public void putinsharedprefBoolean(String key, boolean value) {
-
-        mAppPrefsHelper.putinsharedprefBoolean(key, value);
-    }
-
-    public Boolean getvaluefromsharedprefBoolean(String key) {
-        return mAppPrefsHelper.getvaluefromsharedprefBoolean(key);
     }
 
 

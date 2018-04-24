@@ -18,8 +18,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.model.LikesModel;
 import com.jullae.ui.homefeed.HomeFeedPresentor;
-import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.ui.storydetails.StoryDetailActivity;
+import com.jullae.ui.storydetails.StoryDetailPresentor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,9 +136,9 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
          */
         FeedHolder(final View itemView) {
             super(itemView);
-            user_image = itemView.findViewById(R.id.user_image);
-            user_name = itemView.findViewById(R.id.user_name);
-            user_penname = itemView.findViewById(R.id.user_penname);
+            user_image = itemView.findViewById(R.id.image_avatar);
+            user_name = itemView.findViewById(R.id.text_name);
+            user_penname = itemView.findViewById(R.id.text_penname);
             user_followed = itemView.findViewById(R.id.user_followed);
             progress_bar = itemView.findViewById(R.id.progress_bar);
 

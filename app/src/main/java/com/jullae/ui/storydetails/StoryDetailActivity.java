@@ -25,10 +25,10 @@ import com.jullae.R;
 import com.jullae.app.AppController;
 import com.jullae.model.CommentModel;
 import com.jullae.model.LikesModel;
+import com.jullae.model.StoryModel;
 import com.jullae.ui.adapters.CommentsAdapter;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseActivity;
-import com.jullae.ui.homefeed.HomeFeedModel;
 import com.jullae.utils.Constants;
 
 /**
@@ -47,7 +47,7 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
     private StoryDetailPresentor mPresentor;
     private ImageView btn_like;
     private TextView like_count;
-    private HomeFeedModel.Story storyModel;
+    private StoryModel storyModel;
     private TextView user_followed;
     private TextView comment_count;
     private CommentsAdapter commentsAdapter;
@@ -70,9 +70,9 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
 
         TextView story_tag = findViewById(R.id.tvYourTitle);
         ImageView btn_close = findViewById(R.id.tvClose);
-        TextView user_name = findViewById(R.id.user_name);
-        ImageView user_image = findViewById(R.id.user_image);
-        TextView user_penname = findViewById(R.id.user_penname);
+        TextView user_name = findViewById(R.id.text_name);
+        ImageView user_image = findViewById(R.id.image_avatar);
+        TextView user_penname = findViewById(R.id.text_penname);
         TextView story_text = findViewById(R.id.story_text);
         like_count = findViewById(R.id.like_count);
         comment_count = findViewById(R.id.comment_count);
@@ -94,22 +94,22 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
 
         ImageView ivEditStory = findViewById(R.id.ivEditStory);
         btn_like = findViewById(R.id.btn_like);
-        ImageView ivLikeUserPic = findViewById(R.id.user_image);
+        ImageView ivLikeUserPic = findViewById(R.id.image_avatar);
 
         if (getIntent() != null) {
             Intent i = getIntent();
             Gson gson = new Gson();
-            storyModel = gson.fromJson(i.getStringExtra("object"), HomeFeedModel.Story.class);
+            storyModel = gson.fromJson(i.getStringExtra("object"), StoryModel.class);
         }
 
         story_tag.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
         user_penname.setText(storyModel.getWriter_name());
-        story_text.setText(storyModel.getContent());
+        story_text.setText(storyModel.getStory_text());
 
-        comment_count.setText(storyModel.getStory_comment_count() + " comments");
+        comment_count.setText(storyModel.getComment_count() + " comments");
 
-        Glide.with(this).load(storyModel.getWriter_dp_Url()).into(user_image);
+        Glide.with(this).load(storyModel.getWriter_avatar()).into(user_image);
 
         if (storyModel.getIs_followed().equals("true")) {
             user_followed.setTextColor(Color.parseColor("#ffffff"));
@@ -390,8 +390,8 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
     }
 
     private void setupLike() {
-        like_count.setText(storyModel.getStory_like_count() + " likes");
-        if (storyModel.getStory_is_liked().equals("false")) {
+        like_count.setText(storyModel.getLike_count() + " likes");
+        if (storyModel.getIs_liked().equals("false")) {
             btn_like.setImageResource(R.drawable.ic_unlike);
             like_count.setTextColor(Color.parseColor("#9e9e9e"));
             like_count.setTypeface(Typeface.DEFAULT);
@@ -404,7 +404,7 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
         btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String isLiked = storyModel.getStory_is_liked();
+                String isLiked = storyModel.getIs_liked();
                 makeLikeRequest(isLiked);
                 if (isLiked.equals("false")) {
                     updateToLike();
@@ -425,11 +425,11 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
     }
 
     private void updatetoUnlike() {
-        storyModel.setStory_is_liked("false");
+        storyModel.setIs_liked("false");
         btn_like.setImageResource(R.drawable.ic_unlike);
-        if (Integer.parseInt(storyModel.getStory_like_count()) != 0) {
-            like_count.setText(String.valueOf(Integer.parseInt(storyModel.getStory_like_count()) - 1) + " likes");
-            storyModel.setStory_like_count(String.valueOf(Integer.parseInt(storyModel.getStory_like_count()) - 1));
+        if (Integer.parseInt(storyModel.getLike_count()) != 0) {
+            like_count.setText(String.valueOf(Integer.parseInt(storyModel.getLike_count()) - 1) + " likes");
+            storyModel.setLike_count(String.valueOf(Integer.parseInt(storyModel.getLike_count()) - 1));
         }
         like_count.setTextColor(Color.parseColor("#9e9e9e"));
         like_count.setTypeface(Typeface.DEFAULT);
@@ -438,10 +438,10 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
 
     private void updateToLike() {
 
-        storyModel.setStory_is_liked("true");
+        storyModel.setIs_liked("true");
         btn_like.setImageResource(R.drawable.ic_like);
-        like_count.setText(String.valueOf(Integer.parseInt(storyModel.getStory_like_count()) + 1) + " likes");
-        storyModel.setStory_like_count(String.valueOf(Integer.parseInt(storyModel.getStory_like_count()) + 1));
+        like_count.setText(String.valueOf(Integer.parseInt(storyModel.getLike_count()) + 1) + " likes");
+        storyModel.setLike_count(String.valueOf(Integer.parseInt(storyModel.getLike_count()) + 1));
         like_count.setTextColor(Color.parseColor("#424242"));
         like_count.setTypeface(Typeface.DEFAULT_BOLD);
 
@@ -455,7 +455,7 @@ public class StoryDetailActivity extends BaseActivity implements StoryDetailView
 
             @Override
             public void onFail() {
-                if (storyModel.getStory_is_liked().equals("false"))
+                if (storyModel.getIs_liked().equals("false"))
                     updateToLike();
                 else updatetoUnlike();
                 Toast.makeText(getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();

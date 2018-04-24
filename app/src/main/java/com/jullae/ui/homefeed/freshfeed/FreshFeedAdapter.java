@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.model.FreshFeedModel;
+import com.jullae.model.PictureModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         FreshFeedsViewHolder viewHolder = (FreshFeedsViewHolder) holder;
-
-        FreshFeedModel.PictureModel pictureModel = messagelist.get(position).getPictureModel();
+        PictureModel pictureModel = messagelist.get(position).getPictureModel();
         FreshFeedModel.Story storyModel = messagelist.get(position).getStory();
 
         Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
@@ -68,7 +68,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         setLikeCommentCount(viewHolder, pictureModel, storyModel);
     }
 
-    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, FreshFeedModel.PictureModel pictureModel, FreshFeedModel.Story storyModel) {
+    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, FreshFeedModel.Story storyModel) {
         viewHolder.user_name.setText(pictureModel.getPhotographer_penname().trim());
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         Glide.with(mContext).load(pictureModel.getPhotographer_avatar()).into(viewHolder.user_photo);
@@ -76,7 +76,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, FreshFeedModel.PictureModel pictureModel, FreshFeedModel.Story storyModel) {
+    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, FreshFeedModel.Story storyModel) {
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.pic_like_count.setText(pictureModel.getLike_count() + " likes");
@@ -113,7 +113,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             image = inflate.findViewById(R.id.image);
             user_photo = inflate.findViewById(R.id.user_photo);
             writer_photo = inflate.findViewById(R.id.writer_photo);
-            user_name = inflate.findViewById(R.id.user_name);
+            user_name = inflate.findViewById(R.id.text_name);
             pic_title = inflate.findViewById(R.id.pic_title);
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
@@ -122,7 +122,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             writer_name = inflate.findViewById(R.id.writer_name);
             pic_like_count = inflate.findViewById(R.id.pic_like_count);
             pic_story_count = inflate.findViewById(R.id.pic_comment_count);
-            story_like_count = inflate.findViewById(R.id.story_like_count);
+            //  story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
             pic_text_buy = inflate.findViewById(R.id.pic_text_by);

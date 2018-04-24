@@ -57,7 +57,7 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
 
     @Override
     public void onFetchFeeds(List<FreshFeedModel> list) {
-        searchFeedAdapter.add(list);
+        // searchFeedAdapter.add(list);
     }
 
     @Override

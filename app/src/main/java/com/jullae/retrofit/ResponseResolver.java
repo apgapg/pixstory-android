@@ -5,7 +5,7 @@ import android.content.Context;
 import com.google.gson.JsonSyntaxException;
 import com.jullae.R;
 import com.jullae.utils.dialog.CustomAlertDialog;
-import com.jullae.utils.dialog.ProgressDialog;
+import com.jullae.utils.dialog.MyProgressDialog;
 
 import java.lang.ref.WeakReference;
 import java.net.ConnectException;
@@ -66,7 +66,7 @@ public abstract class ResponseResolver<T> implements Callback<T> {
         this.weakContext = new WeakReference<>(mContext);
         this.showLoading = showLoading;
         if (showLoading) {
-            ProgressDialog.showProgressDialog(mContext, mContext.getString(R.string.loading));
+            MyProgressDialog.showProgressDialog(mContext, mContext.getString(R.string.loading));
         }
     }
 
@@ -83,7 +83,7 @@ public abstract class ResponseResolver<T> implements Callback<T> {
         this.showLoading = showLoading;
         this.showError = showError;
         if (showLoading) {
-            ProgressDialog.showProgressDialog(mContext, mContext.getString(R.string.loading));
+            MyProgressDialog.showProgressDialog(mContext, mContext.getString(R.string.loading));
         }
 
     }
@@ -104,7 +104,7 @@ public abstract class ResponseResolver<T> implements Callback<T> {
 
     @Override
     public void onResponse(final Call<T> t, final Response<T> tResponse) {
-        ProgressDialog.dismissProgressDialog();
+        MyProgressDialog.dismissProgressDialog();
         if (tResponse.isSuccessful()) {
             success(tResponse.body());
         } else {
@@ -114,7 +114,7 @@ public abstract class ResponseResolver<T> implements Callback<T> {
 
     @Override
     public void onFailure(final Call<T> t, final Throwable throwable) {
-        ProgressDialog.dismissProgressDialog();
+        MyProgressDialog.dismissProgressDialog();
         fireError(new APIError(DEFAULT_STATUS_CODE, resolveNetworkError(throwable)));
     }
 

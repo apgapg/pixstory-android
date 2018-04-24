@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground"
+
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/name_field"
+        android:layout_width="240dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+
+        android:drawableLeft="@android:drawable/ic_dialog_email"
+        android:drawablePadding="4dp"
+        android:hint="Name"
+        android:inputType="textEmailAddress"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/penname_field"
+        android:layout_width="240dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+
+        android:drawableLeft="@android:drawable/ic_dialog_email"
+        android:drawablePadding="4dp"
+        android:hint="penname"
+        android:inputType="textEmailAddress"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/bio_field"
+        android:layout_width="240dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+
+        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:drawablePadding="4dp"
+        android:hint="bio (optional)"
+        android:inputType="textPassword"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/button_signup"
+        style="@style/smallCaseButton"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+
+        android:background="@drawable/border_light_grey"
+        android:text="Sign In"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="@string/forgotPassword"
+        android:textColor="#757575"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+
+        android:text=""
+
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/terms_and_conditons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/termsConditions"
+        android:textAlignment="center"
+        android:textSize="10sp" />
+
+
+</LinearLayout>

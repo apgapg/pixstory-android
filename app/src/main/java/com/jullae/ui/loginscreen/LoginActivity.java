@@ -3,30 +3,32 @@ package com.jullae.ui.loginscreen;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.jullae.R;
+import com.jullae.app.AppController;
 import com.jullae.helpers.InputValidation;
 import com.jullae.sql.DatabaseHelper;
 import com.jullae.ui.homefeed.HomeActivity;
+import com.jullae.utils.ErrorResponseModel;
+import com.jullae.utils.dialog.MyProgressDialog;
 
 import org.json.JSONObject;
 
@@ -34,43 +36,51 @@ import org.json.JSONObject;
  * Class used to login into the app through credentials.
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener, LoginActivityView {
 
     //private final AppCompatActivity activity = LoginActivity.this;
 
     //Google
     private static final String TAG = "SignInActivity";
     private static final int RC_GOOGLE_SIGN_IN = 9001;
+
     //Facebook
     private LoginButton fbLoginButton;
     private CallbackManager callbackManager;
-    private EditText textInputEditTextEmail;
-    private EditText textInputEditTextPassword;
-    private TextView emailErrorTextView;
-    private TextView passowrdErrorTextView;
-    private TextView forgotPasswordTextView;
-    private Button buttonLogin;
-    private TextView textViewLinkRegister;
+
     private InputValidation inputValidation;
     //TextView testViewLogin;
     private DatabaseHelper databaseHelper;
     private GoogleApiClient mGoogleApiClient;
+    private LoginActivityPresentor mPresentor;
+    private int emailLoginMode;
+    private String password, email;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loadFontsOnStartUp();
+
+
+        mPresentor = new LoginActivityPresentor(((AppController) getApplication()).getmAppDataManager());
+        if (mPresentor.isUserLoggedIn()) {
+            startHomeActivity();
+        }
+
+        mPresentor.attachView(this);
+        // loadFontsOnStartUp();
+
+        showFragment(new LoginFragment(), false);
 
         initViews();
-        initListeners();
-        initObjects();
+        //initListeners();
+        //initObjects();
 
-
+/*
         callbackManager = CallbackManager.Factory.create();
 
         //Facebook
-        //LoginButton fbLoginButton = (LoginButton) findViewById(R.id.facebook_login);
+        LoginButton fbLoginButton = (LoginButton) findViewById(R.id.facebook_login);
         fbLoginButton.setReadPermissions("email");
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -97,11 +107,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this *//* FragmentActivity *//*, this *//* OnConnectionFailedListener *//*)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .build();*/
 
         //findViewById(R.id.google_login).setOnClickListener(this);
+    }
+
+    private void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+           /* if (b)
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+           */
+        if (shouldAddToBackStack)
+            fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
+        else fragmentTransaction.replace(R.id.container, fragment).commit();
     }
 
     /**
@@ -109,24 +130,73 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      */
     private void initViews() {
 
-        fbLoginButton = (LoginButton) findViewById(R.id.facebook_login);
-        textInputEditTextEmail = (EditText) findViewById(R.id.username_field);
-        textInputEditTextPassword = (EditText) findViewById(R.id.password_field);
-        buttonLogin = (Button) findViewById(R.id.login_button);
-        textViewLinkRegister = (TextView) findViewById(R.id.sign_up);
-        emailErrorTextView = (TextView) findViewById(R.id.invalidEmailWarning);
-        passowrdErrorTextView = (TextView) findViewById(R.id.invalidPasswordWarning);
-//        forgotPasswordTextView = (TextView) findViewById(R.id.forgot_password);
+        fbLoginButton = findViewById(R.id.facebook_login);
+
+
     }
 
-    /**
-     * This method is to initialize listeners
-     */
-    private void initListeners() {
-        findViewById(R.id.google_login).setOnClickListener(this);
-        buttonLogin.setOnClickListener(this);
-        textViewLinkRegister.setOnClickListener(this);
-        forgotPasswordTextView.setOnClickListener(this);
+
+    @Override
+    public void emailValidationError() {
+        Toast.makeText(getApplicationContext(), "Please check your Email!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void passwordValidationError() {
+        Toast.makeText(getApplicationContext(), "Password cannot be Empty!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void emailValidationSuccess(String email, String password) {
+        this.email = email;
+        this.password = password;
+        showFragment(new SignUpFragment(), true);
+    }
+
+    @Override
+    public void signUpValidationError() {
+        Toast.makeText(getApplicationContext(), "Please fill all details!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onSignUpSuccess() {
+        Toast.makeText(getApplicationContext(), "SignUp successful!", Toast.LENGTH_SHORT).show();
+        startHomeActivity();
+    }
+
+    @Override
+    public void onSignUpFail() {
+        Toast.makeText(getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onLoginSuccess() {
+        Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT).show();
+        startHomeActivity();
+    }
+
+
+    @Override
+    public void onLoginFail(ErrorResponseModel errorResponseModel) {
+        Toast.makeText(getApplicationContext(), errorResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgress() {
+        MyProgressDialog.showProgressDialog(this, "Please Wait!");
+    }
+
+    @Override
+    public void hideProgress() {
+        MyProgressDialog.dismissProgressDialog();
+    }
+
+    private void startHomeActivity() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     /**
@@ -177,8 +247,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             case R.id.google_login:
                 googleSignIn();
                 break;
-            case R.id.login_button:
-                verifyFromSQLite();
+            case R.id.button_login:
+                //verifyFromSQLite();
                 break;
             case R.id.sign_up:
                 Intent intentRegister = new Intent(this, RegisterActivity.class);
@@ -193,45 +263,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    /**
-     * This method is to validate the input text fields and verify login credentials from SQLite
-     */
-    private void verifyFromSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, emailErrorTextView, getString(R.string.error_message_email))
-                || !inputValidation.isInputEditTextEmail(textInputEditTextEmail, emailErrorTextView,
-                passowrdErrorTextView, getString(R.string.error_message_email))
-                || !inputValidation.isInputEditTextFilled(textInputEditTextPassword,
-                passowrdErrorTextView, getString(R.string.empty_password))) {
-            return;
-        }
-
-        if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim(),
-                textInputEditTextPassword.getText().toString().trim())) {
-
-
-            Intent homeFeedIntent = new Intent(this, HomeActivity.class);
-            //accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
-            emptyInputEditText();
-            startActivity(homeFeedIntent);
-
-
-        } else {
-            // Toast message to show success message that record is wrong
-            Toast.makeText(this, R.string.error_valid_email_password, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * This method is to empty all input edit text
-     */
-    private void emptyInputEditText() {
-        textInputEditTextEmail.setText(null);
-        textInputEditTextPassword.setText(null);
-    }
-
-    /**
-     * Method used to login by google
-     */
     private void googleSignIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
@@ -261,30 +292,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Signed in successfully, show authenticated UI.
             //GoogleSignInAccount acct = result.getSignInAccount();
             //testViewLogin.setText(getString(R.string.tempSignInGoogleTestString, acct.getDisplayName()));
-            updateUI(true);
+            // updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
-            updateUI(false);
+            //updateUI(false);
         }
     }
 
-    /**
-     * Update ui if success else false.
-     *
-     * @param signedIn true if success else false.
-     */
-    private void updateUI(final Boolean signedIn) {
-        if (signedIn) {
-            //findViewById(R.id.login_button).setVisibility(View.GONE);
-            Intent googleIntent = new Intent(this, HomeActivity.class);
-            startActivity(googleIntent);
-        }
-        /*else {
-            TextView tv = (TextView) findViewById(R.id.testViewForLoginGoogle);
-            tv.setText("Login Failed!!!!!!");
-        }*/
-
-    }
 
     @Override
     public void onConnectionFailed(final ConnectionResult connectionResult) {
@@ -302,25 +316,39 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Typeface customFontNunitoRegular = Typeface.createFromAsset(getAssets(), "fonts/Nunito-Regular.ttf");
         Typeface customFontBerkshire = Typeface.createFromAsset(getAssets(), "fonts/berkshireswash-regular.ttf");
 
-        TextView appName = (TextView) findViewById(R.id.app_name);
+        TextView appName = findViewById(R.id.app_name);
         appName.setTypeface(customFontBerkshire);
 
-        Button fbLogin = (Button) findViewById(R.id.facebook_login);
+        Button fbLogin = findViewById(R.id.facebook_login);
         fbLogin.setTypeface(customFontNunitoRegular);
 
-        Button googleLogin = (Button) findViewById(R.id.google_login);
+        Button googleLogin = findViewById(R.id.google_login);
         googleLogin.setTypeface(customFontNunitoRegular);
 
-        Button loginButton = (Button) findViewById(R.id.login_button);
+        Button loginButton = findViewById(R.id.button_login);
         loginButton.setTypeface(customFontNunitoRegular);
 
-        forgotPasswordTextView = (TextView) findViewById(R.id.forgot_password);
-        forgotPasswordTextView.setTypeface(customFontNunitoRegular);
+        // forgotPasswordTextView = (TextView) findViewById(R.id.forgot_password);
+        //forgotPasswordTextView.setTypeface(customFontNunitoRegular);
 
-        TextView signUpTextView = (TextView) findViewById(R.id.sign_up);
+        TextView signUpTextView = findViewById(R.id.sign_up);
         signUpTextView.setTypeface(customFontNunitoRegular);
 
-        TextView termsConditionsTextView = (TextView) findViewById(R.id.terms_and_conditons);
+        TextView termsConditionsTextView = findViewById(R.id.terms_and_conditons);
         termsConditionsTextView.setTypeface(customFontNunitoRegular);
+    }
+
+    public void performEmailLogin(String email, String password, int emailLoginMode) {
+        mPresentor.performEmailLogin(email, password, emailLoginMode);
+    }
+
+    public void performSignUp(String name, String penname, String bio) {
+        mPresentor.performSignUp(email, password, name, penname, bio);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresentor.detachView();
+        super.onDestroy();
     }
 }

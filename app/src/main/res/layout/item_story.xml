@@ -25,20 +25,20 @@
             android:layout_height="wrap_content">
 
             <com.jullae.customView.CircularImageView
-                android:id="@+id/user_image"
+                android:id="@+id/image_avatar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:src="#99bdbdbd" />
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/text_name"
                 style="@style/txt_12_medium_primaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/user_image"
+                android:layout_toRightOf="@+id/image_avatar"
                 tools:text="Suketu Balaji" />
 
             <TextView

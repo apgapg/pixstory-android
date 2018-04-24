@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jullae.R;
+import com.jullae.model.StoryModel;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final Activity mContext;
     private final RequestOptions picOptions;
 
-    List<HomeFeedModel.Story> messagelist = new ArrayList<>();
+    List<StoryModel> messagelist = new ArrayList<>();
 
     public StoryAdapter(Activity activity) {
         this.mContext = activity;
@@ -48,13 +49,13 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
-        Glide.with(mContext).load(messagelist.get(position).getWriter_dp_Url()).apply(picOptions).into(viewHolder.user_image);
+        Glide.with(mContext).load(messagelist.get(position).getWriter_avatar()).apply(picOptions).into(viewHolder.user_image);
 
         viewHolder.user_name.setText(messagelist.get(position).getWriter_name());
 
-        viewHolder.like_count.setText(messagelist.get(position).getStory_like_count() + " likes");
-        viewHolder.comment_count.setText(messagelist.get(position).getStory_comment_count() + " comments");
-        viewHolder.story_text.setText(messagelist.get(position).getContent());
+        viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
+        viewHolder.comment_count.setText(messagelist.get(position).getComment_count() + " comments");
+        viewHolder.story_text.setText(messagelist.get(position).getStory_text());
 
 
     }
@@ -65,7 +66,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return messagelist.size();
     }
 
-    public void add(List<HomeFeedModel.Story> list) {
+    public void add(List<StoryModel> list) {
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());
@@ -86,8 +87,8 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ivMore = inflate.findViewById(R.id.ivMore);
             ivLike = inflate.findViewById(R.id.btn_like);
             ivEditStory = inflate.findViewById(R.id.ivEditStory);
-            user_name = inflate.findViewById(R.id.user_name);
-            user_image = inflate.findViewById(R.id.user_image);
+            user_name = inflate.findViewById(R.id.text_name);
+            user_image = inflate.findViewById(R.id.image_avatar);
             story_text = inflate.findViewById(R.id.story_text);
             tvLocation = inflate.findViewById(R.id.tvLocation);
             tvTimeInDays = inflate.findViewById(R.id.tvTimeInDays);

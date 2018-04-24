@@ -67,13 +67,13 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Glide.with(mContext).load(messagelist.get(position).getPicture_url()).apply(picOptions).into(viewHolder.image);
 
         viewHolder.user_name.setText(messagelist.get(position).getPhotographer_name());
-        Glide.with(mContext).load(messagelist.get(position).getPhotographer_dp_url()).apply(picOptions).into(viewHolder.user_image);
+        Glide.with(mContext).load(messagelist.get(position).getPhotographer_avatar()).apply(picOptions).into(viewHolder.user_image);
 
         viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
         viewHolder.story_count.setText(messagelist.get(position).getStory_count() + " stories");
         viewHolder.storyAdapter.add(messagelist.get(position).getStories());
 
-        if (messagelist.get(position).getPic_is_liked().equals("false")) {
+        if (messagelist.get(position).getIs_liked().equals("false")) {
             viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);
             viewHolder.like_count.setTextColor(Color.parseColor("#9e9e9e"));
             viewHolder.like_count.setTypeface(Typeface.DEFAULT);
@@ -91,7 +91,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
         if (payloads.contains("like")) {
-            messagelist.get(position).setPic_is_liked("true");
+            messagelist.get(position).setIs_liked("true");
             viewHolder.btn_like.setImageResource(R.drawable.ic_like);
             viewHolder.like_count.setText(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) + 1) + " likes");
             messagelist.get(position).setLike_count(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) + 1));
@@ -100,7 +100,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         } else if (payloads.contains("unlike")) {
-            messagelist.get(position).setPic_is_liked("false");
+            messagelist.get(position).setIs_liked("false");
             viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);
             if (Integer.parseInt(messagelist.get(position).getLike_count()) != 0) {
                 viewHolder.like_count.setText(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) - 1) + " likes");
@@ -183,12 +183,12 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public HomeFeedViewHolder(View inflate) {
             super(inflate);
 
-            user_image = itemView.findViewById(R.id.user_image);
+            user_image = itemView.findViewById(R.id.image_avatar);
             image = itemView.findViewById(R.id.image);
             ivMore = itemView.findViewById(R.id.ivMore);
             btn_like = itemView.findViewById(R.id.btn_like);
             ivEditStory = itemView.findViewById(R.id.ivEditStory);
-            user_name = itemView.findViewById(R.id.user_name);
+            user_name = itemView.findViewById(R.id.text_name);
             tvLocation = itemView.findViewById(R.id.tvLocation);
             tvTimeInDays = itemView.findViewById(R.id.tvTimeInDays);
             like_count = itemView.findViewById(R.id.like_count);
@@ -208,7 +208,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
 
-                    String isLiked = messagelist.get(getAdapterPosition()).getPic_is_liked();
+                    String isLiked = messagelist.get(getAdapterPosition()).getIs_liked();
                     if (isLiked.equals("false"))
                         notifyItemChanged(getAdapterPosition(), "like");
                     else notifyItemChanged(getAdapterPosition(), "unlike");
@@ -221,7 +221,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                         @Override
                         public void onFail() {
-                            if (messagelist.get(getAdapterPosition()).getPic_is_liked().equals("false"))
+                            if (messagelist.get(getAdapterPosition()).getIs_liked().equals("false"))
                                 notifyItemChanged(getAdapterPosition(), "like");
                             else notifyItemChanged(getAdapterPosition(), "unlike");
                             Toast.makeText(mContext.getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();

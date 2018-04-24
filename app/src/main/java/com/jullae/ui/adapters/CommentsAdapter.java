@@ -88,8 +88,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
          */
         FeedHolder(final View itemView) {
             super(itemView);
-            user_image = itemView.findViewById(R.id.user_image);
-            user_name = itemView.findViewById(R.id.user_name);
+            user_image = itemView.findViewById(R.id.image_avatar);
+            user_name = itemView.findViewById(R.id.text_name);
             comment_text = itemView.findViewById(R.id.comment_text);
 
         }

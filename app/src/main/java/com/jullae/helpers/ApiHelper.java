@@ -157,7 +157,7 @@ public class ApiHelper {
         String reportType = null;
         if (reportTypeStory == Constants.REPORT_TYPE_STORY) {
             url = Constants.REPORT_STORY;
-            reportType = "Story";
+            reportType = "StoryModel";
 
         }
 
@@ -170,6 +170,48 @@ public class ApiHelper {
                 .build();
 
 
+    }
+
+    public ANRequest emailLoginReq(String email, String password) {
+        return AndroidNetworking.post(BASE_URL + Constants.EMAIL_LOGIN)
+                .addHeaders(headers)
+                .addBodyParameter("email", email)
+                .addBodyParameter("password", password)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest signUpReq(String email, String password, String name, String penname, String bio) {
+        return AndroidNetworking.post(BASE_URL + Constants.EMAIL_SIGNUP)
+                .addHeaders(headers)
+                .addBodyParameter("email", email)
+                .addBodyParameter("password", password)
+                .addBodyParameter("name", name)
+                .addBodyParameter("penname", penname)
+                .addBodyParameter("bio", bio)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest loadStoryTabFeeds(String penname, int position) {
+        String url = null;
+        if (position == 1) url = Constants.PROFILE_TAB_STORIES;
+        else if (position == 2) url = Constants.PROFILE_TAB_BOOKMARKS;
+
+        return AndroidNetworking.get(BASE_URL + url)
+                .addHeaders(headers)
+                .addPathParameter("penname", "ankitsharma")
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest loadPictureTabFeeds(String penname) {
+
+        return AndroidNetworking.get(BASE_URL + Constants.PROFILE_TAB_PICTURES)
+                .addHeaders(headers)
+                .addPathParameter("penname", penname)
+                .setPriority(Priority.HIGH)
+                .build();
     }
 
     public interface ReqListener {

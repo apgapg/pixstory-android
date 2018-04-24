@@ -23,7 +23,7 @@
         android:paddingTop="6dp">
 
         <com.jullae.customView.CircularImageView
-            android:id="@+id/user_image"
+            android:id="@+id/image_avatar"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_centerVertical="true"
@@ -35,11 +35,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/iconTextMargin"
             android:layout_toLeftOf="@+id/timeLyt"
-            android:layout_toRightOf="@+id/user_image"
+            android:layout_toRightOf="@+id/image_avatar"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/text_name"
                 style="@style/txt_14_regular_primaryText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

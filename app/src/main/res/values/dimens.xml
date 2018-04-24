@@ -76,6 +76,7 @@
     <dimen name="headingSubHeadingMargin">2dp</dimen>
     <dimen name="tab_icon">36dp</dimen>
     <dimen name="item_offset">4dp</dimen>
+    <dimen name="profile_count_text">18dp</dimen>
 
 
 </resources>
