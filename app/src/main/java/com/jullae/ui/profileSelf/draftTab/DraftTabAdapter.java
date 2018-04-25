@@ -14,9 +14,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
+import com.jullae.model.FeedModel;
 import com.jullae.model.PictureModel;
 import com.jullae.model.StoryModel;
-import com.jullae.ui.profileSelf.StoryListModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
     private final Activity mContext;
     private final RequestOptions picOptions;
 
-    List<StoryListModel.StoryMainModel> messagelist = new ArrayList<StoryListModel.StoryMainModel>();
+    List<FeedModel> messagelist = new ArrayList<>();
 
     public DraftTabAdapter(Activity activity) {
         this.mContext = activity;
@@ -67,7 +67,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
         return messagelist.size();
     }
 
-    public void add(List<StoryListModel.StoryMainModel> list) {
+    public void add(List<FeedModel> list) {
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());

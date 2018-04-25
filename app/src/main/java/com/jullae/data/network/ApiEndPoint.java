@@ -29,6 +29,7 @@ public class ApiEndPoint {
     public static final String ENDPOINT_CONVERSATION_LIST = "/user/conversations";
     public static final String ENDPOINT_MESSAGE_LIST = "/user/{id}/messages";
     public static final String ENDPOINT_ADD_MESSAGE = "/user/{id}/message";
+    public static final String ENDPOINT_TAG_SUGGESTIONS = "/suggestion/tag_suggestions";
 
     private ApiEndPoint() {
 

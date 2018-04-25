@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:orientation="horizontal"
-
+            android:paddingLeft="4dp"
             android:paddingRight="4dp">
 
             <TextView
@@ -61,12 +61,13 @@
             android:background="#fff"
             android:ellipsize="end"
             android:maxLines="3"
-            android:paddingBottom="4dp"
+            android:paddingBottom="2dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingTop="4dp" />
+            android:paddingTop="2dp" />
 
         <LinearLayout
+            android:id="@+id/aab"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="#fff"
@@ -109,6 +110,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/image"
         android:padding="8dp"
         android:scaleType="centerCrop"

@@ -7,7 +7,7 @@
     android:paddingTop="24dp">
 
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/search_tag_field"
         android:layout_width="170dp"
 

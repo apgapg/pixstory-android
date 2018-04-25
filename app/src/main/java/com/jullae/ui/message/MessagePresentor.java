@@ -3,7 +3,8 @@ package com.jullae.ui.message;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.helpers.AppDataManager;
-import com.jullae.model.MessageModel;
+import com.jullae.model.MessageMainModel;
+import com.jullae.model.MessageResponseModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.NetworkUtils;
 
@@ -17,15 +18,15 @@ public class MessagePresentor extends BasePresentor<MessageView> {
     public void loadMessage(String user_id) {
         checkViewAttached();
         getMvpView().showProgressBar();
-        getmAppDataManager().getmApiHelper().loadMessageList(user_id).getAsObject(MessageModel.class, new ParsedRequestListener<MessageModel>() {
+        getmAppDataManager().getmApiHelper().loadMessageList(user_id).getAsObject(MessageMainModel.class, new ParsedRequestListener<MessageMainModel>() {
 
             @Override
-            public void onResponse(MessageModel messageModel) {
-                NetworkUtils.parseResponse(TAG, messageModel);
+            public void onResponse(MessageMainModel messageMainModel) {
+                NetworkUtils.parseResponse(TAG, messageMainModel);
 
                 if (isViewAttached()) {
                     getMvpView().hideProgress();
-                    getMvpView().onMessageListFetchSuccess(messageModel.getMessageList());
+                    getMvpView().onMessageListFetchSuccess(messageMainModel.getMessageList());
 
                 }
             }
@@ -45,15 +46,15 @@ public class MessagePresentor extends BasePresentor<MessageView> {
         return getmAppDataManager().getmAppPrefsHelper().getKeyUserId();
     }
 
-    public void sendMessageReq(String message, String conversation_id, final MessageActivity.ReqListener reqListener) {
+    public void sendMessageReq(String message, String user_id, final MessageActivity.ReqListener reqListener) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().sendMessageReq(message, conversation_id).getAsObject(MessageModel.Message.class, new ParsedRequestListener<MessageModel.Message>() {
+        getmAppDataManager().getmApiHelper().sendMessageReq(message, user_id).getAsObject(MessageResponseModel.class, new ParsedRequestListener<MessageResponseModel>() {
 
             @Override
-            public void onResponse(MessageModel.Message messageModel) {
-                NetworkUtils.parseResponse(TAG, messageModel);
+            public void onResponse(MessageResponseModel messageResponseModel) {
+                NetworkUtils.parseResponse(TAG, messageResponseModel);
                 if (isViewAttached())
-                    reqListener.onSuccess(messageModel);
+                    reqListener.onSuccess(messageResponseModel.getMessageModel());
             }
 
             @Override

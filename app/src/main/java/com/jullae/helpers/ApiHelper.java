@@ -5,11 +5,8 @@ import android.util.Log;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.jullae.data.network.ApiEndPoint;
 import com.jullae.utils.Constants;
-import com.jullae.utils.NetworkUtils;
 
 import org.json.JSONObject;
 
@@ -33,8 +30,10 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_TAB_BOOKMARKS
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_TAB_PICTURES;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_TAB_STORIES;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_REPORT_STORY;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_SEARCH_TAG;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_DETAILS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_LIKES_LIST;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_TAG_SUGGESTIONS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_WRITE_COMMENTS;
@@ -83,27 +82,12 @@ public class ApiHelper {
                 .build();
     }
 
-    public void loadsearchfeeds(final ReqListener reqListener) {
-        AndroidNetworking.get(BASE_URL + ENDPOINT_ARCHIVED_FEEDS)
+    public ANRequest loadsearchfeeds(String searchTag) {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_SEARCH_TAG)
                 .addHeaders(headers)
-                .addQueryParameter("term", "karakoram")
-                /*.addPathParameter("pageNumber", "0")
-                .addQueryParameter("limit", "3")*/
+                .addQueryParameter("term", searchTag)
                 .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        NetworkUtils.parseResponse(TAG, response);
-                        reqListener.onSuccess(response);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        NetworkUtils.parseError(TAG, anError);
-                        reqListener.onFail();
-                    }
-                });
+                .build();
     }
 
     public ANRequest loadHomeFeeds() {
@@ -285,11 +269,19 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest sendMessageReq(String message, String conversation_id) {
+    public ANRequest sendMessageReq(String message, String user_id) {
         return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_MESSAGE)
                 .addHeaders(headers)
-                .addPathParameter("id", conversation_id)
+                .addPathParameter("id", user_id)
                 .addBodyParameter("body", message)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest getSearchList(String text) {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_TAG_SUGGESTIONS)
+                .addHeaders(headers)
+                .addQueryParameter("term", text)
                 .setPriority(Priority.HIGH)
                 .build();
     }

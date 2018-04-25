@@ -1,13 +1,19 @@
 package com.jullae.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.jullae.R;
+import com.jullae.app.AppController;
+import com.jullae.ui.adapters.SearchAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.homefeed.HomeActivity;
 
@@ -21,7 +27,7 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
 
     private View view;
-    private View autoCompleteTextView;
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Nullable
     @Override
@@ -35,12 +41,25 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
 
         autoCompleteTextView = view.findViewById(R.id.search_tag_field);
-        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+        SearchAdapter searchAdapter = new SearchAdapter(getmContext(), ((AppController) getmContext().getApplication()).getmAppDataManager());
+        autoCompleteTextView.setAdapter(searchAdapter);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                ((HomeActivity) getmContext()).showSearchFragment();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String searchTag = ((TextView) view).getText().toString();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        autoCompleteTextView.setText("");
+
+
+                        ((HomeActivity) getmContext()).showSearchFragment(searchTag);
+
+                    }
+                }, 500);
             }
         });
+
         view.findViewById(R.id.fresh_feeds).setOnClickListener(this);
         view.findViewById(R.id.weekly_feeds).setOnClickListener(this);
         view.findViewById(R.id.popular_feeds).setOnClickListener(this);
@@ -69,9 +88,6 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                 break;
         }
     }
-    /*private void updateCropEditText(List<String> strings) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, strings);
-        ed_crop.setAdapter(adapter);
-    }*/
+
 
 }

@@ -33,7 +33,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     private static final String TAG = MessageAdapter.class.getName();
     private final RequestOptions picOptions;
     private final String currentUserId;
-    List<MessageModel.Message> messagelist = new ArrayList<>();
+    List<MessageModel> messagelist = new ArrayList<MessageModel>();
     private HomeFeedPresentor mPresentor;
     private Context context;
     private StoryDetailPresentor mStoryPresentor;
@@ -59,7 +59,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     @Override
     public void onBindViewHolder(@NonNull final MessageHolder holder, final int position) {
 
-        holder.user_name.setText(messagelist.get(position).getSent_by_id());
+        holder.user_name.setText(messagelist.get(position).getSent_by_name());
         holder.message.setText(messagelist.get(position).getMessage());
     }
 
@@ -76,14 +76,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         return messagelist.size();
     }
 
-    public void add(List<MessageModel.Message> list) {
+    public void add(List<MessageModel> list) {
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());
         notifyDataSetChanged();
     }
 
-    public void addMessage(MessageModel.Message messageModel) {
+    public void addMessage(MessageModel messageModel) {
         messagelist.add(messageModel);
         notifyItemInserted(messagelist.size() - 1);
     }

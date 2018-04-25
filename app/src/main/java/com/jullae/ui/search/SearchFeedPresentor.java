@@ -1,32 +1,46 @@
 package com.jullae.ui.search;
 
-import com.jullae.ui.base.BasePresentor;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.helpers.AppDataManager;
 import com.jullae.model.FreshFeedModel;
+import com.jullae.model.TagSearchMainModel;
+import com.jullae.ui.base.BasePresentor;
+import com.jullae.utils.NetworkUtils;
 
 import java.util.List;
 
-public class SearchFeedPresentor extends BasePresentor {
+public class SearchFeedPresentor extends BasePresentor<SearchFeedContract.View> {
 
 
+    private static final String TAG = SearchFeedPresentor.class.getName();
     private SearchFeedContract.View view;
 
     public SearchFeedPresentor(AppDataManager appDataManager) {
         super(appDataManager);
     }
 
-    public void loadFeeds() {
-        getmAppDataManager().loadSearchFeeds(new FeedListener() {
+    public void loadFeeds(String searchTag) {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().loadsearchfeeds(searchTag).getAsObject(TagSearchMainModel.class, new ParsedRequestListener<TagSearchMainModel>() {
+
+
             @Override
-            public void onSuccess(List<FreshFeedModel> list) {
-                if (view != null)
-                    view.onFetchFeeds(list);
+            public void onResponse(TagSearchMainModel tagSearchMainModel) {
+                NetworkUtils.parseResponse(TAG, tagSearchMainModel);
+                if (isViewAttached()) {
+                    getMvpView().onFetchFeedsSuccess(tagSearchMainModel.getFeedModelList());
+
+                }
+
             }
 
             @Override
-            public void onFail() {
-                if (view != null)
-                    view.onFetchFeedsFail();
+            public void onError(ANError anError) {
+                NetworkUtils.parseResponse(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().onFetchFeedsFail();
+                }
             }
         });
     }

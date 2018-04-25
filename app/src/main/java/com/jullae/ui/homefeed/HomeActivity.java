@@ -139,8 +139,16 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     }
 
 
-    public void showSearchFragment() {
-        showFragment(new SearchFragment(), true);
+    public void showSearchFragment(String searchTag) {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SearchFragment searchFragment = new SearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("searchTag", searchTag);
+        searchFragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.container, searchFragment).addToBackStack(null).commit();
+
     }
 
     @Override

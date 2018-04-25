@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.jullae.R;
 import com.jullae.app.AppController;
+import com.jullae.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
 
@@ -66,7 +67,7 @@ public class CommonTabFragment extends BaseFragment implements CommonTabView {
     }
 
     @Override
-    public void onStoriesFetchSuccess(List<StoryListModel.StoryMainModel> storyModelList) {
+    public void onStoriesFetchSuccess(List<FeedModel> storyModelList) {
         searchFeedAdapter.add(storyModelList);
     }
 

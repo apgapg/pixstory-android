@@ -8,11 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.model.FreshFeedModel;
+import com.jullae.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
 import com.jullae.ui.search.SearchFeedContract;
@@ -22,9 +22,10 @@ import java.util.List;
 
 public class SearchFragment extends BaseFragment implements SearchFeedContract.View {
     private View view;
-    private AutoCompleteTextView autoCompleteTextView;
     private SearchFeedPresentor searchFeedPresentor;
     private SearchFeedAdapter searchFeedAdapter;
+    private String searchTag;
+    private TextView searchTextView;
 
     @Nullable
     @Override
@@ -35,9 +36,11 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
             return view;
         }
         view = inflater.inflate(R.layout.fragment_search, container, false);
+        searchTag = getArguments().getString("searchTag");
+        searchFeedPresentor = new SearchFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
 
-
-        autoCompleteTextView = view.findViewById(R.id.search_tag_field);
+        searchTextView = view.findViewById(R.id.search_tag_field);
+        searchTextView.setText(searchTag);
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -49,15 +52,14 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(searchFeedAdapter);
 
-        searchFeedPresentor = new SearchFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
 
-        searchFeedPresentor.loadFeeds();
         return view;
     }
 
     @Override
-    public void onFetchFeeds(List<FreshFeedModel> list) {
+    public void onFetchFeedsSuccess(List<FeedModel> list) {
         // searchFeedAdapter.add(list);
+        searchFeedAdapter.add(list);
     }
 
     @Override
@@ -68,13 +70,16 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchFeedPresentor.setView(this);
+        searchFeedPresentor.attachView(this);
+        searchFeedPresentor.loadFeeds(searchTag);
+
     }
 
     @Override
     public void onDestroyView() {
+        searchFeedPresentor.detachView();
+
         super.onDestroyView();
-        searchFeedPresentor.removeView();
     }
 
 }

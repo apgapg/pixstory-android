@@ -57,13 +57,13 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
     private void setUpRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view);
         messageAdapter = new MessageAdapter(this, currentUserId);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(messageAdapter);
     }
 
     @Override
-    public void onMessageListFetchSuccess(List<MessageModel.Message> messageList) {
+    public void onMessageListFetchSuccess(List<MessageModel> messageList) {
         messageAdapter.add(messageList);
     }
 
@@ -95,10 +95,9 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
             public void onClick(View v) {
 
                 updateCommentUI(0);
-
-                mPresentor.sendMessageReq(addMessageField.getText().toString().trim(), "", new ReqListener() {
+                mPresentor.sendMessageReq(addMessageField.getText().toString().trim(), user_id, new ReqListener() {
                     @Override
-                    public void onSuccess(MessageModel.Message messageModel) {
+                    public void onSuccess(MessageModel messageModel) {
                         updateCommentUI(1);
                         messageAdapter.addMessage(messageModel);
                     }
@@ -167,7 +166,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
     }
 
     public interface ReqListener {
-        void onSuccess(MessageModel.Message messageModel);
+        void onSuccess(MessageModel messageModel);
 
         void onFail();
     }
