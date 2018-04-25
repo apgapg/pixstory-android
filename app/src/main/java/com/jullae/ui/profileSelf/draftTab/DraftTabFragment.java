@@ -5,13 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jullae.R;
 import com.jullae.app.AppController;
+import com.jullae.model.DraftModel;
 import com.jullae.ui.base.BaseFragment;
+
+import java.util.List;
 
 public class DraftTabFragment extends BaseFragment implements DraftTabView {
 
@@ -44,7 +48,7 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
         recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        draftTabAdapter = new DraftTabAdapter(getmContext());
+        draftTabAdapter = new DraftTabAdapter(getmContext(), mPresentor);
         recyclerView.setAdapter(draftTabAdapter);
     }
 
@@ -64,8 +68,9 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
 
 
     @Override
-    public void onDraftsFetchSuccess() {
-
+    public void onDraftsFetchSuccess(List<DraftModel.FreshFeed> list) {
+        Log.d(TAG, "onDraftsFetchSuccess: ");
+        draftTabAdapter.add(list);
     }
 
     @Override

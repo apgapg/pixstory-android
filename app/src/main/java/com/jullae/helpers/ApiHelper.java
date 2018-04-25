@@ -16,6 +16,7 @@ import java.util.HashMap;
 import static com.jullae.BuildConfig.BASE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_MESSAGE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ARCHIVED_FEEDS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_SIGNUP;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FOLLOW;
@@ -29,6 +30,8 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_PIC_UPDATE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_TAB_BOOKMARKS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_TAB_PICTURES;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_TAB_STORIES;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PUBLISH_DRAFT;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PUBLISH_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_REPORT_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_SEARCH_TAG;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_DETAILS;
@@ -282,6 +285,38 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_TAG_SUGGESTIONS)
                 .addHeaders(headers)
                 .addQueryParameter("term", text)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    /*POST - /api/v1/story/publish
+Request Params: {"title": "Title", "content": "Text here", "picture_id": picture_id}*/
+    public ANRequest publishStory(String title, String content, String picture_id) {
+
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_PUBLISH_STORY)
+                .addHeaders(headers)
+                .addBodyParameter("title", title)
+                .addBodyParameter("content", content)
+                .addBodyParameter("picture_id", picture_id)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest draftStory(String title, String content, String picture_id) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_PUBLISH_DRAFT)
+                .addHeaders(headers)
+                .addBodyParameter("title", title)
+                .addBodyParameter("content", content)
+                .addBodyParameter("picture_id", picture_id)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest makeDraftDeleteReq(String story_id) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_DELETE_STORY)
+                .addHeaders(headers)
+                .addPathParameter("id", story_id)
+
                 .setPriority(Priority.HIGH)
                 .build();
     }

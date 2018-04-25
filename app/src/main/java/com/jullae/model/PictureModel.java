@@ -41,7 +41,7 @@ public class PictureModel {
         return photographer_penname;
     }
 
-    private String getPicture_id() {
+    public String getPicture_id() {
         return picture_id;
     }
 

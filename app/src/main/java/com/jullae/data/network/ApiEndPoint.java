@@ -23,13 +23,16 @@ public class ApiEndPoint {
     public static final String ENDPOINT_PROFILE_PIC_UPDATE = "/user/{id}/upload_dp";
     public static final String ENDPOINT_WRITE_COMMENTS = "/comment/publish";
     public static final String ENDPOINT_REPORT_STORY = "/report";
-    public static final String ENDPOINT_DRAFTS = "/profile/:penname/drafts";
+    public static final String ENDPOINT_DRAFTS = "/profile/{penname}/drafts";
     public static final String ENDPOINT_PROFILE_VISITOR_INFO = "/profile/{penname}/info";
 
     public static final String ENDPOINT_CONVERSATION_LIST = "/user/conversations";
     public static final String ENDPOINT_MESSAGE_LIST = "/user/{id}/messages";
     public static final String ENDPOINT_ADD_MESSAGE = "/user/{id}/message";
     public static final String ENDPOINT_TAG_SUGGESTIONS = "/suggestion/tag_suggestions";
+    public static final String ENDPOINT_PUBLISH_STORY = "/story/publish";
+    public static final String ENDPOINT_PUBLISH_DRAFT = "/story/draft";
+    public static final String ENDPOINT_DELETE_STORY = "/story/{id}/destroy";
 
     private ApiEndPoint() {
 

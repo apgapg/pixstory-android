@@ -10,10 +10,10 @@ import java.util.List;
  * <p>
  * Feed Model.
  */
-public class FreshFeedModel {
+public class DraftModel {
 
 
-    @SerializedName("posts")
+    @SerializedName("stories")
     @Expose
     private List<FreshFeed> list;
 
@@ -40,5 +40,3 @@ public class FreshFeedModel {
     }
 
 }
-
-

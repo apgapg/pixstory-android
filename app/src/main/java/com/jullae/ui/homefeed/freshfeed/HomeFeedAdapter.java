@@ -2,6 +2,7 @@ package com.jullae.ui.homefeed.freshfeed;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.customView.ItemOffLRsetDecoration;
 import com.jullae.model.LikesModel;
+import com.jullae.ui.DialogActivity;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.homefeed.HomeActivity;
 import com.jullae.ui.homefeed.HomeFeedModel;
@@ -197,6 +199,15 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             like_count = itemView.findViewById(R.id.like_count);
             story_count = itemView.findViewById(R.id.story_count);
 
+            itemView.findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, DialogActivity.class);
+                    i.putExtra("picture_id", messagelist.get(getAdapterPosition()).getPicture_id());
+                    mContext.startActivity(i);
+
+                }
+            });
             recycler_view_story = itemView.findViewById(R.id.recycler_view_story);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             recycler_view_story.setLayoutManager(linearLayoutManager);

@@ -31,6 +31,7 @@ import com.jullae.ui.homefeed.HomeActivity;
 import com.jullae.ui.homefeed.ProfileFragmentPresentor;
 import com.jullae.ui.homefeed.freshfeed.ProfileFragmentView;
 import com.jullae.ui.profileSelf.CommonTabFragment;
+import com.jullae.ui.profileSelf.PictureTabFragment;
 import com.jullae.ui.profileSelf.ProfileMainModel;
 import com.jullae.ui.profileSelf.draftTab.DraftTabFragment;
 
@@ -256,11 +257,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    CommonTabFragment commonTabFragment = new CommonTabFragment();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putInt("position", 1);
-                    commonTabFragment.setArguments(bundle1);
-                    return commonTabFragment;
+                    return new PictureTabFragment();
 
                 case 1:
                     CommonTabFragment commonTabFragment2 = new CommonTabFragment();

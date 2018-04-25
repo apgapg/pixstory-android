@@ -31,8 +31,6 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
 
-        position = getArguments().getInt("position");
-
         mPresentor = new PictureTabPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
 
         setuprecyclerView();

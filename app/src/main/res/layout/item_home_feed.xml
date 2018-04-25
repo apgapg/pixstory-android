@@ -141,14 +141,10 @@
             style="@style/padding8TopBottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="8dp"
             android:gravity="center_vertical|end">
 
-            <ImageView
-                android:id="@+id/ivEditStory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/shape" />
+
 
             <TextView
                 android:id="@+id/story_count"
@@ -160,6 +156,17 @@
                 tools:text="30 Stories" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_write_story"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|end"
+            android:paddingLeft="8dp"
+            android:text="Write a Story"
+
+            android:textColor="#424242"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View

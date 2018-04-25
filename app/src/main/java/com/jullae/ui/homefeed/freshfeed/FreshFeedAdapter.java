@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.model.FreshFeedModel;
 import com.jullae.model.PictureModel;
+import com.jullae.model.StoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         FreshFeedsViewHolder viewHolder = (FreshFeedsViewHolder) holder;
         PictureModel pictureModel = messagelist.get(position).getPictureModel();
-        FreshFeedModel.Story storyModel = messagelist.get(position).getStory();
+        StoryModel storyModel = messagelist.get(position).getStoryModel();
 
         Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
         if (pictureModel.getPicture_title() != null && pictureModel.getPicture_title().isEmpty()) {
@@ -68,7 +69,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         setLikeCommentCount(viewHolder, pictureModel, storyModel);
     }
 
-    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, FreshFeedModel.Story storyModel) {
+    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, StoryModel storyModel) {
         viewHolder.user_name.setText(pictureModel.getPhotographer_penname().trim());
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         Glide.with(mContext).load(pictureModel.getPhotographer_avatar()).into(viewHolder.user_photo);
@@ -76,7 +77,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, FreshFeedModel.Story storyModel) {
+    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, StoryModel storyModel) {
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.pic_like_count.setText(pictureModel.getLike_count() + " likes");
