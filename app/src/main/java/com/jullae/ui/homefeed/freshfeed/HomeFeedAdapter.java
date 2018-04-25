@@ -22,6 +22,7 @@ import com.jullae.R;
 import com.jullae.customView.ItemOffLRsetDecoration;
 import com.jullae.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
+import com.jullae.ui.homefeed.HomeActivity;
 import com.jullae.ui.homefeed.HomeFeedModel;
 import com.jullae.ui.homefeed.HomeFeedPresentor;
 import com.jullae.ui.homefeed.StoryAdapter;
@@ -67,6 +68,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Glide.with(mContext).load(messagelist.get(position).getPicture_url()).apply(picOptions).into(viewHolder.image);
 
         viewHolder.user_name.setText(messagelist.get(position).getPhotographer_name());
+        viewHolder.user_penname.setText(messagelist.get(position).getPhotographer_penname());
+
         Glide.with(mContext).load(messagelist.get(position).getPhotographer_avatar()).apply(picOptions).into(viewHolder.user_image);
 
         viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
@@ -176,7 +179,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         private ImageView user_image, image, ivStoryPic, ivEditStory, btn_like, ivMore;
-        private TextView user_name, tvLocation, tvTimeInDays, like_count, story_count;
+        private TextView user_name, user_penname, tvTimeInDays, like_count, story_count;
         private RecyclerView recycler_view_story;
         private StoryAdapter storyAdapter;
 
@@ -189,7 +192,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             btn_like = itemView.findViewById(R.id.btn_like);
             ivEditStory = itemView.findViewById(R.id.ivEditStory);
             user_name = itemView.findViewById(R.id.text_name);
-            tvLocation = itemView.findViewById(R.id.tvLocation);
+            user_penname = itemView.findViewById(R.id.text_penname);
             tvTimeInDays = itemView.findViewById(R.id.tvTimeInDays);
             like_count = itemView.findViewById(R.id.like_count);
             story_count = itemView.findViewById(R.id.story_count);
@@ -203,6 +206,27 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             storyAdapter = new StoryAdapter(mContext);
             recycler_view_story.setAdapter(storyAdapter);
+
+            user_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getPhotographer_penname());
+                }
+            });
+            user_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getPhotographer_penname());
+                }
+            });
+
+            user_penname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getPhotographer_penname());
+                }
+            });
+
 
             btn_like.setOnClickListener(new View.OnClickListener() {
                 @Override

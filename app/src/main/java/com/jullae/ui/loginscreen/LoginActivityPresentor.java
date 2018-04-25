@@ -59,8 +59,11 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
                     NetworkUtils.parseResponse(TAG, signUpResponseModel);
                     if (signUpResponseModel.isSignUpSuccess()) {
                         getmAppDataManager().getmAppPrefsHelper().saveUserDetails(signUpResponseModel.getAvatar(), signUpResponseModel.getName(), signUpResponseModel.getPenname(), signUpResponseModel.getBio(), signUpResponseModel.getUser_id(), signUpResponseModel.getToken());
+                        getmAppDataManager().getmApiHelper().updateToken(signUpResponseModel.getToken());
+
                         if (isViewAttached()) {
                             getMvpView().hideProgress();
+                            getmAppDataManager().getmApiHelper().updateToken(signUpResponseModel.getToken());
                             getMvpView().onSignUpSuccess();
                         }
                     } else {
@@ -88,9 +91,13 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
             public void onResponse(LoginResponseModel loginResponseModel) {
                 NetworkUtils.parseResponse(TAG, loginResponseModel);
                 if (loginResponseModel.isLoginSuccess()) {
+
                     getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel.getAvatar(), loginResponseModel.getName(), loginResponseModel.getPenname(), loginResponseModel.getBio(), loginResponseModel.getUser_id(), loginResponseModel.getToken());
+                    getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+
                     if (isViewAttached()) {
                         getMvpView().hideProgress();
+
                         getMvpView().onLoginSuccess();
                     }
                 }

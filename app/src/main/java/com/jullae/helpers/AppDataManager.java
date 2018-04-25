@@ -24,7 +24,7 @@ public class AppDataManager {
 
     public AppDataManager(AppPrefsHelper appPrefsHelper) {
         mAppPrefsHelper = appPrefsHelper;
-        mApiHelper = new ApiHelper();
+        mApiHelper = new ApiHelper(mAppPrefsHelper.getKeyToken());
     }
 
     public AppPrefsHelper getmAppPrefsHelper() {

@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.model.PictureModel;
 import com.jullae.model.StoryModel;
-import com.jullae.ui.profile.StoryListModel;
+import com.jullae.ui.profileSelf.StoryListModel;
 
 import java.util.ArrayList;
 import java.util.List;

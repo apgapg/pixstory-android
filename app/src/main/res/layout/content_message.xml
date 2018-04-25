@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/rLayoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/textViewStyle.line_1"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Message"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/tvClose"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+        <include
+            layout="@layout/vertical_divider_light"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="44dp"
+        android:layout_marginTop="48dp"
+        android:clipToPadding="false"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/vertical_divider_light" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:background="#fff">
+
+            <EditText
+                android:id="@+id/field_add_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:background="#fff"
+                android:hint="Add a message..."
+                android:maxLines="8"
+                android:minHeight="48dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="8dp"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/btn_add_message"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_send_inactive_24dp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_message"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"
+        android:background="#fff"
+        android:visibility="invisible" />
+
+
+</RelativeLayout>

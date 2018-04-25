@@ -195,6 +195,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void startHomeActivity() {
+
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }

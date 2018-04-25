@@ -14,31 +14,12 @@ public class StoryModel {
     private String comment_count;
     private String created_at;
 
-    private String is_liked;
-
-    private String is_followed;
-    private String is_self;
 
     public String getWriter_id() {
         return writer_id;
     }
 
 
-    public String getIs_liked() {
-        return is_liked;
-    }
-
-    public void setIs_liked(String is_liked) {
-        this.is_liked = is_liked;
-    }
-
-    public String getIs_followed() {
-        return is_followed;
-    }
-
-    public void setIs_followed(String is_followed) {
-        this.is_followed = is_followed;
-    }
 
     public String getWriter_name() {
         return writer_name;
@@ -80,8 +61,5 @@ public class StoryModel {
         return writer_penname;
     }
 
-    public String getIs_self() {
-        return is_self;
-    }
 
 }

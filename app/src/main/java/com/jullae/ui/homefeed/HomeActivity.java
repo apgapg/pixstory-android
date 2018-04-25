@@ -2,6 +2,7 @@ package com.jullae.ui.homefeed;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -23,6 +24,7 @@ import com.jullae.ui.adapters.GridAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.fragments.LikeDialogFragment;
+import com.jullae.ui.fragments.ProfileFragment;
 import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.fragments.StoryDialogFragment;
 import com.jullae.ui.homefeed.freshfeed.FreshFeedFragment;
@@ -30,6 +32,8 @@ import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.utils.Utils;
 import com.jullae.utils.imagepicker.ImageChooser;
 import com.kbeanie.multipicker.api.entity.ChosenImage;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.util.List;
@@ -52,6 +56,7 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     private ImageChooser imageChooser;
     private ImageView tab_home, tab_explore, tab_profile;
     private BottomSheetBehavior<View> mBottomSheetBehavior;
+    private ProfileFragment.ImagePickListener imagePickListener;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -297,7 +302,21 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
     protected void onActivityResult(final int requestCode, final int resultCode,
                                     final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageChooser.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri imageUri = result.getUri();
+                if (imagePickListener != null)
+                    imagePickListener.onImagePickSucccess(imageUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                if (imagePickListener != null)
+
+                    imagePickListener.onImagePickFail();
+            }
+        }
+        //  imageChooser.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -382,5 +401,31 @@ public class HomeActivity extends BaseActivity implements HomeFeedFragmentold.Fe
         else fragmentTransaction.replace(R.id.container, fragment).commit();
 
 
+    }
+
+    public void showCropImage(ProfileFragment.ImagePickListener imagePickListener) {
+        this.imagePickListener = imagePickListener;
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setFixAspectRatio(true)
+
+                .setRequestedSize(500, 500)
+                .setMinCropResultSize(200, 200)
+                .start(this);
+    }
+
+    public void removeListener() {
+        imagePickListener = null;
+    }
+
+    public void showVisitorProfile(String photographer_penname) {
+        Intent i = new Intent(this, StoryDetailActivity.class);
+        i.putExtra("profile", true);
+/*
+        i.putExtra("user_id", true);
+*/
+        i.putExtra("penname", photographer_penname);
+        startActivity(i);
     }
 }

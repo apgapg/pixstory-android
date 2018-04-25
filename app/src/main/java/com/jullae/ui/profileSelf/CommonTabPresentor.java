@@ -1,4 +1,4 @@
-package com.jullae.ui.profile;
+package com.jullae.ui.profileSelf;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
@@ -6,10 +6,10 @@ import com.jullae.helpers.AppDataManager;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.NetworkUtils;
 
-public class StoryTabPresentor extends BasePresentor<StoryTabView> {
-    private static final String TAG = StoryTabPresentor.class.getName();
+public class CommonTabPresentor extends BasePresentor<CommonTabView> {
+    private static final String TAG = CommonTabPresentor.class.getName();
 
-    public StoryTabPresentor(AppDataManager appDataManager) {
+    public CommonTabPresentor(AppDataManager appDataManager) {
         super(appDataManager);
     }
 

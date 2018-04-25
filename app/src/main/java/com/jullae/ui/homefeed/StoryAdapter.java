@@ -90,11 +90,22 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             user_name = inflate.findViewById(R.id.text_name);
             user_image = inflate.findViewById(R.id.image_avatar);
             story_text = inflate.findViewById(R.id.story_text);
-            tvLocation = inflate.findViewById(R.id.tvLocation);
+            tvLocation = inflate.findViewById(R.id.penname_field);
             tvTimeInDays = inflate.findViewById(R.id.tvTimeInDays);
             like_count = inflate.findViewById(R.id.like_count);
             comment_count = inflate.findViewById(R.id.comment_count);
-
+            user_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
+                }
+            });
+            user_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
+                }
+            });
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -102,7 +113,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     Gson gson = new Gson();
                     String object = gson.toJson(messagelist.get(getAdapterPosition()));
                     i.putExtra("object", object);
-                    i.putExtra("position", getAdapterPosition());
+                    i.putExtra("profile", false);
                     mContext.startActivity(i);
                 }
             });

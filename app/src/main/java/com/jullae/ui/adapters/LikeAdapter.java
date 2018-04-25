@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.model.LikesModel;
 import com.jullae.ui.homefeed.HomeFeedPresentor;
-import com.jullae.ui.storydetails.StoryDetailActivity;
+import com.jullae.ui.storydetails.StoryDetailFragment;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 
 import java.util.ArrayList;
@@ -178,7 +178,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
                             }
                         });
                     else if (mStoryPresentor != null) {
-                        mStoryPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new StoryDetailActivity.FollowReqListener() {
+                        mStoryPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new StoryDetailFragment.FollowReqListener() {
 
                             @Override
                             public void onSuccess() {

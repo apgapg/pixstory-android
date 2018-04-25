@@ -19,14 +19,13 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField 'String', 'BASE_URL', '"http://54.254.240.3:80/"'
+            buildConfigField 'String', 'BASE_URL', '"http://54.255.220.204:80/api/v1/"'
             buildConfigField 'boolean', 'WATER_MARK', 'true'
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources false
         }
         release {
-            buildConfigField 'String', 'BASE_URL', '"http://54.254.240.3:80/"'
+            buildConfigField 'String', 'BASE_URL', '"http://54.255.220.204:80/api/v1/"'
             buildConfigField 'boolean', 'WATER_MARK', 'false'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -76,7 +75,7 @@ dependencies {
 //image picker library
     compile 'com.kbeanie:multipicker:1.1.31@aar'
     compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.theartofdev.edmodo:android-image-cropper:2.4.6'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
     compile 'com.amitshekhar.android:android-networking:1.0.1'
     compile 'com.borjabravo:readmoretextview:2.1.0'

@@ -15,66 +15,101 @@
             android:orientation="vertical"
             app:layout_scrollFlags="scroll">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <com.jullae.customView.CircularImageView
-                    android:id="@+id/image_avatar"
-                    android:layout_width="0dp"
-
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
-                    android:src="#bdbdbd" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/text_name"
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:gravity="center"
-                        android:text="Username"
-                        android:textColor="#424242"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp">
 
-                    <TextView
-                        android:id="@+id/text_penname"
-                        android:layout_width="match_parent"
+                        <com.jullae.customView.CircularImageView
+                            android:id="@+id/image_avatar"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:background="@drawable/circle_dash_border"
+                            android:padding="4dp"
+
+                            android:src="#bdbdbd" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:padding="20dp"
+                            android:visibility="invisible" />
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="penname"
-                        android:textColor="#757575"
-                        android:textSize="14dp" />
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="48dp"
+                        android:layout_marginRight="48dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/user_bio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="8dp"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="3"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:text="Username"
-                        android:textColor="#424242"
-                        android:textSize="12dp" />
+                        <TextView
+                            android:id="@+id/text_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="Username"
+                            android:textColor="#212121"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_penname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="penname"
+                            android:textColor="#757575"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/user_bio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="8dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="3"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:text="Username"
+                            android:textColor="#424242"
+                            android:textSize="12dp" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/button_message"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="36dp"
+                    android:background="@drawable/circle_border"
+                    android:padding="10dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_envelope" />
+            </FrameLayout>
 
             <include layout="@layout/vertical_divider_light" />
 
@@ -102,7 +137,7 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="19"
+                        android:text="-"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
@@ -138,7 +173,7 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="26"
+                        android:text="-"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
@@ -174,13 +209,12 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="49"
+                        android:text="-"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_pictures"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -202,6 +236,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/text_pictures"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -210,12 +245,13 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="5"
+                        android:text="-"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
 
                     <TextView
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

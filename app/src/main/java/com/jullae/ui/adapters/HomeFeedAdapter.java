@@ -22,7 +22,7 @@
 // * the @{@link HomeActivity} with
 // * few options like comments,likes,feeds,stories,edit stories etc.
 // */
-//public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.FeedHolder> {
+//public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ConversationHolder> {
 //
 //    private final LayoutInflater inflater;
 //    private ArrayList<String> list;
@@ -49,13 +49,13 @@
 //    }
 //
 //    @Override
-//    public FeedHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-//        return new FeedHolder(inflater
+//    public ConversationHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+//        return new ConversationHolder(inflater
 //                .inflate(R.layout.adapter_feeds, parent, false));
 //    }
 //
 //    @Override
-//    public void onBindViewHolder(final FeedHolder holder, final int position) {
+//    public void onBindViewHolder(final ConversationHolder holder, final int position) {
 //        holder.tvUserName.setText(list.get(position));
 //        holder.tvLocation.setText(list.get(position));
 //        holder.tvTimeInDays.setText("4 Days Ago");
@@ -82,10 +82,10 @@
 //    }
 //
 //    /**
-//     * Class @{@link FeedHolder} used to bind
+//     * Class @{@link ConversationHolder} used to bind
 //     * the views with the recyclerview.;
 //     */
-//    class FeedHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+//    class ConversationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 //
 //        private ImageView ivUserPic, ivMore, ivStoryPic, ivLike, ivEditStory;
 //        private TextView tvUserName, tvLocation, tvTimeInDays, tvLikes, tvComments;
@@ -98,7 +98,7 @@
 //         *
 //         * @param itemView Item view.
 //         */
-//        FeedHolder(final View itemView) {
+//        ConversationHolder(final View itemView) {
 //            super(itemView);
 ////            circleIndicator = itemView.findViewById(R.id.circleIndicator);
 ////            viewPagerSlider = itemView.findViewById(R.id.viewPagerSlider);

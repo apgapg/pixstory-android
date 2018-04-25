@@ -82,6 +82,11 @@ public class AppPrefsHelper {
         return sharedPreferences.getString(KEY_DP_URL, "");
     }
 
+    public void setKeyDpUrl(String profile_dp_url) {
+        sharedPreferences.edit().putString(KEY_DP_URL, profile_dp_url).commit();
+    }
+
+
     public void putinsharedprefBoolean(String key, boolean value) {
 
         sharedPreferences.edit().putBoolean(key, value).apply();

@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
-import com.jullae.model.CommentModel;
+import com.jullae.model.StoryCommentModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
 
     private static final String TAG = CommentsAdapter.class.getName();
     private final RequestOptions picOptions;
-    List<CommentModel.Comment> messagelist = new ArrayList();
+    List<StoryCommentModel.Comment> messagelist = new ArrayList();
     private Context context;
 
 
@@ -63,14 +63,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
         return messagelist.size();
     }
 
-    public void add(List<CommentModel.Comment> list) {
+    public void add(List<StoryCommentModel.Comment> list) {
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());
         notifyDataSetChanged();
     }
 
-    public void addComment(CommentModel.Comment commentModel) {
+    public void addComment(StoryCommentModel.Comment commentModel) {
         messagelist.add(commentModel);
         notifyItemInserted(messagelist.size() - 1);
     }

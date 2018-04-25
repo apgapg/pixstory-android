@@ -1,4 +1,4 @@
-package com.jullae.ui.profile;
+package com.jullae.ui.profileSelf;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

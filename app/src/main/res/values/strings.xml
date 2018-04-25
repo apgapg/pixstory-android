@@ -94,6 +94,7 @@
     <string name="add_comment">Add Comment</string>
     <string name="title_activity_story_detail">StoryDetailActivity</string>
     <string name="network_error">couldn\'t connect!</string>
+    <string name="title_activity_message">MessageActivity</string>
 
 
 </resources>

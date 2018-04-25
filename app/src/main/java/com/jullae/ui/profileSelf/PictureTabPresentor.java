@@ -1,4 +1,4 @@
-package com.jullae.ui.profile;
+package com.jullae.ui.profileSelf;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;

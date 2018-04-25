@@ -29,6 +29,7 @@ public class HomeFeedModel {
         String picture_id;
 
         String photographer_name;
+        String photographer_penname;
 
         String photographer_avatar;
 
@@ -52,6 +53,10 @@ public class HomeFeedModel {
 
 
         List<StoryModel> stories;
+
+        public String getPhotographer_penname() {
+            return photographer_penname;
+        }
 
         public String getIs_followed() {
             return is_followed;
