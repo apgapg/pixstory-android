@@ -33,6 +33,10 @@ public class ApiEndPoint {
     public static final String ENDPOINT_PUBLISH_STORY = "/story/publish";
     public static final String ENDPOINT_PUBLISH_DRAFT = "/story/draft";
     public static final String ENDPOINT_DELETE_STORY = "/story/{id}/destroy";
+    public static final String ENDPOINT_DELETE_BOOKMARK = "/story/{id}/remove_bookmark";
+
+    public static final String ENDPOINT_UPDATE_PROFILE = "/user/{id}/update";
+    public static final String ENDPOINT_SAVE_STORY = "/story/{id}/bookmark";
 
     private ApiEndPoint() {
 

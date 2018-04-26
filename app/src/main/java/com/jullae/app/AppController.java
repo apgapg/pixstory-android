@@ -7,8 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
-import com.jullae.helpers.AppDataManager;
-import com.jullae.helpers.AppPrefsHelper;
+import com.jullae.data.AppDataManager;
+import com.jullae.data.prefs.AppPrefsHelper;
 
 /**
  * Created by macbunny on 22/11/17.

@@ -10,7 +10,7 @@
     android:orientation="horizontal"
     android:padding="@dimen/padding_small">
 
-    <com.jullae.customView.CircularImageView
+    <com.jullae.ui.custom.CircularImageView
         android:id="@+id/image_avatar"
         android:layout_width="32dp"
         android:layout_height="32dp"

@@ -11,7 +11,7 @@
 //
 //import com.jullae.R;
 //import com.jullae.constant.AppConstant;
-//import com.jullae.ui.homefeed.HomeActivity;
+//import com.jullae.ui.home.homefeed.HomeActivity;
 //
 //import java.util.ArrayList;
 //

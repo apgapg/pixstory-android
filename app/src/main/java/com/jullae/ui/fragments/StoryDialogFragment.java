@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.constant.AppConstant;
-import com.jullae.model.PostRequestModel;
+import com.jullae.data.db.model.PostRequestModel;
 import com.jullae.retrofit.APIError;
 import com.jullae.retrofit.ApiInterface;
 import com.jullae.retrofit.CommonResponse;

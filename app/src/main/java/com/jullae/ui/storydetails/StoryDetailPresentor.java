@@ -3,10 +3,11 @@ package com.jullae.ui.storydetails;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
-import com.jullae.helpers.AppDataManager;
-import com.jullae.model.LikesModel;
-import com.jullae.model.StoryCommentModel;
+import com.jullae.data.AppDataManager;
+import com.jullae.data.db.model.LikesModel;
+import com.jullae.data.db.model.StoryCommentModel;
 import com.jullae.ui.base.BasePresentor;
+import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 
@@ -144,6 +145,31 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
         });
 
 
+    }
+
+    public void saveStory(String story_id) {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().sendStorySaveReq(story_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+
+                if (isViewAttached()) {
+                    getMvpView().onSaveStorySuccess();
+                }
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+
+                if (isViewAttached()) {
+                    getMvpView().onSaveStoryFail();
+                }
+            }
+        });
     }
 
 

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.homefeed.HomeActivity"
+            android:name=".ui.home.homeFeed.HomeActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -63,12 +63,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".ui.message.MessageActivity"
+            android:name=".ui.home.profile.message.MessageActivity"
             android:label="@string/title_activity_message"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.DialogActivity"
+            android:name=".ui.writeStory.WriteStoryActivity"
             android:screenOrientation="portrait" />
     </application>
 

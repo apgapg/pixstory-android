@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.jullae.helpers.AppDataManager;
+import com.jullae.data.AppDataManager;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.ErrorResponseModel;

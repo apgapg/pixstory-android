@@ -19,9 +19,9 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.helpers.InputValidation;
-import com.jullae.model.User;
+import com.jullae.data.db.model.User;
 import com.jullae.sql.DatabaseHelper;
+import com.jullae.utils.InputValidation;
 
 import org.json.JSONObject;
 
@@ -69,19 +69,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void initViews() {
 
-        nameErrorTextView = (TextView) findViewById(R.id.invalidNameWarning);
-        emailErrorTextView = (TextView) findViewById(R.id.invalidEmailRegWarning);
-        passwordErrorTextView = (TextView) findViewById(R.id.invalidPasswordRegWarning);
-        confirmPasswordErrorTextView = (TextView) findViewById(R.id.invalidConfirmPasswordWarning);
+        nameErrorTextView = findViewById(R.id.invalidNameWarning);
+        emailErrorTextView = findViewById(R.id.invalidEmailRegWarning);
+        passwordErrorTextView = findViewById(R.id.invalidPasswordRegWarning);
+        confirmPasswordErrorTextView = findViewById(R.id.invalidConfirmPasswordWarning);
 
-        textInputNameTextView = (EditText) findViewById(R.id.reg_name);
-        textInputEditTextEmail = (EditText) findViewById(R.id.reg_email);
-        textInputEditTextPassword = (EditText) findViewById(R.id.reg_password);
-        textInputEditTextConfirmPassword = (EditText) findViewById(R.id.reg_confirm_password);
+        textInputNameTextView = findViewById(R.id.reg_name);
+        textInputEditTextEmail = findViewById(R.id.reg_email);
+        textInputEditTextPassword = findViewById(R.id.reg_password);
+        textInputEditTextConfirmPassword = findViewById(R.id.reg_confirm_password);
 
-        registerButton = (Button) findViewById(R.id.reg_register_button);
+        registerButton = findViewById(R.id.reg_register_button);
 
-        alreadyMember = (TextView) findViewById(R.id.alreadyMember);
+        alreadyMember = findViewById(R.id.alreadyMember);
 
     }
 

@@ -8,8 +8,8 @@ import android.widget.Filter;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.jullae.helpers.AppDataManager;
-import com.jullae.model.SuggestionMainModel;
+import com.jullae.data.AppDataManager;
+import com.jullae.data.db.model.SuggestionMainModel;
 import com.jullae.utils.NetworkUtils;
 
 import java.util.ArrayList;

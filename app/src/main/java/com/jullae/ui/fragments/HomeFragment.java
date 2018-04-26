@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.ui.homefeed.HomeActivity;
-import com.jullae.ui.homefeed.HomeFeedFragment;
+import com.jullae.ui.home.homeFeed.HomeActivity;
+import com.jullae.ui.home.homeFeed.HomeFeedFragment;
 
 public class HomeFragment extends BaseFragment {
 

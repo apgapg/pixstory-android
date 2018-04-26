@@ -16,8 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
-import com.jullae.model.LikesModel;
-import com.jullae.ui.homefeed.HomeFeedPresentor;
+import com.jullae.data.db.model.LikesModel;
+import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.storydetails.StoryDetailFragment;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jullae.R;
-import com.jullae.model.StoryModel;
+import com.jullae.data.db.model.StoryModel;
 
 import java.util.ArrayList;
 

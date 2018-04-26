@@ -24,9 +24,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.model.LikesModel;
-import com.jullae.model.StoryCommentModel;
-import com.jullae.model.StoryModel;
+import com.jullae.data.db.model.LikesModel;
+import com.jullae.data.db.model.StoryCommentModel;
+import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.adapters.CommentsAdapter;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseFragment;
@@ -198,6 +198,14 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
                     }
                 });
+            }
+        });
+
+        view.findViewById(R.id.text_save_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                mPresentor.saveStory(storyModel.getStory_id());
             }
         });
     }
@@ -508,6 +516,17 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     @Override
     public void onLikesListFetchFail() {
+
+    }
+
+    @Override
+    public void onSaveStorySuccess() {
+        Toast.makeText(getmContext().getApplicationContext(), "Story added to bookmark!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveStoryFail() {
+        Toast.makeText(getmContext().getApplicationContext(), R.string.R_string_something_wrong, Toast.LENGTH_SHORT).show();
 
     }
 

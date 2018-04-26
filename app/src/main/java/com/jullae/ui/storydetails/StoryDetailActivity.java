@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.jullae.R;
-import com.jullae.ui.ProfileVisitor.ProfileVisitorFragment;
 import com.jullae.ui.base.BaseActivity;
+import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorFragment;
 
 /**
  * Created by Rahul Abrol on 12/20/17.

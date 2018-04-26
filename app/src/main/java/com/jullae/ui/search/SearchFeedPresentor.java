@@ -2,9 +2,9 @@ package com.jullae.ui.search;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.jullae.helpers.AppDataManager;
-import com.jullae.model.FreshFeedModel;
-import com.jullae.model.TagSearchMainModel;
+import com.jullae.data.AppDataManager;
+import com.jullae.data.db.model.FreshFeedModel;
+import com.jullae.data.db.model.TagSearchMainModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.NetworkUtils;
 

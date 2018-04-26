@@ -18,8 +18,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.helpers.InputValidation;
 import com.jullae.sql.DatabaseHelper;
+import com.jullae.utils.InputValidation;
 
 import org.json.JSONObject;
 
@@ -56,9 +56,9 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
      * Initialize views.
      */
     private void initViews() {
-        textInputEditTextEmail = (EditText) findViewById(R.id.forgot_password_email);
-        resetPasswordButton = (Button) findViewById(R.id.reset_password_button);
-        emailForgotErrorTextView = (TextView) findViewById(R.id.email_forgot_error_text);
+        textInputEditTextEmail = findViewById(R.id.forgot_password_email);
+        resetPasswordButton = findViewById(R.id.reset_password_button);
+        emailForgotErrorTextView = findViewById(R.id.email_forgot_error_text);
     }
 
     /**

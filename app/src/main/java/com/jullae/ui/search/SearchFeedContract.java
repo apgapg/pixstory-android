@@ -1,6 +1,6 @@
 package com.jullae.ui.search;
 
-import com.jullae.model.FeedModel;
+import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.base.MvpView;
 
 import java.util.List;

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.constant.AppConstant;
-import com.jullae.model.LikesModel;
+import com.jullae.data.db.model.LikesModel;
 import com.jullae.retrofit.APIError;
 import com.jullae.retrofit.ApiInterface;
 import com.jullae.retrofit.CommonResponse;

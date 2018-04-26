@@ -15,8 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
-import com.jullae.model.PictureModel;
-import com.jullae.ui.DialogActivity;
+import com.jullae.data.db.model.PictureModel;
+import com.jullae.ui.writeStory.WriteStoryActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
             button_write_story.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(mContext, DialogActivity.class);
+                    Intent i = new Intent(mContext, WriteStoryActivity.class);
                     i.putExtra("picture_id", messagelist.get(getAdapterPosition()).getPicture_id());
                     mContext.startActivity(i);
                 }

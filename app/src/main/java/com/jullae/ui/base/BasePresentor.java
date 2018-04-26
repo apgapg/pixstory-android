@@ -1,6 +1,6 @@
 package com.jullae.ui.base;
 
-import com.jullae.helpers.AppDataManager;
+import com.jullae.data.AppDataManager;
 
 public class BasePresentor<T extends MvpView> implements Presentor<T> {
 

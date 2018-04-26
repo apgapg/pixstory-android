@@ -22,7 +22,7 @@
         android:paddingRight="4dp"
         android:paddingTop="6dp">
 
-        <com.jullae.customView.CircularImageView
+        <com.jullae.ui.custom.CircularImageView
             android:id="@+id/image_avatar"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -118,7 +118,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.jullae.customView.SquareImageView
+            <com.jullae.ui.custom.SquareImageView
                 android:id="@+id/btn_like"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

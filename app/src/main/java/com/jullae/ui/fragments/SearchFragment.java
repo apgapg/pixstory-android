@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.model.FeedModel;
+import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
 import com.jullae.ui.search.SearchFeedContract;

@@ -24,10 +24,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.helpers.InputValidation;
 import com.jullae.sql.DatabaseHelper;
-import com.jullae.ui.homefeed.HomeActivity;
+import com.jullae.ui.home.homeFeed.HomeActivity;
 import com.jullae.utils.ErrorResponseModel;
+import com.jullae.utils.InputValidation;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 import org.json.JSONObject;

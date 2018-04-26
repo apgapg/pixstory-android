@@ -16,6 +16,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,17 +24,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.jullae.R;
 import com.jullae.app.AppController;
-import com.jullae.model.ConversationModel;
-import com.jullae.model.UserPrefsModel;
-import com.jullae.ui.adapters.ConversationAdapter;
+import com.jullae.data.db.model.ConversationModel;
+import com.jullae.data.db.model.ProfileMainModel;
+import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.ui.homefeed.HomeActivity;
-import com.jullae.ui.homefeed.ProfileFragmentPresentor;
-import com.jullae.ui.homefeed.freshfeed.ProfileFragmentView;
-import com.jullae.ui.profileSelf.CommonTabFragment;
-import com.jullae.ui.profileSelf.PictureTabFragment;
-import com.jullae.ui.profileSelf.ProfileMainModel;
-import com.jullae.ui.profileSelf.draftTab.DraftTabFragment;
+import com.jullae.ui.home.homeFeed.HomeActivity;
+import com.jullae.ui.home.homeFeed.ProfileFragmentPresentor;
+import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
+import com.jullae.ui.home.profile.bookmarkTab.BookmarkTabFragment;
+import com.jullae.ui.home.profile.draftTab.DraftTabFragment;
+import com.jullae.ui.home.profile.message.ConversationAdapter;
+import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
+import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
+import com.jullae.utils.ReqListener;
+import com.jullae.utils.dialog.MyProgressDialog;
 
 import java.io.File;
 import java.util.List;
@@ -58,6 +62,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private UserPrefsModel userPrefsModel;
     private ImageView button_message;
     private ConversationAdapter conversationAdapter;
+    private View button_edit_profile;
 
     @Nullable
     @Override
@@ -78,6 +83,14 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         user_stories = view.findViewById(R.id.text_stories);
         user_pictures = view.findViewById(R.id.text_pictures);
         button_message = view.findViewById(R.id.button_message);
+        button_edit_profile = view.findViewById(R.id.button_edit_profile);
+
+        button_edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEditProfileDialog();
+            }
+        });
 
         button_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +128,62 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mPresentor = new ProfileFragmentPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresentor.attachView(this);
+        userPrefsModel = mPresentor.getStaticUserData();
+
+
+        Glide.with(getmContext()).load(userPrefsModel.getUser_dp_url()).into(user_image);
+        user_name.setText(userPrefsModel.getUser_name());
+        user_penname.setText(userPrefsModel.getUser_penname());
+        user_bio.setText(userPrefsModel.getUser_bio());
+
+        mPresentor.loadProfile(userPrefsModel.getUser_penname());
+    }
+
+
+    private void showEditProfileDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
+        View view = getmContext().getLayoutInflater().inflate(R.layout.dialog_edit_profile, null);
+        final EditText fieldName = view.findViewById(R.id.field_name);
+        final EditText fieldBio = view.findViewById(R.id.field_bio);
+
+        fieldName.setText(userPrefsModel.getUser_name());
+        fieldBio.setText(userPrefsModel.getUser_bio());
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        view.findViewById(R.id.text_update_profile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresentor.updateProfile(fieldName.getText().toString().trim(), fieldBio.getText().toString(), new ReqListener() {
+                    @Override
+                    public void onSuccess() {
+                        dialog.dismiss();
+                        Toast.makeText(getmContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(getmContext(), "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+        dialog.show();
     }
 
     private void showConversationDialog() {
@@ -162,27 +231,21 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
+    @Override
+    public void showProgressBar() {
+        MyProgressDialog.showProgressDialog(getmContext(), "Please Wait!");
+    }
+
+    @Override
+    public void hideProgressBar() {
+        MyProgressDialog.dismissProgressDialog();
+
+    }
+
     private void updateDpReq(File file) {
         mPresentor.makeDpReq(file);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresentor.attachView(this);
-        userPrefsModel = mPresentor.getStaticUserData();
-
-
-        Glide.with(getmContext()).load(userPrefsModel.getUser_dp_url()).into(user_image);
-        user_name.setText(userPrefsModel.getUser_name());
-        user_penname.setText(userPrefsModel.getUser_penname());
-        user_bio.setText(userPrefsModel.getUser_bio());
-
-
-        mPresentor.loadProfile(userPrefsModel.getUser_penname());
-
-
-    }
 
     @Override
     public void showPicUploadProgress() {
@@ -258,27 +321,12 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             switch (position) {
                 case 0:
                     return new PictureTabFragment();
-
                 case 1:
-                    CommonTabFragment commonTabFragment2 = new CommonTabFragment();
-                    Bundle bundle2 = new Bundle();
-                    bundle2.putInt("position", 1);
-                    commonTabFragment2.setArguments(bundle2);
-                    return commonTabFragment2;
+                    return new StoryTabFragment();
                 case 2:
-                    CommonTabFragment commonTabFragment3 = new CommonTabFragment();
-                    Bundle bundle3 = new Bundle();
-                    bundle3.putInt("position", 2);
-                    commonTabFragment3.setArguments(bundle3);
-                    return commonTabFragment3;
-
+                    return new BookmarkTabFragment();
                 case 3:
-                    DraftTabFragment draftTabFragment = new DraftTabFragment();
-                    Bundle bundle4 = new Bundle();
-                    bundle4.putInt("position", 3);
-                    draftTabFragment.setArguments(bundle4);
-                    return draftTabFragment;
-
+                    return new DraftTabFragment();
                 default:
                     return null;
             }

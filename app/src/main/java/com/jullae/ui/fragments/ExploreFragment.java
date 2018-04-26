@@ -15,7 +15,7 @@ import com.jullae.R;
 import com.jullae.app.AppController;
 import com.jullae.ui.adapters.SearchAdapter;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.ui.homefeed.HomeActivity;
+import com.jullae.ui.home.homeFeed.HomeActivity;
 
 /**
  * Created by Rahul Abrol on 12/26/17.

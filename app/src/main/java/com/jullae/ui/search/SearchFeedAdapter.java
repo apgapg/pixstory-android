@@ -14,9 +14,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
-import com.jullae.model.FeedModel;
-import com.jullae.model.PictureModel;
-import com.jullae.model.StoryModel;
+import com.jullae.data.db.model.FeedModel;
+import com.jullae.data.db.model.PictureModel;
+import com.jullae.data.db.model.StoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
