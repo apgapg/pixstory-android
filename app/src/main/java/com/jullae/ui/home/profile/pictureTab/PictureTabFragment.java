@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.adapters.PicturesAdapter;
 import com.jullae.ui.base.BaseFragment;
@@ -31,7 +31,7 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
 
-        mPresentor = new PictureTabPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new PictureTabPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
         setuprecyclerView();
         return view;

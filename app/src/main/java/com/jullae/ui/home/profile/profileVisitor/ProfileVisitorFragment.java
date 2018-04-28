@@ -17,12 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.ProfileMainModel;
 import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.profile.message.MessageActivity;
+import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 
 /**
@@ -68,7 +69,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         user_pictures = view.findViewById(R.id.text_pictures);
 
         button_message = view.findViewById(R.id.button_message);
-
+        view.findViewById(R.id.button_edit_profile).setVisibility(View.INVISIBLE);
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -78,7 +79,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         viewPager.setAdapter(pagerAdapter);
 
-        mPresentor = new ProfileVisitorPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new ProfileVisitorPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
         button_message.setVisibility(View.INVISIBLE);
 
@@ -146,18 +147,10 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    StoryTabFragment commonTabFragment = new StoryTabFragment();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putInt("position", 1);
-                    commonTabFragment.setArguments(bundle1);
-                    return commonTabFragment;
+                    return new PictureTabFragment();
 
                 case 1:
-                    StoryTabFragment commonTabFragment2 = new StoryTabFragment();
-                    Bundle bundle2 = new Bundle();
-                    bundle2.putInt("position", 1);
-                    commonTabFragment2.setArguments(bundle2);
-                    return commonTabFragment2;
+                    return new StoryTabFragment();
 
 
                 default:

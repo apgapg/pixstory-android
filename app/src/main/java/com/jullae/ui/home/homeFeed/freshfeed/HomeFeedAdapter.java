@@ -19,11 +19,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.custom.ItemOffLRsetDecoration;
-import com.jullae.ui.home.homeFeed.HomeActivity;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
@@ -53,8 +54,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         this.mPresentor = homeFeedPresentor;
 
-        picOptions = new RequestOptions();
-        picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        picOptions = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
     }
 
     @NonNull
@@ -67,7 +68,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
-        Glide.with(mContext).load(messagelist.get(position).getPicture_url()).apply(picOptions).into(viewHolder.image);
+        GlideApp.with(mContext).load(messagelist.get(position).getPicture_url()).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.image);
 
         viewHolder.user_name.setText(messagelist.get(position).getPhotographer_name());
         viewHolder.user_penname.setText(messagelist.get(position).getPhotographer_penname());
@@ -192,7 +193,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             image = itemView.findViewById(R.id.image);
             ivMore = itemView.findViewById(R.id.ivMore);
             btn_like = itemView.findViewById(R.id.btn_like);
-            ivEditStory = itemView.findViewById(R.id.ivEditStory);
             user_name = itemView.findViewById(R.id.text_name);
             user_penname = itemView.findViewById(R.id.text_penname);
             tvTimeInDays = itemView.findViewById(R.id.tvTimeInDays);
@@ -212,7 +212,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             recycler_view_story.setLayoutManager(linearLayoutManager);
 
-            ItemOffLRsetDecoration itemDecoration = new ItemOffLRsetDecoration(mContext, R.dimen.item_offset);
+            ItemOffLRsetDecoration itemDecoration = new ItemOffLRsetDecoration(mContext, R.dimen.item_offset_4dp);
             recycler_view_story.addItemDecoration(itemDecoration);
 
             storyAdapter = new StoryAdapter(mContext);

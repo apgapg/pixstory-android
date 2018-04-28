@@ -105,7 +105,6 @@
                 <TextView
                     android:id="@+id/user_followed"
                     android:layout_width="wrap_content"
-                    android:visibility="invisible"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -113,13 +112,14 @@
                     android:background="@drawable/button_border"
                     android:gravity="center"
                     android:paddingBottom="6dp"
-
                     android:paddingLeft="14dp"
+
                     android:paddingRight="14dp"
                     android:paddingTop="6dp"
                     android:text="@string/follow"
                     android:textColor="#757575"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -174,10 +174,10 @@
                             android:id="@+id/btn_like"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:visibility="invisible"
                             android:gravity="center_vertical"
                             android:paddingTop="2dp"
                             android:scaleType="center"
+                            android:visibility="invisible"
                             app:srcCompat="@drawable/ic_unlike" />
 
                         <TextView
@@ -192,22 +192,17 @@
                     <LinearLayout
                         style="@style/padding8TopBottom"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="12dp"
                         android:layout_toRightOf="@+id/t"
                         android:gravity="center_vertical|end">
 
-                        <ImageView
-                            android:id="@+id/ivEditStory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/shape" />
 
                         <TextView
                             android:id="@+id/comment_count"
                             style="@style/textView.feed_secondary_text"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/headingSubHeadingMargin"
                             tools:text="30 comments" />

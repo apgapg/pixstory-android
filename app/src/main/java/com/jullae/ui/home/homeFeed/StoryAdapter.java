@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.ArrayList;
@@ -86,7 +87,6 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             ivMore = inflate.findViewById(R.id.ivMore);
             ivLike = inflate.findViewById(R.id.btn_like);
-            ivEditStory = inflate.findViewById(R.id.ivEditStory);
             user_name = inflate.findViewById(R.id.text_name);
             user_image = inflate.findViewById(R.id.image_avatar);
             story_text = inflate.findViewById(R.id.story_text);

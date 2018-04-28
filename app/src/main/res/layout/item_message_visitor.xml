@@ -6,28 +6,35 @@
     android:layout_margin="2dp">
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="64dp"
+        android:layout_marginRight="100dp"
         android:background="@drawable/message_visitor"
 
+        android:minWidth="100dp"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
 
-        android:paddingLeft="8dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="4dp"
         android:paddingRight="8dp"
         android:paddingTop="4dp">
 
+        <com.jullae.ui.custom.CircularImageView
+            android:id="@+id/image_user"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginLeft="38dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:text="Sender"
@@ -36,15 +43,12 @@
 
             <TextView
                 android:id="@+id/text_message"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-
                 android:textColor="#757575"
                 android:textSize="14dp"
-                tools:text='"This is a test"' />
+                tools:text='"This is a testdewdewdwednwejdwedbiwebdhwbduhwebduwebdweudhwbewbhdw"' />
         </LinearLayout>
     </FrameLayout>
-
 
 </RelativeLayout>

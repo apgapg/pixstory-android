@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
@@ -37,7 +37,7 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
         }
         view = inflater.inflate(R.layout.fragment_search, container, false);
         searchTag = getArguments().getString("searchTag");
-        searchFeedPresentor = new SearchFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        searchFeedPresentor = new SearchFeedPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
         searchTextView = view.findViewById(R.id.search_tag_field);
         searchTextView.setText(searchTag);

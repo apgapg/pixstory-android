@@ -24,6 +24,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FRESH_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_HOME_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_STORY_URL;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_POPULAR_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_PIC_UPDATE;
@@ -41,6 +42,8 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_TAG_SUGGESTIONS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPDATE_PROFILE;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPLOAD_PICTURE;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_VIEW_ALL_STORIES;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_WRITE_COMMENTS;
 
 /**
@@ -351,6 +354,35 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_SAVE_STORY)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest loadAllStories(String picture_id) {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_VIEW_ALL_STORIES)
+                .addHeaders(headers)
+                .addQueryParameter("picture_id", picture_id)
+                .addQueryParameter("story_id", "0")
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest makeUploadPictureReq(String title, File file) {
+
+        /*    Request Params: {"picture_title": "title of the picture", "image": <multipart file to be uplaoded to server> }
+         */
+        return AndroidNetworking.upload(BASE_URL + ENDPOINT_UPLOAD_PICTURE)
+                .addHeaders(headers)
+                .addMultipartParameter("picture_title", title)
+                .addMultipartFile("image", file)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest loadNotificationList(String user_id) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_NOTIFICATION_LIST)
+                .addHeaders(headers)
+                .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
                 .build();
     }

@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.MessageModel;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
             user_id = getIntent().getStringExtra("user_id");
             user_name = getIntent().getStringExtra("user_name");
         }
-        mPresentor = new MessagePresentor(((AppController) getApplication()).getmAppDataManager());
+        mPresentor = new MessagePresentor(((ApplicationClass) getApplication()).getmAppDataManager());
         mPresentor.attachView(this);
 
         progressBar = findViewById(R.id.progress_bar);
@@ -58,7 +58,11 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
         recyclerView = findViewById(R.id.recycler_view);
         messageAdapter = new MessageAdapter(this, currentUserId);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        //     linearLayoutManager.setStackFromEnd(true);
+
         recyclerView.setLayoutManager(linearLayoutManager);
+
+
         recyclerView.setAdapter(messageAdapter);
     }
 
@@ -163,6 +167,10 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
     protected void onDestroy() {
         mPresentor.detachView();
         super.onDestroy();
+    }
+
+    public void scrollRecyclerView(int i) {
+        recyclerView.scrollToPosition(i);
     }
 
     public interface ReqListener {

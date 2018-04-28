@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.utils.AppUtils;
 
-import static com.jullae.app.AppController.PACKAGE_NAME;
+import static com.jullae.ApplicationClass.PACKAGE_NAME;
 
 /**
  * Created by master on 1/4/18.

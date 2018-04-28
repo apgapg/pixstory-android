@@ -22,10 +22,9 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
-import com.jullae.sql.DatabaseHelper;
-import com.jullae.ui.home.homeFeed.HomeActivity;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.ErrorResponseModel;
 import com.jullae.utils.InputValidation;
 import com.jullae.utils.dialog.MyProgressDialog;
@@ -50,7 +49,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private InputValidation inputValidation;
     //TextView testViewLogin;
-    private DatabaseHelper databaseHelper;
     private GoogleApiClient mGoogleApiClient;
     private LoginActivityPresentor mPresentor;
     private int emailLoginMode;
@@ -62,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
 
-        mPresentor = new LoginActivityPresentor(((AppController) getApplication()).getmAppDataManager());
+        mPresentor = new LoginActivityPresentor(((ApplicationClass) getApplication()).getmAppDataManager());
         if (mPresentor.isUserLoggedIn()) {
             startHomeActivity();
         }
@@ -97,21 +95,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onError(final FacebookException exception) {
                 // App code
             }
-        });
-
-        //Google
-        //testViewLogin = (TextView) findViewById(R.id.testViewForLoginGoogle);
+        });*/
+/*
+        Google
+      testViewLogin = (TextView) findViewById(R.id.testViewForLoginGoogle);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this *//* FragmentActivity *//*, this *//* OnConnectionFailedListener *//*)
+                .enableAutoManage(this )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();*/
+                .build();
 
-        //findViewById(R.id.google_login).setOnClickListener(this);
+       findViewById(R.id.google_login).setOnClickListener(this);*/
     }
 
     private void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
@@ -202,14 +200,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     /**
      * This method is to initialize objects to be used
-     */
-    private void initObjects() {
-        databaseHelper = new DatabaseHelper(this);
-        inputValidation = new InputValidation(this);
-
-    }
-
-    /**
+     * <p>
+     * /**
      * Method used to get the result after successful login
      * of the user .
      *
@@ -251,14 +243,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             case R.id.button_login:
                 //verifyFromSQLite();
                 break;
-            case R.id.sign_up:
+            /*case R.id.sign_up:
                 Intent intentRegister = new Intent(this, RegisterActivity.class);
                 startActivity(intentRegister);
                 break;
             case R.id.forgot_password:
                 Intent intentForgotPassword = new Intent(this, ForgotPasswordActivity.class);
                 startActivity(intentForgotPassword);
-                break;
+                break;*/
             default:
                 break;
         }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_round_dialog"
+
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="Add Picture: "
+            android:textAppearance="@style/text_14.medium.primary" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="4dp"
+            android:padding="10dp"
+            android:rotation="45"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
+    </FrameLayout>
+
+    <include layout="@layout/vertical_divider" />
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop" />
+
+    <include layout="@layout/vertical_divider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:gravity="bottom"
+        android:paddingLeft="12dp"
+        android:text="Title"
+        android:textAppearance="@style/text_14.medium.primary" />
+
+    <EditText
+        android:id="@+id/field_title"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="#fff"
+        android:hint="Give a title to your picture..."
+        android:lines="1"
+        android:paddingBottom="4dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:textAppearance="@style/text_14.regular.primary" />
+
+    <include layout="@layout/vertical_divider" />
+
+
+    <TextView
+        android:id="@+id/text_submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="SUBMIT"
+        android:textAppearance="@style/text_12.medium.primary" />
+
+
+</LinearLayout>

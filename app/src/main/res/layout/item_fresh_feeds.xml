@@ -13,10 +13,8 @@
         android:scaleType="centerCrop"
         android:src="#24bdbdbd" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="#757575" />
+    <include layout="@layout/vertical_divider_light" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,11 +33,13 @@
 
         <TextView
             android:id="@+id/pic_text_by"
-            style="@style/textView.feed_secondary_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:gravity="center_vertical"
+            android:text="by"
 
-            android:text="by" />
+            android:textAppearance="@style/text_14.light.secondary" />
 
         <com.jullae.ui.custom.CircularImageView
             android:id="@+id/user_photo"
@@ -50,19 +50,22 @@
 
         <TextView
             android:id="@+id/text_name"
-            style="@style/textView.feed_primary_text"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:text="Username"
 
-            android:text="Username" />
+            android:textAppearance="@style/text_14.medium.primary" />
 
         <TextView
-            style="@style/textView.feed_secondary_text"
             android:layout_width="wrap_content"
-
             android:layout_height="match_parent"
-            android:text="1 day ago" />
+            android:gravity="center_vertical"
+
+            android:text="1 day ago"
+            android:textAppearance="@style/text_14.light.secondary" />
 
         <ImageView
             android:layout_width="32dp"
@@ -74,26 +77,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="24dp"
         android:background="#fff"
-        android:orientation="horizontal"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/pic_like_count"
-            style="@style/textView.feed_secondary_text"
             android:layout_width="wrap_content"
-
             android:layout_height="match_parent"
-            android:text="3 likes" />
+            android:paddingLeft="10dp"
+            android:paddingRight="4dp"
+            android:text="3 likes"
+            android:textAppearance="@style/text_14.light.secondary" />
 
         <TextView
             android:id="@+id/pic_comment_count"
-            style="@style/textView.feed_secondary_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="1 stories" />
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="1 stories"
+            android:textAppearance="@style/text_14.light.secondary" />
 
 
         <TextView
@@ -103,134 +107,144 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="end|center_vertical"
+            android:gravity="end"
             android:lines="1"
             android:paddingRight="12dp"
             android:text="Write a story"
-            android:textColor="#424242"
-            android:textStyle="bold" />
+            android:textAppearance="@style/text_14.medium.primary" />
 
 
     </LinearLayout>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="#757575" />
+    <include layout="@layout/vertical_divider_light" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:background="#fff"
-        android:orientation="horizontal"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="6dp"
 
-        <TextView
-            android:id="@+id/story_title"
-            style="@style/textView.feed_primary_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        android:background="@drawable/shape_round_rectangle_grey"
+        android:orientation="vertical"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp">
 
-            android:text="Title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp">
 
-        <TextView
-            style="@style/textView.feed_secondary_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/story_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
 
+                android:paddingRight="4dp"
+                android:text="Title"
 
-            android:text="by" />
+                android:textAppearance="@style/text_12.medium.primary" />
 
-        <com.jullae.ui.custom.CircularImageView
-            android:id="@+id/writer_photo"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="4dp"
+                android:gravity="center_vertical"
+                android:text="by"
+                android:textAppearance="@style/text_12.light.secondary"
 
-            android:src="#99bdbdbd" />
+                />
 
-        <TextView
-            android:id="@+id/writer_name"
-            style="@style/textView.feed_primary_text"
-            android:layout_width="0dp"
+            <com.jullae.ui.custom.CircularImageView
+                android:id="@+id/writer_photo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+
+                android:src="#99bdbdbd" />
+
+            <TextView
+                android:id="@+id/writer_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="4dp"
+                android:text="Username"
+
+                android:textAppearance="@style/text_12.medium.primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+
+                android:text="1 day ago"
+                android:textAppearance="@style/text_12.light.secondary" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+
+        </LinearLayout>
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/story_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:paddingBottom="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textAppearance="@style/text_12.regular.secondary"
 
-            android:text="Username" />
+            app:trimLines="3"
+            app:trimMode="trimModeLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/story_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="4dp"
+                android:text="3 likes"
+                android:textAppearance="@style/text_12.light.secondary" />
+
+            <TextView
+                android:id="@+id/story_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="1 stories"
+
+                android:textAppearance="@style/text_12.light.secondary" />
+
+
+        </LinearLayout>
 
         <TextView
-            style="@style/textView.feed_secondary_text"
-            android:layout_width="wrap_content"
-
-            android:layout_height="match_parent"
-            android:text="1 day ago" />
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+            android:id="@+id/text_view_more_story"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="view all 5 stories"
+            android:textAppearance="@style/text_12.regular.primary" />
 
     </LinearLayout>
-
-    <com.borjabravo.readmoretextview.ReadMoreTextView
-        android:id="@+id/story_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp"
-        app:colorClickableText="#424242"
-        app:trimLines="3"
-        app:trimMode="trimModeLine" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:background="#fff"
-        android:orientation="horizontal"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
-
-        <TextView
-            android:id="@+id/like_count"
-            style="@style/textView.feed_secondary_text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:text="3 likes" />
-
-        <TextView
-            android:id="@+id/story_comment_count"
-            style="@style/textView.feed_secondary_text2"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:text="1 stories" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/view_more_story"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:paddingBottom="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-
-        android:text="view all 5 stories"
-        android:textColor="#9e9e9e" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/divider" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.jullae.ui.home.homeFeed.freshfeed;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.ui.pictureDetail.PictureDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +62,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         } else {
             viewHolder.pic_title.setVisibility(View.GONE);
-            viewHolder.pic_text_buy.setText(" By");
+            viewHolder.pic_text_buy.setText("  By");
         }
 
         viewHolder.story_title.setText(storyModel.getStory_title());
@@ -105,7 +108,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView user_name, pic_title;
         private TextView writer_name, story_title, story_text;
         private TextView pic_like_count, story_like_count;
-        private TextView pic_story_count, story_comment_count;
+        private TextView pic_story_count, story_comment_count, text_view_more_story;
         private TextView pic_text_buy;
 
         public FreshFeedsViewHolder(View inflate) {
@@ -118,15 +121,29 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             pic_title = inflate.findViewById(R.id.pic_title);
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
+            text_view_more_story = inflate.findViewById(R.id.text_view_more_story);
 
 
             writer_name = inflate.findViewById(R.id.writer_name);
             pic_like_count = inflate.findViewById(R.id.pic_like_count);
             pic_story_count = inflate.findViewById(R.id.pic_comment_count);
-            //  story_like_count = inflate.findViewById(R.id.story_like_count);
+            story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
             pic_text_buy = inflate.findViewById(R.id.pic_text_by);
+
+            text_view_more_story.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Gson gson = new Gson();
+                    String pictureModel = gson.toJson(messagelist.get(getAdapterPosition()).getPictureModel());
+                    Intent i = new Intent(mContext, PictureDetailActivity.class);
+                    i.putExtra("pictureModel", pictureModel);
+                    mContext.startActivity(i);
+
+                }
+            });
 
         }
     }

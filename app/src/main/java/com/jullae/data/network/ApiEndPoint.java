@@ -38,6 +38,11 @@ public class ApiEndPoint {
     public static final String ENDPOINT_UPDATE_PROFILE = "/user/{id}/update";
     public static final String ENDPOINT_SAVE_STORY = "/story/{id}/bookmark";
 
+    public static final String ENDPOINT_VIEW_ALL_STORIES = "/discover/other_stories";
+    public static final String ENDPOINT_UPLOAD_PICTURE = "/picture/upload";
+
+    public static final String ENDPOINT_NOTIFICATION_LIST = "/user/{id}/read_notifications";
+
     private ApiEndPoint() {
 
     }

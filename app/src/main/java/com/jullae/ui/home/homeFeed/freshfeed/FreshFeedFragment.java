@@ -9,10 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.ui.custom.ItemOffTBsetDecoration;
 
 import java.util.List;
 
@@ -43,12 +44,12 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
         freshFeedAdapter = new FreshFeedAdapter(getmContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(mContext, R.dimen.item_offset);
-        ///recyclerView.addItemDecoration(itemDecoration);
+        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);
+        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(freshFeedAdapter);
 
-        mPresentor = new FreshFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new FreshFeedPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
         return view;
     }

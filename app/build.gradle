@@ -80,6 +80,10 @@ dependencies {
     compile 'com.amitshekhar.android:android-networking:1.0.1'
     compile 'com.borjabravo:readmoretextview:2.1.0'
 
+    implementation 'com.karumi:dexter:4.2.0'
+    compile 'com.binaryfork:spanny:1.0.4'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

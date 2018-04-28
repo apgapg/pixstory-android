@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
@@ -35,7 +35,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         }
         view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
-        homeFeedPresentor = new HomeFeedPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        homeFeedPresentor = new HomeFeedPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -43,7 +43,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset);
+        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(homeFeedAdapter);

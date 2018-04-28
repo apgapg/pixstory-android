@@ -1,16 +1,19 @@
 package com.jullae.ui.home.profile.message;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.MessageModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
@@ -19,14 +22,6 @@ import com.jullae.ui.storydetails.StoryDetailPresentor;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Rahul Abrol on 12/20/17.
- * <p>
- * Class @{@link MessageAdapter} used as a adapter of
- * the class @{@link com.jullae.ui.fragments.LikeDialogFragment}
- * to hold the elements of dialog fragment to show the users
- * who like the story.
- */
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageHolder> {
 
@@ -59,8 +54,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     @Override
     public void onBindViewHolder(@NonNull final MessageHolder holder, final int position) {
 
-        holder.user_name.setText(messagelist.get(position).getSent_by_name());
+        if (!messagelist.get(position).getSent_by_id().equals(currentUserId))
+            holder.user_name.setText(messagelist.get(position).getSent_by_name());
+        else holder.user_name.setText("You");
+
         holder.message.setText(messagelist.get(position).getMessage());
+        GlideApp.with(context).load(messagelist.get(position).getSent_by_avatar()).into(holder.image_user);
     }
 
     @Override
@@ -84,14 +83,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     }
 
     public void addMessage(MessageModel messageModel) {
-        messagelist.add(messageModel);
-        notifyItemInserted(messagelist.size() - 1);
+        messagelist.add(0, messageModel);
+        notifyItemInserted(0);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                ((MessageActivity) context).scrollRecyclerView(0);
+            }
+        });
     }
 
 
     class MessageHolder extends RecyclerView.ViewHolder {
 
         private TextView user_name, message;
+        private ImageView image_user;
 
         /**
          * Constructor to initialize the view Attribute.
@@ -102,6 +108,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             super(itemView);
             user_name = itemView.findViewById(R.id.text_name);
             message = itemView.findViewById(R.id.text_message);
+            image_user = itemView.findViewById(R.id.image_user);
 
         }
 

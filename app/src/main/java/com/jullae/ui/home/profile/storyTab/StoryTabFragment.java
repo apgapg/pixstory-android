@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
@@ -36,7 +36,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
 
 
-        mPresentor = new StoryTabPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new StoryTabPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
         setuprecyclerView();
         return view;

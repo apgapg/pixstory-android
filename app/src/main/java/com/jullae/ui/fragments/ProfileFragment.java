@@ -22,13 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.ConversationModel;
 import com.jullae.data.db.model.ProfileMainModel;
 import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.ui.home.homeFeed.HomeActivity;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.ProfileFragmentPresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
 import com.jullae.ui.home.profile.bookmarkTab.BookmarkTabFragment;
@@ -125,7 +125,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         viewPager.setAdapter(pagerAdapter);
 
-        mPresentor = new ProfileFragmentPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new ProfileFragmentPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
         return view;
     }

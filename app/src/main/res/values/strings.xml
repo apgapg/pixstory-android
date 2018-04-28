@@ -96,6 +96,7 @@
     <string name="network_error">couldn\'t connect!</string>
     <string name="title_activity_message">MessageActivity</string>
     <string name="R.string.something_wrong">Something went wrong! Please try again.</string>
+    <string name="title_activity_picture_detail">PictureDetailActivity</string>
 
 
 </resources>

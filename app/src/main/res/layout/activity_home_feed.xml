@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.home.homeFeed.HomeActivity">
+    tools:context=".ui.home.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -16,14 +16,29 @@
         android:orientation="vertical"
         app:elevation="0dp">
 
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center"
-            android:text="PixStory"
-            android:textColor="#424242"
-            android:textSize="24dp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center"
+                android:text="PixStory"
+                android:textColor="#424242"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/image_notification"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="8dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_bell" />
+        </FrameLayout>
+
 
         <View
             android:layout_width="match_parent"

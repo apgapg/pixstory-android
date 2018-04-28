@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jullae.ui.base.BaseResponseModel;
 
 public class MessageResponseModel extends BaseResponseModel {
-    @SerializedName("messageModel")
+    @SerializedName("chat_message")
     @Expose
     private MessageModel messageModel;
 

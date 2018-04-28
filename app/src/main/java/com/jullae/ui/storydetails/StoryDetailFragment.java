@@ -22,8 +22,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.app.AppController;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.StoryCommentModel;
 import com.jullae.data.db.model.StoryModel;
@@ -66,7 +66,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         Gson gson = new Gson();
         storyModel = gson.fromJson(getArguments().getString("storymodel"), StoryModel.class);
 
-        mPresentor = new StoryDetailPresentor(((AppController) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new StoryDetailPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
 
 
         TextView story_tag = view.findViewById(R.id.title);
@@ -92,7 +92,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         setupAddComment();
 
 
-        ImageView ivEditStory = view.findViewById(R.id.ivEditStory);
         ImageView ivLikeUserPic = view.findViewById(R.id.image_avatar);
 
         story_tag.setText(storyModel.getStory_title());

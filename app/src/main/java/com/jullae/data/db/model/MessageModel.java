@@ -7,7 +7,7 @@ public class MessageModel {
     private String sent_by_penname;
     private String sent_by_avatar;
     private String sent_by_id;
-    private String self;
+    private String is_self;
     private String sent_at;
 
 
@@ -35,8 +35,8 @@ public class MessageModel {
         return sent_by_id;
     }
 
-    public String getSelf() {
-        return self;
+    public String getIs_self() {
+        return is_self;
     }
 
     public String getSent_at() {

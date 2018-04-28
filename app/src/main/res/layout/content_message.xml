@@ -8,15 +8,16 @@
     <RelativeLayout
         android:id="@+id/rLayoutTitle"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="52dp"
         android:background="#fff">
 
         <TextView
             android:id="@+id/title"
             style="@style/textViewStyle.line_1"
             android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
             android:text="Message"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="56dp"
             android:textStyle="bold" />
 
         <ImageView
@@ -24,6 +25,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="12dp"
+            android:layout_centerVertical="true"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
@@ -39,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
         android:clipToPadding="false"
         android:paddingBottom="2dp"
         android:paddingTop="2dp" />
@@ -100,7 +102,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerInParent="true"
-        android:background="#fff"
         android:visibility="invisible" />
 
 

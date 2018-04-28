@@ -25,6 +25,7 @@
         android:background="@color/black_opa_10" />
 
     <TextView
+        android:id="@+id/text_add_picture"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#fff"

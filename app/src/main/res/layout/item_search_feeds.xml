@@ -72,9 +72,7 @@
             android:layout_height="32dp"
             android:background="#fff"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp">
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/story_like_count"
@@ -82,6 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top"
+                android:paddingLeft="10dp"
+                android:paddingRight="8dp"
                 android:text="3 likes" />
 
             <TextView
@@ -89,6 +89,8 @@
                 style="@style/textView.feed_secondary_text2"
                 android:layout_width="wrap_content"
 
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:layout_height="wrap_content"
                 android:text="1 comments" />
 
