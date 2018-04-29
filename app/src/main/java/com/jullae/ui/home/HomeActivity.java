@@ -72,6 +72,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     private ImagePicker imagePicker;
     private Uri imageToUploadUri;
     private HomeActivityPresentor mPresentor;
+    private ImageView button_notification;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -95,6 +96,13 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         tab_profile.setOnClickListener(this);
         tab_home.setOnClickListener(this);
 
+        button_notification = findViewById(R.id.image_notification);
+        button_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new NotificationFragment(), true);
+            }
+        });
         //Find bottom Sheet ID
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -588,6 +596,15 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     @Override
     public void showProgressBar() {
         MyProgressDialog.showProgressDialog(this, "Uploading! Please wait.");
+    }
+
+    public void updateNotificationIcon(boolean unread_notifications) {
+        Log.d(TAG, "updateNotificationIcon: ");
+        button_notification.setVisibility(View.VISIBLE);
+        if (unread_notifications)
+            button_notification.setImageResource(R.drawable.ic_bell_active);
+        else button_notification.setImageResource(R.drawable.ic_bell_normal);
+
     }
 
     interface AddPictureListener {

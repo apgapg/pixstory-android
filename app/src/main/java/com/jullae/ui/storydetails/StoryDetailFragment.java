@@ -52,6 +52,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private LikeAdapter likeAdapter;
     private View view;
     private StoryDetailPresentor mPresentor;
+    private StoryCommentModel.StoryDetailModel storyDetailModel;
 
     @Nullable
     @Override
@@ -107,22 +108,20 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         return view;
     }
 
-    private void setUpFollowedButton(final StoryCommentModel.StoryDetailModel storyDetailModel) {
+    private void setUpFollowedButton() {
         user_followed = view.findViewById(R.id.user_followed);
         user_followed.setVisibility(View.VISIBLE);
         if (storyDetailModel.getIs_followed().equals("true")) {
-            user_followed.setTextColor(Color.parseColor("#ffffff"));
-            user_followed.setBackground(getResources().getDrawable(R.drawable.button_active));
+            updateUIFollowed();
         } else {
-            user_followed.setTextColor(getResources().getColor(R.color.black75));
-            user_followed.setBackground(getResources().getDrawable(R.drawable.button_border));
+            updatUIUnFollowed();
         }
 
         user_followed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showReqProgress();
-                makeUserFollowReq(storyDetailModel);
+                makeUserFollowReq();
             }
         });
     }
@@ -340,7 +339,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         mPresentor.loadComments(storyModel.getStory_id(), new StoryDetailPresentor.CommentsListener() {
             @Override
             public void onSuccess(StoryCommentModel storyCommentModel) {
-                setUpFollowedButton(storyCommentModel.getStoryDetailModel());
+                storyDetailModel = storyCommentModel.getStoryDetailModel();
+                setUpFollowedButton();
                 setupLike(storyCommentModel.getStoryDetailModel());
                 commentsAdapter.add(storyCommentModel.getStoryDetailModel().getComments());
             }
@@ -353,16 +353,24 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     }
 
-    private void makeUserFollowReq(final StoryCommentModel.StoryDetailModel storyDetailModel) {
+    private void makeUserFollowReq() {
+        Boolean is_followed;
+        is_followed = !storyDetailModel.getIs_followed().equals("false");
+
         mPresentor.makeFollowUserReq(storyModel.getWriter_id(), new FollowReqListener() {
             @Override
             public void onSuccess() {
 
                 stopReqProgress();
-                if (storyDetailModel.getIs_followed().equals("true")) {
-                    updateToFollowed(storyDetailModel);
+
+
+                if (storyDetailModel.getIs_followed().equals("false")) {
+                    storyDetailModel.setIs_followed("true");
+                    updateUIFollowed();
                 } else {
-                    updateToUnFollowed(storyDetailModel);
+                    storyDetailModel.setIs_followed("false");
+
+                    updatUIUnFollowed();
                 }
             }
 
@@ -371,7 +379,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 stopReqProgress();
                 Toast.makeText(getmContext().getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
             }
-        });
+        }, is_followed);
 
 
     }
@@ -382,16 +390,15 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     }
 
-    private void updateToUnFollowed(StoryCommentModel.StoryDetailModel storyDetailModel) {
-        storyDetailModel.setIs_followed("false");
-
+    private void updatUIUnFollowed() {
+        user_followed.setText("Follow");
         user_followed.setTextColor(getResources().getColor(R.color.black75));
         user_followed.setBackground(getResources().getDrawable(R.drawable.button_border));
 
     }
 
-    private void updateToFollowed(StoryCommentModel.StoryDetailModel storyDetailModel) {
-        storyDetailModel.setIs_followed("true");
+    private void updateUIFollowed() {
+        user_followed.setText("Followed");
         user_followed.setTextColor(Color.parseColor("#ffffff"));
         user_followed.setBackground(getResources().getDrawable(R.drawable.button_active));
 

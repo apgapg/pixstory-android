@@ -24,11 +24,11 @@ import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.custom.ItemOffLRsetDecoration;
-import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
 import com.jullae.ui.writeStory.WriteStoryActivity;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 
 import java.util.ArrayList;
@@ -221,20 +221,20 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getPhotographer_penname());
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
             user_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getPhotographer_penname());
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
 
             user_penname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getPhotographer_penname());
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
 

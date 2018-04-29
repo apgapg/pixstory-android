@@ -72,7 +72,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
 
     public void addComment(StoryCommentModel.Comment commentModel) {
         messagelist.add(commentModel);
-        notifyItemInserted(messagelist.size() - 1);
+        notifyItemInserted(0);
     }
 
 

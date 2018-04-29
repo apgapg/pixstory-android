@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:drawable="@drawable/ic_bell_normal">
+
+    </item>
+
+    <item
+        android:bottom="16dp"
+        android:left="14dp"
+        android:right="2dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/red_light" />
+
+        </shape>
+    </item>
+</layer-list>

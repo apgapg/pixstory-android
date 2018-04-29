@@ -4,6 +4,7 @@ public class PictureModel {
 
     private String picture_id;
     private String picture_title;
+    private String picture_url;
     private String picture_url_small;
     private String picture_medium;
     private String photographer_name;
@@ -16,6 +17,9 @@ public class PictureModel {
     private String is_followed;
     private String is_self;
 
+    public String getPicture_url() {
+        return picture_url;
+    }
 
     public String getPhotographer_avatar() {
         return photographer_avatar;

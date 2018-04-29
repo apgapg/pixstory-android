@@ -13,7 +13,8 @@ public class ApiEndPoint {
     public static final String ENDPOINT_UNLIKE_PICTURE_URL = "/picture/{id}/unlike";
     public static final String ENDPOINT_PICTURE_LIKES_LIST = "/picture/{id}/likes";
     public static final String ENDPOINT_STORY_LIKES_LIST = "/story/{id}/likes";
-    public static final String ENDPOINT_FOLLOW = "/picture/{id}/follow";
+    public static final String ENDPOINT_FOLLOW = "/user/{id}/follow";
+    public static final String ENDPOINT_UNFOLLOW = "/user/{id}/unfollow";
     public static final String ENDPOINT_STORY_DETAILS = "/story/{id}/view";
     public static final String ENDPOINT_EMAIL_SIGNUP = "/custom_registration";
     public static final String ENDPOINT_EMAIL_LOGIN = "/custom_authentication";
@@ -41,7 +42,7 @@ public class ApiEndPoint {
     public static final String ENDPOINT_VIEW_ALL_STORIES = "/discover/other_stories";
     public static final String ENDPOINT_UPLOAD_PICTURE = "/picture/upload";
 
-    public static final String ENDPOINT_NOTIFICATION_LIST = "/user/{id}/read_notifications";
+    public static final String ENDPOINT_NOTIFICATION_LIST = "/user/{id}/notifications";
 
     private ApiEndPoint() {
 

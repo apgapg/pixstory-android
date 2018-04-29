@@ -52,8 +52,8 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
         PictureModel pictureModel = messagelist.get(position);
 
 
-        Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
-        //viewHolder.user_name.setText(pictureModel.getPhotographer_name().trim());
+        Glide.with(mContext).load(pictureModel.getPicture_url()).apply(picOptions).into(viewHolder.image);
+        viewHolder.user_name.setText(pictureModel.getPhotographer_name().trim());
         viewHolder.picture_like_count.setText(pictureModel.getLike_count() + " likes");
         viewHolder.picture_comment_count.setText(pictureModel.getStory_count() + " stories");
         viewHolder.picture_title.setText(pictureModel.getPicture_title());

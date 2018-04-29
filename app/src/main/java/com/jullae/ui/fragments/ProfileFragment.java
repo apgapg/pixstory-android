@@ -1,6 +1,7 @@
 package com.jullae.ui.fragments;
 
 import android.app.AlertDialog;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,15 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.ConversationModel;
-import com.jullae.data.db.model.ProfileMainModel;
-import com.jullae.data.db.model.UserPrefsModel;
+import com.jullae.data.db.model.ProfileModel;
+import com.jullae.databinding.FragmentProfileBinding;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.ProfileFragmentPresentor;
@@ -54,15 +54,15 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private static final String TAG = ProfileFragment.class.getName();
     private View view;
     private ImageView user_image;
-    private TextView user_name, user_penname, user_bio, user_followers, user_following, user_stories, user_pictures;
     private ProfileFragmentPresentor mPresentor;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
-    private UserPrefsModel userPrefsModel;
+    private ProfileModel mProfileModel;
     private ImageView button_message;
     private ConversationAdapter conversationAdapter;
     private View button_edit_profile;
+    private FragmentProfileBinding binding;
 
     @Nullable
     @Override
@@ -72,16 +72,12 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 ((ViewGroup) view.getParent()).removeView(view);
             return view;
         }
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        view = binding.getRoot();
+        // view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         user_image = view.findViewById(R.id.image_avatar);
-        user_name = view.findViewById(R.id.text_name);
-        user_penname = view.findViewById(R.id.text_penname);
-        user_bio = view.findViewById(R.id.user_bio);
-        user_followers = view.findViewById(R.id.text_followers);
-        user_following = view.findViewById(R.id.text_following);
-        user_stories = view.findViewById(R.id.text_stories);
-        user_pictures = view.findViewById(R.id.text_pictures);
+
         button_message = view.findViewById(R.id.button_message);
         button_edit_profile = view.findViewById(R.id.button_edit_profile);
 
@@ -134,17 +130,33 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
-        userPrefsModel = mPresentor.getStaticUserData();
+        mProfileModel = mPresentor.getStaticUserData();
 
 
-        Glide.with(getmContext()).load(userPrefsModel.getUser_dp_url()).into(user_image);
-        user_name.setText(userPrefsModel.getUser_name());
-        user_penname.setText(userPrefsModel.getUser_penname());
-        user_bio.setText(userPrefsModel.getUser_bio());
+//        Glide.with(getmContext()).load(mProfileModel.getUser_dp_url()).into(user_image);
+    /*    user_name.setText(mProfileModel.getName());
+        user_penname.setText(mProfileModel.getUser_penname());
+        user_bio.setText(mProfileModel.getUser_bio());*/
 
-        mPresentor.loadProfile(userPrefsModel.getUser_penname());
+        binding.setProfileModel(mProfileModel);
+        mPresentor.loadProfile(mProfileModel.getPenname());
     }
 
+    @Override
+    public void onProfileFetchSuccess(ProfileModel profileModel) {
+
+        mProfileModel.setFollower_count(profileModel.getFollower_count());
+        mProfileModel.setFollowing_count(profileModel.getFollowing_count());
+        mProfileModel.setStories_count(profileModel.getStories_count());
+        mProfileModel.setPictures_count(profileModel.getPictures_count());
+        ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
+
+    }
+
+    @Override
+    public void onProfileFetchFail() {
+
+    }
 
     private void showEditProfileDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
@@ -152,8 +164,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         final EditText fieldName = view.findViewById(R.id.field_name);
         final EditText fieldBio = view.findViewById(R.id.field_bio);
 
-        fieldName.setText(userPrefsModel.getUser_name());
-        fieldBio.setText(userPrefsModel.getUser_bio());
+        fieldName.setText(mProfileModel.getName());
+        fieldBio.setText(mProfileModel.getBio());
         dialogBuilder.setView(view);
 
         final AlertDialog dialog = dialogBuilder.create();
@@ -260,7 +272,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     @Override
     public void onProfilePicUpdateFail() {
-        Glide.with(getmContext()).load(userPrefsModel.getUser_dp_url()).into(user_image);
+        Glide.with(getmContext()).load(mProfileModel.getUser_dp_url()).into(user_image);
         Toast.makeText(getmContext().getApplicationContext(), "Failed to update avatar!", Toast.LENGTH_SHORT).show();
 
     }
@@ -271,23 +283,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         Glide.with(getmContext()).load(profile_dp_url).into(user_image);
         Toast.makeText(getmContext().getApplicationContext(), "Avatar updated successfully!", Toast.LENGTH_SHORT).show();
 
-
-    }
-
-    @Override
-    public void onProfileFetchSuccess(ProfileMainModel.ProfileModel profileModel) {
-      /*  Glide.with(getmContext()).load(profileModel.getUser_dp_url()).into(user_image);
-        user_name.setText(profileModel.getName());
-        user_penname.setText(profileModel.getPenname());
-        user_bio.setText(profileModel.getBio());*/
-        user_followers.setText(profileModel.getFollower_count());
-        user_following.setText(profileModel.getFollowing_count());
-        user_stories.setText(profileModel.getStories_count());
-        user_pictures.setText(profileModel.getPictures_count());
-    }
-
-    @Override
-    public void onProfileFetchFail() {
 
     }
 

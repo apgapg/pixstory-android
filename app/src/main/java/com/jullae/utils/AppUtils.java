@@ -2,11 +2,13 @@ package com.jullae.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Patterns;
 
 import com.jullae.ui.adapters.PicturesAdapter;
+import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 
 /**
  * Created by master on 7/4/18.
@@ -32,5 +34,9 @@ public class AppUtils {
     }
 
 
-
+    public static void showVisitorProfile(Activity mContext, String writer_penname) {
+        Intent i = new Intent(mContext, ProfileVisitorActivity.class);
+        i.putExtra("penname", writer_penname);
+        mContext.startActivity(i);
+    }
 }

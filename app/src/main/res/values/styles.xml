@@ -5,7 +5,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:dialogTheme">@style/CustomDialog</item>
 
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
@@ -317,8 +316,7 @@
     </style>
 
     <style name="text_14.light.primary">
-        <item name="android:textColor">#000000</item>
-        <item name="android:alpha">87</item>
+        <item name="android:textColor">#DE000000</item>
     </style>
 
     <style name="text_14.light.secondary">
@@ -327,8 +325,7 @@
 
 
     <style name="text_14.regular.primary">
-        <item name="android:textColor">#000000</item>
-        <item name="android:alpha">87</item>
+        <item name="android:textColor">#DE000000</item>
     </style>
 
     <style name="text_14.regular.secondary">
@@ -337,8 +334,7 @@
 
 
     <style name="text_14.medium.primary">
-        <item name="android:textColor">#000000</item>
-        <item name="android:alpha">87</item>
+        <item name="android:textColor">#DE000000</item>
     </style>
 
     <style name="text_14.medium.secondary">
@@ -385,8 +381,7 @@
     </style>
 
     <style name="text_12.light.primary">
-        <item name="android:textColor">#000000</item>
-        <item name="android:alpha">87</item>
+        <item name="android:textColor">#DE000000</item>
     </style>
 
     <style name="text_12.light.secondary">
@@ -414,12 +409,11 @@
     </style>
 
     <style name="text_12.regular.primary">
-        <item name="android:textColor">#000000</item>
-        <item name="android:alpha">87</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="text_12.regular.secondary">
-        <item name="android:textColor">#8A000000</item>
+        <item name="android:textColor">@color/secondary_text</item>
     </style>
 
     <style name="text_12.regular.secondary.center_vertical">
@@ -443,8 +437,7 @@
     </style>
 
     <style name="text_12.medium.primary">
-        <item name="android:textColor">#000000</item>
-        <item name="android:alpha">87</item>
+        <item name="android:textColor">#DE000000</item>
     </style>
 
     <style name="text_12.medium.secondary">
@@ -510,4 +503,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <color name="primary_text">#DE000000</color>
+    <color name="secondary_text">#8A000000</color>
 </resources>

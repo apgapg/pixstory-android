@@ -91,9 +91,9 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     }
 
-    public void makeFollowUserReq(String user_id, final LikeAdapter.FollowReqListener followReqListener) {
+    public void makeFollowUserReq(String user_id, final LikeAdapter.FollowReqListener followReqListener, Boolean is_followed) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().makeFollowReq(user_id).getAsString(new StringRequestListener() {
+        getmAppDataManager().getmApiHelper().makeFollowReq(user_id, is_followed).getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 NetworkUtils.parseResponse(TAG, response);

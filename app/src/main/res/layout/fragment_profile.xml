@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="profileModel"
+            type="com.jullae.data.db.model.ProfileModel" />
+    </data>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -65,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:gravity="center"
-                            android:text="-"
+                            android:text="@{profileModel.name}"
                             android:textColor="#212121"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -75,9 +84,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="-"
-                            android:textColor="#757575"
-                            android:textSize="14dp" />
+                            android:text="@{profileModel.penname}"
+                            android:textAppearance="@style/text_14.light.secondary" />
 
                         <TextView
                             android:id="@+id/user_bio"
@@ -90,9 +98,8 @@
                             android:maxLines="3"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
-                            android:text="-"
-                            android:textColor="#424242"
-                            android:textSize="12dp" />
+                            android:text="@{profileModel.bio}"
+                            android:textAppearance="@style/text_12.regular.primary" />
 
 
                     </LinearLayout>
@@ -149,7 +156,7 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="-"
+                        android:text="@{profileModel.follower_count}"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
@@ -185,7 +192,7 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="-"
+                        android:text="@{profileModel.following_count}"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
@@ -221,7 +228,7 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="-"
+                        android:text="@{profileModel.stories_count}"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
@@ -257,7 +264,7 @@
                         android:gravity="center"
                         android:maxLines="3"
 
-                        android:text="-"
+                        android:text="@{profileModel.pictures_count}"
                         android:textColor="#424242"
                         android:textSize="@dimen/profile_count_text"
                         android:textStyle="bold" />
@@ -303,3 +310,4 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
+</layout>

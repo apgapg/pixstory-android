@@ -4,7 +4,9 @@ assemble.dependsOn('lint')
 android {
     compileSdkVersion 27
     buildToolsVersion "26.0.2"
-
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.jullae"
         minSdkVersion 19
@@ -13,7 +15,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
         //
     }
 

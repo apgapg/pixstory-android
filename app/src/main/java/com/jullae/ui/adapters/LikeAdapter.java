@@ -151,8 +151,10 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
                         notifyItemChanged(getAdapterPosition(), "follow");
                     else notifyItemChanged(getAdapterPosition(), "unfollow");
 
+                    Boolean is_followed;
+                    is_followed = messagelist.get(getAdapterPosition()).getUser_followed().equals("true");
 
-                    if (mPresentor != null)
+                    if (mPresentor != null) {
                         mPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new FollowReqListener() {
                             @Override
                             public void onSuccess() {
@@ -176,8 +178,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
                                 }
 
                             }
-                        });
-                    else if (mStoryPresentor != null) {
+                        }, is_followed);
+                    } else if (mStoryPresentor != null) {
                         mStoryPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new StoryDetailFragment.FollowReqListener() {
 
                             @Override
@@ -202,7 +204,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
                                 }
 
                             }
-                        });
+                        }, is_followed);
 
                     }
 

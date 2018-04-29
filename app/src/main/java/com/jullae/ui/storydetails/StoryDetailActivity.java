@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.jullae.R;
 import com.jullae.ui.base.BaseActivity;
-import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorFragment;
 
 /**
  * Created by Rahul Abrol on 12/20/17.
@@ -36,22 +35,12 @@ public class StoryDetailActivity extends BaseActivity {
                 storyModel = i.getStringExtra("object");
                 showStoryDetailFragment();
 
-            } else showProfileVisitorFragment(i.getStringExtra("penname"));
+            }
         }
 
 
     }
 
-    private void showProfileVisitorFragment(String penname) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ProfileVisitorFragment profileVisitorFragment = new ProfileVisitorFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("penname", penname);
-        profileVisitorFragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.container, profileVisitorFragment).commit();
-
-    }
 
     private void showStoryDetailFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();

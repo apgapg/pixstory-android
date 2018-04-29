@@ -8,7 +8,7 @@ import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.AvatarResponseModel;
 import com.jullae.data.db.model.ConversationModel;
 import com.jullae.data.db.model.ProfileMainModel;
-import com.jullae.data.db.model.UserPrefsModel;
+import com.jullae.data.db.model.ProfileModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
@@ -25,7 +25,7 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
         super(appDataManager);
     }
 
-    public UserPrefsModel getStaticUserData() {
+    public ProfileModel getStaticUserData() {
         return getmAppDataManager().getmAppPrefsHelper().getPrefsUserData();
     }
 

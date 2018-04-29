@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.data.db.model.ProfileMainModel;
+import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.profile.message.MessageActivity;
@@ -60,13 +60,13 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         penname = getArguments().getString("penname");
 
         user_image = view.findViewById(R.id.image_avatar);
-        user_name = view.findViewById(R.id.text_name);
-        user_penname = view.findViewById(R.id.text_penname);
-        user_bio = view.findViewById(R.id.user_bio);
-        user_followers = view.findViewById(R.id.text_followers);
+        //user_name = view.findViewById(R.id.text_name);
+        //user_penname = view.findViewById(R.id.text_penname);
+        // user_bio = view.findViewById(R.id.user_bio);
+      /*  user_followers = view.findViewById(R.id.text_followers);
         user_following = view.findViewById(R.id.text_following);
         user_stories = view.findViewById(R.id.text_stories);
-        user_pictures = view.findViewById(R.id.text_pictures);
+        user_pictures = view.findViewById(R.id.text_pictures);*/
 
         button_message = view.findViewById(R.id.button_message);
         view.findViewById(R.id.button_edit_profile).setVisibility(View.INVISIBLE);
@@ -109,7 +109,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     }
 
     @Override
-    public void onProfileFetchSuccess(final ProfileMainModel.ProfileModel profileModel) {
+    public void onProfileFetchSuccess(final ProfileModel profileModel) {
         Glide.with(getmContext()).load(profileModel.getUser_dp_url()).into(user_image);
         user_name.setText(profileModel.getName());
         user_penname.setText(profileModel.getPenname());
@@ -131,6 +131,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
                 getmContext().startActivity(i);
             }
         });
+
     }
 
 

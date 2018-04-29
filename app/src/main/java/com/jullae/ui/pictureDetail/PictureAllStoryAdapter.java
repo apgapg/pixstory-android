@@ -16,7 +16,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
-import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.ArrayList;
@@ -94,18 +93,19 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             tvTimeInDays = inflate.findViewById(R.id.tvTimeInDays);
             like_count = inflate.findViewById(R.id.like_count);
             comment_count = inflate.findViewById(R.id.comment_count);
-            user_name.setOnClickListener(new View.OnClickListener() {
+         /*   user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
+                    showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
                 }
             });
             user_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
+                    showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
                 }
-            });
+            });*/
+
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,5 +118,8 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
             });
         }
+
+
     }
+
 }

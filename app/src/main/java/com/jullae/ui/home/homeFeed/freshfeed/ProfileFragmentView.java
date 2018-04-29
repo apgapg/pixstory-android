@@ -1,7 +1,7 @@
 package com.jullae.ui.home.homeFeed.freshfeed;
 
 import com.jullae.data.db.model.ConversationModel;
-import com.jullae.data.db.model.ProfileMainModel;
+import com.jullae.data.db.model.ProfileModel;
 import com.jullae.ui.base.MvpView;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface ProfileFragmentView extends MvpView {
 
     void onProfilePicUpdateSuccess(String profile_dp_url);
 
-    void onProfileFetchSuccess(ProfileMainModel.ProfileModel profileModel);
+    void onProfileFetchSuccess(ProfileModel profileModel);
 
     void onProfileFetchFail();
 

@@ -39,6 +39,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_SEARCH_TAG;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_DETAILS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_TAG_SUGGESTIONS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNFOLLOW;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPDATE_PROFILE;
@@ -145,8 +146,12 @@ public class ApiHelper {
 
     }
 
-    public ANRequest makeFollowReq(String user_id) {
-        return AndroidNetworking.post(BASE_URL + ENDPOINT_FOLLOW)
+    public ANRequest makeFollowReq(String user_id, Boolean is_followed) {
+        String url = null;
+        if (!is_followed)
+            url = ENDPOINT_FOLLOW;
+        else url = ENDPOINT_UNFOLLOW;
+        return AndroidNetworking.post(BASE_URL + url)
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
@@ -380,7 +385,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     }
 
     public ANRequest loadNotificationList(String user_id) {
-        return AndroidNetworking.post(BASE_URL + ENDPOINT_NOTIFICATION_LIST)
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_NOTIFICATION_LIST)
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)

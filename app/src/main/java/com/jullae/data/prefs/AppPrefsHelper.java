@@ -3,7 +3,7 @@ package com.jullae.data.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.jullae.data.db.model.UserPrefsModel;
+import com.jullae.data.db.model.ProfileModel;
 import com.jullae.utils.AppUtils;
 
 import static com.jullae.ApplicationClass.PACKAGE_NAME;
@@ -122,7 +122,7 @@ public class AppPrefsHelper {
     }
 
 
-    public UserPrefsModel getPrefsUserData() {
-        return new UserPrefsModel(getKeyName(), getKeyPenname(), getKeyBio(), getKeyDpUrl());
+    public ProfileModel getPrefsUserData() {
+        return new ProfileModel(getKeyName(), getKeyPenname(), getKeyBio(), getKeyDpUrl());
     }
 }

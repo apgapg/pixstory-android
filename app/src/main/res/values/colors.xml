@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/white</color>
-    <!--#303F9F-->
     <color name="colorPrimaryDark">#d8d8d8</color>
     <color name="colorAccent">#47515D</color>
     <color name="colorAppName">#47515D</color>

@@ -91,7 +91,8 @@
             android:name=".ui.pictureDetail.PictureDetailActivity"
             android:label="@string/title_activity_picture_detail"
             android:theme="@style/AppTheme" />
-        <activity android:name=".TempActivity"></activity>
+        <activity android:name=".TempActivity" />
+        <activity android:name=".ui.home.profile.profileVisitor.ProfileVisitorActivity"></activity>
     </application>
 
 </manifest>
