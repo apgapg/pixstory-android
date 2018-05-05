@@ -77,7 +77,10 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
         viewHolder.story_count.setText(messagelist.get(position).getStory_count() + " stories");
-        viewHolder.storyAdapter.add(messagelist.get(position).getStories());
+        if (messagelist.get(position).getStories().size() != 0)
+            viewHolder.storyAdapter.add(messagelist.get(position).getStories());
+        else viewHolder.storyAdapter.addEmptyMessage(messagelist.get(position).getPicture_id());
+
 
         if (messagelist.get(position).getIs_liked().equals("false")) {
             viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);

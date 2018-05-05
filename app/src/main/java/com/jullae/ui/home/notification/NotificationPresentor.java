@@ -2,6 +2,7 @@ package com.jullae.ui.home.notification;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.NotificationMainModel;
 import com.jullae.ui.base.BasePresentor;
@@ -36,6 +37,22 @@ public class NotificationPresentor extends BasePresentor<NotificationView> {
                     getMvpView().hideProgressBar();
                     getMvpView().onNotificationFetchFail();
                 }
+
+            }
+        });
+    }
+
+    public void sendReadNotiReq() {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().sendNotiReadReq(getmAppDataManager().getmAppPrefsHelper().getKeyUserId()).getAsString(new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                NetworkUtils.parseResponse(TAG, response);
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
 
             }
         });

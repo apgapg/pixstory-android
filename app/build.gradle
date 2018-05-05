@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 assemble.dependsOn('lint')
 android {
     compileSdkVersion 27
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '27.0.3'
     dataBinding {
         enabled = true
     }
@@ -51,8 +51,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.1.0'
     testCompile 'junit:junit:4.12'
     //libraries
-    compile 'com.google.android.gms:play-services-auth:15.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.29.0'
+    compile 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.facebook.android:facebook-login:4.29.0'
     compile 'com.android.volley:volley:1.0.0'
     //RecyclerView
 

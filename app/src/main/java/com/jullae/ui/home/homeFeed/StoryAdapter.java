@@ -18,6 +18,7 @@ import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
+import com.jullae.ui.writeStory.WriteStoryActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,8 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final Activity mContext;
     private final RequestOptions picOptions;
 
-    List<StoryModel> messagelist = new ArrayList<>();
+    List<Object> messagelist = new ArrayList<>();
+    private String picture_id;
 
     public StoryAdapter(Activity activity) {
         this.mContext = activity;
@@ -43,24 +45,38 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new HomeFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_story, parent, false));
+        if (viewType == 1)
+            return new HomeFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_story, parent, false));
+        else
+            return new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_story_list, parent, false));
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
+        if (messagelist.get(position) instanceof StoryModel) {
+            StoryModel storyModel = (StoryModel) messagelist.get(position);
+            HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
-        Glide.with(mContext).load(messagelist.get(position).getWriter_avatar()).apply(picOptions).into(viewHolder.user_image);
+            Glide.with(mContext).load(storyModel.getWriter_avatar()).apply(picOptions).into(viewHolder.user_image);
 
-        viewHolder.user_name.setText(messagelist.get(position).getWriter_name());
+            viewHolder.user_name.setText(storyModel.getWriter_name());
 
-        viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
-        viewHolder.comment_count.setText(messagelist.get(position).getComment_count() + " comments");
-        viewHolder.story_text.setText(messagelist.get(position).getStory_text());
+            viewHolder.like_count.setText(storyModel.getLike_count() + " likes");
+            viewHolder.comment_count.setText(storyModel.getComment_count() + " comments");
+            viewHolder.story_text.setText(storyModel.getStory_text());
 
+        } else {
 
+        }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (messagelist.get(position) instanceof StoryModel)
+            return 1;
+        else return 2;
+    }
 
     @Override
     public int getItemCount() {
@@ -71,6 +87,13 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());
+        notifyDataSetChanged();
+    }
+
+    public void addEmptyMessage(String picture_id) {
+        this.picture_id = picture_id;
+        messagelist.clear();
+        messagelist.add("empty");
         notifyDataSetChanged();
     }
 
@@ -97,13 +120,13 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
+                    ((HomeActivity) mContext).showVisitorProfile(((StoryModel) messagelist.get(getAdapterPosition())).getWriter_penname());
                 }
             });
             user_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity) mContext).showVisitorProfile(messagelist.get(getAdapterPosition()).getWriter_penname());
+                    ((HomeActivity) mContext).showVisitorProfile(((StoryModel) messagelist.get(getAdapterPosition())).getWriter_penname());
                 }
             });
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
@@ -119,4 +142,23 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         }
     }
+
+    private class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        public EmptyViewHolder(View inflate) {
+            super(inflate);
+
+
+            inflate.findViewById(R.id.text_add_story).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, WriteStoryActivity.class);
+                    i.putExtra("picture_id", picture_id);
+                    mContext.startActivity(i);
+                }
+            });
+        }
+    }
+
+
 }

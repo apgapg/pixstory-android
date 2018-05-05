@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import static com.jullae.BuildConfig.BASE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_MESSAGE;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_PROFILE_DETAILS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ARCHIVED_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_BOOKMARK;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_STORY;
@@ -21,10 +22,12 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_SIGNUP;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FOLLOW;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FRESH_FEEDS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_GOOGLE_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_HOME_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_LIST;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_READ_STATUS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_POPULAR_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_PIC_UPDATE;
@@ -206,14 +209,13 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest signUpReq(String email, String password, String name, String penname, String bio) {
+    public ANRequest signUpReq(String email, String password, String name, String penname) {
         return AndroidNetworking.post(BASE_URL + ENDPOINT_EMAIL_SIGNUP)
                 .addHeaders(headers)
                 .addBodyParameter("email", email)
                 .addBodyParameter("password", password)
                 .addBodyParameter("name", name)
                 .addBodyParameter("penname", penname)
-                .addBodyParameter("bio", bio)
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -390,6 +392,49 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
                 .build();
+    }
+
+    public ANRequest sendNotiReadReq(String keyUserId) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_NOTIFICATION_READ_STATUS)
+                .addHeaders(headers)
+                .addPathParameter("id", keyUserId)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest googleSignInReq(String idToken) {
+
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_GOOGLE_LOGIN)
+                .addHeaders(headers)
+                .addBodyParameter("code", idToken)
+
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest addProfileDetailReq(String user_id, String token, String penname, String email) {
+        Log.d(TAG, "addProfileDetailReq: " + email.isEmpty());
+        if (!email.isEmpty()) {
+
+            return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_PROFILE_DETAILS)
+                    .addHeaders("Authorization", "Bearer " + token)
+                    .addPathParameter("id", user_id)
+                    .addBodyParameter("penname", penname)
+                    .addBodyParameter("email", email)
+                    .setPriority(Priority.HIGH)
+                    .build();
+        } else {
+            return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_PROFILE_DETAILS)
+                    .addHeaders("Authorization", "Bearer " + token)
+                    .addPathParameter("id", user_id)
+                    .addBodyParameter("penname", penname)
+                    .setPriority(Priority.HIGH)
+                    .build();
+        }
+    }
+
+    public void makeFbLoginReq(String token) {
+
     }
 
 

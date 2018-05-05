@@ -78,6 +78,7 @@
     <dimen name="item_offset_4dp">4dp</dimen>
     <dimen name="item_offset_2dp">2dp</dimen>
     <dimen name="profile_count_text">18dp</dimen>
+    <dimen name="item_offset_1dp">1dp</dimen>
 
 
 </resources>

@@ -14,8 +14,7 @@
     <string name="logIn">Already have an account? <a style='text-decoration:none' href="#">Log In</a></string>
     <string name="registerLogin">Already a member? <a style='text-decoration:none' href="#">Login</a></string>
     <string name="termsConditions">By signing in, you are agreeing to the PixStory terms of service and privacy policy</string>
-    <string name="facebook_app_id">1476433195726339</string>
-    <string name="fb_login_protocol_scheme">fb1476433195726339</string>
+
     <string name="error_message_email">Enter Valid Email</string>
     <string name="empty_password">Password cant be empty</string>
     <string name="error_valid_email_password">Wrong Email or Password</string>
@@ -95,8 +94,12 @@
     <string name="title_activity_story_detail">StoryDetailActivity</string>
     <string name="network_error">couldn\'t connect!</string>
     <string name="title_activity_message">MessageActivity</string>
-    <string name="R.string.something_wrong">Something went wrong! Please try again.</string>
+    <string name="something_wrong">Something went wrong! Please try again.</string>
     <string name="title_activity_picture_detail">PictureDetailActivity</string>
+    <string name="server_client_id">541324721132-d19ofp21e4392qo0d762f7qmpi56crsf.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">215494812382809</string>
+    <string name="fb_login_protocol_scheme">fb215494812382809</string>
 
 
 </resources>

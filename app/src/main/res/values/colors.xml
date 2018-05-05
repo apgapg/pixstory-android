@@ -42,5 +42,8 @@
     <color name="radio_btn_color">#bdc6cf</color>
     <color name="divider">#AA757575</color>
     <color name="black75">#757575</color>
+
+    <color name="primary_text">#DE000000</color>
+    <color name="secondary_text">#8A000000</color>
 </resources>
 

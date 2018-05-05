@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.jullae.data.db.model.ProfileModel;
+import com.jullae.ui.loginscreen.LoginResponseModel;
 import com.jullae.utils.AppUtils;
 
 import static com.jullae.ApplicationClass.PACKAGE_NAME;
@@ -53,6 +54,16 @@ public class AppPrefsHelper {
         sharedPreferences.edit().putString(KEY_USER_ID, user_id).commit();
         sharedPreferences.edit().putString(KEY_TOKEN, token).commit();
         sharedPreferences.edit().putString(KEY_DP_URL, avatar).commit();
+        setLoggedInMode(true);
+    }
+
+    public void saveUserDetails(LoginResponseModel loginResponseModel) {
+        sharedPreferences.edit().putString(KEY_NAME, loginResponseModel.getName()).commit();
+        sharedPreferences.edit().putString(KEY_PENNAME, loginResponseModel.getPenname()).commit();
+        sharedPreferences.edit().putString(KEY_BIO, loginResponseModel.getBio()).commit();
+        sharedPreferences.edit().putString(KEY_USER_ID, loginResponseModel.getUser_id()).commit();
+        sharedPreferences.edit().putString(KEY_TOKEN, loginResponseModel.getToken()).commit();
+        sharedPreferences.edit().putString(KEY_DP_URL, loginResponseModel.getAvatar()).commit();
         setLoggedInMode(true);
     }
 

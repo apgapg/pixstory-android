@@ -31,11 +31,8 @@ public class StoryDetailActivity extends BaseActivity {
 
         if (getIntent() != null) {
             Intent i = getIntent();
-            if (!i.getBooleanExtra("profile", false)) {
-                storyModel = i.getStringExtra("object");
-                showStoryDetailFragment();
-
-            }
+            storyModel = i.getStringExtra("object");
+            showStoryDetailFragment();
         }
 
 

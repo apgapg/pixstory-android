@@ -1,6 +1,8 @@
 package com.jullae.ui.home.notification;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.NotificationModel;
+import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,50 +34,56 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int NOTI_TYPE_STORY_LIKE = 4;
     private static final int NOTI_TYPE_PICTURE_LIKE = 5;
     private final Activity mContext;
-    private final RequestOptions picOptions;
 
     List<NotificationModel> messagelist = new ArrayList<>();
 
     public NotificationAdapter(Activity activity) {
         this.mContext = activity;
-        picOptions = new RequestOptions();
-        picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case NOTI_TYPE_FOLLOW:
-                return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_follow, parent, false));
+                return new NotificationType1ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_follow, parent, false));
             case NOTI_TYPE_NEW_STORY:
-                return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_new_story, parent, false));
+                return new NotificationType4ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_new_story, parent, false));
             case NOTI_TYPE_NEW_COMMENT:
-                return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_follow, parent, false));
+                return new NotificationType1ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_new_story, parent, false));
             case NOTI_TYPE_STORY_LIKE:
-                return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_story_like, parent, false));
+                return new NotificationType2ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_story_like, parent, false));
             case NOTI_TYPE_PICTURE_LIKE:
-                return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_picture_like, parent, false));
+                return new NotificationType3ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_picture_like, parent, false));
             default:
-                return new NotificationViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_follow, parent, false));
-
+                return null;
         }
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ((BaseViewHolder) holder).text.setText(messagelist.get(position).getSpannable_text());
 
-        NotificationViewHolder viewHolder = (NotificationViewHolder) holder;
+        if (holder instanceof NotificationType1ViewHolder) {
 
-        GlideApp.with(mContext).load(messagelist.get(position).getActor_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.user_image);
+            NotificationType1ViewHolder holder1 = (NotificationType1ViewHolder) holder;
+            GlideApp.with(mContext).load(messagelist.get(position).getActor_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder1.user_image);
 
-        viewHolder.text.setText(messagelist.get(position).getSpannable_text());
+        } else if (holder instanceof NotificationType3ViewHolder) {
+            NotificationType3ViewHolder holder3 = (NotificationType3ViewHolder) holder;
+            GlideApp.with(mContext).load(messagelist.get(position).getPicture_url_thumb()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into((holder3).image);
+        } else if (holder instanceof NotificationType4ViewHolder) {
+            NotificationType4ViewHolder holder4 = (NotificationType4ViewHolder) holder;
+            GlideApp.with(mContext).load(messagelist.get(position).getActor_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder4.user_image);
 
+            GlideApp.with(mContext).load(messagelist.get(position).getPicture_url_thumb()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into((holder4).image);
+
+        }
 
     }
 
     @Override
     public int getItemViewType(int position) {
-        switch (position) {
+      /*  switch (position) {
             case NOTI_TYPE_FOLLOW:
                 return NOTI_TYPE_FOLLOW;
             case NOTI_TYPE_NEW_STORY:
@@ -87,10 +95,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case NOTI_TYPE_PICTURE_LIKE:
                 return NOTI_TYPE_PICTURE_LIKE;
             default:
-                return super.getItemViewType(position);
+               return -1;
 
-        }
+        }*/
+        return messagelist.get(position).getNotification_type_id();
     }
+
 
     @Override
     public int getItemCount() {
@@ -104,19 +114,96 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
+    private void onUserClick(int adapterPosition) {
+        switch (adapterPosition) {
+            case NOTI_TYPE_FOLLOW:
+                showVisitorProfile(messagelist.get(adapterPosition).getActor_penname());
+                break;
+            case NOTI_TYPE_NEW_STORY:
 
-    private class NotificationViewHolder extends RecyclerView.ViewHolder {
+                break;
+            case NOTI_TYPE_NEW_COMMENT:
+                showStoryDetails();
+                break;
+            case NOTI_TYPE_STORY_LIKE:
+                break;
+
+            case NOTI_TYPE_PICTURE_LIKE:
+                break;
 
 
-        private ImageView user_image;
+        }
+    }
+
+    private void showStoryDetails() {
+
+    }
+
+    private void showVisitorProfile(String penname) {
+        Intent i = new Intent(mContext, ProfileVisitorActivity.class);
+        i.putExtra("penname", penname);
+        mContext.startActivity(i);
+    }
+
+    private class BaseViewHolder extends RecyclerView.ViewHolder {
+
         private TextView text;
 
-        public NotificationViewHolder(View inflate) {
+        public BaseViewHolder(View inflate) {
+            super(inflate);
+
+            text = inflate.findViewById(R.id.text);
+            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onUserClick(getAdapterPosition());
+                }
+            });
+        }
+    }
+
+    private class NotificationType1ViewHolder extends BaseViewHolder {
+        private ImageView user_image;
+
+        public NotificationType1ViewHolder(View inflate) {
             super(inflate);
 
 
             user_image = inflate.findViewById(R.id.image_avatar);
-            text = inflate.findViewById(R.id.text);
+
+
+        }
+    }
+
+    private class NotificationType2ViewHolder extends BaseViewHolder {
+
+
+        public NotificationType2ViewHolder(View inflate) {
+            super(inflate);
+
+
+        }
+    }
+
+    private class NotificationType3ViewHolder extends BaseViewHolder {
+        private ImageView image;
+
+        public NotificationType3ViewHolder(View inflate) {
+            super(inflate);
+
+            image = inflate.findViewById(R.id.image);
+
+        }
+    }
+
+    private class NotificationType4ViewHolder extends BaseViewHolder {
+        private ImageView image, user_image;
+
+        public NotificationType4ViewHolder(View inflate) {
+            super(inflate);
+
+            image = inflate.findViewById(R.id.image);
+            user_image = inflate.findViewById(R.id.image_avatar);
 
         }
     }

@@ -9,6 +9,7 @@ public class LoginResponseModel extends BaseResponseModel {
     private String avatar;
     private String user_id;
     private String token;
+    private String account_status;
 
     /* {
          "success": true,
@@ -51,5 +52,9 @@ public class LoginResponseModel extends BaseResponseModel {
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public String getAccount_status() {
+        return account_status;
     }
 }

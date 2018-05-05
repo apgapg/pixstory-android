@@ -1,113 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content">
 
-        android:background="#fff"
-
-        android:orientation="vertical">
-
-        <FrameLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:text="Add your Story!"
-                android:textColor="#424242"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/close"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:padding="10dp"
-                android:rotation="45"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
-        </FrameLayout>
-
-
-        <include layout="@layout/vertical_divider_light" />
-
-        <EditText
-            android:id="@+id/field_title"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="#fff"
-            android:hint="Give a title to your story..."
-            android:lines="1"
-            android:paddingLeft="12dp"
-            android:textColor="#212121"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="Add your Story!"
+            android:textAppearance="@style/text_12.medium.primary"
             android:textSize="14dp"
             android:textStyle="bold" />
 
-        <include layout="@layout/vertical_divider_light" />
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="40dp"
 
-        <EditText
-            android:id="@+id/field_story"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#fff"
-            android:gravity="top"
-            android:hint="Please write your story here..."
-            android:lines="8"
-            android:maxLines="8"
-            android:paddingBottom="8dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="8dp"
-            android:textColor="#424242"
-            android:textSize="14dp" />
-
-        <include layout="@layout/vertical_divider_light" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal">
+            android:layout_gravity="end|center_vertical"
+            android:padding="10dp"
+            android:rotation="45"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
+    </FrameLayout>
 
-            <TextView
-                android:id="@+id/text_save_draft"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Save as Draft"
-                android:textColor="#424242"
-                android:textStyle="bold" />
 
-            <View
-                android:layout_width="0.7dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:background="#bdbdbd" />
+    <include layout="@layout/vertical_divider_light" />
 
-            <TextView
-                android:id="@+id/text_publish"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Publish"
-                android:textColor="#424242"
-                android:textStyle="bold" />
-        </LinearLayout>
+    <EditText
+        android:id="@+id/field_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#fff"
+        android:hint="Give a title to your story..."
+        android:lines="1"
+        android:paddingLeft="12dp"
+        android:textColor="#212121"
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
+    <include layout="@layout/vertical_divider_light" />
+
+    <EditText
+        android:id="@+id/field_story"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#fff"
+        android:gravity="top"
+        android:hint="Please write your story here..."
+        android:lines="8"
+        android:maxLines="8"
+        android:paddingBottom="8dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp"
+        android:textColor="#424242"
+        android:textSize="14dp" />
+
+    <include layout="@layout/vertical_divider_light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_save_draft"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Save as Draft"
+            android:textColor="#424242"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="#bdbdbd" />
+
+        <TextView
+            android:id="@+id/text_publish"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Publish"
+            android:textColor="#424242"
+            android:textStyle="bold" />
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

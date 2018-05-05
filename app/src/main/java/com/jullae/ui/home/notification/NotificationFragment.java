@@ -13,6 +13,7 @@ import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.NotificationModel;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.ui.custom.ItemOffTBsetDecoration;
 
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
         recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_1dp);
+        recyclerView.addItemDecoration(itemDecoration);
         notificationAdapter = new NotificationAdapter(getmContext());
         recyclerView.setAdapter(notificationAdapter);
     }
@@ -52,6 +55,7 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
+        mPresentor.sendReadNotiReq();
         mPresentor.loadNotifications();
 
     }
@@ -70,11 +74,15 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
 
     @Override
     public void onNotificationFetchSuccess(List<NotificationModel> notificationModelList) {
-        if (notificationModelList.size() != 0) {
-            for (int i = 0; i < notificationModelList.size(); i++)
-                notificationModelList.get(i).setSpannable_text(getmContext());
-            notificationAdapter.add(notificationModelList);
-        } else {
+        if (notificationModelList != null)
+            if (notificationModelList.size() != 0) {
+                for (int i = 0; i < notificationModelList.size(); i++)
+                    notificationModelList.get(i).setSpannable_text(getmContext());
+                notificationAdapter.add(notificationModelList);
+            } else {
+                view.findViewById(R.id.text_empty).setVisibility(View.VISIBLE);
+            }
+        else {
             view.findViewById(R.id.text_empty).setVisibility(View.VISIBLE);
         }
 

@@ -80,16 +80,14 @@ public class NotificationModel {
     }
 
     public void setSpannable_text(Context context) {
-        if (notification_type_id == 1 || notification_type_id == 3) {
-            Spanny spanny = new Spanny(actor_name, new TextAppearanceSpan(context, R.style.text_14_medium_primary))
+        if (notification_type_id == 1 || notification_type_id == 3 || notification_type_id == 2) {
+            Spanny spanny = new Spanny(actor_name + " ", new TextAppearanceSpan(context, R.style.text_14_medium_primary))
                     .append(text, new TextAppearanceSpan(context, R.style.text_14_regular_secondary));
             this.spannable_text = spanny;
         } else {
             ///temp
-            Spanny spanny = new Spanny(actor_name, new TextAppearanceSpan(context, R.style.text_14_medium_primary))
-                    .append(text, new TextAppearanceSpan(context, R.style.text_14_regular_secondary));
+            Spanny spanny = new Spanny(text, new TextAppearanceSpan(context, R.style.text_14_regular_secondary));
             this.spannable_text = spanny;
-
         }
     }
 }

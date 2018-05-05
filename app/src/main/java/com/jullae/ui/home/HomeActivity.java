@@ -96,13 +96,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         tab_profile.setOnClickListener(this);
         tab_home.setOnClickListener(this);
 
-        button_notification = findViewById(R.id.image_notification);
-        button_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFragment(new NotificationFragment(), true);
-            }
-        });
+
         //Find bottom Sheet ID
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -163,10 +157,11 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
             }
         });
 
-        ImageView button_notification = findViewById(R.id.image_notification);
+        button_notification = findViewById(R.id.image_notification);
         button_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button_notification.setImageResource(R.drawable.ic_bell_normal);
                 showFragment(new NotificationFragment(), true);
             }
         });

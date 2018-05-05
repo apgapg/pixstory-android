@@ -1,9 +1,11 @@
 package com.jullae.ui.loginscreen;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.data.AppDataManager;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.AppUtils;
@@ -47,13 +49,13 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
             "user_id": x,
             "token": "xxx"
     }*/
-    public void performSignUp(final String email, final String password, final String name, final String penname, final String bio) {
+    public void performSignUp(final String email, final String password, final String name, final String penname, int loginMode) {
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(name) || TextUtils.isEmpty(penname) || TextUtils.isEmpty(bio)) {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(name) || TextUtils.isEmpty(penname)) {
             getMvpView().signUpValidationError();
         } else {
             getMvpView().showProgress();
-            getmAppDataManager().getmApiHelper().signUpReq(email, password, name, penname, bio).getAsObject(SignUpResponseModel.class, new ParsedRequestListener<SignUpResponseModel>() {
+            getmAppDataManager().getmApiHelper().signUpReq(email, password, name, penname).getAsObject(SignUpResponseModel.class, new ParsedRequestListener<SignUpResponseModel>() {
                 @Override
                 public void onResponse(SignUpResponseModel signUpResponseModel) {
                     NetworkUtils.parseResponse(TAG, signUpResponseModel);
@@ -118,5 +120,79 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
 
     public boolean isUserLoggedIn() {
         return getmAppDataManager().getmAppPrefsHelper().getLoggedInMode();
+    }
+
+    public void makeGoogleSignInReq(String idToken) {
+        checkViewAttached();
+        getMvpView().showProgress();
+        getmAppDataManager().getmApiHelper().googleSignInReq(idToken)/*.getAsString(new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "onResponse: " + response);
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Log.d(TAG, anError.getErrorBody());
+
+            }
+        })*/.getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+
+            @Override
+            public void onResponse(LoginResponseModel loginResponseModel) {
+                NetworkUtils.parseResponse(TAG, loginResponseModel);
+                if (loginResponseModel.getAccount_status().equals("act")) {
+                    getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel);
+                    getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+
+                    if (isViewAttached()) {
+                        getMvpView().hideProgress();
+                        getMvpView().onLoginSuccess();
+                    }
+                } else if (loginResponseModel.getAccount_status().equals("incomp")) {
+                    if (isViewAttached()) {
+                        getMvpView().hideProgress();
+                        Log.d(TAG, "onResponse: " + loginResponseModel.getToken());
+                        getMvpView().onGoogleSignInSuccess(loginResponseModel.getUser_id(), loginResponseModel.getToken());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onLoginFail(errorResponseModel);
+                }
+            }
+        });
+
+    }
+
+    public void addProfileDetails(String user_id, String token, String penname, String email) {
+        checkViewAttached();
+        if (TextUtils.isEmpty(penname)) {
+            getMvpView().signUpValidationError();
+        } else {
+            getmAppDataManager().getmApiHelper().addProfileDetailReq(user_id, token, penname, email).getAsString(new StringRequestListener() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d(TAG, "onResponse: " + response);
+
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    NetworkUtils.parseError(TAG, anError);
+
+                }
+            });
+        }
+    }
+
+    public void makeFbLoginReq(String token) {
+        checkViewAttached();
+        getmAppDataManager().getmApiHelper().makeFbLoginReq(token);
     }
 }

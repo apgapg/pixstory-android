@@ -11,13 +11,17 @@ import android.widget.EditText;
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
 
+import static com.jullae.ui.loginscreen.LoginActivity.MODE_GOOGLE;
+import static com.jullae.ui.loginscreen.LoginActivity.MODE_SIGNUP_EMAIL;
+
 public class SignUpFragment extends BaseFragment {
 
 
     private View view;
     private EditText nameField;
     private EditText pennameField;
-    private EditText bioField;
+    private int loginMode = 0;
+    private EditText emailField;
 
     @Nullable
     @Override
@@ -31,12 +35,28 @@ public class SignUpFragment extends BaseFragment {
 
         nameField = view.findViewById(R.id.name_field);
         pennameField = view.findViewById(R.id.penname_field);
-        bioField = view.findViewById(R.id.bio_field);
+        emailField = view.findViewById(R.id.email_field);
 
+        if (getArguments() != null) {
+            String email = getArguments().getString("email");
+            int loginMode = getArguments().getInt("loginmode");
+
+            nameField.setVisibility(View.INVISIBLE);
+            if (email == null) {
+                emailField.setVisibility(View.VISIBLE);
+
+            }
+            this.loginMode = loginMode;
+            if (loginMode == 0)
+                throw new IllegalArgumentException("login mode isnt assigned");
+        }
         view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((LoginActivity) getmContext()).performSignUp(nameField.getText().toString().trim(), pennameField.getText().toString().trim(), bioField.getText().toString().trim());
+                if (loginMode == MODE_SIGNUP_EMAIL)
+                    ((LoginActivity) getmContext()).performSignUp(nameField.getText().toString().trim(), pennameField.getText().toString().trim());
+                else if (loginMode == MODE_GOOGLE)
+                    ((LoginActivity) getmContext()).addProfileDetails(pennameField.getText().toString().trim(), emailField.getText().toString().trim());
             }
         });
 

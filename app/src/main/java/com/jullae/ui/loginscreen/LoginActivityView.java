@@ -23,4 +23,6 @@ public interface LoginActivityView extends MvpView {
     void showProgress();
 
     void hideProgress();
+
+    void onGoogleSignInSuccess(String user_id, String token);
 }

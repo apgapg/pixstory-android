@@ -10,6 +10,8 @@ import android.util.Patterns;
 import com.jullae.ui.adapters.PicturesAdapter;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 
+import java.util.List;
+
 /**
  * Created by master on 7/4/18.
  */
@@ -38,5 +40,20 @@ public class AppUtils {
         Intent i = new Intent(mContext, ProfileVisitorActivity.class);
         i.putExtra("penname", writer_penname);
         mContext.startActivity(i);
+    }
+
+    public static void checkforNull(List<String> strings) {
+        for (int i = 0; i < strings.size(); i++) {
+            if (strings.get(i) == null || strings.get(i).isEmpty())
+                throw new NullPointerException("Field is empty at position: " + i);
+        }
+    }
+
+    public static void checkforNull(Object object) {
+
+        if (object == null)
+            throw new NullPointerException("Object is null");
+
+
     }
 }

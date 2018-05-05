@@ -18,6 +18,8 @@ public class ApiEndPoint {
     public static final String ENDPOINT_STORY_DETAILS = "/story/{id}/view";
     public static final String ENDPOINT_EMAIL_SIGNUP = "/custom_registration";
     public static final String ENDPOINT_EMAIL_LOGIN = "/custom_authentication";
+    public static final String ENDPOINT_GOOGLE_LOGIN = "/google_authentication";
+
     public static final String ENDPOINT_PROFILE_TAB_PICTURES = "/profile/{penname}/pictures";
     public static final String ENDPOINT_PROFILE_TAB_STORIES = "/profile/{penname}/stories";
     public static final String ENDPOINT_PROFILE_TAB_BOOKMARKS = "/profile/{penname}/bookmarks";
@@ -43,6 +45,9 @@ public class ApiEndPoint {
     public static final String ENDPOINT_UPLOAD_PICTURE = "/picture/upload";
 
     public static final String ENDPOINT_NOTIFICATION_LIST = "/user/{id}/notifications";
+    public static final String ENDPOINT_NOTIFICATION_READ_STATUS = "/user/{id}/read_notifications";
+    public static final String ENDPOINT_ADD_PROFILE_DETAILS = "/user/{id}/complete_account_setup";
+
 
     private ApiEndPoint() {
 

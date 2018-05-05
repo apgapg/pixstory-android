@@ -93,7 +93,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         setupAddComment();
 
 
-        ImageView ivLikeUserPic = view.findViewById(R.id.image_avatar);
 
         story_tag.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
@@ -532,7 +531,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     @Override
     public void onSaveStoryFail() {
-        Toast.makeText(getmContext().getApplicationContext(), R.string.R_string_something_wrong, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getmContext().getApplicationContext(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
 
     }
 

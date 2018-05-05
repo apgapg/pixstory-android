@@ -1,33 +1,39 @@
 {
   "project_info": {
-    "project_number": "133928718773",
-    "project_id": "firebase-jullae"
+    "project_number": "541324721132",
+    "firebase_url": "https://pixstory-1525432678434.firebaseio.com",
+    "project_id": "pixstory-1525432678434",
+    "storage_bucket": "pixstory-1525432678434.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:133928718773:android:0145851299ab5de4",
+        "mobilesdk_app_id": "1:541324721132:android:0145851299ab5de4",
         "android_client_info": {
           "package_name": "com.jullae"
         }
       },
       "oauth_client": [
         {
-          "client_id": "133928718773-ll8f8lgngbm4c2mjibvruvnq58dhfsnb.apps.googleusercontent.com",
+          "client_id": "541324721132-1jt0pcrhn5j80evk2864bimrpmhil1vh.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "541324721132-b5rb0d541d44tqm2mvqq7p2vi7tucdnr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jullae",
-            "certificate_hash": "4ec083189aad8491c2c2430df7eac291ac90d5a7"
+            "certificate_hash": "506c7a164264667389eee4ac3656c08f85aa2563"
           }
         },
         {
-          "client_id": "133928718773-8cmr3sfijk14jcvfod1tvkn6q41lj4dv.apps.googleusercontent.com",
+          "client_id": "541324721132-d19ofp21e4392qo0d762f7qmpi56crsf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAqU4fypqXC-kd-zX9O6FTiz_d_GfxHe-c"
+          "current_key": "AIzaSyCHksZrh4pUzn9Rw-BYl203rAN4WP2vRSI"
         }
       ],
       "services": {
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541324721132-1jt0pcrhn5j80evk2864bimrpmhil1vh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
