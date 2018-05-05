@@ -20,6 +20,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_BOOKMARK;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_SIGNUP;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FACEBOOK_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FOLLOW;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FRESH_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_GOOGLE_LOGIN;
@@ -139,14 +140,11 @@ public class ApiHelper {
         else if (likesListType == Constants.LIKE_TYPE_PICTURE)
             endpoint = ENDPOINT_PICTURE_LIKES_LIST;
 
-
         return AndroidNetworking.get(BASE_URL + endpoint)
                 .addHeaders(headers)
                 .addPathParameter("id", id)
                 .setPriority(Priority.HIGH)
                 .build();
-
-
     }
 
     public ANRequest makeFollowReq(String user_id, Boolean is_followed) {
@@ -159,8 +157,6 @@ public class ApiHelper {
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.HIGH)
                 .build();
-
-
     }
 
     public ANRequest loadComments(String story_id) {
@@ -280,6 +276,12 @@ public class ApiHelper {
 
     }
 
+    /**
+     * Load message list an request.
+     *
+     * @param user_id the user id
+     * @return the ANRequest
+     */
     public ANRequest loadMessageList(String user_id) {
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_MESSAGE_LIST)
                 .addHeaders(headers)
@@ -375,9 +377,6 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     }
 
     public ANRequest makeUploadPictureReq(String title, File file) {
-
-        /*    Request Params: {"picture_title": "title of the picture", "image": <multipart file to be uplaoded to server> }
-         */
         return AndroidNetworking.upload(BASE_URL + ENDPOINT_UPLOAD_PICTURE)
                 .addHeaders(headers)
                 .addMultipartParameter("picture_title", title)
@@ -413,9 +412,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     }
 
     public ANRequest addProfileDetailReq(String user_id, String token, String penname, String email) {
-        Log.d(TAG, "addProfileDetailReq: " + email.isEmpty());
         if (!email.isEmpty()) {
-
             return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_PROFILE_DETAILS)
                     .addHeaders("Authorization", "Bearer " + token)
                     .addPathParameter("id", user_id)
@@ -433,8 +430,13 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         }
     }
 
-    public void makeFbLoginReq(String token) {
+    public ANRequest makeFbLoginReq(String token) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_FACEBOOK_LOGIN)
+                .addHeaders(headers)
+                .addBodyParameter("token", token)
 
+                .setPriority(Priority.HIGH)
+                .build();
     }
 
 

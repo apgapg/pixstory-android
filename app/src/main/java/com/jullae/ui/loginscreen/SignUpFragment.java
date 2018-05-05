@@ -11,8 +11,9 @@ import android.widget.EditText;
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
 
-import static com.jullae.ui.loginscreen.LoginActivity.MODE_GOOGLE;
-import static com.jullae.ui.loginscreen.LoginActivity.MODE_SIGNUP_EMAIL;
+import static com.jullae.ui.loginscreen.LoginActivity.LOGIN_MODE_FACEBOOK;
+import static com.jullae.ui.loginscreen.LoginActivity.LOGIN_MODE_GOOGLE;
+import static com.jullae.ui.loginscreen.LoginActivity.LOGIN_MODE_SIGNUP_EMAIL;
 
 public class SignUpFragment extends BaseFragment {
 
@@ -53,9 +54,9 @@ public class SignUpFragment extends BaseFragment {
         view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loginMode == MODE_SIGNUP_EMAIL)
+                if (loginMode == LOGIN_MODE_SIGNUP_EMAIL)
                     ((LoginActivity) getmContext()).performSignUp(nameField.getText().toString().trim(), pennameField.getText().toString().trim());
-                else if (loginMode == MODE_GOOGLE)
+                else if (loginMode == LOGIN_MODE_GOOGLE || loginMode == LOGIN_MODE_FACEBOOK)
                     ((LoginActivity) getmContext()).addProfileDetails(pennameField.getText().toString().trim(), emailField.getText().toString().trim());
             }
         });
@@ -63,4 +64,5 @@ public class SignUpFragment extends BaseFragment {
 
         return view;
     }
+
 }

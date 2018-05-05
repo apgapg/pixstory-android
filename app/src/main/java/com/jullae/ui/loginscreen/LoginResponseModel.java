@@ -10,6 +10,7 @@ public class LoginResponseModel extends BaseResponseModel {
     private String user_id;
     private String token;
     private String account_status;
+    private String email;
 
     /* {
          "success": true,
@@ -56,5 +57,9 @@ public class LoginResponseModel extends BaseResponseModel {
 
     public String getAccount_status() {
         return account_status;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

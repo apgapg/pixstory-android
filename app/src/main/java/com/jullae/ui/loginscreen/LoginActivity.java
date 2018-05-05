@@ -12,26 +12,18 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.ErrorResponseModel;
-import com.jullae.utils.InputValidation;
 import com.jullae.utils.dialog.MyProgressDialog;
-
-import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -40,32 +32,25 @@ import static com.jullae.ui.loginscreen.LoginFragment.RC_SIGN_IN;
 /**
  * Class used to login into the app through credentials.
  */
-public class LoginActivity extends AppCompatActivity implements
-        LoginActivityView {
+public class LoginActivity extends AppCompatActivity implements LoginActivityView {
 
-    //private final AppCompatActivity activity = LoginActivity.this;
+    public static final int LOGIN_MODE_SIGNUP_EMAIL = 23;
+    public static final int LOGIN_MODE_GOOGLE = 25;
+    public static final int LOGIN_MODE_FACEBOOK = 26;
 
-    public static final int MODE_SIGNUP_EMAIL = 23;
-    public static final int MODE_GOOGLE = 25;
-    //Google
-    private static final String TAG = "SignInActivity";
-    private static final int RC_GOOGLE_SIGN_IN = 9001;
-    //Facebook
-    private LoginButton fbLoginButton;
+    private static final String TAG = LoginActivity.class.getName();
+
     private CallbackManager callbackManager;
 
-    private InputValidation inputValidation;
-    //TextView testViewLogin;
-    private GoogleApiClient mGoogleApiClient;
     private LoginActivityPresentor mPresentor;
-    private int emailLoginMode;
     private String password, email;
-    private GoogleSignInClient mGoogleSignInClient;
     private int loginMode;
     private String google_idToken;
     private String google_name, google_email, google_photoUrl;
     private String user_id;
     private String token;
+
+    public static Boolean isUserSignedUp = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -79,48 +64,11 @@ public class LoginActivity extends AppCompatActivity implements
         }
 
         mPresentor.attachView(this);
-        // loadFontsOnStartUp();
 
         showFragment(new LoginFragment(), false);
 
         setUpFbLogin();
 
-/*
-        callbackManager = CallbackManager.Factory.create();
-
-        //Facebook
-        LoginButton fbLoginButton = (LoginButton) findViewById(R.id.facebook_login);
-        fbLoginButton.setReadPermissions("email");
-        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(final LoginResult loginResult) {
-                getUserDetails(loginResult);
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(final FacebookException exception) {
-                // App code
-            }
-        });*/
-/*
-        Google
-      testViewLogin = (TextView) findViewById(R.id.testViewForLoginGoogle);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this )
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-       findViewById(R.id.google_login).setOnClickListener(this);*/
 
     }
 
@@ -131,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         Log.d(TAG, "onSuccess: " + loginResult.getAccessToken().getToken());
+                        setLoginMode(LOGIN_MODE_FACEBOOK);
                         mPresentor.makeFbLoginReq(loginResult.getAccessToken().getToken());
                         // App code
                     }
@@ -177,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements
     public void emailValidationSuccess(String email, String password) {
         this.email = email;
         this.password = password;
-        setLoginMode(MODE_SIGNUP_EMAIL);
+        setLoginMode(LOGIN_MODE_SIGNUP_EMAIL);
         showFragment(new SignUpFragment(), true);
     }
 
@@ -236,54 +185,29 @@ public class LoginActivity extends AppCompatActivity implements
         showFragment(signUpFragment, true);
     }
 
-    private void startHomeActivity() {
+    @Override
+    public void onFacebookSignInSuccess(String user_id, String token, String email) {
+        this.user_id = user_id;
+        this.token = token;
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
 
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
+        bundle.putInt("loginmode", loginMode);
+        SignUpFragment signUpFragment = new SignUpFragment();
+        signUpFragment.setArguments(bundle);
+        showFragment(signUpFragment, true);
     }
 
-    /**
-     * This method is to initialize objects to be used
-     * <p>
-     * /**
-     * Method used to get the result after successful login
-     * of the user .
-     *
-     * @param loginResult login model after result.
-     */
-    protected void getUserDetails(final LoginResult loginResult) {
-
-        /*TextView fbTv = (TextView) findViewById(R.id.testViewForLoginGoogle);
-        fbTv.setText("Facebook Login successful!!!!!!");*/
-
-        Intent fbIntent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(fbIntent);
-
-        GraphRequest dataRequest = GraphRequest.newMeRequest(
-                loginResult.getAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(final JSONObject jsonObject, final GraphResponse response) {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        intent.putExtra("userProfile", jsonObject.toString());
-                        startActivity(intent);
-                    }
-
-                });
-            /*Bundle permission_param = new Bundle();
-            permission_param.putString("fields", "id,name,email,
-                    picture.width(120).height(120)");
-                    dataRequest.setParameters(permission_param);
-            dataRequest.executeAsync();*/
-
+    private void startHomeActivity() {
+        isUserSignedUp = true;
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
-
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
@@ -306,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements
             this.google_email = account.getEmail();
             this.google_photoUrl = String.valueOf(account.getPhotoUrl());
 
-            setLoginMode(MODE_GOOGLE);
+            setLoginMode(LOGIN_MODE_GOOGLE);
 
 
             /**/
@@ -343,5 +267,13 @@ public class LoginActivity extends AppCompatActivity implements
         Log.d(TAG, "addProfileDetails: " + user_id);
         AppUtils.checkforNull(Arrays.asList(user_id, token));
         mPresentor.addProfileDetails(user_id, token, penname, email);
+    }
+
+    public void logoutUser() {
+        Log.d(TAG, "logoutUser: called");
+        if (!isUserSignedUp) {
+            LoginManager.getInstance().logOut();
+
+        }
     }
 }

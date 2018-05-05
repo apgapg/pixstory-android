@@ -25,4 +25,6 @@ public interface LoginActivityView extends MvpView {
     void hideProgress();
 
     void onGoogleSignInSuccess(String user_id, String token);
+
+    void onFacebookSignInSuccess(String user_id, String token, String email);
 }

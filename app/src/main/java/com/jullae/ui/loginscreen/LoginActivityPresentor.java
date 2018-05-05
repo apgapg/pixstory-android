@@ -125,18 +125,7 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
     public void makeGoogleSignInReq(String idToken) {
         checkViewAttached();
         getMvpView().showProgress();
-        getmAppDataManager().getmApiHelper().googleSignInReq(idToken)/*.getAsString(new StringRequestListener() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: " + response);
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                Log.d(TAG, anError.getErrorBody());
-
-            }
-        })*/.getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+        getmAppDataManager().getmApiHelper().googleSignInReq(idToken).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
 
             @Override
             public void onResponse(LoginResponseModel loginResponseModel) {
@@ -193,6 +182,38 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
 
     public void makeFbLoginReq(String token) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().makeFbLoginReq(token);
+        getMvpView().showProgress();
+        getmAppDataManager().getmApiHelper().makeFbLoginReq(token).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+
+            @Override
+            public void onResponse(LoginResponseModel loginResponseModel) {
+                NetworkUtils.parseResponse(TAG, loginResponseModel);
+
+                if (loginResponseModel.getAccount_status().equals("act")) {
+                    getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel);
+                    getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+
+                    if (isViewAttached()) {
+                        getMvpView().hideProgress();
+                        getMvpView().onLoginSuccess();
+                    }
+                } else if (loginResponseModel.getAccount_status().equals("incomp")) {
+                    if (isViewAttached()) {
+                        getMvpView().hideProgress();
+                        Log.d(TAG, "onResponse: " + loginResponseModel.getToken());
+                        getMvpView().onFacebookSignInSuccess(loginResponseModel.getUser_id(), loginResponseModel.getToken(), loginResponseModel.getEmail());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onLoginFail(errorResponseModel);
+                }
+            }
+        });
     }
 }

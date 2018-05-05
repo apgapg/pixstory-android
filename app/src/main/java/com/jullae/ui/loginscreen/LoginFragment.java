@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,6 +21,7 @@ import com.jullae.ui.base.BaseFragment;
 
 import java.util.Arrays;
 
+import static com.jullae.ui.loginscreen.LoginActivity.isUserSignedUp;
 import static com.jullae.utils.Constants.SHOW_LOGIN;
 import static com.jullae.utils.Constants.SHOW_SIGNUP;
 
@@ -36,7 +36,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private TextView buttonSignUp;
     private int emailLoginMode = SHOW_LOGIN;
     private GoogleSignInClient mGoogleSignInClient;
-    private CallbackManager callbackManager;
     private LoginButton loginButton;
 
     @Nullable
@@ -82,7 +81,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
     private void setUpFacebookLogin() {
         loginButton = view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+        loginButton.setReadPermissions(Arrays.asList(EMAIL, "public_profile"));
 
 
     }
@@ -124,7 +123,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             case R.id.sign_in_button:
                 signIn();
                 break;
-            // ...
         }
     }
 
@@ -132,5 +130,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         getmContext().startActivityForResult(signInIntent, RC_SIGN_IN);
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (!isUserSignedUp)
+            mGoogleSignInClient.signOut();
+        super.onDestroyView();
     }
 }

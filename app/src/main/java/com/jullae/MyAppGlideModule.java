@@ -13,6 +13,7 @@ public final class MyAppGlideModule extends AppGlideModule {
 
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
-        builder.setLogLevel(Log.VERBOSE);
+        if (BuildConfig.DEBUG)
+            builder.setLogLevel(Log.VERBOSE);
     }
 }
