@@ -19,6 +19,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,12 +29,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
+import com.jullae.data.db.model.SearchPeopleMainModel;
+import com.jullae.ui.adapters.SearchPersonAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.fragments.ProfileFragment;
 import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.notification.NotificationFragment;
+import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.utils.dialog.MyProgressDialog;
 import com.karumi.dexter.Dexter;
@@ -73,6 +78,8 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     private Uri imageToUploadUri;
     private HomeActivityPresentor mPresentor;
     private ImageView button_notification;
+    private View button_search;
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -88,6 +95,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
 
+        setUpSearchButton();
         tab_explore = findViewById(R.id.tab_explore);
         tab_profile = findViewById(R.id.tab_profile);
         tab_home = findViewById(R.id.tab_home);
@@ -165,6 +173,47 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
                 showFragment(new NotificationFragment(), true);
             }
         });
+    }
+
+    private void setUpSearchButton() {
+        button_search = findViewById(R.id.image_search);
+
+        autoCompleteTextView = findViewById(R.id.search_person);
+        final SearchPersonAdapter searchPersonAdapter = new SearchPersonAdapter(this, ((ApplicationClass) getApplication()).getmAppDataManager());
+        autoCompleteTextView.setAdapter(searchPersonAdapter);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SearchPeopleMainModel.SearchPeopleModel searchPeopleModel = (((SearchPersonAdapter) parent.getAdapter())).getItemAtPosition(position);
+                final String penname = searchPeopleModel.getUser_penname();
+                autoCompleteTextView.setText(penname);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent intent = new Intent(HomeActivity.this, ProfileVisitorActivity.class);
+                        intent.putExtra("penname", penname);
+                        startActivity(intent);
+                        cleanUpSearchContainer();
+                    }
+                }, 500);
+            }
+        })
+        ;
+
+        button_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.search_container).setVisibility(View.VISIBLE);
+            }
+        });
+
+
+    }
+
+    private void cleanUpSearchContainer() {
+        findViewById(R.id.search_container).setVisibility(View.GONE);
+        autoCompleteTextView.setText("");
     }
 
     private void showAddImageOption() {
@@ -387,7 +436,9 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     @Override
     public void onBackPressed() {
 
-        if (getSupportFragmentManager().findFragmentById(R.id.container) instanceof HomeFragment && getSupportFragmentManager().findFragmentById(R.id.container).isVisible()) {
+        if (findViewById(R.id.search_container).getVisibility() == View.VISIBLE) {
+            cleanUpSearchContainer();
+        } else if (getSupportFragmentManager().findFragmentById(R.id.container) instanceof HomeFragment && getSupportFragmentManager().findFragmentById(R.id.container).isVisible()) {
             HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.container);
             if (!homeFragment.onBackPressByUser())
                 super.onBackPressed();

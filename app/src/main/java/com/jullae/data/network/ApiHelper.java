@@ -29,6 +29,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_READ_STATUS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PEOPLE_SUGGESTIONS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_POPULAR_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_PIC_UPDATE;
@@ -307,6 +308,15 @@ public class ApiHelper {
                 .build();
     }
 
+    public ANRequest getSearchPeopleList(String text) {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_PEOPLE_SUGGESTIONS)
+                .addHeaders(headers)
+                .addQueryParameter("term", text)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+
     /*POST - /api/v1/story/publish
 Request Params: {"title": "Title", "content": "Text here", "picture_id": picture_id}*/
     public ANRequest publishStory(String title, String content, String picture_id) {
@@ -415,7 +425,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         if (!email.isEmpty()) {
             return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_PROFILE_DETAILS)
                     .addHeaders("Authorization", "Bearer " + token)
-                    .addPathParameter("id", user_id)
+                    .addBodyParameter("user_id", user_id)
                     .addBodyParameter("penname", penname)
                     .addBodyParameter("email", email)
                     .setPriority(Priority.HIGH)
@@ -423,7 +433,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         } else {
             return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_PROFILE_DETAILS)
                     .addHeaders("Authorization", "Bearer " + token)
-                    .addPathParameter("id", user_id)
+                    .addBodyParameter("user_id", user_id)
                     .addBodyParameter("penname", penname)
                     .setPriority(Priority.HIGH)
                     .build();

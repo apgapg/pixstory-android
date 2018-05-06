@@ -33,11 +33,22 @@
                 android:id="@+id/image_notification"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_bell_normal"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginRight="8dp"
+                android:padding="9dp"
+                android:scaleType="centerCrop"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_bell_normal"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/image_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="48dp"
                 android:scaleType="center"
+                app:srcCompat="@drawable/ic_search_black_24dp"
                 tools:visibility="visible" />
         </FrameLayout>
 
@@ -101,5 +112,44 @@
         android:visibility="gone" />
 
     <include layout="@layout/bottom_sheet_content" />
+
+    <RelativeLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#67000000" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="6dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/search_person"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+                android:background="@drawable/border_grey"
+                android:dropDownHeight="240dp"
+                android:hint="Search for people..."
+                android:lines="1"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textAppearance="@style/text_14.regular.primary" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -34,6 +34,7 @@ public class ApiEndPoint {
     public static final String ENDPOINT_MESSAGE_LIST = "/user/{id}/messages";
     public static final String ENDPOINT_ADD_MESSAGE = "/user/{id}/message";
     public static final String ENDPOINT_TAG_SUGGESTIONS = "/suggestion/tag_suggestions";
+    public static final String ENDPOINT_PEOPLE_SUGGESTIONS = "/suggestion/name_suggestions";
     public static final String ENDPOINT_PUBLISH_STORY = "/story/publish";
     public static final String ENDPOINT_PUBLISH_DRAFT = "/story/draft";
     public static final String ENDPOINT_DELETE_STORY = "/story/{id}/destroy";
@@ -47,7 +48,7 @@ public class ApiEndPoint {
 
     public static final String ENDPOINT_NOTIFICATION_LIST = "/user/{id}/notifications";
     public static final String ENDPOINT_NOTIFICATION_READ_STATUS = "/user/{id}/read_notifications";
-    public static final String ENDPOINT_ADD_PROFILE_DETAILS = "/user/{id}/complete_account_setup";
+    public static final String ENDPOINT_ADD_PROFILE_DETAILS = "/auth_misc/complete_account_setup";
 
 
     private ApiEndPoint() {

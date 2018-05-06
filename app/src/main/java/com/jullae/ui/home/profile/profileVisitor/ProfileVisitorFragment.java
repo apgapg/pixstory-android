@@ -60,13 +60,13 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         penname = getArguments().getString("penname");
 
         user_image = view.findViewById(R.id.image_avatar);
-        //user_name = view.findViewById(R.id.text_name);
-        //user_penname = view.findViewById(R.id.text_penname);
-        // user_bio = view.findViewById(R.id.user_bio);
-      /*  user_followers = view.findViewById(R.id.text_followers);
+        user_name = view.findViewById(R.id.text_name);
+        user_penname = view.findViewById(R.id.text_penname);
+        user_bio = view.findViewById(R.id.user_bio);
+        user_followers = view.findViewById(R.id.text_followers);
         user_following = view.findViewById(R.id.text_following);
         user_stories = view.findViewById(R.id.text_stories);
-        user_pictures = view.findViewById(R.id.text_pictures);*/
+        user_pictures = view.findViewById(R.id.text_pictures);
 
         button_message = view.findViewById(R.id.button_message);
         view.findViewById(R.id.button_edit_profile).setVisibility(View.INVISIBLE);
@@ -110,27 +110,31 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
     @Override
     public void onProfileFetchSuccess(final ProfileModel profileModel) {
-        Glide.with(getmContext()).load(profileModel.getUser_dp_url()).into(user_image);
-        user_name.setText(profileModel.getName());
-        user_penname.setText(profileModel.getPenname());
-        user_bio.setText(profileModel.getBio());
-        user_followers.setText(profileModel.getFollower_count());
-        user_following.setText(profileModel.getFollowing_count());
-        user_stories.setText(profileModel.getStories_count());
-        user_pictures.setText(profileModel.getPictures_count());
+        try {
+            Glide.with(getmContext()).load(profileModel.getUser_dp_url()).into(user_image);
+            user_name.setText(profileModel.getName());
+            user_penname.setText(profileModel.getPenname());
+            user_bio.setText(profileModel.getBio());
+            user_followers.setText(profileModel.getFollower_count());
+            user_following.setText(profileModel.getFollowing_count());
+            user_stories.setText(profileModel.getStories_count());
+            user_pictures.setText(profileModel.getPictures_count());
 
-        button_message.setVisibility(View.VISIBLE);
-        button_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            button_message.setVisibility(View.VISIBLE);
+            button_message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Intent i = new Intent(getmContext(), MessageActivity.class);
-                i.putExtra("user_id", profileModel.getId());
-                i.putExtra("user_name", profileModel.getName());
+                    Intent i = new Intent(getmContext(), MessageActivity.class);
+                    i.putExtra("user_id", profileModel.getId());
+                    i.putExtra("user_name", profileModel.getName());
 
-                getmContext().startActivity(i);
-            }
-        });
+                    getmContext().startActivity(i);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
