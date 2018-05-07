@@ -39,9 +39,6 @@ public class LoginResponseModel extends BaseResponseModel {
         return penname;
     }
 
-    public boolean isLoginSuccess() {
-        return isReqSuccess();
-    }
 
     public String getToken() {
         return token;

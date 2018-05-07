@@ -20,6 +20,7 @@ public class ApiEndPoint {
     public static final String ENDPOINT_EMAIL_LOGIN = "/custom_authentication";
     public static final String ENDPOINT_GOOGLE_LOGIN = "/google_authentication";
     public static final String ENDPOINT_FACEBOOK_LOGIN = "/facebook_authentication";
+    public static final String ENDPOINT_FORGOT_PASSWORD = "/reset_password_request";
 
     public static final String ENDPOINT_PROFILE_TAB_PICTURES = "/profile/{penname}/pictures";
     public static final String ENDPOINT_PROFILE_TAB_STORIES = "/profile/{penname}/stories";

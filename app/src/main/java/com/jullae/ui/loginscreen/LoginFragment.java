@@ -31,7 +31,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private View view;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private TextView forgotPasswordTextView;
+    private TextView button_forgotPassword;
     private Button buttonLogin;
     private TextView buttonSignUp;
     private int emailLoginMode = SHOW_LOGIN;
@@ -49,7 +49,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         view = inflater.inflate(R.layout.fragment_login, container, false);
         editTextEmail = view.findViewById(R.id.username_field);
         editTextPassword = view.findViewById(R.id.password_field);
-        forgotPasswordTextView = view.findViewById(R.id.forgot_password);
+        button_forgotPassword = view.findViewById(R.id.text_forgot_password);
 
         buttonLogin = view.findViewById(R.id.button_login);
         buttonSignUp = view.findViewById(R.id.sign_up);
@@ -69,6 +69,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 if (emailLoginMode == SHOW_LOGIN)
                     updateUI(SHOW_SIGNUP);
                 else updateUI(SHOW_LOGIN);
+            }
+        });
+        button_forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LoginActivity) getmContext()).showForgotPasswordFragment();
             }
         });
         setUpGoogleSignIn();
@@ -104,12 +110,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private void updateUI(int mode) {
         if (mode == SHOW_SIGNUP) {
             buttonLogin.setText("Sign In");
-            forgotPasswordTextView.setVisibility(View.INVISIBLE);
+            button_forgotPassword.setVisibility(View.INVISIBLE);
             buttonSignUp.setText(R.string.logIn);
             emailLoginMode = SHOW_SIGNUP;
         } else if (mode == SHOW_LOGIN) {
             buttonLogin.setText("Login");
-            forgotPasswordTextView.setVisibility(View.INVISIBLE);
+            button_forgotPassword.setVisibility(View.INVISIBLE);
             buttonSignUp.setText(R.string.signUp);
             emailLoginMode = SHOW_LOGIN;
 

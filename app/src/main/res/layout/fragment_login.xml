@@ -92,19 +92,20 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
 
-        android:background="@drawable/border_light_grey"
+        android:background="@drawable/button_border_color_primary_text"
         android:text="@string/login"
+        android:textAppearance="@style/text_14.regular.primary"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/forgot_password"
+        android:id="@+id/text_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
 
         android:text="@string/forgotPassword"
-        android:textColor="#757575" />
+        android:textAppearance="@style/text_14.regular.secondary" />
 
     <TextView
         android:id="@+id/sign_up"
@@ -116,7 +117,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:text="@string/signUp"
-
+        android:textAppearance="@style/text_14.regular.secondary"
         />
 
     <TextView

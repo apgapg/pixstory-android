@@ -25,13 +25,5 @@ public class BaseResponseModel {
         return message;
     }
 
-    public String getSuccess() {
-        return success;
-    }
-
-    public boolean isReqSuccess() {
-        return success.equals("true");
-    }
-
 
 }

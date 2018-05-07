@@ -244,6 +244,9 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         }
     }
 
+    public void showForgotPasswordFragment() {
+        showFragment(new ForgotPasswordFragment(), true);
+    }
 
     public void performEmailLogin(String email, String password, int emailLoginMode) {
         mPresentor.performEmailLogin(email, password, emailLoginMode);
@@ -275,5 +278,10 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
             LoginManager.getInstance().logOut();
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

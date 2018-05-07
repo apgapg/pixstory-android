@@ -5,6 +5,7 @@ import android.util.Log;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jullae.utils.Constants;
 
 import org.json.JSONObject;
@@ -22,6 +23,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_SIGNUP;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FACEBOOK_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FOLLOW;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FORGOT_PASSWORD;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_FRESH_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_GOOGLE_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_HOME_FEEDS;
@@ -202,6 +204,7 @@ public class ApiHelper {
                 .addHeaders(headers)
                 .addBodyParameter("email", email)
                 .addBodyParameter("password", password)
+                .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -213,6 +216,7 @@ public class ApiHelper {
                 .addBodyParameter("password", password)
                 .addBodyParameter("name", name)
                 .addBodyParameter("penname", penname)
+                .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -416,7 +420,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_GOOGLE_LOGIN)
                 .addHeaders(headers)
                 .addBodyParameter("code", idToken)
-
+                .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -444,7 +448,16 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_FACEBOOK_LOGIN)
                 .addHeaders(headers)
                 .addBodyParameter("token", token)
+                .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                .setPriority(Priority.HIGH)
+                .build();
+    }
 
+    public ANRequest makeForgotPasswordReq(String email) {
+        Log.d(TAG, "makeForgotPasswordReq: " + email);
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_FORGOT_PASSWORD)
+                .addHeaders(headers)
+                .addQueryParameter("email", email)
                 .setPriority(Priority.HIGH)
                 .build();
     }

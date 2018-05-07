@@ -70,13 +70,12 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
             @Override
             public void onResponse(AvatarResponseModel avatarResponseModel) {
                 NetworkUtils.parseResponse(TAG, avatarResponseModel);
-                if (avatarResponseModel.isReqSuccess()) {
-                    getmAppDataManager().getmAppPrefsHelper().setKeyDpUrl(avatarResponseModel.getProfile_dp_url());
-                    if (isViewAttached()) {
-                        getMvpView().hidePicUploadProgress();
-                        getMvpView().onProfilePicUpdateSuccess(avatarResponseModel.getProfile_dp_url());
-                    }
+                getmAppDataManager().getmAppPrefsHelper().setKeyDpUrl(avatarResponseModel.getProfile_dp_url());
+                if (isViewAttached()) {
+                    getMvpView().hidePicUploadProgress();
+                    getMvpView().onProfilePicUpdateSuccess(avatarResponseModel.getProfile_dp_url());
                 }
+
             }
 
             @Override
@@ -120,14 +119,13 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
                         @Override
                         public void onResponse(BaseResponseModel response) {
                             NetworkUtils.parseResponse(TAG, response);
-                            if (response.isReqSuccess()) {
-                                getmAppDataManager().getmAppPrefsHelper().setKeyName(name);
-                                getmAppDataManager().getmAppPrefsHelper().setKeyBio(bio);
-                                if (isViewAttached()) {
-                                    getMvpView().hideProgressBar();
-                                    reqListener.onSuccess();
-                                }
+                            getmAppDataManager().getmAppPrefsHelper().setKeyName(name);
+                            getmAppDataManager().getmAppPrefsHelper().setKeyBio(bio);
+                            if (isViewAttached()) {
+                                getMvpView().hideProgressBar();
+                                reqListener.onSuccess();
                             }
+
                         }
 
                         @Override

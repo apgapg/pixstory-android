@@ -27,17 +27,10 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
                 @Override
                 public void onResponse(StoryResponseModel storyResponseModel) {
                     NetworkUtils.parseResponse(TAG, storyResponseModel);
-                    if (storyResponseModel.isReqSuccess()) {
                         if (isViewAttached()) {
                             getMvpView().hideProgressBar();
                             getMvpView().onStoryPublishSuccess();
                         }
-                    } else {
-                        if (isViewAttached()) {
-                            getMvpView().onStoryPublishFail();
-                            getMvpView().hideProgressBar();
-                        }
-                    }
                 }
 
                 @Override
@@ -61,17 +54,10 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
                 @Override
                 public void onResponse(BaseResponseModel baseResponseModel) {
                     NetworkUtils.parseResponse(TAG, baseResponseModel);
-                    if (baseResponseModel.isReqSuccess()) {
                         if (isViewAttached()) {
                             getMvpView().hideProgressBar();
                             getMvpView().onStoryDraftSuccess();
                         }
-                    } else {
-                        if (isViewAttached()) {
-                            getMvpView().onStoryDraftFail();
-                            getMvpView().hideProgressBar();
-                        }
-                    }
                 }
 
                 @Override

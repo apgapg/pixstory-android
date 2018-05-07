@@ -653,6 +653,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
     }
 
+
     interface AddPictureListener {
         void onPictureTitleEmpty();
 

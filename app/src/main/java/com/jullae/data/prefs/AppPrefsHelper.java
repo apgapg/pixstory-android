@@ -47,17 +47,10 @@ public class AppPrefsHelper {
         sharedPreferences.edit().putBoolean("IS_LOGGED_IN", loggedIn).apply();
     }
 
-    public void saveUserDetails(String avatar, String name, String penname, String bio, String user_id, String token) {
-        sharedPreferences.edit().putString(KEY_NAME, name).commit();
-        sharedPreferences.edit().putString(KEY_PENNAME, penname).commit();
-        sharedPreferences.edit().putString(KEY_BIO, bio).commit();
-        sharedPreferences.edit().putString(KEY_USER_ID, user_id).commit();
-        sharedPreferences.edit().putString(KEY_TOKEN, token).commit();
-        sharedPreferences.edit().putString(KEY_DP_URL, avatar).commit();
-        setLoggedInMode(true);
-    }
+
 
     public void saveUserDetails(LoginResponseModel loginResponseModel) {
+        sharedPreferences.edit().putString(KEY_EMAIL, loginResponseModel.getEmail()).commit();
         sharedPreferences.edit().putString(KEY_NAME, loginResponseModel.getName()).commit();
         sharedPreferences.edit().putString(KEY_PENNAME, loginResponseModel.getPenname()).commit();
         sharedPreferences.edit().putString(KEY_BIO, loginResponseModel.getBio()).commit();
@@ -96,6 +89,9 @@ public class AppPrefsHelper {
         return sharedPreferences.getString(KEY_USER_ID, "");
     }
 
+    public String getKeyEmail() {
+        return KEY_EMAIL;
+    }
 
     public String getKeyDpUrl() {
         return sharedPreferences.getString(KEY_DP_URL, "");

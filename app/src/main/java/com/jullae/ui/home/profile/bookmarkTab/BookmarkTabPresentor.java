@@ -46,9 +46,8 @@ public class BookmarkTabPresentor extends BasePresentor<BookmarkTabView> {
             public void onResponse(BaseResponseModel response) {
                 NetworkUtils.parseResponse(TAG, response);
                 if (isViewAttached()) {
-                    if (response.isReqSuccess())
-                        deleteListener.onSuccess();
-                    else deleteListener.onFail();
+
+                    deleteListener.onSuccess();
 
                 }
             }

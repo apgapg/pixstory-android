@@ -14,9 +14,6 @@ public class SignUpResponseModel extends BaseResponseModel {
         super(b, errorCode, errorMessage);
     }
 
-    public boolean isSignUpSuccess() {
-        return isReqSuccess();
-    }
 
     public String getToken() {
         return token;
