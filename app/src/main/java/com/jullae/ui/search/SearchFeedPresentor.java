@@ -16,13 +16,12 @@ public class SearchFeedPresentor extends BasePresentor<SearchFeedContract.View> 
     private static final String TAG = SearchFeedPresentor.class.getName();
     private SearchFeedContract.View view;
 
-    public SearchFeedPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public SearchFeedPresentor() {
     }
 
     public void loadFeeds(String searchTag) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().loadsearchfeeds(searchTag).getAsObject(TagSearchMainModel.class, new ParsedRequestListener<TagSearchMainModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadsearchfeeds(searchTag).getAsObject(TagSearchMainModel.class, new ParsedRequestListener<TagSearchMainModel>() {
 
 
             @Override

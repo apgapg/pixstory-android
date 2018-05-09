@@ -15,11 +15,15 @@
         android:background="#fff">
 
         <TextView
-            android:id="@+id/title"
-            style="@style/textViewStyle.line_1"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="@string/title"
+            android:textAppearance="@style/text_14.medium.primary"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <ImageView
@@ -67,8 +71,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="@dimen/margin_very_tiny"
-                        android:background="@drawable/ripple_effect"
-                        app:srcCompat="@drawable/user_icon" />
+                        tools:srcCompat="@drawable/user_icon" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -78,18 +81,17 @@
 
                         <TextView
                             android:id="@+id/text_name"
-                            style="@style/textViewStyle.line_1"
-                            android:ellipsize="end"
-                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/text_16.medium.primary"
                             tools:text="Ankit sharma" />
 
                         <TextView
                             android:id="@+id/text_penname"
-                            style="@style/textViewStyle.line_1"
-                            android:ellipsize="end"
-                            android:textColor="@color/grey_light4"
-                            android:textSize="@dimen/text_size_small"
-                            tools:text='"@rahulabrol2211"' />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/text_14.regular.secondary"
+                            tools:text="rahulabrol2211" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -128,11 +130,13 @@
 
             <TextView
                 android:id="@+id/story_text"
-                style="@style/textViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="8dp"
+                android:textAppearance="@style/text_14.regular.primary"
                 android:textSize="14dp"
 
 
@@ -181,29 +185,27 @@
 
                         <TextView
                             android:id="@+id/like_count"
-                            style="@style/textView.feed_secondary_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
+                            android:textAppearance="@style/text_14.light.secondary"
                             tools:text="12 likes" />
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/padding8TopBottom"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="12dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/t"
                         android:gravity="center_vertical|end">
 
 
                         <TextView
                             android:id="@+id/comment_count"
-                            style="@style/textView.feed_secondary_text"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/headingSubHeadingMargin"
+                            android:gravity="center"
+                            android:textAppearance="@style/text_14.light.secondary"
                             tools:text="30 comments" />
 
                     </LinearLayout>
@@ -261,7 +263,7 @@
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 android:paddingTop="8dp"
-                android:textSize="14dp" />
+                android:textAppearance="@style/text_14.regular.primary" />
 
             <ImageView
                 android:id="@+id/btn_add_comment"

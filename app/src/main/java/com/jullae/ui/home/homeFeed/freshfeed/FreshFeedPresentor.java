@@ -12,14 +12,13 @@ public class FreshFeedPresentor extends BasePresentor<FreshFeedContract.View> {
 
     private static final String TAG = FreshFeedPresentor.class.getName();
 
-    public FreshFeedPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public FreshFeedPresentor() {
     }
 
     public void loadFeeds(int position) {
         checkViewAttached();
         getMvpView().showProgressBar();
-        getmAppDataManager().getmApiHelper().loadFreshFeeds(position).getAsObject(FreshFeedModel.class, new ParsedRequestListener<FreshFeedModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadFreshFeeds(position).getAsObject(FreshFeedModel.class, new ParsedRequestListener<FreshFeedModel>() {
             @Override
             public void onResponse(FreshFeedModel freshFeedModel) {
                 NetworkUtils.parseResponse(TAG, freshFeedModel);

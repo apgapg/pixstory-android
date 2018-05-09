@@ -19,8 +19,7 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
 
     private static final String TAG = LoginActivityPresentor.class.getName();
 
-    public LoginActivityPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public LoginActivityPresentor() {
     }
 
     public void performEmailLogin(String email, String password, int emailLoginMode) {
@@ -42,14 +41,14 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
     }
 
     private void performEmailLoginReq(final String email, String password) {
-        getmAppDataManager().getmApiHelper().emailLoginReq(email, password).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().emailLoginReq(email, password).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
             @Override
             public void onResponse(LoginResponseModel loginResponseModel) {
                 NetworkUtils.parseResponse(TAG, loginResponseModel);
 
 
-                getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel);
-                getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+                AppDataManager.getInstance().getmSharedPrefsHelper().saveUserDetails(loginResponseModel);
+                AppDataManager.getInstance().getmApiHelper().updateToken(loginResponseModel.getToken());
 
                 if (isViewAttached()) {
                     getMvpView().hideProgress();
@@ -78,12 +77,12 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
             getMvpView().signUpValidationError();
         } else {
             getMvpView().showProgress();
-            getmAppDataManager().getmApiHelper().signUpReq(email, password, name, penname).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+            AppDataManager.getInstance().getmApiHelper().signUpReq(email, password, name, penname).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
                 @Override
                 public void onResponse(LoginResponseModel loginResponseModel) {
                     NetworkUtils.parseResponse(TAG, loginResponseModel);
-                    getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel);
-                    getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+                    AppDataManager.getInstance().getmSharedPrefsHelper().saveUserDetails(loginResponseModel);
+                    AppDataManager.getInstance().getmApiHelper().updateToken(loginResponseModel.getToken());
 
                     if (isViewAttached()) {
                         getMvpView().hideProgress();
@@ -108,15 +107,15 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
     public void makeFbLoginReq(String token) {
         checkViewAttached();
         getMvpView().showProgress();
-        getmAppDataManager().getmApiHelper().makeFbLoginReq(token).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().makeFbLoginReq(token).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
 
             @Override
             public void onResponse(LoginResponseModel loginResponseModel) {
                 NetworkUtils.parseResponse(TAG, loginResponseModel);
 
                 if (loginResponseModel.getAccount_status().equals("act")) {
-                    getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel);
-                    getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+                    AppDataManager.getInstance().getmSharedPrefsHelper().saveUserDetails(loginResponseModel);
+                    AppDataManager.getInstance().getmApiHelper().updateToken(loginResponseModel.getToken());
 
                     if (isViewAttached()) {
                         getMvpView().hideProgress();
@@ -145,14 +144,14 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
     public void makeGoogleSignInReq(String idToken) {
         checkViewAttached();
         getMvpView().showProgress();
-        getmAppDataManager().getmApiHelper().googleSignInReq(idToken).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().googleSignInReq(idToken).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
 
             @Override
             public void onResponse(LoginResponseModel loginResponseModel) {
                 NetworkUtils.parseResponse(TAG, loginResponseModel);
                 if (loginResponseModel.getAccount_status().equals("act")) {
-                    getmAppDataManager().getmAppPrefsHelper().saveUserDetails(loginResponseModel);
-                    getmAppDataManager().getmApiHelper().updateToken(loginResponseModel.getToken());
+                    AppDataManager.getInstance().getmSharedPrefsHelper().saveUserDetails(loginResponseModel);
+                    AppDataManager.getInstance().getmApiHelper().updateToken(loginResponseModel.getToken());
 
                     if (isViewAttached()) {
                         getMvpView().hideProgress();
@@ -184,7 +183,7 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
         if (TextUtils.isEmpty(penname)) {
             getMvpView().signUpValidationError();
         } else {
-            getmAppDataManager().getmApiHelper().addProfileDetailReq(user_id, token, penname, email).getAsString(new StringRequestListener() {
+            AppDataManager.getInstance().getmApiHelper().addProfileDetailReq(user_id, token, penname, email).getAsString(new StringRequestListener() {
                 @Override
                 public void onResponse(String response) {
                     Log.d(TAG, "onResponse: " + response);
@@ -201,7 +200,7 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
     }
 
     public boolean isUserLoggedIn() {
-        return getmAppDataManager().getmAppPrefsHelper().getLoggedInMode();
+        return AppDataManager.getInstance().getmSharedPrefsHelper().getLoggedInMode();
     }
 
 }

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.ui.base.BaseFragment;
@@ -49,7 +48,7 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(freshFeedAdapter);
 
-        mPresentor = new FreshFeedPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new FreshFeedPresentor();
 
         return view;
     }

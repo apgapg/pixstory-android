@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.jullae.R;
 import com.jullae.ui.base.BaseActivity;
@@ -22,6 +21,7 @@ public class StoryDetailActivity extends BaseActivity {
 
 
     private String storyModel;
+    private String story_id;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -32,20 +32,27 @@ public class StoryDetailActivity extends BaseActivity {
         if (getIntent() != null) {
             Intent i = getIntent();
             storyModel = i.getStringExtra("object");
-            showStoryDetailFragment();
+            story_id = i.getStringExtra("story_id");
+
+            Bundle bundle = new Bundle();
+            if (storyModel != null)
+                bundle.putString("storymodel", storyModel);
+            else if (story_id != null)
+                bundle.putString("story_id", story_id);
+            else throw new NullPointerException("story params cant be null!");
+
+            showStoryDetailFragment(bundle);
+
         }
 
 
     }
 
 
-    private void showStoryDetailFragment() {
+    private void showStoryDetailFragment(Bundle bundle) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         StoryDetailFragment storyDetailFragment = new StoryDetailFragment();
-        Bundle bundle = new Bundle();
-        Log.d(TAG, "showStoryDetailFragment: " + storyModel);
-        bundle.putString("storymodel", storyModel);
         storyDetailFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.container, storyDetailFragment).commit();
 
@@ -61,4 +68,10 @@ public class StoryDetailActivity extends BaseActivity {
     }
 
 
+    public void showSearchResults(String story_text) {
+        Intent i = new Intent();
+        i.putExtra("searchtag", story_text);
+        setResult(RESULT_OK, i);
+        finish();
+    }
 }

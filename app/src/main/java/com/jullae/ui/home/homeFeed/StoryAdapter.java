@@ -117,6 +117,17 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tvTimeInDays = inflate.findViewById(R.id.tvTimeInDays);
             like_count = inflate.findViewById(R.id.like_count);
             comment_count = inflate.findViewById(R.id.comment_count);
+            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, StoryDetailActivity.class);
+                    Gson gson = new Gson();
+                    String object = gson.toJson(messagelist.get(getAdapterPosition()));
+                    i.putExtra("object", object);
+                    i.putExtra("profile", false);
+                    mContext.startActivity(i);
+                }
+            });
             user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -129,17 +140,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     ((HomeActivity) mContext).showVisitorProfile(((StoryModel) messagelist.get(getAdapterPosition())).getWriter_penname());
                 }
             });
-            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(mContext, StoryDetailActivity.class);
-                    Gson gson = new Gson();
-                    String object = gson.toJson(messagelist.get(getAdapterPosition()));
-                    i.putExtra("object", object);
-                    i.putExtra("profile", false);
-                    mContext.startActivity(i);
-                }
-            });
+
         }
     }
 

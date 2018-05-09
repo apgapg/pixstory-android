@@ -18,17 +18,13 @@ import java.util.List;
 public class SearchAdapter extends ArrayAdapter<String> {
     private static final String TAG = SearchAdapter.class.getName();
     private final List<String> searchList;
-    private final AppDataManager mAppDataManager;
 
-    public SearchAdapter(@NonNull Context context, AppDataManager appDataManager) {
+    public SearchAdapter(@NonNull Context context) {
         super(context, android.R.layout.simple_dropdown_item_1line);
-        this.mAppDataManager = appDataManager;
         searchList = new ArrayList<>();
     }
 
-    public AppDataManager getmAppDataManager() {
-        return mAppDataManager;
-    }
+
 
     @Override
     public int getCount() {
@@ -50,7 +46,7 @@ public class SearchAdapter extends ArrayAdapter<String> {
                 FilterResults filterResults = new FilterResults();
 
                 if (constraint != null) {
-                    getmAppDataManager().getmApiHelper().getSearchList(constraint.toString()).getAsObject(SuggestionMainModel.class, new ParsedRequestListener<SuggestionMainModel>() {
+                    AppDataManager.getInstance().getmApiHelper().getSearchList(constraint.toString()).getAsObject(SuggestionMainModel.class, new ParsedRequestListener<SuggestionMainModel>() {
 
 
                         @Override
@@ -59,6 +55,7 @@ public class SearchAdapter extends ArrayAdapter<String> {
                             for (int i = 0; i < suggestionMainModel.getSuggestionModelList().size(); i++) {
                                 searchList.add(suggestionMainModel.getSuggestionModelList().get(i).getTag_name());
                             }
+                            notifyDataSetChanged();
                         }
 
                         @Override

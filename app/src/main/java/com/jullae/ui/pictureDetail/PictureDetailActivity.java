@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
@@ -41,7 +40,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         pictureModel = gson.fromJson(getIntent().getStringExtra("pictureModel"), PictureModel.class);
 
 
-        mPresentor = new PictureDetailPresentor(((ApplicationClass) getApplication()).getmAppDataManager());
+        mPresentor = new PictureDetailPresentor();
         mPresentor.attachView(this);
 
         Glide.with(this).load(pictureModel.getPicture_url_small()).into(image);

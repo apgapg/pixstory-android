@@ -16,6 +16,7 @@ import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.NotificationModel;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
+import com.jullae.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,12 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int NOTI_TYPE_FOLLOW = 1;
+    public static final int NOTI_TYPE_NEW_STORY = 2;
+    public static final int NOTI_TYPE_NEW_COMMENT = 3;
+    public static final int NOTI_TYPE_STORY_LIKE = 4;
+    public static final int NOTI_TYPE_PICTURE_LIKE = 5;
     private static final String TAG = NotificationAdapter.class.getName();
-    private static final int NOTI_TYPE_FOLLOW = 1;
-    private static final int NOTI_TYPE_NEW_STORY = 2;
-    private static final int NOTI_TYPE_NEW_COMMENT = 3;
-    private static final int NOTI_TYPE_STORY_LIKE = 4;
-    private static final int NOTI_TYPE_PICTURE_LIKE = 5;
     private final Activity mContext;
 
     List<NotificationModel> messagelist = new ArrayList<>();
@@ -115,19 +116,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void onUserClick(int adapterPosition) {
-        switch (adapterPosition) {
+        switch (messagelist.get(adapterPosition).getNotification_type_id()) {
             case NOTI_TYPE_FOLLOW:
-                showVisitorProfile(messagelist.get(adapterPosition).getActor_penname());
+                AppUtils.showVisitorProfile(mContext, messagelist.get(adapterPosition).getActor_penname());
                 break;
             case NOTI_TYPE_NEW_STORY:
-
+                AppUtils.showStoryDetailActivity(mContext, messagelist.get(adapterPosition).getStory_id());
                 break;
             case NOTI_TYPE_NEW_COMMENT:
-                showStoryDetails();
+                AppUtils.showStoryDetailActivity(mContext, messagelist.get(adapterPosition).getStory_id());
                 break;
             case NOTI_TYPE_STORY_LIKE:
+                AppUtils.showStoryDetailActivity(mContext, messagelist.get(adapterPosition).getStory_id());
                 break;
-
             case NOTI_TYPE_PICTURE_LIKE:
                 break;
 

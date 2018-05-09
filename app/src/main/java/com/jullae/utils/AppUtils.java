@@ -7,8 +7,10 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import com.jullae.SearchActivity;
 import com.jullae.ui.adapters.PicturesAdapter;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
+import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.List;
 
@@ -36,10 +38,15 @@ public class AppUtils {
     }
 
 
-    public static void showVisitorProfile(Activity mContext, String writer_penname) {
+    public static void showVisitorProfile(Context mContext, String writer_penname) {
+        mContext.startActivity(buildVisitorProfileActivityIntent(mContext, writer_penname));
+    }
+
+    public static Intent buildVisitorProfileActivityIntent(Context mContext, String writer_penname) {
         Intent i = new Intent(mContext, ProfileVisitorActivity.class);
         i.putExtra("penname", writer_penname);
-        mContext.startActivity(i);
+        return i;
+
     }
 
     public static void checkforNull(List<String> strings) {
@@ -54,6 +61,30 @@ public class AppUtils {
         if (object == null)
             throw new NullPointerException("Object is null");
 
+
+    }
+
+    /**
+     * Show search activity.
+     *
+     * @param activity  the activity
+     * @param searchTag the search tag
+     */
+    public static void showSearchActivity(Activity activity, String searchTag) {
+        Intent i = new Intent(activity, SearchActivity.class);
+        i.putExtra("searchtag", searchTag);
+        activity.startActivity(i);
+    }
+
+    public static void showStoryDetailActivity(Context context, String story_id) {
+        context.startActivity(buildStoryDetailActivityIntent(context, story_id));
+
+    }
+
+    public static Intent buildStoryDetailActivityIntent(Context context, String story_id) {
+        Intent i = new Intent(context, StoryDetailActivity.class);
+        i.putExtra("story_id", story_id);
+        return i;
 
     }
 }

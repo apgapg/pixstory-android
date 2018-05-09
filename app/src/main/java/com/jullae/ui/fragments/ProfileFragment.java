@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.ConversationModel;
 import com.jullae.data.db.model.ProfileModel;
@@ -121,7 +120,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         viewPager.setAdapter(pagerAdapter);
 
-        mPresentor = new ProfileFragmentPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new ProfileFragmentPresentor();
 
         return view;
     }

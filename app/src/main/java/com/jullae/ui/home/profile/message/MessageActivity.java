@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.MessageModel;
 
@@ -40,7 +39,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
             user_id = getIntent().getStringExtra("user_id");
             user_name = getIntent().getStringExtra("user_name");
         }
-        mPresentor = new MessagePresentor(((ApplicationClass) getApplication()).getmAppDataManager());
+        mPresentor = new MessagePresentor();
         mPresentor.attachView(this);
 
         progressBar = findViewById(R.id.progress_bar);

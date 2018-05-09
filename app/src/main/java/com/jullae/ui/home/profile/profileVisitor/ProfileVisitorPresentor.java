@@ -11,14 +11,13 @@ public class ProfileVisitorPresentor extends BasePresentor<ProfileVisitorView> {
 
     private static final String TAG = ProfileVisitorPresentor.class.getName();
 
-    public ProfileVisitorPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public ProfileVisitorPresentor() {
     }
 
 
     public void loadProfile(String penname) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
+        AppDataManager.getInstance().getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
             @Override
             public void onResponse(ProfileMainModel profileMainModel) {
                 NetworkUtils.parseResponse(TAG, profileMainModel);

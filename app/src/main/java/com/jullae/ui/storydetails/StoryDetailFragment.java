@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.StoryCommentModel;
@@ -53,6 +52,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private View view;
     private StoryDetailPresentor mPresentor;
     private StoryCommentModel.StoryDetailModel storyDetailModel;
+    private TextView story_title, user_name, user_penname, story_text;
+    private ImageView btn_close, user_image;
+    private String story_id;
 
     @Nullable
     @Override
@@ -64,47 +66,52 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         }
         view = inflater.inflate(R.layout.content_story_details, container, false);
 
-        Gson gson = new Gson();
-        storyModel = gson.fromJson(getArguments().getString("storymodel"), StoryModel.class);
 
-        mPresentor = new StoryDetailPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new StoryDetailPresentor();
 
 
-        TextView story_tag = view.findViewById(R.id.title);
-        ImageView btn_close = view.findViewById(R.id.tvClose);
-        TextView user_name = view.findViewById(R.id.text_name);
-        ImageView user_image = view.findViewById(R.id.image_avatar);
-        TextView user_penname = view.findViewById(R.id.text_penname);
-        TextView story_text = view.findViewById(R.id.story_text);
+        story_title = view.findViewById(R.id.text_title);
+        btn_close = view.findViewById(R.id.tvClose);
+        user_name = view.findViewById(R.id.text_name);
+        user_image = view.findViewById(R.id.image_avatar);
+        user_penname = view.findViewById(R.id.text_penname);
+        story_text = view.findViewById(R.id.story_text);
         like_count = view.findViewById(R.id.like_count);
         comment_count = view.findViewById(R.id.comment_count);
-
-
         btn_more = view.findViewById(R.id.btn_more);
-
-        btn_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         setupMoreBottomSheet();
         setupAddComment();
 
+        Gson gson = new Gson();
+        storyModel = gson.fromJson(getArguments().getString("storymodel"), StoryModel.class);
 
+        if (storyModel != null) {
+            story_id = storyModel.getStory_id();
+            setProfiledata();
 
-        story_tag.setText(storyModel.getStory_title());
+        } else {
+            story_id = getArguments().getString("story_id");
+        }
+
+        story_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((StoryDetailActivity) getmContext()).showSearchResults(storyModel.getStory_text()
+                );
+            }
+        });
+
+        return view;
+    }
+
+    private void setProfiledata() {
+        story_title.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
         user_penname.setText(storyModel.getWriter_name());
         story_text.setText(storyModel.getStory_text());
-
         comment_count.setText(storyModel.getComment_count() + " comments");
-
         Glide.with(this).load(storyModel.getWriter_avatar()).into(user_image);
-
-
-        return view;
     }
 
     private void setUpFollowedButton() {
@@ -335,10 +342,11 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         commentsAdapter = new CommentsAdapter(getmContext());
         recyclerView.setAdapter(commentsAdapter);
 
-        mPresentor.loadComments(storyModel.getStory_id(), new StoryDetailPresentor.CommentsListener() {
+        mPresentor.loadComments(story_id, new StoryDetailPresentor.CommentsListener() {
             @Override
             public void onSuccess(StoryCommentModel storyCommentModel) {
                 storyDetailModel = storyCommentModel.getStoryDetailModel();
+                setProfiledata();
                 setUpFollowedButton();
                 setupLike(storyCommentModel.getStoryDetailModel());
                 commentsAdapter.add(storyCommentModel.getStoryDetailModel().getComments());

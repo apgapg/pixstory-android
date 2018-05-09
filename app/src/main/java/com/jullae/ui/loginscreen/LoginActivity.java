@@ -18,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.AppUtils;
@@ -58,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         setContentView(R.layout.activity_login);
 
 
-        mPresentor = new LoginActivityPresentor(((ApplicationClass) getApplication()).getmAppDataManager());
+        mPresentor = new LoginActivityPresentor();
         if (mPresentor.isUserLoggedIn()) {
             startHomeActivity();
         }

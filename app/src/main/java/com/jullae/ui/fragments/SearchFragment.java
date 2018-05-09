@@ -1,6 +1,7 @@
 package com.jullae.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
+import com.jullae.ui.adapters.SearchAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
 import com.jullae.ui.search.SearchFeedContract;
@@ -26,6 +29,7 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
     private SearchFeedAdapter searchFeedAdapter;
     private String searchTag;
     private TextView searchTextView;
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Nullable
     @Override
@@ -37,11 +41,31 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
         }
         view = inflater.inflate(R.layout.fragment_search, container, false);
         searchTag = getArguments().getString("searchTag");
-        searchFeedPresentor = new SearchFeedPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        searchFeedPresentor = new SearchFeedPresentor();
 
-        searchTextView = view.findViewById(R.id.search_tag_field);
-        searchTextView.setText(searchTag);
 
+        autoCompleteTextView = view.findViewById(R.id.search_tag_field);
+        autoCompleteTextView.setText(searchTag);
+        autoCompleteTextView.setSelection(searchTag.length());
+        SearchAdapter searchAdapter = new SearchAdapter(getmContext());
+        autoCompleteTextView.setAdapter(searchAdapter);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String searchTag = ((TextView) view).getText().toString();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // autoCompleteTextView.setText("");
+
+
+                        // ((HomeActivity) getmContext()).showSearchActivity(searchTag);
+                        onSearchTextChanged(searchTag);
+
+                    }
+                }, 500);
+            }
+        });
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         searchFeedAdapter = new SearchFeedAdapter(getmContext());
@@ -54,6 +78,10 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
 
 
         return view;
+    }
+
+    private void onSearchTextChanged(String searchTag) {
+        searchFeedPresentor.loadFeeds(searchTag);
     }
 
     @Override

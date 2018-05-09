@@ -14,15 +14,14 @@ import java.io.File;
 public class HomeActivityPresentor extends BasePresentor<HomeActivityView> {
     private static final String TAG = HomeActivityPresentor.class.getName();
 
-    public HomeActivityPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public HomeActivityPresentor() {
     }
 
     public void submitPicture(String title, File file, final HomeActivity.AddPictureListener addPictureListener) {
         checkViewAttached();
         getMvpView().showProgressBar();
         if (!TextUtils.isEmpty(title)) {
-            getmAppDataManager().getmApiHelper().makeUploadPictureReq(title, file).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+            AppDataManager.getInstance().getmApiHelper().makeUploadPictureReq(title, file).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
                 @Override
                 public void onResponse(BaseResponseModel response) {

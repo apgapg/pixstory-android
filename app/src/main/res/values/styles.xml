@@ -22,7 +22,7 @@
         <item name="android:textAllCaps">false</item>
     </style>
     <!--Common button style for all buttons-->
-    <style name="buttonStyle" parent="@android:style/Widget.Button">
+    <style name="buttonStyle" parent="@style/Widget.AppCompat.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -460,6 +460,109 @@
     </style>
 
     <style name="text_12.medium.secondary.center_vertical.text_center_vertical">
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+
+
+    <!--text size 16sp-->
+
+    <style name="text_16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="text_16.light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="text_16.regular">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="text_16.medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="text_16.light.primary">
+        <item name="android:textColor">#DE000000</item>
+    </style>
+
+    <style name="text_16.light.secondary">
+        <item name="android:textColor">#8A000000</item>
+    </style>
+
+    <style name="text_16.light.secondary.center_vertical">
+        <item name="android:layout_centerVertical">true</item>
+
+    </style>
+
+    <style name="text_16.light.secondary.layout_gravity_vertical">
+        <item name="android:layout_gravity">center_vertical</item>
+
+    </style>
+
+    <style name="text_16.light.secondary.center_vertical.text_center">
+        <item name="android:gravity">center</item>
+
+    </style>
+
+    <style name="text_16.light.secondary.center_vertical.text_center_vertical">
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+
+    <style name="text_16.regular.primary">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="text_16.regular.secondary">
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="text_16.regular.secondary.center_vertical">
+        <item name="android:layout_centerVertical">true</item>
+
+    </style>
+
+    <style name="text_16.regular.secondary.layout_gravity_vertical">
+        <item name="android:layout_gravity">center_vertical</item>
+
+    </style>
+
+    <style name="text_16.regular.secondary.center_vertical.text_center">
+        <item name="android:gravity">center</item>
+
+    </style>
+
+    <style name="text_16.regular.secondary.center_vertical.text_center_vertical">
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+
+    <style name="text_16.medium.primary">
+        <item name="android:textColor">#DE000000</item>
+    </style>
+
+    <style name="text_16.medium.secondary">
+        <item name="android:textColor">#8A000000</item>
+    </style>
+
+    <style name="text_16.medium.secondary.center_vertical">
+        <item name="android:layout_centerVertical">true</item>
+
+    </style>
+
+    <style name="text_16.medium.secondary.layout_gravity_vertical">
+        <item name="android:layout_gravity">center_vertical</item>
+
+    </style>
+
+    <style name="text_16.medium.secondary.center_vertical.text_center">
+        <item name="android:gravity">center</item>
+
+    </style>
+
+    <style name="text_16.medium.secondary.center_vertical.text_center_vertical">
         <item name="android:gravity">center_vertical</item>
 
     </style>

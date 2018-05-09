@@ -11,14 +11,13 @@ import com.jullae.utils.NetworkUtils;
 public class MessagePresentor extends BasePresentor<MessageView> {
     private static final String TAG = MessagePresentor.class.getName();
 
-    public MessagePresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public MessagePresentor() {
     }
 
     public void loadMessage(String user_id) {
         checkViewAttached();
         getMvpView().showProgressBar();
-        getmAppDataManager().getmApiHelper().loadMessageList(user_id).getAsObject(MessageMainModel.class, new ParsedRequestListener<MessageMainModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadMessageList(user_id).getAsObject(MessageMainModel.class, new ParsedRequestListener<MessageMainModel>() {
 
             @Override
             public void onResponse(MessageMainModel messageMainModel) {
@@ -43,12 +42,12 @@ public class MessagePresentor extends BasePresentor<MessageView> {
     }
 
     public String getCurrentUserId() {
-        return getmAppDataManager().getmAppPrefsHelper().getKeyUserId();
+        return AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId();
     }
 
     public void sendMessageReq(String message, String user_id, final MessageActivity.ReqListener reqListener) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().sendMessageReq(message, user_id).getAsObject(MessageResponseModel.class, new ParsedRequestListener<MessageResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().sendMessageReq(message, user_id).getAsObject(MessageResponseModel.class, new ParsedRequestListener<MessageResponseModel>() {
 
             @Override
             public void onResponse(MessageResponseModel messageResponseModel) {

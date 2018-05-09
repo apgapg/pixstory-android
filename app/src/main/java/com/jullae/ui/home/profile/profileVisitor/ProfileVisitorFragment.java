@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.UserPrefsModel;
@@ -79,7 +78,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         viewPager.setAdapter(pagerAdapter);
 
-        mPresentor = new ProfileVisitorPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new ProfileVisitorPresentor();
 
         button_message.setVisibility(View.INVISIBLE);
 

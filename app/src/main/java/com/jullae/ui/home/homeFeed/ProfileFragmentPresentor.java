@@ -21,17 +21,16 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
 
     private static final String TAG = ProfileFragmentPresentor.class.getName();
 
-    public ProfileFragmentPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public ProfileFragmentPresentor() {
     }
 
     public ProfileModel getStaticUserData() {
-        return getmAppDataManager().getmAppPrefsHelper().getPrefsUserData();
+        return AppDataManager.getInstance().getmSharedPrefsHelper().getPrefsUserData();
     }
 
     public void loadProfile(String penname) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
+        AppDataManager.getInstance().getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
             @Override
             public void onResponse(ProfileMainModel profileMainModel) {
                 NetworkUtils.parseResponse(TAG, profileMainModel);
@@ -53,7 +52,7 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
     public void makeDpReq(File file) {
         checkViewAttached();
         getMvpView().showPicUploadProgress();
-        getmAppDataManager().getmApiHelper().makeDpChangeReq(getmAppDataManager().getmAppPrefsHelper().getKeyUserId(), file)
+        AppDataManager.getInstance().getmApiHelper().makeDpChangeReq(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId(), file)
                 /*.getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
@@ -70,7 +69,7 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
             @Override
             public void onResponse(AvatarResponseModel avatarResponseModel) {
                 NetworkUtils.parseResponse(TAG, avatarResponseModel);
-                getmAppDataManager().getmAppPrefsHelper().setKeyDpUrl(avatarResponseModel.getProfile_dp_url());
+                AppDataManager.getInstance().getmSharedPrefsHelper().setKeyDpUrl(avatarResponseModel.getProfile_dp_url());
                 if (isViewAttached()) {
                     getMvpView().hidePicUploadProgress();
                     getMvpView().onProfilePicUpdateSuccess(avatarResponseModel.getProfile_dp_url());
@@ -91,7 +90,7 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
 
     public void getConversationList() {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().getConversationList().getAsObject(ConversationModel.class, new ParsedRequestListener<ConversationModel>() {
+        AppDataManager.getInstance().getmApiHelper().getConversationList().getAsObject(ConversationModel.class, new ParsedRequestListener<ConversationModel>() {
 
             @Override
             public void onResponse(ConversationModel conversationModel) {
@@ -114,13 +113,13 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(bio)) {
             checkViewAttached();
             getMvpView().showProgressBar();
-            getmAppDataManager().getmApiHelper().updateProfileReq(name, bio, getmAppDataManager().getmAppPrefsHelper().getKeyUserId())
+            AppDataManager.getInstance().getmApiHelper().updateProfileReq(name, bio, AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId())
                     .getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
                         @Override
                         public void onResponse(BaseResponseModel response) {
                             NetworkUtils.parseResponse(TAG, response);
-                            getmAppDataManager().getmAppPrefsHelper().setKeyName(name);
-                            getmAppDataManager().getmAppPrefsHelper().setKeyBio(bio);
+                            AppDataManager.getInstance().getmSharedPrefsHelper().setKeyName(name);
+                            AppDataManager.getInstance().getmSharedPrefsHelper().setKeyBio(bio);
                             if (isViewAttached()) {
                                 getMvpView().hideProgressBar();
                                 reqListener.onSuccess();

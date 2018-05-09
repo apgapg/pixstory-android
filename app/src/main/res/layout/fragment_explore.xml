@@ -9,7 +9,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/search_tag_field"
-        android:layout_width="170dp"
+        android:layout_width="@dimen/search_bar_width"
 
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
@@ -19,7 +19,7 @@
         android:paddingLeft="8dp"
 
         android:paddingRight="8dp"
-        android:textSize="12dp" />
+        android:textAppearance="@style/text_14.regular.primary" />
 
 
     <LinearLayout

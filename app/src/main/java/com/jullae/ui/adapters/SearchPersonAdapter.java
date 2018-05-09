@@ -26,20 +26,16 @@ import java.util.List;
 public class SearchPersonAdapter extends ArrayAdapter<SearchPeopleMainModel.SearchPeopleModel> {
     private static final String TAG = SearchPersonAdapter.class.getName();
     private final List<SearchPeopleMainModel.SearchPeopleModel> searchList;
-    private final AppDataManager mAppDataManager;
     private final Context context;
 
-    public SearchPersonAdapter(@NonNull Context context, AppDataManager appDataManager) {
+    public SearchPersonAdapter(@NonNull Context context) {
         super(context, android.R.layout.simple_list_item_1);
         this.context = context;
-        this.mAppDataManager = appDataManager;
+
         searchList = new ArrayList<>();
     }
 
 
-    public AppDataManager getmAppDataManager() {
-        return mAppDataManager;
-    }
 
     @NonNull
     @Override
@@ -79,7 +75,7 @@ public class SearchPersonAdapter extends ArrayAdapter<SearchPeopleMainModel.Sear
                 FilterResults filterResults = new FilterResults();
 
                 if (constraint != null) {
-                    getmAppDataManager().getmApiHelper().getSearchPeopleList(constraint.toString()).getAsObject(SearchPeopleMainModel.class, new ParsedRequestListener<SearchPeopleMainModel>() {
+                    AppDataManager.getInstance().getmApiHelper().getSearchPeopleList(constraint.toString()).getAsObject(SearchPeopleMainModel.class, new ParsedRequestListener<SearchPeopleMainModel>() {
 
 
                         @Override

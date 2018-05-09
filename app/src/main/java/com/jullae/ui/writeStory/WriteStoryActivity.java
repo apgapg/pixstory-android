@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.utils.dialog.MyProgressDialog;
 
@@ -21,7 +20,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         setContentView(R.layout.activity_dialog);
 
         picture_id = getIntent().getStringExtra("picture_id");
-        mPresentor = new WriteStoryPresentor(((ApplicationClass) getApplication()).getmAppDataManager());
+        mPresentor = new WriteStoryPresentor();
         mPresentor.attachView(this);
 
 

@@ -14,15 +14,14 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
 
     private static final String TAG = WriteStoryPresentor.class.getName();
 
-    public WriteStoryPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public WriteStoryPresentor() {
     }
 
     public void sendStoryPublishReq(String title, String content, String picture_id) {
         checkViewAttached();
         if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
             getMvpView().showProgressBar();
-            getmAppDataManager().getmApiHelper().publishStory(title, content, picture_id).getAsObject(StoryResponseModel.class, new ParsedRequestListener<StoryResponseModel>() {
+            AppDataManager.getInstance().getmApiHelper().publishStory(title, content, picture_id).getAsObject(StoryResponseModel.class, new ParsedRequestListener<StoryResponseModel>() {
 
                 @Override
                 public void onResponse(StoryResponseModel storyResponseModel) {
@@ -49,7 +48,7 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
         checkViewAttached();
         if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
             getMvpView().showProgressBar();
-            getmAppDataManager().getmApiHelper().draftStory(title, content, picture_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+            AppDataManager.getInstance().getmApiHelper().draftStory(title, content, picture_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
                 @Override
                 public void onResponse(BaseResponseModel baseResponseModel) {

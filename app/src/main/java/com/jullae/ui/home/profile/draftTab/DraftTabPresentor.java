@@ -11,13 +11,12 @@ import com.jullae.utils.NetworkUtils;
 public class DraftTabPresentor extends BasePresentor<DraftTabView> {
     private static final String TAG = DraftTabPresentor.class.getName();
 
-    public DraftTabPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public DraftTabPresentor() {
     }
 
     public void loadDrafts() {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().getDraftList(getmAppDataManager().getmAppPrefsHelper().getKeyPenname()).getAsObject(DraftModel.class, new ParsedRequestListener<DraftModel>() {
+        AppDataManager.getInstance().getmApiHelper().getDraftList(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(DraftModel.class, new ParsedRequestListener<DraftModel>() {
             @Override
             public void onResponse(DraftModel draftModel) {
                 NetworkUtils.parseResponse(TAG, draftModel);
@@ -38,7 +37,7 @@ public class DraftTabPresentor extends BasePresentor<DraftTabView> {
 
     public void sendDeleteDraftReq(String story_id, final DraftTabAdapter.DeleteListener deleteListener) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().makeDraftDeleteReq(story_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().makeDraftDeleteReq(story_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
 
             @Override

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
@@ -34,7 +33,7 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
         }
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
 
-        mPresentor = new BookmarkTabPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new BookmarkTabPresentor();
 
         setuprecyclerView();
         return view;

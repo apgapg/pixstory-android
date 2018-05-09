@@ -10,13 +10,12 @@ import com.jullae.utils.NetworkUtils;
 public class StoryTabPresentor extends BasePresentor<StoryTabView> {
     private static final String TAG = StoryTabPresentor.class.getName();
 
-    public StoryTabPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public StoryTabPresentor() {
     }
 
     public void loadFeeds() {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().loadStoryTabFeeds(getmAppDataManager().getmAppPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadStoryTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
             @Override
             public void onResponse(StoryListModel storyListModel) {
                 NetworkUtils.parseResponse(TAG, storyListModel);

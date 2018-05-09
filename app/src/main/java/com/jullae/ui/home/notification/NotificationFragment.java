@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.NotificationModel;
 import com.jullae.ui.base.BaseFragment;
@@ -34,7 +33,7 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
         }
         view = inflater.inflate(R.layout.fragment_notification, container, false);
 
-        mPresentor = new NotificationPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new NotificationPresentor();
 
         setUpRecyclerView();
 

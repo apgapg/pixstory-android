@@ -13,8 +13,7 @@ public class ForgotPasswordPresentor extends BasePresentor<ForgotPasswordView> {
 
     private static final String TAG = ForgotPasswordPresentor.class.getName();
 
-    public ForgotPasswordPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public ForgotPasswordPresentor() {
     }
 
     public void makeForgotPasswordReq(String email) {
@@ -23,7 +22,7 @@ public class ForgotPasswordPresentor extends BasePresentor<ForgotPasswordView> {
             getMvpView().onEmailValidationFail();
         } else {
             getMvpView().showProgressBar();
-            getmAppDataManager().getmApiHelper().makeForgotPasswordReq(email).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+            AppDataManager.getInstance().getmApiHelper().makeForgotPasswordReq(email).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
                 @Override
                 public void onResponse(BaseResponseModel response) {

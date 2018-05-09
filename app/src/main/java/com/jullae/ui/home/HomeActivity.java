@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.SearchPeopleMainModel;
 import com.jullae.ui.adapters.SearchPersonAdapter;
@@ -38,7 +37,7 @@ import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.notification.NotificationFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
-import com.jullae.ui.storydetails.StoryDetailActivity;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -85,7 +84,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_feed);
-        mPresentor = new HomeActivityPresentor(((ApplicationClass) getApplication()).getmAppDataManager());
+        mPresentor = new HomeActivityPresentor();
         mPresentor.attachView(this);
 
         showFragment(new HomeFragment(), false);
@@ -179,7 +178,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         button_search = findViewById(R.id.image_search);
 
         autoCompleteTextView = findViewById(R.id.search_person);
-        final SearchPersonAdapter searchPersonAdapter = new SearchPersonAdapter(this, ((ApplicationClass) getApplication()).getmAppDataManager());
+        final SearchPersonAdapter searchPersonAdapter = new SearchPersonAdapter(this);
         autoCompleteTextView.setAdapter(searchPersonAdapter);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -618,13 +617,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     }
 
     public void showVisitorProfile(String photographer_penname) {
-        Intent i = new Intent(this, StoryDetailActivity.class);
-        i.putExtra("profile", true);
-/*
-        i.putExtra("user_id", true);
-*/
-        i.putExtra("penname", photographer_penname);
-        startActivity(i);
+        AppUtils.showVisitorProfile(this, photographer_penname);
     }
 
     @Override
@@ -651,6 +644,10 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
             button_notification.setImageResource(R.drawable.ic_bell_active);
         else button_notification.setImageResource(R.drawable.ic_bell_normal);
 
+    }
+
+    public void showSearchActivity(String searchTag) {
+        AppUtils.showSearchActivity(this, searchTag);
     }
 
 

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.dialog.MyProgressDialog;
@@ -36,7 +35,7 @@ public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswo
         }
         view = inflater.inflate(R.layout.fragment_forgot_password, container, false);
 
-        mPresentor = new ForgotPasswordPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new ForgotPasswordPresentor();
         emailField = view.findViewById(R.id.email_field);
 
         view.findViewById(R.id.text_confirm).setOnClickListener(new View.OnClickListener() {

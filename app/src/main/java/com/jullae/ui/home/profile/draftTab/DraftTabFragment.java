@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.DraftModel;
 import com.jullae.ui.base.BaseFragment;
@@ -36,7 +35,7 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
 
 
-        mPresentor = new DraftTabPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        mPresentor = new DraftTabPresentor();
 
         setuprecyclerView();
         return view;

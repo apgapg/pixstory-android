@@ -11,14 +11,13 @@ public class PictureDetailPresentor extends BasePresentor<PictureDetailView> {
 
     private static final String TAG = PictureDetailPresentor.class.getName();
 
-    public PictureDetailPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public PictureDetailPresentor() {
     }
 
 
     public void loadStories(String picture_id) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().loadAllStories(picture_id).getAsObject(AllStoriesModel.class, new ParsedRequestListener<AllStoriesModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadAllStories(picture_id).getAsObject(AllStoriesModel.class, new ParsedRequestListener<AllStoriesModel>() {
 
             @Override
             public void onResponse(AllStoriesModel allStoriesModel) {

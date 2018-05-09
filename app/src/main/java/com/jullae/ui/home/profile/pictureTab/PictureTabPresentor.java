@@ -10,13 +10,12 @@ import com.jullae.utils.NetworkUtils;
 public class PictureTabPresentor extends BasePresentor<PictureTabView> {
     private static final String TAG = PictureTabPresentor.class.getName();
 
-    public PictureTabPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public PictureTabPresentor() {
     }
 
     public void loadFeeds() {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().loadPictureTabFeeds(getmAppDataManager().getmAppPrefsHelper().getKeyPenname()).getAsObject(PictureListModel.class, new ParsedRequestListener<PictureListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadPictureTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(PictureListModel.class, new ParsedRequestListener<PictureListModel>() {
 
 
             @Override

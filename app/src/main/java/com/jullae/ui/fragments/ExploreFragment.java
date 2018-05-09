@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.ui.adapters.SearchAdapter;
 import com.jullae.ui.base.BaseFragment;
@@ -41,7 +40,7 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
 
 
         autoCompleteTextView = view.findViewById(R.id.search_tag_field);
-        SearchAdapter searchAdapter = new SearchAdapter(getmContext(), ((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        SearchAdapter searchAdapter = new SearchAdapter(getmContext());
         autoCompleteTextView.setAdapter(searchAdapter);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,10 +52,10 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                         autoCompleteTextView.setText("");
 
 
-                        ((HomeActivity) getmContext()).showSearchFragment(searchTag);
+                        ((HomeActivity) getmContext()).showSearchActivity(searchTag);
 
                     }
-                }, 500);
+                }, 300);
             }
         });
 

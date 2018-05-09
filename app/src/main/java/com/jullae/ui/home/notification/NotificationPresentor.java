@@ -12,14 +12,13 @@ public class NotificationPresentor extends BasePresentor<NotificationView> {
 
     private static final String TAG = NotificationPresentor.class.getName();
 
-    public NotificationPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public NotificationPresentor() {
     }
 
     public void loadNotifications() {
         checkViewAttached();
         getMvpView().showProgressBar();
-        getmAppDataManager().getmApiHelper().loadNotificationList(getmAppDataManager().getmAppPrefsHelper().getKeyUserId()).getAsObject(NotificationMainModel.class, new ParsedRequestListener<NotificationMainModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadNotificationList(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId()).getAsObject(NotificationMainModel.class, new ParsedRequestListener<NotificationMainModel>() {
             @Override
             public void onResponse(NotificationMainModel notificationMainModel) {
                 NetworkUtils.parseResponse(TAG, notificationMainModel);
@@ -44,7 +43,7 @@ public class NotificationPresentor extends BasePresentor<NotificationView> {
 
     public void sendReadNotiReq() {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().sendNotiReadReq(getmAppDataManager().getmAppPrefsHelper().getKeyUserId()).getAsString(new StringRequestListener() {
+        AppDataManager.getInstance().getmApiHelper().sendNotiReadReq(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId()).getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 NetworkUtils.parseResponse(TAG, response);

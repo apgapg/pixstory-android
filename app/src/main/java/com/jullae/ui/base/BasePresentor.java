@@ -1,20 +1,9 @@
 package com.jullae.ui.base;
 
-import com.jullae.data.AppDataManager;
-
 public class BasePresentor<T extends MvpView> implements Presentor<T> {
 
 
-    private final AppDataManager mAppDataManager;
     private T mMvpView;
-
-    public BasePresentor(AppDataManager appDataManager) {
-        this.mAppDataManager = appDataManager;
-    }
-
-    public AppDataManager getmAppDataManager() {
-        return mAppDataManager;
-    }
 
 
     @Override

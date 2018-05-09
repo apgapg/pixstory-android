@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.base.BaseFragment;
@@ -35,7 +34,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         }
         view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
-        homeFeedPresentor = new HomeFeedPresentor(((ApplicationClass) getmContext().getApplication()).getmAppDataManager());
+        homeFeedPresentor = new HomeFeedPresentor();
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);

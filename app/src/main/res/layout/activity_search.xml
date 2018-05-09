@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/rLayoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#fff">
+
+        <TextView
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Searched Tags"
+            android:textAppearance="@style/text_14.medium.primary"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/tvClose"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+        <include
+            layout="@layout/vertical_divider_light"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

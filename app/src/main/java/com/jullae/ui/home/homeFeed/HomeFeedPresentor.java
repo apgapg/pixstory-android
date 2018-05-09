@@ -17,8 +17,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
     private static final String TAG = HomeFeedPresentor.class.getName();
     private HomeFeedView view;
 
-    public HomeFeedPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public HomeFeedPresentor() {
     }
 
     public void setView(HomeFeedView view) {
@@ -28,7 +27,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
     public void loadFeeds() {
         checkViewAttached();
         getMvpView().showProgress();
-        getmAppDataManager().getmApiHelper().loadHomeFeeds().getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadHomeFeeds().getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
             @Override
             public void onResponse(HomeFeedModel homeFeedModel) {
                 NetworkUtils.parseResponse(TAG, homeFeedModel);
@@ -52,7 +51,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     public void setLike(String id, final HomeFeedAdapter.ReqListener reqListener, String isLiked) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().setlikeReq(id, isLiked, Constants.LIKE_TYPE_PICTURE).getAsString(new StringRequestListener() {
+        AppDataManager.getInstance().getmApiHelper().setlikeReq(id, isLiked, Constants.LIKE_TYPE_PICTURE).getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 if (isViewAttached())
@@ -70,7 +69,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     public void getLikeslist(String id, int pictureLike) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().getLikesList(id, pictureLike).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
+        AppDataManager.getInstance().getmApiHelper().getLikesList(id, pictureLike).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
 
             @Override
             public void onResponse(LikesModel likesModel) {
@@ -93,7 +92,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     public void makeFollowUserReq(String user_id, final LikeAdapter.FollowReqListener followReqListener, Boolean is_followed) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().makeFollowReq(user_id, is_followed).getAsString(new StringRequestListener() {
+        AppDataManager.getInstance().getmApiHelper().makeFollowReq(user_id, is_followed).getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 NetworkUtils.parseResponse(TAG, response);

@@ -61,6 +61,8 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_WRITE_COMMENTS;
 public class ApiHelper {
 
     private static final String TAG = ApiHelper.class.getName();
+    private static final String DEVICE_TYPE = "device_type";
+    private static final String ANDROID = "android";
     private final HashMap<String, String> headers;
 
     public ApiHelper(String keyToken) {
@@ -205,6 +207,8 @@ public class ApiHelper {
                 .addBodyParameter("email", email)
                 .addBodyParameter("password", password)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                .addBodyParameter(DEVICE_TYPE, ANDROID)
+
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -217,6 +221,8 @@ public class ApiHelper {
                 .addBodyParameter("name", name)
                 .addBodyParameter("penname", penname)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                .addBodyParameter(DEVICE_TYPE, ANDROID)
+
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -421,6 +427,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addBodyParameter("code", idToken)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                .addBodyParameter(DEVICE_TYPE, ANDROID)
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -449,6 +456,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addBodyParameter("token", token)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                .addBodyParameter(DEVICE_TYPE, ANDROID)
                 .setPriority(Priority.HIGH)
                 .build();
     }
@@ -470,12 +478,6 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
 
         void onFail();
 
-        interface StringReqListener {
-
-            void onSuccess(String string);
-
-            void onFail();
-        }
     }
 
 

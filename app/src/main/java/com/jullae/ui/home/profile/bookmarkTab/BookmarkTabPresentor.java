@@ -12,13 +12,12 @@ import com.jullae.utils.NetworkUtils;
 public class BookmarkTabPresentor extends BasePresentor<BookmarkTabView> {
     private static final String TAG = BookmarkTabPresentor.class.getName();
 
-    public BookmarkTabPresentor(AppDataManager appDataManager) {
-        super(appDataManager);
+    public BookmarkTabPresentor() {
     }
 
     public void loadFeeds() {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().loadStoryTabFeeds(getmAppDataManager().getmAppPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadStoryTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
             @Override
             public void onResponse(StoryListModel storyListModel) {
                 NetworkUtils.parseResponse(TAG, storyListModel);
@@ -39,7 +38,7 @@ public class BookmarkTabPresentor extends BasePresentor<BookmarkTabView> {
 
     public void sendDeleteBookmarkReq(String story_id, final DraftTabAdapter.DeleteListener deleteListener) {
         checkViewAttached();
-        getmAppDataManager().getmApiHelper().makeBookmarkDeleteReq(story_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().makeBookmarkDeleteReq(story_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
 
             @Override

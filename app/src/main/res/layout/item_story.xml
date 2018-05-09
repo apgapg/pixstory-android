@@ -17,41 +17,44 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="22dp"
         android:orientation="vertical"
-        android:paddingTop="2dp"
         android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingRight="8dp"
+        android:paddingTop="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="24dp"
+            android:layout_marginBottom="4dp">
 
             <com.jullae.ui.custom.CircularImageView
                 android:id="@+id/image_avatar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
                 android:src="#99bdbdbd" />
 
             <TextView
                 android:id="@+id/text_name"
-                android:textAppearance="@style/text_14.medium.primary"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_toRightOf="@+id/image_avatar"
+                android:textAppearance="@style/text_14.medium.primary"
                 tools:text="Suketu Balaji" />
 
             <TextView
                 android:id="@+id/tvCmntTime"
-                android:textAppearance="@style/text_12.light.secondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignParentEnd="true"
+
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:gravity="end"
+                android:textAppearance="@style/text_12.light.secondary"
                 tools:text="6 days ago" />
         </RelativeLayout>
 
@@ -59,7 +62,6 @@
             android:id="@+id/story_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:lines="6"
             android:textAppearance="@style/text_12.regular.secondary"
@@ -78,23 +80,23 @@
 
         <TextView
             android:id="@+id/like_count"
-            android:paddingLeft="6dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textAppearance="@style/text_12.light.secondary"
+            android:paddingLeft="6dp"
             android:paddingRight="4dp"
+            android:textAppearance="@style/text_12.light.secondary"
             tools:text="3 likes" />
 
         <TextView
             android:id="@+id/comment_count"
-            android:textAppearance="@style/text_12.light.secondary"
             android:layout_width="wrap_content"
-
             android:layout_height="match_parent"
+
             android:gravity="center"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
+            android:textAppearance="@style/text_12.light.secondary"
             tools:text="6 Comments" />
     </LinearLayout>
 </RelativeLayout>
