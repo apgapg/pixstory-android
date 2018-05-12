@@ -47,8 +47,10 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1)
             return new HomeFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_story, parent, false));
-        else
+        else if (viewType == 2)
             return new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_story_list, parent, false));
+        else
+            return new AddStoryViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_story_list, parent, false));
 
     }
 
@@ -75,7 +77,10 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemViewType(int position) {
         if (messagelist.get(position) instanceof StoryModel)
             return 1;
-        else return 2;
+        else if (messagelist.get(position).equals("empty"))
+            return 2;
+        else
+            return 3;
     }
 
     @Override
@@ -86,6 +91,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void add(List<StoryModel> list) {
         messagelist.clear();
         messagelist.addAll(list);
+        messagelist.add("new_story");
         Log.d(TAG, "add: list size: " + list.size());
         notifyDataSetChanged();
     }
@@ -147,6 +153,23 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private class EmptyViewHolder extends RecyclerView.ViewHolder {
 
         public EmptyViewHolder(View inflate) {
+            super(inflate);
+
+
+            inflate.findViewById(R.id.text_add_story).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, WriteStoryActivity.class);
+                    i.putExtra("picture_id", picture_id);
+                    mContext.startActivity(i);
+                }
+            });
+        }
+    }
+
+    private class AddStoryViewHolder extends RecyclerView.ViewHolder {
+
+        public AddStoryViewHolder(View inflate) {
             super(inflate);
 
 

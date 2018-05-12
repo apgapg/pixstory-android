@@ -21,10 +21,10 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/title"
-            android:textAppearance="@style/text_14.medium.primary"
+            android:textAppearance="@style/text_14.regular.primary"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@string/title" />
 
         <ImageView
             android:id="@+id/tvClose"
@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
+        android:layout_marginBottom="48dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -48,7 +49,7 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <include layout="@layout/vertical_divider" />
+            <include layout="@layout/vertical_divider_light" />
 
 
             <RelativeLayout
@@ -83,14 +84,14 @@
                             android:id="@+id/text_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/text_16.medium.primary"
+                            android:textAppearance="@style/text_14.medium.primary"
                             tools:text="Ankit sharma" />
 
                         <TextView
                             android:id="@+id/text_penname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/text_14.regular.secondary"
+                            android:textAppearance="@style/text_12.light.secondary"
                             tools:text="rahulabrol2211" />
                     </LinearLayout>
                 </LinearLayout>
@@ -125,7 +126,7 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/vertical_divider" />
+            <include layout="@layout/vertical_divider_light" />
 
 
             <TextView

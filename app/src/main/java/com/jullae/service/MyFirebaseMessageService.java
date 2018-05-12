@@ -76,7 +76,7 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
                 i = AppUtils.buildStoryDetailActivityIntent(this, pushNotificationModel.getStory_id());
                 break;
             case NOTI_TYPE_PICTURE_LIKE:
-                i = new Intent(this, HomeActivity.class);
+                i = AppUtils.buildPictureDetailActivityIntent(this, pushNotificationModel.getPicture_id());
                 break;
             default:
                 i = new Intent(this, HomeActivity.class);

@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jullae.R;
+import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
-import com.jullae.data.db.model.StoryCommentModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.adapters.CommentsAdapter;
 import com.jullae.ui.adapters.LikeAdapter;
@@ -51,7 +52,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private LikeAdapter likeAdapter;
     private View view;
     private StoryDetailPresentor mPresentor;
-    private StoryCommentModel.StoryDetailModel storyDetailModel;
     private TextView story_title, user_name, user_penname, story_text;
     private ImageView btn_close, user_image;
     private String story_id;
@@ -69,7 +69,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
         mPresentor = new StoryDetailPresentor();
 
-
         story_title = view.findViewById(R.id.text_title);
         btn_close = view.findViewById(R.id.tvClose);
         user_name = view.findViewById(R.id.text_name);
@@ -83,12 +82,15 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         setupMoreBottomSheet();
         setupAddComment();
 
+
         Gson gson = new Gson();
         storyModel = gson.fromJson(getArguments().getString("storymodel"), StoryModel.class);
-
+        Log.d("sss", "onCreateView: " + storyModel);
         if (storyModel != null) {
             story_id = storyModel.getStory_id();
             setProfiledata();
+            //setUpFollowedButton();
+            //setupLike();
 
         } else {
             story_id = getArguments().getString("story_id");
@@ -117,7 +119,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private void setUpFollowedButton() {
         user_followed = view.findViewById(R.id.user_followed);
         user_followed.setVisibility(View.VISIBLE);
-        if (storyDetailModel.getIs_followed().equals("true")) {
+        Log.d("dsd", "setUpFollowedButton: " + story_id);
+        Log.d("frr", "setUpFollowedButton: " + storyModel.getIs_followed());
+        if (storyModel.getIs_followed().equals("true")) {
             updateUIFollowed();
         } else {
             updatUIUnFollowed();
@@ -136,7 +140,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
-        setupComments();
+        mPresentor.loadStoryDetails(story_id);
+        //  setupComments();
 
     }
 
@@ -272,7 +277,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
                 mPresentor.sendcommentReq(addCommentField.getText().toString().trim(), storyModel.getStory_id(), new StoryDetailPresentor.ReqListener() {
                     @Override
-                    public void onSuccess(StoryCommentModel.Comment commentModel) {
+                    public void onSuccess(CommentModel commentModel) {
                         updateCommentUI(1);
                         commentsAdapter.addComment(commentModel);
                     }
@@ -341,28 +346,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         recyclerView.setLayoutManager(linearLayoutManager);
         commentsAdapter = new CommentsAdapter(getmContext());
         recyclerView.setAdapter(commentsAdapter);
-
-        mPresentor.loadComments(story_id, new StoryDetailPresentor.CommentsListener() {
-            @Override
-            public void onSuccess(StoryCommentModel storyCommentModel) {
-                storyDetailModel = storyCommentModel.getStoryDetailModel();
-                setProfiledata();
-                setUpFollowedButton();
-                setupLike(storyCommentModel.getStoryDetailModel());
-                commentsAdapter.add(storyCommentModel.getStoryDetailModel().getComments());
-            }
-
-            @Override
-            public void onFail() {
-                Toast.makeText(getmContext().getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        commentsAdapter.add(storyModel.getCommentModelList());
     }
 
     private void makeUserFollowReq() {
         Boolean is_followed;
-        is_followed = !storyDetailModel.getIs_followed().equals("false");
+        is_followed = !storyModel.getIs_followed().equals("false");
 
         mPresentor.makeFollowUserReq(storyModel.getWriter_id(), new FollowReqListener() {
             @Override
@@ -371,11 +360,11 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 stopReqProgress();
 
 
-                if (storyDetailModel.getIs_followed().equals("false")) {
-                    storyDetailModel.setIs_followed("true");
+                if (storyModel.getIs_followed().equals("false")) {
+                    storyModel.setIs_followed("true");
                     updateUIFollowed();
                 } else {
-                    storyDetailModel.setIs_followed("false");
+                    storyModel.setIs_followed("false");
 
                     updatUIUnFollowed();
                 }
@@ -416,11 +405,11 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         user_followed.setVisibility(View.VISIBLE);
     }
 
-    private void setupLike(final StoryCommentModel.StoryDetailModel storyDetailModel) {
+    private void setupLike() {
         btn_like = view.findViewById(R.id.btn_like);
         btn_like.setVisibility(View.VISIBLE);
         like_count.setText(storyModel.getLike_count() + " likes");
-        if (storyDetailModel.getIs_liked().equals("false")) {
+        if (storyModel.getIs_liked().equals("false")) {
             btn_like.setImageResource(R.drawable.ic_unlike);
             like_count.setTextColor(Color.parseColor("#9e9e9e"));
             like_count.setTypeface(Typeface.DEFAULT);
@@ -433,12 +422,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String isLiked = storyDetailModel.getIs_liked();
-                makeLikeRequest(isLiked, storyDetailModel);
+                String isLiked = storyModel.getIs_liked();
+                makeLikeRequest(isLiked, storyModel);
                 if (isLiked.equals("false")) {
-                    updateToLike(storyDetailModel);
+                    updateToLike();
                 } else {
-                    updatetoUnlike(storyDetailModel);
+                    updatetoUnlike();
                 }
 
 
@@ -453,8 +442,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         });
     }
 
-    private void updatetoUnlike(StoryCommentModel.StoryDetailModel storyDetailModel) {
-        storyDetailModel.setIs_liked("false");
+    private void updatetoUnlike() {
+        storyModel.setIs_liked("false");
         btn_like.setImageResource(R.drawable.ic_unlike);
         if (Integer.parseInt(storyModel.getLike_count()) != 0) {
             like_count.setText(String.valueOf(Integer.parseInt(storyModel.getLike_count()) - 1) + " likes");
@@ -465,18 +454,16 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     }
 
-    private void updateToLike(StoryCommentModel.StoryDetailModel storyDetailModel) {
-
-        storyDetailModel.setIs_liked("true");
+    private void updateToLike() {
+        storyModel.setIs_liked("true");
         btn_like.setImageResource(R.drawable.ic_like);
         like_count.setText(String.valueOf(Integer.parseInt(storyModel.getLike_count()) + 1) + " likes");
         storyModel.setLike_count(String.valueOf(Integer.parseInt(storyModel.getLike_count()) + 1));
         like_count.setTextColor(Color.parseColor("#424242"));
         like_count.setTypeface(Typeface.DEFAULT_BOLD);
-
     }
 
-    private void makeLikeRequest(String isLiked, final StoryCommentModel.StoryDetailModel storyDetailModel) {
+    private void makeLikeRequest(String isLiked, final StoryModel storyModel) {
         mPresentor.setLike(storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
             @Override
             public void onSuccess() {
@@ -484,9 +471,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
             @Override
             public void onFail() {
-                if (storyDetailModel.getIs_liked().equals("false"))
-                    updateToLike(storyDetailModel);
-                else updatetoUnlike(storyDetailModel);
+                if (storyModel.getIs_liked().equals("false"))
+                    updateToLike();
+                else updatetoUnlike();
                 Toast.makeText(getmContext().getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
             }
         }, isLiked);
@@ -540,6 +527,20 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     @Override
     public void onSaveStoryFail() {
         Toast.makeText(getmContext().getApplicationContext(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onStoryDetailFetchSuccess(StoryModel storyModel) {
+        this.storyModel = storyModel;
+        setProfiledata();
+        setUpFollowedButton();
+        setupComments();
+        setupLike();
+    }
+
+    @Override
+    public void onStoryDetailFetchFail() {
 
     }
 

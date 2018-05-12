@@ -21,6 +21,7 @@ public class ApiEndPoint {
     public static final String ENDPOINT_GOOGLE_LOGIN = "/google_authentication";
     public static final String ENDPOINT_FACEBOOK_LOGIN = "/facebook_authentication";
     public static final String ENDPOINT_FORGOT_PASSWORD = "/reset_password_request";
+    public static final String ENDPOINT_PICTURE_DETAIL = "/auth_misc/pic_story";
 
     public static final String ENDPOINT_PROFILE_TAB_PICTURES = "/profile/{penname}/pictures";
     public static final String ENDPOINT_PROFILE_TAB_STORIES = "/profile/{penname}/stories";

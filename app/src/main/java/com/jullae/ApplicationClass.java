@@ -8,7 +8,6 @@ import com.jullae.data.AppDataManager;
 public class ApplicationClass extends Application {
 
     public static final String TAG = ApplicationClass.class.getSimpleName();
-    private AppDataManager mAppDataManager;
 
 
     @Override

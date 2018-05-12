@@ -1,5 +1,10 @@
 package com.jullae.data.db.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class StoryModel {
 
 
@@ -12,13 +17,22 @@ public class StoryModel {
     private String story_text;
     private String like_count;
     private String comment_count;
+    private String is_liked;
+    private String is_self;
+    private String is_followed;
     private String created_at;
 
+    @SerializedName("comments")
+    @Expose
+    private List<CommentModel> commentModelList;
+
+    public List<CommentModel> getCommentModelList() {
+        return commentModelList;
+    }
 
     public String getWriter_id() {
         return writer_id;
     }
-
 
 
     public String getWriter_name() {
@@ -61,5 +75,23 @@ public class StoryModel {
         return writer_penname;
     }
 
+    public String getIs_liked() {
+        return is_liked;
+    }
 
+    public void setIs_liked(String is_liked) {
+        this.is_liked = is_liked;
+    }
+
+    public String getIs_self() {
+        return is_self;
+    }
+
+    public String getIs_followed() {
+        return is_followed;
+    }
+
+    public void setIs_followed(String is_followed) {
+        this.is_followed = is_followed;
+    }
 }

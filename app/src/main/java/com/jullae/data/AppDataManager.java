@@ -15,23 +15,27 @@ public class AppDataManager {
     private static AppDataManager uniqueInstance;
     private final ApiHelper mApiHelper;
 
-    public AppDataManager(Context context) {
+    private AppDataManager(Context context) {
+
+        //Prevent form the reflection api.
+        if (uniqueInstance != null)
+            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+
         SharedPrefsHelper.initialize(context);
         mApiHelper = new ApiHelper(SharedPrefsHelper.getInstance().getKeyToken());
     }
 
     public static AppDataManager getInstance() {
+        if (uniqueInstance == null)
+            throw new NullPointerException("Please call initialize() before getting the instance.");
         return uniqueInstance;
     }
 
-    public static void initialize(Context applicationContext) {
+    public synchronized static void initialize(Context applicationContext) {
         if (applicationContext == null)
             throw new NullPointerException("Provided application context is null");
         else if (uniqueInstance == null) {
-            synchronized (SharedPrefsHelper.class) {
-                uniqueInstance = new AppDataManager(applicationContext);
-            }
-
+            uniqueInstance = new AppDataManager(applicationContext);
         }
     }
 

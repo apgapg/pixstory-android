@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootview"
+    android:layout_width="@dimen/story_card_height_home_feed"
+    android:layout_height="@dimen/story_card_width_home_feed"
+    android:layout_marginTop="4dp"
+
+    android:background="@drawable/shape_round_rectangle_grey"
+    android:orientation="vertical"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:lines="2"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:text="Want to add another story??"
+        android:textAppearance="@style/text_14.light.primary" />
+
+    <TextView
+        android:id="@+id/text_add_story"
+        android:layout_width="140dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_border_color_primary_text"
+        android:gravity="center"
+
+
+        android:text="ADD ANOTHER STORY"
+        android:textAppearance="@style/text_14.regular.primary"
+        android:textSize="12dp" />
+</LinearLayout>

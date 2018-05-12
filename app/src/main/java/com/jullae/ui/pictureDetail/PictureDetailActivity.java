@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.ui.home.homeFeed.HomeFeedModel;
 
 import java.util.List;
 
@@ -36,22 +37,28 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         pic_like_count = findViewById(R.id.pic_like_count);
         pic_story_count = findViewById(R.id.pic_comment_count);
 
-        Gson gson = new Gson();
-        pictureModel = gson.fromJson(getIntent().getStringExtra("pictureModel"), PictureModel.class);
-
 
         mPresentor = new PictureDetailPresentor();
         mPresentor.attachView(this);
 
-        Glide.with(this).load(pictureModel.getPicture_url_small()).into(image);
-        Glide.with(this).load(pictureModel.getPhotographer_avatar()).into(user_photo);
-        user_name.setText(pictureModel.getPhotographer_name());
-        pic_title.setText(pictureModel.getPicture_title());
-        pic_like_count.setText(pictureModel.getLike_count() + " likes");
-        pic_story_count.setText(pictureModel.getStory_count() + " stories");
+        Gson gson = new Gson();
+        pictureModel = gson.fromJson(getIntent().getStringExtra("pictureModel"), PictureModel.class);
+
         setUpRecyclerView();
 
-        mPresentor.loadStories(pictureModel.getPicture_id());
+        if (pictureModel != null) {
+            Glide.with(this).load(pictureModel.getPicture_url_small()).into(image);
+            Glide.with(this).load(pictureModel.getPhotographer_avatar()).into(user_photo);
+            user_name.setText(pictureModel.getPhotographer_name());
+            pic_title.setText(pictureModel.getPicture_title());
+            pic_like_count.setText(pictureModel.getLike_count() + " likes");
+            pic_story_count.setText(pictureModel.getStory_count() + " stories");
+            mPresentor.loadStories(pictureModel.getPicture_id());
+
+        } else {
+            mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
+        }
+
     }
 
     private void setUpRecyclerView() {
@@ -71,6 +78,23 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
 
     @Override
     public void onStoriesFetchFail() {
+
+    }
+
+    @Override
+    public void onFetchFeedSuccess(HomeFeedModel homeFeedModel) {
+        Glide.with(this).load(homeFeedModel.getFeedList().get(0).getPicture_url()).into(image);
+        Glide.with(this).load(homeFeedModel.getFeedList().get(0).getPhotographer_avatar()).into(user_photo);
+        user_name.setText(homeFeedModel.getFeedList().get(0).getPhotographer_name());
+        pic_title.setText(homeFeedModel.getFeedList().get(0).getPicture_title());
+        pic_like_count.setText(homeFeedModel.getFeedList().get(0).getLike_count() + " likes");
+        pic_story_count.setText(homeFeedModel.getFeedList().get(0).getStory_count() + " stories");
+        mPresentor.loadStories(homeFeedModel.getFeedList().get(0).getPicture_id());
+
+    }
+
+    @Override
+    public void onFetchFeedFail() {
 
     }
 }

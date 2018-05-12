@@ -33,11 +33,10 @@ public class StoryDetailActivity extends BaseActivity {
             Intent i = getIntent();
             storyModel = i.getStringExtra("object");
             story_id = i.getStringExtra("story_id");
-
             Bundle bundle = new Bundle();
-            if (storyModel != null)
+            if (getIntent().hasExtra("object"))
                 bundle.putString("storymodel", storyModel);
-            else if (story_id != null)
+            else if (getIntent().hasExtra("story_id"))
                 bundle.putString("story_id", story_id);
             else throw new NullPointerException("story params cant be null!");
 

@@ -10,6 +10,7 @@ import android.util.Patterns;
 import com.jullae.SearchActivity;
 import com.jullae.ui.adapters.PicturesAdapter;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
+import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 
 import java.util.List;
@@ -86,5 +87,15 @@ public class AppUtils {
         i.putExtra("story_id", story_id);
         return i;
 
+    }
+
+    public static Intent buildPictureDetailActivityIntent(Context context, String picture_id) {
+        Intent i = new Intent(context, PictureDetailActivity.class);
+        i.putExtra("picture_id", picture_id);
+        return i;
+    }
+
+    public static void showPictureDetailActivity(Activity mContext, String picture_id) {
+        mContext.startActivity(buildPictureDetailActivityIntent(mContext, picture_id));
     }
 }

@@ -68,11 +68,7 @@
             android:name=".ui.loginscreen.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.storydetails.StoryDetailActivity"
@@ -97,7 +93,13 @@
             android:name=".ui.pictureDetail.PictureDetailActivity"
             android:label="@string/title_activity_picture_detail"
             android:theme="@style/AppTheme" />
-        <activity android:name=".TempActivity" />
+        <activity android:name=".TempActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.home.profile.profileVisitor.ProfileVisitorActivity"
             android:screenOrientation="portrait" />

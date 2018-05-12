@@ -132,7 +132,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mProfileModel = mPresentor.getStaticUserData();
 
 
-//        Glide.with(getmContext()).load(mProfileModel.getUser_dp_url()).into(user_image);
+//        Glide.with(getmContext()).load(mProfileModel.getUser_avatar()).into(user_image);
     /*    user_name.setText(mProfileModel.getName());
         user_penname.setText(mProfileModel.getUser_penname());
         user_bio.setText(mProfileModel.getUser_bio());*/

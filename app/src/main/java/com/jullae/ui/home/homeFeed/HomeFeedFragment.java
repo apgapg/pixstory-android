@@ -68,6 +68,12 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     @Override
     public void onFetchFeedSuccess(HomeFeedModel homeFeedModel) {
+        for (int i = 0; i < homeFeedModel.getFeedList().size(); i++) {
+            for (int j = 0; j < homeFeedModel.getFeedList().get(i).getStories().size(); j++) {
+                if (homeFeedModel.getFeedList().get(i).getStories().get(j).getStory_id().equals(homeFeedModel.getFeedList().get(i).getNav_story_id()))
+                    homeFeedModel.getFeedList().get(i).setHighlightStoryIndex(j);
+            }
+        }
         homeFeedAdapter.add(homeFeedModel.getFeedList());
     }
 

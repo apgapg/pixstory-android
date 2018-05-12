@@ -51,8 +51,13 @@ public class HomeFeedModel {
 
         String is_self;
 
-
         List<StoryModel> stories;
+
+        private int highlightStoryIndex;
+
+        public int getHighlightStoryIndex() {
+            return highlightStoryIndex;
+        }
 
         public String getPhotographer_penname() {
             return photographer_penname;
@@ -120,6 +125,10 @@ public class HomeFeedModel {
 
         public String getIs_self() {
             return is_self;
+        }
+
+        public void setHighlightStoryIndex(int highlightStoryIndex) {
+            this.highlightStoryIndex = highlightStoryIndex;
         }
     }
 

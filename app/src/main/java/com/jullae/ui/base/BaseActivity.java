@@ -20,7 +20,6 @@ import com.jullae.utils.LocaleHelper;
 
 import java.util.Locale;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Developer: Rahul Abrol
@@ -49,11 +48,11 @@ public abstract class BaseActivity extends AppCompatActivity implements AppConst
         };
     }
 
-    @Override
+   /* @Override
     protected void attachBaseContext(final Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(getCurrentContext(newBase)));
     }
-
+*/
     /**
      * Get current context and used in resources.
      *

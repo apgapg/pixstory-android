@@ -4,8 +4,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.data.AppDataManager;
+import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
-import com.jullae.data.db.model.StoryCommentModel;
+import com.jullae.data.db.model.StoryMainModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.Constants;
@@ -84,13 +85,13 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
 
     public void loadComments(String story_id, final CommentsListener commentsListener) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadComments(story_id).getAsObject(StoryCommentModel.class, new ParsedRequestListener<StoryCommentModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadComments(story_id).getAsObject(CommentModel.class, new ParsedRequestListener<CommentModel>() {
 
             @Override
-            public void onResponse(StoryCommentModel storyCommentModel) {
-                NetworkUtils.parseResponse(TAG, storyCommentModel);
+            public void onResponse(CommentModel commentModel) {
+                NetworkUtils.parseResponse(TAG, commentModel);
                 if (isViewAttached())
-                    commentsListener.onSuccess(storyCommentModel);
+                    commentsListener.onSuccess(commentModel);
             }
 
             @Override
@@ -104,15 +105,15 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
 
     }
 
-    public void sendcommentReq(String comment, String story_id, final StoryDetailPresentor.ReqListener reqListener) {
+    public void sendcommentReq(final String comment, String story_id, final StoryDetailPresentor.ReqListener reqListener) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().sendCommentReq(comment, story_id).getAsObject(StoryCommentModel.Comment.class, new ParsedRequestListener<StoryCommentModel.Comment>() {
+        AppDataManager.getInstance().getmApiHelper().sendCommentReq(comment, story_id).getAsObject(CommentModel.class, new ParsedRequestListener<CommentModel>() {
 
             @Override
-            public void onResponse(StoryCommentModel.Comment commentSingleModel) {
-                NetworkUtils.parseResponse(TAG, commentSingleModel);
+            public void onResponse(CommentModel commentModel) {
+                NetworkUtils.parseResponse(TAG, commentModel);
                 if (isViewAttached())
-                    reqListener.onSuccess(commentSingleModel);
+                    reqListener.onSuccess(commentModel);
             }
 
             @Override
@@ -172,15 +173,37 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
         });
     }
 
+    public void loadStoryDetails(final String story_id) {
+        checkViewAttached();
+        AppDataManager.getInstance().getmApiHelper().fetchStoryDetails(story_id).getAsObject(StoryMainModel.class, new ParsedRequestListener<StoryMainModel>() {
+
+            @Override
+            public void onResponse(StoryMainModel storyMainModel) {
+                NetworkUtils.parseResponse(TAG, storyMainModel);
+                if (isViewAttached())
+                    getMvpView().onStoryDetailFetchSuccess(storyMainModel.getStoryModel());
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached())
+                    getMvpView().onStoryDetailFetchFail();
+
+            }
+        });
+
+    }
+
 
     public interface CommentsListener {
-        void onSuccess(StoryCommentModel storyCommentModel);
+        void onSuccess(CommentModel storyCommentModel);
 
         void onFail();
     }
 
     public interface ReqListener {
-        void onSuccess(StoryCommentModel.Comment commentModel);
+        void onSuccess(CommentModel commentModel);
 
         void onFail();
     }

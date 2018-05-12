@@ -130,6 +130,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 AppUtils.showStoryDetailActivity(mContext, messagelist.get(adapterPosition).getStory_id());
                 break;
             case NOTI_TYPE_PICTURE_LIKE:
+                AppUtils.showPictureDetailActivity(mContext, messagelist.get(adapterPosition).getPicture_id());
                 break;
 
 

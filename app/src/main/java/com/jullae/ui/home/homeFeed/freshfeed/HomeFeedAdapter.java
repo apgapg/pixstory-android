@@ -77,9 +77,11 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
         viewHolder.story_count.setText(messagelist.get(position).getStory_count() + " stories");
-        if (messagelist.get(position).getStories().size() != 0)
+        if (messagelist.get(position).getStories().size() != 0) {
             viewHolder.storyAdapter.add(messagelist.get(position).getStories());
-        else viewHolder.storyAdapter.addEmptyMessage(messagelist.get(position).getPicture_id());
+            Log.d(TAG, "onBindViewHolder: " + messagelist.get(position).getHighlightStoryIndex());
+            viewHolder.recycler_view_story.scrollToPosition(messagelist.get(position).getHighlightStoryIndex());
+        } else viewHolder.storyAdapter.addEmptyMessage(messagelist.get(position).getPicture_id());
 
 
         if (messagelist.get(position).getIs_liked().equals("false")) {
@@ -220,7 +222,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             storyAdapter = new StoryAdapter(mContext);
             recycler_view_story.setAdapter(storyAdapter);
-
             user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

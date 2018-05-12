@@ -32,6 +32,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_READ_STATUS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PEOPLE_SUGGESTIONS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_DETAIL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_POPULAR_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PROFILE_PIC_UPDATE;
@@ -466,6 +467,24 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.get(BASE_URL + ENDPOINT_FORGOT_PASSWORD)
                 .addHeaders(headers)
                 .addQueryParameter("email", email)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest loadPictureDetail(String picture_id) {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_PICTURE_DETAIL)
+                .addHeaders(headers)
+                .addQueryParameter("story_id", picture_id)
+                /*.addPathParameter("pageNumber", "0")
+                .addQueryParameter("limit", "3")*/
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest fetchStoryDetails(String story_id) {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_STORY_DETAILS)
+                .addHeaders(headers)
+                .addPathParameter("id", story_id)
                 .setPriority(Priority.HIGH)
                 .build();
     }
