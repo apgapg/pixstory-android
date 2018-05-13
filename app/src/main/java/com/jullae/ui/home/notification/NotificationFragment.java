@@ -34,7 +34,12 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
         view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         mPresentor = new NotificationPresentor();
-
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmContext().finish();
+            }
+        });
         setUpRecyclerView();
 
         return view;

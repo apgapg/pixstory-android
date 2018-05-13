@@ -8,6 +8,7 @@ import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
+import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 
@@ -110,4 +111,24 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     }
 
+    public void reportPicture(String report, String picture_id, final StoryDetailPresentor.StringReqListener stringReqListener) {
+        checkViewAttached();
+        AppDataManager.getInstance().getmApiHelper().reportStory(report, picture_id, Constants.REPORT_TYPE_PICTURE).getAsString(new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached())
+                    stringReqListener.onSuccess();
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached())
+                    stringReqListener.onFail();
+            }
+        });
+
+
+    }
 }

@@ -270,6 +270,8 @@
                         app:srcCompat="@drawable/ic_send_inactive_24dp" />
                 </RelativeLayout>
 
+                <include layout="@layout/vertical_divider_light" />
+
             </LinearLayout>
 
         </LinearLayout>

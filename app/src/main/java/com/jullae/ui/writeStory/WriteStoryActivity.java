@@ -31,7 +31,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -41,7 +41,9 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         findViewById(R.id.text_publish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), field_story.getText().toString().trim(), picture_id);
+                if (mPresentor.checkNonEmptyFields(field_title.getText().toString(), field_story.getText().toString())) {
+                    showPublishDialog();
+                }
             }
         });
 
@@ -114,7 +116,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     private void showExitDialog() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setMessage("All your changes will be discarded?");
+        builder1.setMessage("All your changes will be discarded.");
         builder1.setTitle("Confirm Exit?");
         builder1.setCancelable(true);
 
@@ -123,8 +125,33 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        setResult(RESULT_OK);
                         finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
+
+    private void showPublishDialog() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setTitle("Publish Story?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), field_story.getText().toString().trim(), picture_id);
                     }
                 });
 

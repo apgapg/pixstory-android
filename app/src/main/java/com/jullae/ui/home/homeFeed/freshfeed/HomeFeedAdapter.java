@@ -7,11 +7,14 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.jullae.ui.custom.ItemOffLRsetDecoration;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
+import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
@@ -60,6 +64,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         calculateoffset = (((ApplicationClass) activity.getApplication()).getDpWidth() - 20) / 2;
     }
+
 
     @NonNull
     @Override
@@ -129,7 +134,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super.onBindViewHolder(holder, position, payloads);
     }
 
-
     @Override
     public int getItemCount() {
         return messagelist.size();
@@ -180,10 +184,78 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+    private void showMenuOptions(final int adapterPosition, ImageView ivMore) {
+        PopupMenu popup = new PopupMenu(mContext, ivMore);
+        //inflating menu from xml resource
+        popup.inflate(R.menu.picture_options);
+        //adding click listener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu1:
+                        //handle menu1 click
+                        showReportStoryDialog(adapterPosition);
+                        break;
+                    case R.id.menu2:
+                        //handle menu2 click
+                        break;
+                }
+                return false;
+            }
+        });
+        //displaying the popup
+        popup.show();
+    }
+
     public interface ReqListener {
         void onSuccess();
 
         void onFail();
+    }
+
+    public void showReportStoryDialog(final int adapterPosition) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        final View view3 = mContext.getLayoutInflater().inflate(R.layout.dialog_report_story, null);
+        dialogBuilder.setView(view3);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+        dialog.show();
+        final EditText field_report = view3.findViewById(R.id.field_report);
+        final TextView btn_report = view3.findViewById(R.id.report);
+        btn_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String report = field_report.getText().toString().trim();
+                if (report.length() != 0) {
+
+                    view3.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+                    btn_report.setVisibility(View.INVISIBLE);
+
+                    mPresentor.reportPicture(report, messagelist.get(adapterPosition).getPicture_id(), new StoryDetailPresentor.StringReqListener() {
+                        @Override
+                        public void onSuccess() {
+                            view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                            dialog.dismiss();
+                            Toast.makeText(mContext.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onFail() {
+                            view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                            btn_report.setVisibility(View.VISIBLE);
+                            Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
+
     }
 
     private class HomeFeedViewHolder extends RecyclerView.ViewHolder {
@@ -208,6 +280,12 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             like_count = itemView.findViewById(R.id.like_count);
             story_count = itemView.findViewById(R.id.story_count);
 
+            ivMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMenuOptions(getAdapterPosition(), ivMore);
+                }
+            });
             itemView.findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -285,4 +363,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     }
+
+
 }

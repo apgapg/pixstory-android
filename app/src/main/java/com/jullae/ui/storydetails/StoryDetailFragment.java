@@ -217,7 +217,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                     @Override
                     public void run() {
                         showReportStoryDialog();
-
                     }
                 });
             }

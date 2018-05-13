@@ -19,34 +19,39 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
 
     public void sendStoryPublishReq(String title, String content, String picture_id) {
         checkViewAttached();
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
-            getMvpView().showProgressBar();
-            AppDataManager.getInstance().getmApiHelper().publishStory(title, content, picture_id).getAsObject(StoryResponseModel.class, new ParsedRequestListener<StoryResponseModel>() {
 
-                @Override
-                public void onResponse(StoryResponseModel storyResponseModel) {
-                    NetworkUtils.parseResponse(TAG, storyResponseModel);
-                    if (isViewAttached()) {
-                        getMvpView().hideProgressBar();
-                        getMvpView().onStoryPublishSuccess();
-                    }
-                }
+        getMvpView().showProgressBar();
+        AppDataManager.getInstance().getmApiHelper().publishStory(title, content, picture_id).getAsObject(StoryResponseModel.class, new ParsedRequestListener<StoryResponseModel>() {
 
-                @Override
-                public void onError(ANError anError) {
-                    NetworkUtils.parseResponse(TAG, anError);
-                    if (isViewAttached()) {
-                        getMvpView().onStoryPublishFail();
-                        getMvpView().hideProgressBar();
-                    }
+            @Override
+            public void onResponse(StoryResponseModel storyResponseModel) {
+                NetworkUtils.parseResponse(TAG, storyResponseModel);
+                if (isViewAttached()) {
+                    getMvpView().hideProgressBar();
+                    getMvpView().onStoryPublishSuccess();
                 }
-            });
-        } else if (!TextUtils.isEmpty(title)) {
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseResponse(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().onStoryPublishFail();
+                    getMvpView().hideProgressBar();
+                }
+            }
+        });
+
+    }
+
+    public boolean checkNonEmptyFields(String title, String content) {
+        if (!TextUtils.isEmpty(title)) {
             getMvpView().onTitleEmpty();
-
+            return false;
         } else if (!TextUtils.isEmpty(content)) {
             getMvpView().onContentEmpty();
-        }
+            return false;
+        } else return true;
     }
 
     public void sendStoryDraftReq(String title, String content, String picture_id) {
@@ -58,10 +63,10 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
                 @Override
                 public void onResponse(BaseResponseModel baseResponseModel) {
                     NetworkUtils.parseResponse(TAG, baseResponseModel);
-                        if (isViewAttached()) {
-                            getMvpView().hideProgressBar();
-                            getMvpView().onStoryDraftSuccess();
-                        }
+                    if (isViewAttached()) {
+                        getMvpView().hideProgressBar();
+                        getMvpView().onStoryDraftSuccess();
+                    }
                 }
 
                 @Override

@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.jullae.NotificationActivity;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.SearchPeopleMainModel;
@@ -36,7 +37,6 @@ import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.fragments.ProfileFragment;
 import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
-import com.jullae.ui.home.notification.NotificationFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
@@ -170,7 +170,8 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
             @Override
             public void onClick(View v) {
                 button_notification.setImageResource(R.drawable.ic_bell_normal);
-                showFragment(new NotificationFragment(), true);
+                startActivity(new Intent(HomeActivity.this, NotificationActivity.class));
+                //showFragment(new NotificationFragment(), true);
             }
         });
     }

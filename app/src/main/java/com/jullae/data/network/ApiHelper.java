@@ -190,12 +190,15 @@ public class ApiHelper {
     }
 
     public ANRequest reportStory(String report, String id, int reportTypeStory) {
-        String url = null;
+        String url = ENDPOINT_REPORT_STORY;
         String reportType = null;
         if (reportTypeStory == Constants.REPORT_TYPE_STORY) {
-            url = ENDPOINT_REPORT_STORY;
+
             reportType = "StoryModel";
 
+        } else if (reportTypeStory == Constants.REPORT_TYPE_PICTURE) {
+
+            reportType = "PictureModel";
         }
 
         return AndroidNetworking.post(BASE_URL + url)
