@@ -25,7 +25,7 @@ public class LikesModel {
 
         private String user_id;
 
-        private String user_dp_url;
+        private String user_avatar;
         private String user_name;
 
         private String user_penname;
@@ -40,12 +40,12 @@ public class LikesModel {
             this.user_id = user_id;
         }
 
-        public String getUser_dp_url() {
-            return user_dp_url;
+        public String getUser_avatar() {
+            return user_avatar;
         }
 
-        public void setUser_dp_url(String user_dp_url) {
-            this.user_dp_url = user_dp_url;
+        public void setUser_avatar(String user_avatar) {
+            this.user_avatar = user_avatar;
         }
 
         public String getUser_name() {

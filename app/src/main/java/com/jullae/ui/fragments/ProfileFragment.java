@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.ConversationModel;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.databinding.FragmentProfileBinding;
@@ -198,10 +199,10 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     }
 
     private void showConversationDialog() {
-        showLikesDialog();
+        showMessageDialog();
     }
 
-    private void showLikesDialog() {
+    private void showMessageDialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
         View view = getmContext().getLayoutInflater().inflate(R.layout.dialog_conversation, null);
@@ -312,11 +313,19 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         @Override
         public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putString("penname", AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname());
             switch (position) {
                 case 0:
-                    return new PictureTabFragment();
+                    PictureTabFragment pictureTabFragment = new PictureTabFragment();
+                    pictureTabFragment.setArguments(bundle);
+                    return pictureTabFragment;
+
                 case 1:
-                    return new StoryTabFragment();
+                    StoryTabFragment storyTabFragment = new StoryTabFragment();
+                    storyTabFragment.setArguments(bundle);
+                    return storyTabFragment;
+
                 case 2:
                     return new BookmarkTabFragment();
                 case 3:

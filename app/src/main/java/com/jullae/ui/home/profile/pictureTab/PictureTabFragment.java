@@ -13,6 +13,7 @@ import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.adapters.PicturesAdapter;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.utils.AppUtils;
 
 import java.util.List;
 
@@ -23,11 +24,15 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     private PicturesAdapter picturesAdapter;
     private PictureTabPresentor mPresentor;
     private int position;
+    private String penname;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
+        penname = getArguments().getString("penname");
+        AppUtils.checkforNullPenname(penname);
+
         mPresentor = new PictureTabPresentor();
         setuprecyclerView();
         return view;
@@ -45,7 +50,7 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
-        mPresentor.loadFeeds();
+        mPresentor.loadFeeds(penname);
     }
 
     @Override

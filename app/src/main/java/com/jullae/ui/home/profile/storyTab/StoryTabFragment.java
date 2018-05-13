@@ -13,6 +13,7 @@ import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.search.SearchFeedAdapter;
+import com.jullae.utils.AppUtils;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
     private RecyclerView recyclerView;
     private SearchFeedAdapter searchFeedAdapter;
     private StoryTabPresentor mPresentor;
+    private String penname;
 
     @Nullable
     @Override
@@ -33,6 +35,8 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
             return view;
         }
         view = inflater.inflate(R.layout.fragment_story_tab_profile, container, false);
+        penname = getArguments().getString("penname");
+        AppUtils.checkforNullPenname(penname);
 
 
         mPresentor = new StoryTabPresentor();
@@ -53,7 +57,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
-        mPresentor.loadFeeds();
+        mPresentor.loadFeeds(penname);
     }
 
     @Override

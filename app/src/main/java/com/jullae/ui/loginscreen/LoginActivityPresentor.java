@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.data.AppDataManager;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.AppUtils;
@@ -149,21 +148,8 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
             @Override
             public void onResponse(LoginResponseModel loginResponseModel) {
                 NetworkUtils.parseResponse(TAG, loginResponseModel);
-                if (loginResponseModel.getAccount_status().equals("act")) {
-                    AppDataManager.getInstance().getmSharedPrefsHelper().saveUserDetails(loginResponseModel);
-                    AppDataManager.getInstance().getmApiHelper().updateToken(loginResponseModel.getToken());
+                checkResponse(loginResponseModel);
 
-                    if (isViewAttached()) {
-                        getMvpView().hideProgress();
-                        getMvpView().onLoginSuccess();
-                    }
-                } else if (loginResponseModel.getAccount_status().equals("incomp")) {
-                    if (isViewAttached()) {
-                        getMvpView().hideProgress();
-                        Log.d(TAG, "onResponse: " + loginResponseModel.getToken());
-                        getMvpView().onGoogleSignInSuccess(loginResponseModel.getUser_id(), loginResponseModel.getToken());
-                    }
-                }
             }
 
             @Override
@@ -178,29 +164,57 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
 
     }
 
+    private void checkResponse(LoginResponseModel loginResponseModel) {
+        if (loginResponseModel.getAccount_status().equals("act")) {
+            AppDataManager.getInstance().getmSharedPrefsHelper().saveUserDetails(loginResponseModel);
+            AppDataManager.getInstance().getmApiHelper().updateToken(loginResponseModel.getToken());
+
+            if (isViewAttached()) {
+                getMvpView().hideProgress();
+                getMvpView().onLoginSuccess();
+            }
+        } else if (loginResponseModel.getAccount_status().equals("incomp")) {
+            if (isViewAttached()) {
+                getMvpView().hideProgress();
+                Log.d(TAG, "onResponse: " + loginResponseModel.getToken());
+                getMvpView().onGoogleSignInSuccess(loginResponseModel.getUser_id(), loginResponseModel.getToken());
+            }
+        }
+    }
+
     public void addProfileDetails(String user_id, String token, String penname, String email) {
         checkViewAttached();
         if (TextUtils.isEmpty(penname)) {
             getMvpView().signUpValidationError();
         } else {
-            AppDataManager.getInstance().getmApiHelper().addProfileDetailReq(user_id, token, penname, email).getAsString(new StringRequestListener() {
+            AppDataManager.getInstance().getmApiHelper().addProfileDetailReq(user_id, token, penname, email).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+
                 @Override
-                public void onResponse(String response) {
-                    Log.d(TAG, "onResponse: " + response);
+                public void onResponse(LoginResponseModel loginResponseModel) {
+                    NetworkUtils.parseResponse(TAG, loginResponseModel);
+                    checkResponse(loginResponseModel);
 
                 }
 
                 @Override
                 public void onError(ANError anError) {
-                    NetworkUtils.parseError(TAG, anError);
-
+                    ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
+                    if (isViewAttached()) {
+                        getMvpView().hideProgress();
+                        getMvpView().onLoginFail(errorResponseModel);
+                    }
                 }
             });
+
         }
     }
 
     public boolean isUserLoggedIn() {
+
         return AppDataManager.getInstance().getmSharedPrefsHelper().getLoggedInMode();
     }
 
+    public String getLoggedInProvider() {
+        return AppDataManager.getInstance().getmSharedPrefsHelper().getKeyProvider();
+    }
 }

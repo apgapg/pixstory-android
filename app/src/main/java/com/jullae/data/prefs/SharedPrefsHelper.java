@@ -22,6 +22,7 @@ public class SharedPrefsHelper {
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_TOKEN = "token";
     private static final String KEY_DP_URL = "dp_url";
+    private static final String KEY_PROVIDER = "provider";
     private static final String TAG = SharedPrefsHelper.class.getName();
 
     private static SharedPreferences sharedPreferences;
@@ -76,15 +77,8 @@ public class SharedPrefsHelper {
         sharedPreferences.edit().putBoolean("IS_LOGGED_IN", loggedIn).apply();
     }
 
-    public void saveUserDetails(LoginResponseModel loginResponseModel) {
-        sharedPreferences.edit().putString(KEY_EMAIL, loginResponseModel.getEmail()).commit();
-        sharedPreferences.edit().putString(KEY_NAME, loginResponseModel.getName()).commit();
-        sharedPreferences.edit().putString(KEY_PENNAME, loginResponseModel.getPenname()).commit();
-        sharedPreferences.edit().putString(KEY_BIO, loginResponseModel.getBio()).commit();
-        sharedPreferences.edit().putString(KEY_USER_ID, loginResponseModel.getUser_id()).commit();
-        sharedPreferences.edit().putString(KEY_TOKEN, loginResponseModel.getToken()).commit();
-        sharedPreferences.edit().putString(KEY_DP_URL, loginResponseModel.getAvatar()).commit();
-        setLoggedInMode(true);
+    public static String getKeyProvider() {
+        return KEY_PROVIDER;
     }
 
     public String getKeyName() {
@@ -93,6 +87,18 @@ public class SharedPrefsHelper {
 
     public void setKeyName(String name) {
         sharedPreferences.edit().putString(KEY_NAME, name).commit();
+    }
+
+    public void saveUserDetails(LoginResponseModel loginResponseModel) {
+        sharedPreferences.edit().putString(KEY_EMAIL, loginResponseModel.getEmail()).commit();
+        sharedPreferences.edit().putString(KEY_NAME, loginResponseModel.getName()).commit();
+        sharedPreferences.edit().putString(KEY_PENNAME, loginResponseModel.getPenname()).commit();
+        sharedPreferences.edit().putString(KEY_BIO, loginResponseModel.getBio()).commit();
+        sharedPreferences.edit().putString(KEY_USER_ID, loginResponseModel.getUser_id()).commit();
+        sharedPreferences.edit().putString(KEY_TOKEN, loginResponseModel.getToken()).commit();
+        sharedPreferences.edit().putString(KEY_DP_URL, loginResponseModel.getAvatar()).commit();
+        sharedPreferences.edit().putString(KEY_PROVIDER, loginResponseModel.getProvider()).commit();
+        setLoggedInMode(true);
     }
 
     public String getKeyPenname() {

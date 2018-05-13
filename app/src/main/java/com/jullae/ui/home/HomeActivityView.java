@@ -7,4 +7,6 @@ public interface HomeActivityView extends MvpView {
     void hideProgressBar();
 
     void showProgressBar();
+
+    void onPictureUploadSuccess();
 }

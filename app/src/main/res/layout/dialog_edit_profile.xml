@@ -55,10 +55,10 @@
         android:background="#fff"
         android:hint="enter your name..."
         android:lines="1"
-        android:paddingBottom="4dp"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp"
         android:paddingTop="4dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="4dp"
         android:textColor="#212121"
         android:textSize="14dp" />
 
@@ -82,10 +82,10 @@
         android:gravity="top"
         android:hint="describe about yourself..."
         android:lines="2"
-        android:paddingBottom="4dp"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp"
         android:paddingTop="4dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="4dp"
         android:textColor="#212121"
         android:textSize="14dp" />
 

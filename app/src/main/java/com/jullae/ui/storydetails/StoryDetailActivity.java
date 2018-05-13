@@ -67,9 +67,9 @@ public class StoryDetailActivity extends BaseActivity {
     }
 
 
-    public void showSearchResults(String story_text) {
+    public void showSearchResults(String story_title) {
         Intent i = new Intent();
-        i.putExtra("searchtag", story_text);
+        i.putExtra("searchtag", story_title);
         setResult(RESULT_OK, i);
         finish();
     }

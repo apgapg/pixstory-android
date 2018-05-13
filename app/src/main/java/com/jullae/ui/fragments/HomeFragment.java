@@ -21,6 +21,7 @@ public class HomeFragment extends BaseFragment {
 
     private View view;
     private ViewPager viewPager;
+    private PagerAdapter adapter;
 
 
     @Nullable
@@ -44,7 +45,7 @@ public class HomeFragment extends BaseFragment {
         //load all pages only once.
         viewPager.setOffscreenPageLimit(2);
         //set Adapter.
-        PagerAdapter adapter = new PagerAdapter(((HomeActivity) getmContext()).getSupportFragmentManager());
+        adapter = new PagerAdapter(((HomeActivity) getmContext()).getSupportFragmentManager());
 
         //set Adapter of pager.
         viewPager.setAdapter(adapter);
@@ -91,6 +92,12 @@ public class HomeFragment extends BaseFragment {
     public void showFragment(int i) {
         if (isAdded())
             viewPager.setCurrentItem(i);
+    }
+
+    public void refreshFeeds() {
+        if (adapter.getRegisteredFragment(0) != null) {
+            ((HomeFeedFragment) adapter.getRegisteredFragment(0)).refreshFeeds();
+        }
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {

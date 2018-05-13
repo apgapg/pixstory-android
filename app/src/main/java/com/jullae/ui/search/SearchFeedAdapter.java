@@ -17,6 +17,7 @@ import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,13 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
             story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
+            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showStoryDetailActivity(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
 
+                }
+            });
         }
     }
 }

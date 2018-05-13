@@ -1,5 +1,7 @@
 package com.jullae.utils;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.Gson;
 
 public class GsonUtils {
@@ -19,8 +21,12 @@ public class GsonUtils {
     }
 
 
-    public String fromJson(String json, T object) {
-        return getGson().toJson()
+    public <T> T fromJson(@NonNull String jsonString, @NonNull Class<T> tClass) {
+        return getGson().fromJson(jsonString, tClass);
+    }
+
+    public <T> String toJson(@NonNull final T t) {
+        return getGson().toJson(t);
     }
 
     public Gson getGson() {

@@ -2,14 +2,14 @@
 	"likes": [
 		{
 			"user_id": 2,
-			"user_dp_url": "https://images.pexels.com/photos/34950/pexels-photo.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
+			"user_avatar": "https://images.pexels.com/photos/34950/pexels-photo.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
 			"user_name": "Aarush sharma",
 			"user_penname": "aakrutikarna",
 			"user_followed": true
 		},
 		{
 			"user_id": 3,
-			"user_dp_url": null,
+			"user_avatar": null,
 			"user_name": "Aryan kumar",
 			"user_penname": "aryankumar",
 			"user_followed": false

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -38,9 +39,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     public static final int LOGIN_MODE_FACEBOOK = 26;
 
     private static final String TAG = LoginActivity.class.getName();
-
+    public static Boolean isUserSignedUp = false;
     private CallbackManager callbackManager;
-
     private LoginActivityPresentor mPresentor;
     private String password, email;
     private int loginMode;
@@ -49,8 +49,6 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     private String user_id;
     private String token;
 
-    public static Boolean isUserSignedUp = false;
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +56,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
 
         mPresentor = new LoginActivityPresentor();
-        if (mPresentor.isUserLoggedIn()) {
+
+        if (isUserLoggedIn()) {
             startHomeActivity();
         }
 
@@ -69,6 +68,14 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         setUpFbLogin();
 
 
+    }
+
+    private boolean isUserLoggedIn() {
+        String provider = mPresentor.getLoggedInProvider();
+        if (provider.equals("facebook")) {
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            return accessToken != null && !accessToken.isExpired();
+        } else return mPresentor.isUserLoggedIn();
     }
 
     private void setUpFbLogin() {

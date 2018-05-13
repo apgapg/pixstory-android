@@ -98,6 +98,8 @@ public class ApiHelper {
                 /*.addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")*/
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
+
                 .build();
     }
 
@@ -106,6 +108,8 @@ public class ApiHelper {
                 .addHeaders(headers)
                 .addQueryParameter("term", searchTag)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
+
                 .build();
     }
 
@@ -116,6 +120,7 @@ public class ApiHelper {
                 /*.addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")*/
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
                 .build();
     }
 
@@ -135,6 +140,7 @@ public class ApiHelper {
                 .addHeaders(headers)
                 .addPathParameter("id", id)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
                 .build();
     }
 
@@ -179,6 +185,7 @@ public class ApiHelper {
                 .addBodyParameter("comment", comment)
                 .addBodyParameter("story_id", story_id)
                 .setPriority(Priority.HIGH)
+
                 .build();
     }
 
@@ -197,6 +204,7 @@ public class ApiHelper {
                 .addBodyParameter("reportable_id", id)
                 .addBodyParameter("reason", report)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
                 .build();
 
 
@@ -270,12 +278,14 @@ public class ApiHelper {
                 .build();
     }
 
+
     public ANRequest fetchVisitorProfileData(String penname) {
         Log.d(TAG, "fetchVisitorProfileData: " + penname);
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_PROFILE_VISITOR_INFO)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
                 .build();
 
     }
@@ -403,6 +413,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addMultipartParameter("picture_title", title)
                 .addMultipartFile("image", file)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
                 .build();
     }
 
@@ -430,6 +441,8 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
+
                 .build();
     }
 
@@ -441,6 +454,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                     .addBodyParameter("penname", penname)
                     .addBodyParameter("email", email)
                     .setPriority(Priority.HIGH)
+                    .setLogReponseBody(true)
                     .build();
         } else {
             return AndroidNetworking.post(BASE_URL + ENDPOINT_ADD_PROFILE_DETAILS)
@@ -459,6 +473,8 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
                 .setPriority(Priority.HIGH)
+                .setLogReponseBody(true)
+
                 .build();
     }
 

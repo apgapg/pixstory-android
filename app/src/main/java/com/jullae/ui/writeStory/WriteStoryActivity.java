@@ -1,7 +1,10 @@
 package com.jullae.ui.writeStory;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +16,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     private WriteStoryPresentor mPresentor;
     private String picture_id;
+    private EditText field_story, field_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,8 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
             }
         });
 
-        final EditText field_title = findViewById(R.id.field_title);
-        final EditText field_story = findViewById(R.id.field_story);
+        field_title = findViewById(R.id.field_title);
+        field_story = findViewById(R.id.field_story);
 
         findViewById(R.id.text_publish).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +90,54 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
     public void onStoryDraftSuccess() {
         Toast.makeText(getApplicationContext(), "Story saved as Draft!", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public void onTitleEmpty() {
+        Toast.makeText(getApplicationContext(), "Story title cannnot be empty!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onContentEmpty() {
+        Toast.makeText(getApplicationContext(), "story cannnot be empty!", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!TextUtils.isEmpty(field_title.getText().toString()) || !TextUtils.isEmpty(field_story.getText().toString())) {
+            showExitDialog();
+        } else super.onBackPressed();
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("All your changes will be discarded?");
+        builder1.setTitle("Confirm Exit?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 }

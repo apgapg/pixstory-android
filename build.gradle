@@ -9,7 +9,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
         classpath 'com.google.gms:google-services:3.2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -19,22 +19,11 @@ buildscript {
 
 allprojects {
     repositories {
+
         google()
         jcenter()
         maven { url "https://jitpack.io" }
-        task checkstyle(type: Checkstyle) {
-            showViolations = true
-            configFile file("../checkStyleConfig/checkstyle.xml")
-            source 'src/main/java'
-            include '**/*.java'
-            exclude '**/gen/**'
-            exclude '**/constant/**'
-            exclude '**/model/**'
-            exclude '**/R.java'
-            exclude '**/retrofit/**'
-            // empty classpath
-            classpath = files()
-        }
+
     }
 }
 

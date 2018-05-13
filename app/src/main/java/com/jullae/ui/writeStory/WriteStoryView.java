@@ -14,4 +14,8 @@ public interface WriteStoryView extends MvpView {
     void onStoryDraftFail();
 
     void onStoryDraftSuccess();
+
+    void onTitleEmpty();
+
+    void onContentEmpty();
 }

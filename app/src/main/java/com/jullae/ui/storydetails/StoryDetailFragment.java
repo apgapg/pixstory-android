@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -32,6 +33,8 @@ import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.Constants;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 public class StoryDetailFragment extends BaseFragment implements StoryDetailView {
 
     private static final int ACTIVATE = 1;
@@ -52,9 +55,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private LikeAdapter likeAdapter;
     private View view;
     private StoryDetailPresentor mPresentor;
-    private TextView story_title, user_name, user_penname, story_text;
-    private ImageView btn_close, user_image;
+    private TextView story_title, user_name, user_penname;
+    private HtmlTextView story_text;
+    private ImageView user_image;
     private String story_id;
+    private SwipeRefreshLayout swipeRefresh;
+    private View btn_close;
 
     @Nullable
     @Override
@@ -70,7 +76,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         mPresentor = new StoryDetailPresentor();
 
         story_title = view.findViewById(R.id.text_title);
-        btn_close = view.findViewById(R.id.tvClose);
+        btn_close = view.findViewById(R.id.close);
         user_name = view.findViewById(R.id.text_name);
         user_image = view.findViewById(R.id.image_avatar);
         user_penname = view.findViewById(R.id.text_penname);
@@ -79,6 +85,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         comment_count = view.findViewById(R.id.comment_count);
         btn_more = view.findViewById(R.id.btn_more);
 
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmContext().finish();
+            }
+        });
         setupMoreBottomSheet();
         setupAddComment();
 
@@ -99,7 +111,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         story_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((StoryDetailActivity) getmContext()).showSearchResults(storyModel.getStory_text()
+                ((StoryDetailActivity) getmContext()).showSearchResults(storyModel.getStory_title()
                 );
             }
         });
@@ -111,7 +123,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         story_title.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
         user_penname.setText(storyModel.getWriter_name());
-        story_text.setText(storyModel.getStory_text());
+        // story_text.setText(Html.fromHtml(storyModel.getStory_text()));
+        story_text.setHtml(storyModel.getStory_text());
         comment_count.setText(storyModel.getComment_count() + " comments");
         Glide.with(this).load(storyModel.getWriter_avatar()).into(user_image);
     }
@@ -534,7 +547,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     public void onStoryDetailFetchSuccess(StoryModel storyModel) {
         this.storyModel = storyModel;
         setProfiledata();
-        setUpFollowedButton();
+        if (!storyModel.getIs_self())
+            setUpFollowedButton();
         setupComments();
         setupLike();
     }

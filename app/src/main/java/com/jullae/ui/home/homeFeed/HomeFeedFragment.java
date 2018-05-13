@@ -3,6 +3,7 @@ package com.jullae.ui.home.homeFeed;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,8 +21,9 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     private static final String TAG = HomeFeedFragment.class.getName();
     private View view;
-    private HomeFeedPresentor homeFeedPresentor;
+    private HomeFeedPresentor mPresentor;
     private HomeFeedAdapter homeFeedAdapter;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Nullable
     @Override
@@ -34,11 +36,12 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         }
         view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
-        homeFeedPresentor = new HomeFeedPresentor();
+        mPresentor = new HomeFeedPresentor();
 
+        swipeRefresh = view.findViewById(R.id.swiperefresh);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        homeFeedAdapter = new HomeFeedAdapter(getmContext(), homeFeedPresentor);
+        homeFeedAdapter = new HomeFeedAdapter(getmContext(), mPresentor);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -47,21 +50,26 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(homeFeedAdapter);
 
-
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresentor.loadFeeds();
+            }
+        });
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        homeFeedPresentor.attachView(this);
-        homeFeedPresentor.loadFeeds();
+        mPresentor.attachView(this);
+        mPresentor.loadFeeds();
 
     }
 
     @Override
     public void onDestroyView() {
-        homeFeedPresentor.detachView();
+        mPresentor.detachView();
 
         super.onDestroyView();
     }
@@ -84,12 +92,14 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     @Override
     public void showProgress() {
-        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+        //view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+        swipeRefresh.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+        //view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+        swipeRefresh.setRefreshing(false);
 
     }
 
@@ -102,5 +112,9 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     public void onLikesListFetchFail() {
         homeFeedAdapter.onLikesListFetchFail();
 
+    }
+
+    public void refreshFeeds() {
+        mPresentor.loadFeeds();
     }
 }

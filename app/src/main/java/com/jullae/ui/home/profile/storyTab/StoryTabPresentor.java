@@ -13,9 +13,9 @@ public class StoryTabPresentor extends BasePresentor<StoryTabView> {
     public StoryTabPresentor() {
     }
 
-    public void loadFeeds() {
+    public void loadFeeds(String penname) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadStoryTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadStoryTabFeeds(penname).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
             @Override
             public void onResponse(StoryListModel storyListModel) {
                 NetworkUtils.parseResponse(TAG, storyListModel);

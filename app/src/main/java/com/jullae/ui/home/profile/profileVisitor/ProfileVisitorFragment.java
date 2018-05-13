@@ -149,13 +149,18 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         @Override
         public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            bundle.putString("penname", penname);
             switch (position) {
                 case 0:
-                    return new PictureTabFragment();
+                    PictureTabFragment pictureTabFragment = new PictureTabFragment();
+                    pictureTabFragment.setArguments(bundle);
+                    return pictureTabFragment;
 
                 case 1:
-                    return new StoryTabFragment();
-
+                    StoryTabFragment storyTabFragment = new StoryTabFragment();
+                    storyTabFragment.setArguments(bundle);
+                    return storyTabFragment;
 
                 default:
                     return null;

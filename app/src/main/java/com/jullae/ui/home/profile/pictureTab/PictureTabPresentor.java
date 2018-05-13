@@ -13,9 +13,9 @@ public class PictureTabPresentor extends BasePresentor<PictureTabView> {
     public PictureTabPresentor() {
     }
 
-    public void loadFeeds() {
+    public void loadFeeds(String penname) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadPictureTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(PictureListModel.class, new ParsedRequestListener<PictureListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadPictureTabFeeds(penname).getAsObject(PictureListModel.class, new ParsedRequestListener<PictureListModel>() {
 
 
             @Override

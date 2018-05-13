@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.CommentModel;
+import com.jullae.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,19 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
             user_name = itemView.findViewById(R.id.text_name);
             comment_text = itemView.findViewById(R.id.comment_text);
 
+            user_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(context, messagelist.get(getAdapterPosition()).getUser_penname());
+                }
+            });
+            user_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(context, messagelist.get(getAdapterPosition()).getUser_penname());
+
+                }
+            });
         }
 
     }

@@ -23,6 +23,8 @@ public class AppUtils {
     public static final String LOCALE_ENGLISH = "en";
     public static final String LOCALE_HINDI = "hi";
     public static final String LOCALE_MARATHI = "mr";
+    public static final int REQUEST_CODE_WRTIE_STORY = 23;
+    public static final int REQUEST_CODE_SEARCH_TAG = 33;
     private static final String TAG = AppUtils.class.getName();
 
     public static String getDeviceId(Context context) {
@@ -97,5 +99,11 @@ public class AppUtils {
 
     public static void showPictureDetailActivity(Activity mContext, String picture_id) {
         mContext.startActivity(buildPictureDetailActivityIntent(mContext, picture_id));
+    }
+
+    public static void checkforNullPenname(String penname) {
+        if (penname == null) {
+            throw new NullPointerException("penname cannot be null!");
+        }
     }
 }

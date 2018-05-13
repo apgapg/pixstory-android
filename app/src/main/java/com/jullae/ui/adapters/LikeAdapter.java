@@ -69,7 +69,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
         holder.user_name.setText(messagelist.get(position).getUser_name());
         holder.user_penname.setText(messagelist.get(position).getUser_penname());
 
-        Glide.with(context).load(messagelist.get(position).getUser_dp_url()).apply(picOptions).into(holder.user_image);
+        Glide.with(context).load(messagelist.get(position).getUser_avatar()).apply(picOptions).into(holder.user_image);
         if (messagelist.get(position).getUser_followed().equals("true")) {
             holder.user_followed.setTextColor(Color.parseColor("#ffffff"));
             holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_active));

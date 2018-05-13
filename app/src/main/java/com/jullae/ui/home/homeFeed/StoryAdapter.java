@@ -19,6 +19,7 @@ import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
+import com.jullae.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +132,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     String object = gson.toJson(messagelist.get(getAdapterPosition()));
                     i.putExtra("object", object);
                     i.putExtra("profile", false);
-                    mContext.startActivity(i);
+                    mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_SEARCH_TAG);
                 }
             });
             user_name.setOnClickListener(new View.OnClickListener() {

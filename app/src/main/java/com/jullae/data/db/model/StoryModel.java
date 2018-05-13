@@ -18,7 +18,7 @@ public class StoryModel {
     private String like_count;
     private String comment_count;
     private String is_liked;
-    private String is_self;
+    private boolean is_self;
     private String is_followed;
     private String created_at;
 
@@ -83,7 +83,7 @@ public class StoryModel {
         this.is_liked = is_liked;
     }
 
-    public String getIs_self() {
+    public boolean getIs_self() {
         return is_self;
     }
 

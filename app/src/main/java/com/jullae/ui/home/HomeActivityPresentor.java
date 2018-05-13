@@ -29,6 +29,7 @@ public class HomeActivityPresentor extends BasePresentor<HomeActivityView> {
                     if (isViewAttached()) {
                         getMvpView().hideProgressBar();
                         addPictureListener.closeDialog();
+                        getMvpView().onPictureUploadSuccess();
                     }
 
                 }

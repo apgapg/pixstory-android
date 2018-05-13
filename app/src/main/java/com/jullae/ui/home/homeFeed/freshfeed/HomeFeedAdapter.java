@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.jullae.ApplicationClass;
 import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
@@ -45,6 +46,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final Activity mContext;
     private final RequestOptions picOptions;
     private final HomeFeedPresentor mPresentor;
+    private final float calculateoffset;
 
     List<HomeFeedModel.Feed> messagelist = new ArrayList<HomeFeedModel.Feed>();
     private LikeAdapter likeAdapter;
@@ -56,6 +58,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         picOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        calculateoffset = (((ApplicationClass) activity.getApplication()).getDpWidth() - 20) / 2;
     }
 
     @NonNull
@@ -80,7 +83,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (messagelist.get(position).getStories().size() != 0) {
             viewHolder.storyAdapter.add(messagelist.get(position).getStories());
             Log.d(TAG, "onBindViewHolder: " + messagelist.get(position).getHighlightStoryIndex());
-            viewHolder.recycler_view_story.scrollToPosition(messagelist.get(position).getHighlightStoryIndex());
+            viewHolder.linearLayoutManager.scrollToPositionWithOffset(messagelist.get(position).getHighlightStoryIndex(), (int) calculateoffset);
         } else viewHolder.storyAdapter.addEmptyMessage(messagelist.get(position).getPicture_id());
 
 
@@ -189,6 +192,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private ImageView user_image, image, ivStoryPic, ivEditStory, btn_like, ivMore;
         private TextView user_name, user_penname, tvTimeInDays, like_count, story_count;
         private RecyclerView recycler_view_story;
+        private LinearLayoutManager linearLayoutManager;
         private StoryAdapter storyAdapter;
 
         public HomeFeedViewHolder(View inflate) {
@@ -209,12 +213,12 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, WriteStoryActivity.class);
                     i.putExtra("picture_id", messagelist.get(getAdapterPosition()).getPicture_id());
-                    mContext.startActivity(i);
+                    mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_WRTIE_STORY);
 
                 }
             });
             recycler_view_story = itemView.findViewById(R.id.recycler_view_story);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+            linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             recycler_view_story.setLayoutManager(linearLayoutManager);
 
             ItemOffLRsetDecoration itemDecoration = new ItemOffLRsetDecoration(mContext, R.dimen.item_offset_4dp);

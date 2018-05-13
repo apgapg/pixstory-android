@@ -26,13 +26,7 @@
             android:textStyle="bold"
             tools:text="@string/title" />
 
-        <ImageView
-            android:id="@+id/tvClose"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
     </RelativeLayout>
 
 
@@ -57,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:gravity="center"
-                android:paddingBottom="8dp"
                 android:paddingLeft="10dp"
+                android:paddingTop="8dp"
                 android:paddingRight="10dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,11 +108,11 @@
                     android:layout_marginRight="2dp"
                     android:background="@drawable/button_border"
                     android:gravity="center"
-                    android:paddingBottom="6dp"
                     android:paddingLeft="14dp"
+                    android:paddingTop="6dp"
 
                     android:paddingRight="14dp"
-                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
                     android:text="@string/follow"
                     android:textColor="#757575"
                     android:textSize="@dimen/text_size_small"
@@ -129,14 +123,14 @@
             <include layout="@layout/vertical_divider_light" />
 
 
-            <TextView
+            <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/story_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="8dp"
                 android:textAppearance="@style/text_14.regular.primary"
                 android:textSize="14dp"
 
@@ -223,73 +217,74 @@
                         app:srcCompat="@drawable/ic_more_vert_black_24dp" />
                 </RelativeLayout>
 
-                <View
+                <include layout="@layout/vertical_divider_light" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_light" />
+                    android:layout_height="wrap_content" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:background="#fff">
+
+                    <EditText
+                        android:id="@+id/field_add_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:background="#fff"
+                        android:hint="Add a comment..."
+                        android:maxLines="8"
+                        android:minHeight="48dp"
+                        android:paddingLeft="14dp"
+                        android:paddingTop="8dp"
+                        android:paddingRight="14dp"
+                        android:paddingBottom="8dp"
+                        android:textAppearance="@style/text_14.regular.primary" />
+
+                    <ImageView
+                        android:id="@+id/btn_add_comment"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="12dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_send_inactive_24dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_comment"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="#fff"
+                        android:padding="12dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/ic_send_inactive_24dp" />
+                </RelativeLayout>
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/close"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="bottom"
-        android:orientation="vertical">
-
-        <include layout="@layout/vertical_divider_light" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:background="#fff">
-
-            <EditText
-                android:id="@+id/field_add_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:background="#fff"
-                android:hint="Add a comment..."
-                android:maxLines="8"
-                android:minHeight="48dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp"
-                android:paddingTop="8dp"
-                android:textAppearance="@style/text_14.regular.primary" />
-
-            <ImageView
-                android:id="@+id/btn_add_comment"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="12dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_send_inactive_24dp" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar_comment"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="#fff"
-                android:padding="12dp"
-                android:scaleType="centerCrop"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_send_inactive_24dp" />
-        </RelativeLayout>
-
-    </LinearLayout>
+        android:background="@drawable/border_grey"
+        android:gravity="center"
+        android:text="CLOSE"
+        android:textAppearance="@style/text_14.medium.secondary" />
 
     <View
         android:id="@+id/bg"

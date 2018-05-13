@@ -21,6 +21,7 @@ import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.home.profile.draftTab.DraftTabAdapter;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 import java.util.ArrayList;
@@ -148,6 +149,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
                 @Override
                 public void onClick(View v) {
                     showDeleteDraftWarningDialog(getAdapterPosition(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
+                }
+            });
+            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showStoryDetailActivity(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
+
                 }
             });
         }

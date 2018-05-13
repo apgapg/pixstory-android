@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.SearchPeopleMainModel;
 import com.jullae.ui.adapters.SearchPersonAdapter;
 import com.jullae.ui.base.BaseActivity;
@@ -189,10 +190,11 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
-                        Intent intent = new Intent(HomeActivity.this, ProfileVisitorActivity.class);
-                        intent.putExtra("penname", penname);
-                        startActivity(intent);
+                        if (!penname.equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname())) {
+                            Intent intent = new Intent(HomeActivity.this, ProfileVisitorActivity.class);
+                            intent.putExtra("penname", penname);
+                            startActivity(intent);
+                        } else showHomeFragment(2);
                         cleanUpSearchContainer();
                     }
                 }, 500);
@@ -523,6 +525,21 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
                 imagePicker.submit(data);
             }
         }
+
+        if (requestCode == AppUtils.REQUEST_CODE_WRTIE_STORY && resultCode == Activity.RESULT_OK) {
+            refreshHomeFeeds();
+
+        }
+        if (requestCode == AppUtils.REQUEST_CODE_SEARCH_TAG && resultCode == Activity.RESULT_OK) {
+            AppUtils.showSearchActivity(HomeActivity.this, data.getStringExtra("searchtag"));
+        }
+    }
+
+    private void refreshHomeFeeds() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment instanceof HomeFragment) {
+            ((HomeFragment) fragment).refreshFeeds();
+        }
     }
 
     private void onImageChosenByUser(String uri) {
@@ -635,6 +652,12 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     @Override
     public void showProgressBar() {
         MyProgressDialog.showProgressDialog(this, "Uploading! Please wait.");
+    }
+
+    @Override
+    public void onPictureUploadSuccess() {
+        refreshHomeFeeds();
+
     }
 
     public void updateNotificationIcon(boolean unread_notifications) {

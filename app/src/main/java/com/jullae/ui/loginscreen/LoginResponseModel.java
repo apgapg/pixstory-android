@@ -8,6 +8,7 @@ public class LoginResponseModel extends BaseResponseModel {
     private String bio;
     private String avatar;
     private String user_id;
+    private String provider;
     private String token;
     private String account_status;
     private String email;
@@ -39,6 +40,9 @@ public class LoginResponseModel extends BaseResponseModel {
         return penname;
     }
 
+    public String getProvider() {
+        return provider;
+    }
 
     public String getToken() {
         return token;
