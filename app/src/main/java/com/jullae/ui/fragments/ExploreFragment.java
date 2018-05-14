@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.ui.adapters.SearchAdapter;
@@ -74,11 +75,12 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
                 ((HomeActivity) getmContext()).showFreshFeedFragment(0);
                 break;
             case R.id.weekly_feeds:
-                ((HomeActivity) getmContext()).showFreshFeedFragment(1);
-
+                // ((HomeActivity) getmContext()).showFreshFeedFragment(1);
+                Toast.makeText(getmContext().getApplicationContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fav_feeds:
-                ((HomeActivity) getmContext()).showFreshFeedFragment(2);
+                //((HomeActivity) getmContext()).showFreshFeedFragment(2);
+                Toast.makeText(getmContext().getApplicationContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.popular_feeds:

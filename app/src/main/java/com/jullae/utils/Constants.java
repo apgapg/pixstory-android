@@ -12,4 +12,11 @@ public class Constants {
     public static final int SHOW_LOGIN = 0;
 
 
+    public static final String REFRESH_INTENT_FILTER = "refresh-event";
+    public static final String REFRESH_MODE = "refreshMode";
+    public static final int REFRESH_BOOKMARKS_TAB = 0;
+    public static final int REFRESH_PICTURES_TAB = 1;
+    public static final int REFRESH_HOME_FEEDS = 2;
+    public static final int REFRESH_DRAFTS_TAB = 3;
+    public static final String PROVIDER_EMAIL = "custom";
 }

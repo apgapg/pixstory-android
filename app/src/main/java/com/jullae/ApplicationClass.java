@@ -10,6 +10,7 @@ public class ApplicationClass extends Application {
 
     public static final String TAG = ApplicationClass.class.getSimpleName();
     private float dpWidth, dpHeight;
+    public static float density;
 
 
     @Override
@@ -27,6 +28,7 @@ public class ApplicationClass extends Application {
         DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        density = displayMetrics.density;
     }
 
     public float getDpHeight() {
@@ -36,4 +38,11 @@ public class ApplicationClass extends Application {
     public float getDpWidth() {
         return dpWidth;
     }
+
+    public float getDensity() {
+        return density;
+    }
 }
+
+
+

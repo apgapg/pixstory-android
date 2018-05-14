@@ -159,7 +159,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void showMenuOptions(final int adapterPosition, ImageView ivMore) {
         PopupMenu popup = new PopupMenu(mContext, ivMore);
         //inflating menu from xml resource
-        popup.inflate(R.menu.picture_options);
+        popup.inflate(R.menu.profile_options_email);
         //adding click listener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override

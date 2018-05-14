@@ -26,6 +26,8 @@
             android:textStyle="bold"
             tools:text="@string/title" />
 
+        <include layout="@layout/vertical_divider_light" />
+
 
     </RelativeLayout>
 
@@ -34,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="@dimen/close_button_height"
         android:scrollbars="none">
 
         <LinearLayout
@@ -42,8 +44,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
-
-            <include layout="@layout/vertical_divider_light" />
 
 
             <RelativeLayout
@@ -135,7 +135,7 @@
                 android:textSize="14dp"
 
 
-                tools:text="Las Vegas, in Nevada’s Mojave Desert, is a resort city famed for its vibrant nightlife, centered around 24-hour casinos and other entertainment options. Its main street and focal point is the Strip, just over 4 miles long. This boulevard is home to themed hotels with elaborate displays such as fountains synchronized to music as well as replic incorporated in 1911. At the close of the 20th century, it was the most populated American city founded within that century (a similar distinction earned by Chicago in the 1800s). Population growth has accelerated since the 1960s, and between 1990 and 2000 the population nearly doubled, increasing by 85.2%. Rapid growth has continued into the 21st century." />
+                tools:text="Las Vegas, in Nevada’s M home to themed hotels with elaborate displays such as fountains synchronized to music as well as replic incorporated in 1911. At the close of the 20th century, it was the most populated American city founded within that century (a similar distinction earned by Chicago in the 1800s). Population growth has accelerated since the 1960s, and between 1990 and 2000 the population nearly doubled, increasing by 85.2%. Rapid growth has continued into the 21st century." />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -278,15 +278,7 @@
     </ScrollView>
 
 
-    <TextView
-        android:id="@+id/close"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/border_grey"
-        android:gravity="center"
-        android:text="CLOSE"
-        android:textAppearance="@style/text_14.medium.secondary" />
+    <include layout="@layout/close_button" />
 
     <View
         android:id="@+id/bg"

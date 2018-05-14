@@ -11,10 +11,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jullae.R;
+import com.jullae.data.db.model.HomeFeedSingleModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
-import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 
 import java.util.List;
 
@@ -74,6 +75,22 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
             }
         });
 
+        pic_like_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showLikesDialog(PictureDetailActivity.this, pictureModel.getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+            }
+        });
+
+        findViewById(R.id.write_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showWriteStoryDialog(PictureDetailActivity.this, pictureModel.getPicture_id());
+            }
+        });
+
+
+
 
     }
 
@@ -98,14 +115,14 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     }
 
     @Override
-    public void onFetchFeedSuccess(HomeFeedModel homeFeedModel) {
-        Glide.with(this).load(homeFeedModel.getFeedList().get(0).getPicture_url()).into(image);
-        Glide.with(this).load(homeFeedModel.getFeedList().get(0).getPhotographer_avatar()).into(user_image);
-        user_name.setText(homeFeedModel.getFeedList().get(0).getPhotographer_name());
-        pic_title.setText(homeFeedModel.getFeedList().get(0).getPicture_title());
-        pic_like_count.setText(homeFeedModel.getFeedList().get(0).getLike_count() + " likes");
-        pic_story_count.setText(homeFeedModel.getFeedList().get(0).getStory_count() + " stories");
-        mPresentor.loadStories(homeFeedModel.getFeedList().get(0).getPicture_id());
+    public void onFetchFeedSuccess(HomeFeedSingleModel.Feed homeFeedModel) {
+        Glide.with(this).load(homeFeedModel.getPicture_url()).into(image);
+        Glide.with(this).load(homeFeedModel.getPhotographer_avatar()).into(user_image);
+        user_name.setText(homeFeedModel.getPhotographer_name());
+        pic_title.setText(homeFeedModel.getPicture_title());
+        pic_like_count.setText(homeFeedModel.getLike_count() + " likes");
+        pic_story_count.setText(homeFeedModel.getStory_count() + " stories");
+        mPresentor.loadStories(homeFeedModel.getPicture_id());
 
     }
 

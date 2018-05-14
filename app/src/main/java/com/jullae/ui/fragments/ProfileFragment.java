@@ -12,9 +12,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -36,6 +39,7 @@ import com.jullae.ui.home.profile.draftTab.DraftTabFragment;
 import com.jullae.ui.home.profile.message.ConversationAdapter;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.ReqListener;
 import com.jullae.utils.dialog.MyProgressDialog;
 
@@ -120,6 +124,12 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         viewPager.setOffscreenPageLimit(3);
 
         viewPager.setAdapter(pagerAdapter);
+        view.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenuOptions(v);
+            }
+        });
 
         mPresentor = new ProfileFragmentPresentor();
 
@@ -222,6 +232,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
+
     private void setupRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
@@ -230,6 +241,61 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         recyclerView.setAdapter(conversationAdapter);
 
         mPresentor.getConversationList();
+    }
+
+    private void showPasswordChangeDialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
+        final View view = getmContext().getLayoutInflater().inflate(R.layout.dialog_password_change, null);
+
+        final EditText field_old_password = view.findViewById(R.id.field_old_password);
+        final EditText field_new_password = view.findViewById(R.id.field_new_password);
+
+
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+      /*  view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });*/
+        view.findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(field_old_password.getText().toString())) {
+                    Toast.makeText(getmContext().getApplicationContext(), "Please enter your old password", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(field_old_password.getText().toString())) {
+                    Toast.makeText(getmContext().getApplicationContext(), "Please enter your new password", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.submit).setVisibility(View.INVISIBLE);
+                    mPresentor.makePasswordChange(field_old_password.getText().toString(), field_new_password.getText().toString(), new PasswordChangeListener() {
+                        @Override
+                        public void onPasswordChangeSuccess() {
+
+                            dialog.dismiss();
+                            Toast.makeText(getmContext(), "Password changed successfully", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onPasswordChangeFail() {
+                            view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.submit).setVisibility(View.INVISIBLE);
+                            Toast.makeText(getmContext(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+                }
+            }
+        });
+
+        dialog.show();
+
+
     }
 
     @Override
@@ -241,6 +307,34 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     @Override
     public void onConversationListFetchFail() {
 
+    }
+
+    private void showMenuOptions(View ivMore) {
+        PopupMenu popup = new PopupMenu(getmContext(), ivMore);
+        //inflating menu from xml resource
+
+        if (mPresentor.isEmailModeLogin())
+            popup.inflate(R.menu.profile_options_email);
+        else popup.inflate(R.menu.profile_options_without_email);
+        //adding click listener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu1:
+                        //handle menu1 click
+                        showPasswordChangeDialog();
+                        break;
+                    case R.id.menu2:
+                        //handle menu2 click
+                        AppUtils.showLogoutDialog(getmContext());
+                        break;
+                }
+                return false;
+            }
+        });
+        //displaying the popup
+        popup.show();
     }
 
     @Override
@@ -257,7 +351,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private void updateDpReq(File file) {
         mPresentor.makeDpReq(file);
     }
-
 
     @Override
     public void showPicUploadProgress() {
@@ -286,7 +379,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
-
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
@@ -295,11 +387,11 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
-    public void refreshPictureTabFeeds() {
-        if (pagerAdapter.getRegisteredFragment(0) != null) {
-            PictureTabFragment pictureTabFragment = (PictureTabFragment) pagerAdapter.getRegisteredFragment(0);
-            pictureTabFragment.refreshfeeds();
-        }
+
+    public interface PasswordChangeListener {
+        void onPasswordChangeSuccess();
+
+        void onPasswordChangeFail();
     }
 
 

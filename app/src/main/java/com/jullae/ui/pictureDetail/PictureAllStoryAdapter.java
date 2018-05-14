@@ -10,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.storydetails.StoryDetailActivity;
@@ -31,14 +30,12 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private static final String TAG = PictureAllStoryAdapter.class.getName();
     private final Activity mContext;
-    private final RequestOptions picOptions;
 
     private List<StoryModel> messagelist = new ArrayList<>();
 
     public PictureAllStoryAdapter(Activity activity) {
         this.mContext = activity;
-        picOptions = new RequestOptions();
-        picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+
     }
 
     @Override
@@ -50,7 +47,7 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PictureAllStoryHolder viewHolder = (PictureAllStoryHolder) holder;
 
-        Glide.with(mContext).load(messagelist.get(position).getWriter_avatar()).apply(picOptions).into(viewHolder.user_image);
+        GlideApp.with(mContext).load(messagelist.get(position).getWriter_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.user_image);
 
         viewHolder.user_name.setText(messagelist.get(position).getWriter_name());
 

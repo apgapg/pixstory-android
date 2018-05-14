@@ -31,6 +31,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_LIKE_STORY_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_READ_STATUS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PASSWORD_CHANGE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PEOPLE_SUGGESTIONS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_DETAIL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_LIKES_LIST;
@@ -220,8 +221,8 @@ public class ApiHelper {
                 .addBodyParameter("password", password)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
-
                 .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 
@@ -236,6 +237,7 @@ public class ApiHelper {
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
 
                 .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 
@@ -494,10 +496,11 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     public ANRequest loadPictureDetail(String picture_id) {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PICTURE_DETAIL)
                 .addHeaders(headers)
-                .addQueryParameter("story_id", picture_id)
+                .addQueryParameter("picture_id", picture_id)
                 /*.addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")*/
                 .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 
@@ -505,6 +508,16 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.get(BASE_URL + ENDPOINT_STORY_DETAILS)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest makePasswordChangeReq(String oldpassword, String newpassword, String keyUserId) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_PASSWORD_CHANGE)
+                .addHeaders(headers)
+                .addPathParameter("id", keyUserId)
+                .addBodyParameter("old_password", oldpassword)
+                .addBodyParameter("new_password", newpassword)
                 .setPriority(Priority.HIGH)
                 .build();
     }

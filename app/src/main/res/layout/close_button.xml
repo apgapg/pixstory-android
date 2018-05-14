@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="@dimen/close_button_height"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom"
     android:orientation="vertical">
 
     <include layout="@layout/vertical_divider_light" />
@@ -9,7 +11,7 @@
     <TextView
         android:id="@+id/close"
         android:layout_width="match_parent"
-        android:layout_height="42.6dp"
+        android:layout_height="38.6dp"
         android:layout_alignParentBottom="true"
         android:background="#fff"
         android:gravity="center"

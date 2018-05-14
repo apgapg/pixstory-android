@@ -3,11 +3,14 @@ package com.jullae.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jullae.ApplicationClass;
 import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.SearchActivity;
@@ -24,6 +28,7 @@ import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
+import com.jullae.ui.loginscreen.LoginActivity;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
@@ -204,4 +209,39 @@ public class AppUtils {
         dialog.show();
     }
 
+    public static void sendRefreshBroadcast(Context context, int refreshCode) {
+        Log.d(TAG, "sendRefreshBroadcast: ");
+        Intent intent = new Intent(Constants.REFRESH_INTENT_FILTER);
+        intent.putExtra(Constants.REFRESH_MODE, refreshCode);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public static void showLogoutDialog(final Activity context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Do you really want to Logout?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AppDataManager.getInstance().getmSharedPrefsHelper().clear();
+                context.startActivity(new Intent(context, LoginActivity.class));
+                context.finishAffinity();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        //creating alert dialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public static float convertdpTopx(int i) {
+        return ApplicationClass.density * i;
+    }
 }

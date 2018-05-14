@@ -1,10 +1,16 @@
 package com.jullae.ui.home.profile.pictureTab;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +20,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.adapters.PicturesAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 
 import java.util.List;
 
@@ -23,8 +30,21 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     private RecyclerView recyclerView;
     private PicturesAdapter picturesAdapter;
     private PictureTabPresentor mPresentor;
-    private int position;
     private String penname;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
+            Log.d("receiver", "Got message: " + refreshMode);
+            switch (refreshMode) {
+                case Constants.REFRESH_PICTURES_TAB:
+                    mPresentor.loadFeeds(penname);
+                    break;
+
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -46,16 +66,26 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
         recyclerView.setAdapter(picturesAdapter);
     }
 
+    private void setupRefreshBroadcastListener() {
+        LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.REFRESH_INTENT_FILTER));
+
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
         mPresentor.loadFeeds(penname);
+        setupRefreshBroadcastListener();
+
     }
 
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
+        LocalBroadcastManager.getInstance(getmContext()).unregisterReceiver(mMessageReceiver);
+
         super.onDestroyView();
 
     }
@@ -70,7 +100,7 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
     }
 
-    public void refreshfeeds() {
+    /*public void refreshfeeds() {
         mPresentor.loadFeeds(penname);
-    }
+    }*/
 }

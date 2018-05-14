@@ -1,8 +1,13 @@
 package com.jullae.ui.home.homeFeed;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +21,7 @@ import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
+import com.jullae.utils.Constants;
 
 public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
@@ -24,6 +30,26 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     private HomeFeedPresentor mPresentor;
     private HomeFeedAdapter homeFeedAdapter;
     private SwipeRefreshLayout swipeRefresh;
+    private RecyclerView recyclerView;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
+            Log.d("receiver", "Got message: " + refreshMode);
+            switch (refreshMode) {
+                case Constants.REFRESH_PICTURES_TAB:
+                    loadFeeds();
+
+                    break;
+
+            }
+        }
+    };
+
+    private void loadFeeds() {
+        recyclerView.scrollToPosition(0);
+        mPresentor.loadFeeds();
+    }
 
     @Nullable
     @Override
@@ -40,7 +66,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
         swipeRefresh = view.findViewById(R.id.swiperefresh);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
         homeFeedAdapter = new HomeFeedAdapter(getmContext(), mPresentor);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
@@ -63,13 +89,24 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
-        mPresentor.loadFeeds();
+        loadFeeds();
+        setupRefreshBroadcastListener();
+
 
     }
+
+
+    private void setupRefreshBroadcastListener() {
+        LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.REFRESH_INTENT_FILTER));
+
+    }
+
 
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
+        LocalBroadcastManager.getInstance(getmContext()).unregisterReceiver(mMessageReceiver);
 
         super.onDestroyView();
     }

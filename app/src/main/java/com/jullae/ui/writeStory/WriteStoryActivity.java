@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jullae.R;
+import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 public class WriteStoryActivity extends AppCompatActivity implements WriteStoryView {
@@ -101,6 +103,8 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
     @Override
     public void onStoryDraftSuccess() {
         Toast.makeText(getApplicationContext(), "Story saved as Draft!", Toast.LENGTH_SHORT).show();
+        AppUtils.sendRefreshBroadcast(WriteStoryActivity.this, Constants.REFRESH_DRAFTS_TAB);
+
         finish();
     }
 

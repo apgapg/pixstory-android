@@ -1,6 +1,7 @@
 package com.jullae.ui.home.homeFeed;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
@@ -11,7 +12,9 @@ import com.jullae.data.db.model.ProfileMainModel;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
+import com.jullae.ui.fragments.ProfileFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
+import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 import com.jullae.utils.ReqListener;
 
@@ -138,5 +141,30 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
                         }
                     });
         }
+    }
+
+    public boolean isEmailModeLogin() {
+        Log.d(TAG, "isEmailModeLogin: " + AppDataManager.getInstance().getmSharedPrefsHelper().getKeyProvider());
+        return AppDataManager.getInstance().getmSharedPrefsHelper().getKeyProvider().equals(Constants.PROVIDER_EMAIL);
+    }
+
+    public void makePasswordChange(String oldpassword, String newpassword, final ProfileFragment.PasswordChangeListener passwordChangeListener) {
+        checkViewAttached();
+        AppDataManager.getInstance().getmApiHelper().makePasswordChangeReq(oldpassword, newpassword, AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId()).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached())
+                    passwordChangeListener.onPasswordChangeSuccess();
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached())
+                    passwordChangeListener.onPasswordChangeFail();
+            }
+        });
     }
 }

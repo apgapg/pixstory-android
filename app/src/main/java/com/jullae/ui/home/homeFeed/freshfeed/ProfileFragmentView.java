@@ -26,4 +26,6 @@ public interface ProfileFragmentView extends MvpView {
     void showProgressBar();
 
     void hideProgressBar();
+
+
 }

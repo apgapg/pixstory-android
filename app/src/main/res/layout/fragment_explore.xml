@@ -57,13 +57,13 @@
                 android:id="@+id/fav_feeds"
                 style="@style/textView.explore_cards"
                 android:background="@drawable/shape_round_rectangle_green"
-                android:text="Our all time favourites!" />
+                android:text="Coming soon!" />
 
             <TextView
                 android:id="@+id/weekly_feeds"
                 style="@style/textView.explore_cards"
                 android:background="@drawable/shape_round_rectangle_blue"
-                android:text="The weekly trend setters!" />
+                android:text="Coming soon!" />
         </LinearLayout>
 
     </LinearLayout>

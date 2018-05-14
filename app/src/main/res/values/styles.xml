@@ -312,7 +312,8 @@
     </style>
 
     <style name="text_14.medium">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="text_14.light.primary">
@@ -377,7 +378,8 @@
     </style>
 
     <style name="text_12.medium">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="text_12.light.primary">
@@ -480,7 +482,8 @@
     </style>
 
     <style name="text_16.medium">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="text_16.light.primary">

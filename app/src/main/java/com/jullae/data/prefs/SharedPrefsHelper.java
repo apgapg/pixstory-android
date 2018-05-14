@@ -77,8 +77,8 @@ public class SharedPrefsHelper {
         sharedPreferences.edit().putBoolean("IS_LOGGED_IN", loggedIn).apply();
     }
 
-    public static String getKeyProvider() {
-        return KEY_PROVIDER;
+    public String getKeyProvider() {
+        return sharedPreferences.getString(KEY_PROVIDER, "");
     }
 
     public String getKeyName() {

@@ -51,7 +51,6 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
 
                 if (isViewAttached()) {
                     getMvpView().hideProgress();
-
                     getMvpView().onLoginSuccess();
                 }
 

@@ -4,8 +4,8 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.AllStoriesModel;
+import com.jullae.data.db.model.HomeFeedSingleModel;
 import com.jullae.ui.base.BasePresentor;
-import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.utils.NetworkUtils;
 
 public class PictureDetailPresentor extends BasePresentor<PictureDetailView> {
@@ -41,12 +41,12 @@ public class PictureDetailPresentor extends BasePresentor<PictureDetailView> {
 
     public void loadPictureDetails(String picture_id) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadPictureDetail(picture_id).getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadPictureDetail(picture_id).getAsObject(HomeFeedSingleModel.class, new ParsedRequestListener<HomeFeedSingleModel>() {
             @Override
-            public void onResponse(HomeFeedModel homeFeedModel) {
-                NetworkUtils.parseResponse(TAG, homeFeedModel);
+            public void onResponse(HomeFeedSingleModel homeFeedSingleModel) {
+                NetworkUtils.parseResponse(TAG, homeFeedSingleModel);
                 if (isViewAttached()) {
-                    getMvpView().onFetchFeedSuccess(homeFeedModel);
+                    getMvpView().onFetchFeedSuccess(homeFeedSingleModel.getFeedModel());
                 }
             }
 

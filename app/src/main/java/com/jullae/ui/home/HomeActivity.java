@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -36,10 +35,11 @@ import com.jullae.ui.adapters.SearchPersonAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.fragments.ProfileFragment;
-import com.jullae.ui.fragments.SearchFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
+import com.jullae.utils.KeyboardUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -185,7 +185,9 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         autoCompleteTextView.setAdapter(searchPersonAdapter);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
+                KeyboardUtils.hideKeyboard(HomeActivity.this);
+
                 SearchPeopleMainModel.SearchPeopleModel searchPeopleModel = (((SearchPersonAdapter) parent.getAdapter())).getItemAtPosition(position);
                 final String penname = searchPeopleModel.getUser_penname();
                 autoCompleteTextView.setText(penname);
@@ -243,7 +245,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     }
 
 
-    private void showImageChooseDialog() {
+ /*   private void showImageChooseDialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         View view = this.getLayoutInflater().inflate(R.layout.dialog_choose_image, null);
@@ -287,7 +289,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         });
 
 
-    }
+    }*/
 
     private void checkCameraPermission() {
         Dexter.withActivity(this)
@@ -394,18 +396,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
     }
 
-
-    public void showSearchFragment(String searchTag) {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SearchFragment searchFragment = new SearchFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("searchTag", searchTag);
-        searchFragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.container, searchFragment).addToBackStack(null).commit();
-
-    }
 
     @Override
     public void onClick(final View v) {
@@ -539,30 +529,18 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         }
 
         if (requestCode == AppUtils.REQUEST_CODE_WRTIE_STORY && resultCode == Activity.RESULT_OK) {
-            refreshHomeFeeds();
 
+            AppUtils.sendRefreshBroadcast(HomeActivity.this, Constants.REFRESH_HOME_FEEDS);
         }
         if (requestCode == AppUtils.REQUEST_CODE_SEARCH_TAG && resultCode == Activity.RESULT_OK) {
             AppUtils.showSearchActivity(HomeActivity.this, data.getStringExtra("searchtag"));
         }
         if (requestCode == AppUtils.REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB && resultCode == Activity.RESULT_OK) {
-            refreshPictureTabFeeds();
+            AppUtils.sendRefreshBroadcast(HomeActivity.this, Constants.REFRESH_PICTURES_TAB);
         }
     }
 
-    private void refreshPictureTabFeeds() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (fragment instanceof ProfileFragment) {
-            ((ProfileFragment) fragment).refreshPictureTabFeeds();
-        }
-    }
 
-    private void refreshHomeFeeds() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (fragment instanceof HomeFragment) {
-            ((HomeFragment) fragment).refreshFeeds();
-        }
-    }
 
     private void onImageChosenByUser(String uri) {
         Log.d(TAG, "onImageChosenByUser: " + uri);
@@ -626,18 +604,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     }
 
 
-    private void showProfileTabFragment(Fragment fragment, boolean shouldAddToBackStack) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-           /* if (b)
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-           */
-        if (shouldAddToBackStack)
-            fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
-        else fragmentTransaction.replace(R.id.container, fragment).commit();
-
-
-    }
 
     public void showCropImage(ProfileFragment.ImagePickListener imagePickListener) {
         this.imagePickListener = imagePickListener;
@@ -678,7 +644,8 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
     @Override
     public void onPictureUploadSuccess() {
-        refreshHomeFeeds();
+        AppUtils.sendRefreshBroadcast(this, Constants.REFRESH_PICTURES_TAB);
+
 
     }
 

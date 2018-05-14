@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
@@ -40,6 +41,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     private static final int ACTIVATE = 1;
     private static final int IN_ACTIVATE = 0;
+    private static final String TAG = StoryDetailFragment.class.getName();
     private ImageView btn_like;
     private TextView like_count;
     private StoryModel storyModel;
@@ -86,6 +88,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         comment_count = view.findViewById(R.id.comment_count);
         btn_more = view.findViewById(R.id.btn_more);
 
+        story_text.setHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 206)));
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -506,7 +509,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     @Override
     public void onSaveStorySuccess() {
         Toast.makeText(getmContext().getApplicationContext(), "Story added to bookmark!", Toast.LENGTH_SHORT).show();
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_BOOKMARKS_TAB);
     }
+
 
     @Override
     public void onSaveStoryFail() {
