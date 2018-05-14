@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.storydetails.StoryDetailActivity;
+import com.jullae.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,18 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     i.putExtra("object", object);
                     i.putExtra("profile", false);
                     mContext.startActivity(i);
+                }
+            });
+            user_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getWriter_penname());
+                }
+            });
+            user_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getWriter_penname());
                 }
             });
         }

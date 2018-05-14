@@ -23,7 +23,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog);
 
-        picture_id = getIntent().getStringExtra("picture_id");
+
         mPresentor = new WriteStoryPresentor();
         mPresentor.attachView(this);
 
@@ -37,6 +37,16 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
         field_title = findViewById(R.id.field_title);
         field_story = findViewById(R.id.field_story);
+
+
+        picture_id = getIntent().getStringExtra("picture_id");
+        if (getIntent().getStringExtra("story_title") != null) {
+            field_title.setText(getIntent().getStringExtra("story_title"));
+        }
+        if (getIntent().getStringExtra("story_text") != null) {
+            field_story.setText(getIntent().getStringExtra("story_text"));
+            field_story.setSelection(getIntent().getStringExtra("story_text").length());
+        }
 
         findViewById(R.id.text_publish).setOnClickListener(new View.OnClickListener() {
             @Override

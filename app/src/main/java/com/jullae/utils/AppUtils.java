@@ -1,17 +1,32 @@
 package com.jullae.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jullae.GlideApp;
+import com.jullae.R;
 import com.jullae.SearchActivity;
-import com.jullae.ui.adapters.PicturesAdapter;
+import com.jullae.data.AppDataManager;
+import com.jullae.data.db.model.LikesModel;
+import com.jullae.data.db.model.PictureModel;
+import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
+import com.jullae.ui.writeStory.WriteStoryActivity;
 
 import java.util.List;
 
@@ -25,6 +40,7 @@ public class AppUtils {
     public static final String LOCALE_MARATHI = "mr";
     public static final int REQUEST_CODE_WRTIE_STORY = 23;
     public static final int REQUEST_CODE_SEARCH_TAG = 33;
+    public static final int REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB = 27;
     private static final String TAG = AppUtils.class.getName();
 
     public static String getDeviceId(Context context) {
@@ -35,9 +51,20 @@ public class AppUtils {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
-    public static void showWriteStoryDialog(Activity mContext, final String picture_id, final PicturesAdapter.ReqListener reqListener) {
+    public static void showWriteStoryDialog(Activity mContext, final String picture_id) {
 
+        Intent i = new Intent(mContext, WriteStoryActivity.class);
+        i.putExtra("picture_id", picture_id);
+        mContext.startActivity(i);
+    }
 
+    public static void showWriteStoryDialogWithData(Activity mContext, final String picture_id, String story_title, String story_text) {
+
+        Intent i = new Intent(mContext, WriteStoryActivity.class);
+        i.putExtra("picture_id", picture_id);
+        i.putExtra("story_title", story_title);
+        i.putExtra("story_text", story_text);
+        mContext.startActivity(i);
     }
 
 
@@ -107,5 +134,74 @@ public class AppUtils {
         }
     }
 
+
+    public static void showLikesDialog(Activity mContext, String picture_id, int likeTypePicture) {
+
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        View view = mContext.getLayoutInflater().inflate(R.layout.dialog_likes, null);
+
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        final LikeAdapter likeAdapter = new LikeAdapter(mContext);
+        recyclerView.setAdapter(likeAdapter);
+        AppDataManager.getInstance().getmApiHelper().getLikesList(picture_id, likeTypePicture).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
+
+            @Override
+            public void onResponse(LikesModel likesModel) {
+                NetworkUtils.parseResponse(TAG, likesModel);
+                likeAdapter.add(likesModel.getLikes());
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+
+            }
+        });
+
+
+    }
+
+    public static void showFullPictureDialog(Activity mContext, PictureModel pictureModel) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        View view = mContext.getLayoutInflater().inflate(R.layout.dialog_full_picture, null);
+        ImageView image = view.findViewById(R.id.image);
+        ImageView user_photo = view.findViewById(R.id.user_photo);
+        TextView user_name = view.findViewById(R.id.text_name);
+        TextView pic_title = view.findViewById(R.id.pic_title);
+        TextView pic_like_count = view.findViewById(R.id.pic_like_count);
+        TextView pic_story_count = view.findViewById(R.id.pic_comment_count);
+        user_name.setText(pictureModel.getPhotographer_name());
+        pic_title.setText(pictureModel.getPicture_title());
+        pic_like_count.setText(pictureModel.getLike_count() + " likes");
+        pic_story_count.setText(pictureModel.getStory_count() + " stories");
+
+        GlideApp.with(mContext).load(pictureModel.getPicture_url()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(image);
+        GlideApp.with(mContext).load(pictureModel.getPhotographer_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(user_photo);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
 }

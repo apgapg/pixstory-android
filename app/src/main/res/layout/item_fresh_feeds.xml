@@ -122,13 +122,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
         android:layout_marginTop="6dp"
+        android:layout_marginRight="4dp"
 
         android:background="@drawable/shape_round_rectangle_grey"
         android:orientation="vertical"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,7 +144,10 @@
                 android:gravity="center"
 
                 android:paddingRight="4dp"
-                android:text="Title"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxWidth="150dp"
+                android:text="Titledekdnekdnednjdnejd"
 
                 android:textAppearance="@style/text_12.medium.primary" />
 
@@ -168,43 +171,41 @@
 
             <TextView
                 android:id="@+id/writer_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingLeft="4dp"
                 android:text="Username"
 
                 android:textAppearance="@style/text_12.medium.primary" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+            <!--  <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:gravity="center_vertical"
 
-                android:text="1 day ago"
-                android:textAppearance="@style/text_12.light.secondary" />
+                  android:text="1 day ago"
+                  android:textAppearance="@style/text_12.light.secondary" />-->
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_more_vert_black_24dp" />
-
+            <!--  <ImageView
+                  android:layout_width="32dp"
+                  android:layout_height="match_parent"
+                  android:padding="8dp"
+                  android:scaleType="centerCrop"
+                  app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+  -->
         </LinearLayout>
 
-        <com.borjabravo.readmoretextview.ReadMoreTextView
+        <TextView
             android:id="@+id/story_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
+            android:ellipsize="end"
+            android:maxLines="4"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:textAppearance="@style/text_12.regular.secondary"
-
-            app:trimLines="3"
-            app:trimMode="trimModeLine" />
+            android:paddingBottom="2dp"
+            android:textAppearance="@style/text_12.regular.secondary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -239,9 +240,9 @@
             android:id="@+id/text_view_more_story"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:paddingBottom="4dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:paddingBottom="4dp"
             android:text="view all 5 stories"
             android:textAppearance="@style/text_12.regular.primary" />
 

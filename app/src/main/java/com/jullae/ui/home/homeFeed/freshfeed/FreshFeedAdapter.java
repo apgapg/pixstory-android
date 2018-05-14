@@ -1,7 +1,6 @@
 package com.jullae.ui.home.homeFeed.freshfeed;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,12 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
-import com.jullae.ui.pictureDetail.PictureDetailActivity;
+import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +69,13 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         setUserNamesandAvatar(viewHolder, pictureModel, storyModel);
 
         setLikeCommentCount(viewHolder, pictureModel, storyModel);
+        viewHolder.text_view_more_story.setText("view all " + messagelist.get(position).getPictureModel().getStory_count() + " stories");
     }
 
     private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, StoryModel storyModel) {
         viewHolder.user_name.setText(pictureModel.getPhotographer_penname().trim());
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
-        Glide.with(mContext).load(pictureModel.getPhotographer_avatar()).into(viewHolder.user_photo);
+        Glide.with(mContext).load(pictureModel.getPhotographer_avatar()).into(viewHolder.user_image);
         Glide.with(mContext).load(storyModel.getWriter_avatar()).into(viewHolder.writer_photo);
 
     }
@@ -104,7 +104,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
         private View rootview;
-        private ImageView image, user_photo, writer_photo;
+        private ImageView image, user_image, writer_photo;
         private TextView user_name, pic_title;
         private TextView writer_name, story_title, story_text;
         private TextView pic_like_count, story_like_count;
@@ -115,7 +115,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(inflate);
 
             image = inflate.findViewById(R.id.image);
-            user_photo = inflate.findViewById(R.id.user_photo);
+            user_image = inflate.findViewById(R.id.user_photo);
             writer_photo = inflate.findViewById(R.id.writer_photo);
             user_name = inflate.findViewById(R.id.text_name);
             pic_title = inflate.findViewById(R.id.pic_title);
@@ -135,15 +135,44 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             text_view_more_story.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Gson gson = new Gson();
-                    String pictureModel = gson.toJson(messagelist.get(getAdapterPosition()).getPictureModel());
-                    Intent i = new Intent(mContext, PictureDetailActivity.class);
-                    i.putExtra("pictureModel", pictureModel);
-                    mContext.startActivity(i);
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
 
                 }
             });
+            user_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
+                }
+            });
+            user_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
+                }
+            });
+            writer_photo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
+                }
+            });
+
+
+            pic_like_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+                }
+            });
+
+            story_like_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
+                }
+            });
+
 
         }
     }

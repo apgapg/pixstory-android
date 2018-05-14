@@ -295,6 +295,13 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
+    public void refreshPictureTabFeeds() {
+        if (pagerAdapter.getRegisteredFragment(0) != null) {
+            PictureTabFragment pictureTabFragment = (PictureTabFragment) pagerAdapter.getRegisteredFragment(0);
+            pictureTabFragment.refreshfeeds();
+        }
+    }
+
 
     public interface ImagePickListener {
         void onImagePickSucccess(Uri uri);

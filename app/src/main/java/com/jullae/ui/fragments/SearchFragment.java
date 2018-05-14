@@ -43,6 +43,12 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
         searchTag = getArguments().getString("searchTag");
         searchFeedPresentor = new SearchFeedPresentor();
 
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmContext().finish();
+            }
+        });
 
         autoCompleteTextView = view.findViewById(R.id.search_tag_field);
         autoCompleteTextView.setText(searchTag);

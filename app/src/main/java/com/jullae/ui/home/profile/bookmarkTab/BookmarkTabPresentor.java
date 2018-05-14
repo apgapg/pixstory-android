@@ -17,7 +17,7 @@ public class BookmarkTabPresentor extends BasePresentor<BookmarkTabView> {
 
     public void loadFeeds() {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadStoryTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadBookmarkTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
             @Override
             public void onResponse(StoryListModel storyListModel) {
                 NetworkUtils.parseResponse(TAG, storyListModel);

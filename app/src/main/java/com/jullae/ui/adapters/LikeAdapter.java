@@ -12,14 +12,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+import com.jullae.GlideApp;
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
-import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
-import com.jullae.ui.storydetails.StoryDetailFragment;
-import com.jullae.ui.storydetails.StoryDetailPresentor;
+import com.jullae.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,25 +36,13 @@ import java.util.List;
 public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
 
     private static final String TAG = LikeAdapter.class.getName();
-    private final RequestOptions picOptions;
     List<LikesModel.Like> messagelist = new ArrayList();
-    private HomeFeedPresentor mPresentor;
     private Context context;
-    private StoryDetailPresentor mStoryPresentor;
 
 
-    public LikeAdapter(final Context context, HomeFeedPresentor mPresentor) {
+    public LikeAdapter(final Context context) {
         this.context = context;
-        picOptions = new RequestOptions();
-        picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
-        this.mPresentor = mPresentor;
-    }
 
-    public LikeAdapter(Context context, StoryDetailPresentor mPresentor) {
-        this.context = context;
-        picOptions = new RequestOptions();
-        picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
-        this.mStoryPresentor = mPresentor;
     }
 
 
@@ -69,7 +57,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
         holder.user_name.setText(messagelist.get(position).getUser_name());
         holder.user_penname.setText(messagelist.get(position).getUser_penname());
 
-        Glide.with(context).load(messagelist.get(position).getUser_avatar()).apply(picOptions).into(holder.user_image);
+        GlideApp.with(context).load(messagelist.get(position).getUser_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder.user_image);
         if (messagelist.get(position).getUser_followed().equals("true")) {
             holder.user_followed.setTextColor(Color.parseColor("#ffffff"));
             holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_active));
@@ -154,59 +142,30 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
                     Boolean is_followed;
                     is_followed = messagelist.get(getAdapterPosition()).getUser_followed().equals("true");
 
-                    if (mPresentor != null) {
-                        mPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new FollowReqListener() {
-                            @Override
-                            public void onSuccess() {
-
-                                if (messagelist.get(getAdapterPosition()).getUser_followed().equals("false")) {
-                                    notifyItemChanged(getAdapterPosition(), "follow_true");
-                                    messagelist.get(getAdapterPosition()).setUser_followed("true");
-                                } else {
-                                    notifyItemChanged(getAdapterPosition(), "unfollow_true");
-                                    messagelist.get(getAdapterPosition()).setUser_followed("false");
-                                }
-
+                    AppDataManager.getInstance().getmApiHelper().makeFollowReq(messagelist.get(getAdapterPosition()).getUser_id(), is_followed).getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            NetworkUtils.parseResponse(TAG, response);
+                            if (messagelist.get(getAdapterPosition()).getUser_followed().equals("false")) {
+                                notifyItemChanged(getAdapterPosition(), "follow_true");
+                                messagelist.get(getAdapterPosition()).setUser_followed("true");
+                            } else {
+                                notifyItemChanged(getAdapterPosition(), "unfollow_true");
+                                messagelist.get(getAdapterPosition()).setUser_followed("false");
                             }
+                        }
 
-                            @Override
-                            public void onFail() {
-                                if (messagelist.get(getAdapterPosition()).getUser_followed().equals("true")) {
-                                    notifyItemChanged(getAdapterPosition(), "follow_true");
-                                } else {
-                                    notifyItemChanged(getAdapterPosition(), "unfollow_true");
-                                }
-
+                        @Override
+                        public void onError(ANError anError) {
+                            NetworkUtils.parseError(TAG, anError);
+                            if (messagelist.get(getAdapterPosition()).getUser_followed().equals("true")) {
+                                notifyItemChanged(getAdapterPosition(), "follow_true");
+                            } else {
+                                notifyItemChanged(getAdapterPosition(), "unfollow_true");
                             }
-                        }, is_followed);
-                    } else if (mStoryPresentor != null) {
-                        mStoryPresentor.makeFollowUserReq(messagelist.get(getAdapterPosition()).getUser_id(), new StoryDetailFragment.FollowReqListener() {
+                        }
+                    });
 
-                            @Override
-                            public void onSuccess() {
-
-                                if (messagelist.get(getAdapterPosition()).getUser_followed().equals("false")) {
-                                    notifyItemChanged(getAdapterPosition(), "follow_true");
-                                    messagelist.get(getAdapterPosition()).setUser_followed("true");
-                                } else {
-                                    notifyItemChanged(getAdapterPosition(), "unfollow_true");
-                                    messagelist.get(getAdapterPosition()).setUser_followed("false");
-                                }
-
-                            }
-
-                            @Override
-                            public void onFail() {
-                                if (messagelist.get(getAdapterPosition()).getUser_followed().equals("true")) {
-                                    notifyItemChanged(getAdapterPosition(), "follow_true");
-                                } else {
-                                    notifyItemChanged(getAdapterPosition(), "unfollow_true");
-                                }
-
-                            }
-                        }, is_followed);
-
-                    }
 
                 }
             });

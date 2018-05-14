@@ -31,6 +31,7 @@ import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.adapters.CommentsAdapter;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
@@ -449,7 +450,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         like_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showLikesDialog(storyModel.getStory_id());
+                AppUtils.showLikesDialog(getmContext(), storyModel.getStory_id(), Constants.LIKE_TYPE_STORY);
             }
         });
     }
@@ -489,35 +490,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 Toast.makeText(getmContext().getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
             }
         }, isLiked);
-    }
-
-    private void showLikesDialog(String id) {
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
-        View view2 = getLayoutInflater().inflate(R.layout.dialog_likes, null);
-
-        setupRecyclerView(view2, id);
-        dialogBuilder.setView(view2);
-
-        final AlertDialog dialog = dialogBuilder.create();
-        view2.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-    }
-
-    private void setupRecyclerView(View view2, String id) {
-        RecyclerView recyclerView = view2.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        likeAdapter = new LikeAdapter(getmContext(), mPresentor);
-        recyclerView.setAdapter(likeAdapter);
-
-        mPresentor.getLikeslist(id, Constants.LIKE_TYPE_STORY);
     }
 
 

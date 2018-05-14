@@ -69,4 +69,8 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     public void onPicturesFetchFail() {
 
     }
+
+    public void refreshfeeds() {
+        mPresentor.loadFeeds(penname);
+    }
 }

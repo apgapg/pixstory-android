@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
@@ -60,7 +60,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
         PictureModel pictureModel = messagelist.get(position).getPictureModel();
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
-        Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
+        GlideApp.with(mContext).load(pictureModel.getPicture_url_small()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.image);
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
@@ -156,6 +156,12 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
                 public void onClick(View v) {
                     AppUtils.showStoryDetailActivity(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
 
+                }
+            });
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel());
                 }
             });
         }

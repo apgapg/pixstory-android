@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -207,6 +208,16 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
             @Override
             public void onClick(View v) {
                 findViewById(R.id.search_container).setVisibility(View.VISIBLE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.toggleSoftInputFromWindow(autoCompleteTextView.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                autoCompleteTextView.requestFocus();
+
+            }
+        });
+        findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleanUpSearchContainer();
             }
         });
 
@@ -533,6 +544,16 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         }
         if (requestCode == AppUtils.REQUEST_CODE_SEARCH_TAG && resultCode == Activity.RESULT_OK) {
             AppUtils.showSearchActivity(HomeActivity.this, data.getStringExtra("searchtag"));
+        }
+        if (requestCode == AppUtils.REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB && resultCode == Activity.RESULT_OK) {
+            refreshPictureTabFeeds();
+        }
+    }
+
+    private void refreshPictureTabFeeds() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment instanceof ProfileFragment) {
+            ((ProfileFragment) fragment).refreshPictureTabFeeds();
         }
     }
 

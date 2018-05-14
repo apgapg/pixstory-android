@@ -20,6 +20,7 @@ import com.jullae.R;
 import com.jullae.data.db.model.DraftModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 import java.util.ArrayList;
@@ -144,7 +145,21 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
 
                 }
             });
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel());
+                }
+            });
 
+            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showWriteStoryDialogWithData(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_title(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_text());
+
+
+                }
+            });
         }
     }
 }

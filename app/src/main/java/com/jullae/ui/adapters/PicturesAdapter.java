@@ -14,9 +14,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
-import com.jullae.ui.writeStory.WriteStoryActivity;
+import com.jullae.ui.pictureDetail.PictureDetailActivity;
+import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,12 +103,34 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
             picture_comment_count = inflate.findViewById(R.id.story_comment_count);
             button_write_story = inflate.findViewById(R.id.text_write_story);
 
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()));
+                }
+            });
+
             button_write_story.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(mContext, WriteStoryActivity.class);
-                    i.putExtra("picture_id", messagelist.get(getAdapterPosition()).getPicture_id());
-                    mContext.startActivity(i);
+
+                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id());
+                }
+            });
+            inflate.findViewById(R.id.view_all_stories).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Gson gson = new Gson();
+                    String pictureModel = gson.toJson(messagelist.get(getAdapterPosition()));
+                    Intent i = new Intent(mContext, PictureDetailActivity.class);
+                    i.putExtra("pictureModel", pictureModel);
+                    mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB);
+                }
+            });
+            picture_like_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
                 }
             });
         }

@@ -62,7 +62,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         picOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        calculateoffset = (((ApplicationClass) activity.getApplication()).getDpWidth() - 20) / 2;
+        calculateoffset = (((ApplicationClass) activity.getApplication()).getDpWidth() - 24) / 2;
     }
 
 
@@ -146,35 +146,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    private void showLikesDialog(String id) {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-        View view = mContext.getLayoutInflater().inflate(R.layout.dialog_likes, null);
-
-        setupRecyclerView(view, id);
-        dialogBuilder.setView(view);
-
-        final AlertDialog dialog = dialogBuilder.create();
-        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-
-    }
-
-    private void setupRecyclerView(View view, String id) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        likeAdapter = new LikeAdapter(mContext, mPresentor);
-        recyclerView.setAdapter(likeAdapter);
-
-        mPresentor.getLikeslist(id, Constants.LIKE_TYPE_PICTURE);
-    }
 
     public void onLikesListFetchSuccess(LikesModel likesModel) {
         likeAdapter.add(likesModel.getLikes());
@@ -354,7 +326,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showLikesDialog(messagelist.get(getAdapterPosition()).getPicture_id());
+                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
                 }
             });
 

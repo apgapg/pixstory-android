@@ -105,7 +105,6 @@
     @set app:layout_behavior = "android.support.design.widget.BottomSheetBehavior" -->
 
 
-
     <RelativeLayout
         android:id="@+id/search_container"
         android:layout_width="match_parent"
@@ -119,29 +118,42 @@
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#67000000" />
+            android:background="#fff" />
 
-        <RelativeLayout
+
+        <AutoCompleteTextView
+            android:id="@+id/search_person"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginTop="6dp">
+            android:layout_height="48dp"
+            android:background="#fff"
+            android:dropDownHeight="240dp"
+            android:hint="Search for people..."
+            android:lines="1"
+            android:paddingLeft="44dp"
+            android:paddingRight="16dp"
+            android:textAppearance="@style/text_16.regular.primary" />
 
-            <AutoCompleteTextView
-                android:id="@+id/search_person"
-                android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="11dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="5dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_search" />
 
-                android:layout_height="match_parent"
-                android:background="@drawable/border_grey"
-                android:dropDownHeight="240dp"
-                android:hint="Search for people..."
-                android:lines="1"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:textAppearance="@style/text_14.regular.primary" />
-        </RelativeLayout>
+        <include
+            layout="@layout/vertical_divider_light"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_marginTop="48dp" />
 
+        <include
+            layout="@layout/close_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 
