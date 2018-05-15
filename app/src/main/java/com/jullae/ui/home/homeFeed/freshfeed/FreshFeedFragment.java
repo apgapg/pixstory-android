@@ -3,6 +3,7 @@ package com.jullae.ui.home.homeFeed.freshfeed;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
     private View view;
     private int position;
     private View progressBar;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
 
 
         position = getArguments().getInt("position");
-
+        swipeRefresh = view.findViewById(R.id.swiperefresh);
         progressBar = view.findViewById(R.id.progress_bar);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         freshFeedAdapter = new FreshFeedAdapter(getmContext());
@@ -47,7 +49,12 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(freshFeedAdapter);
-
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresentor.loadFeeds(position);
+            }
+        });
         mPresentor = new FreshFeedPresentor();
 
         return view;
@@ -79,13 +86,14 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
 
     @Override
     public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        //  progressBar.setVisibility(View.VISIBLE);
+        swipeRefresh.setRefreshing(true);
     }
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.INVISIBLE);
-
+        //     progressBar.setVisibility(View.INVISIBLE);
+        swipeRefresh.setRefreshing(false);
 
     }
 }

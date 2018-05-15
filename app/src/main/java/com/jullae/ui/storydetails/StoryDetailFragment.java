@@ -88,7 +88,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         comment_count = view.findViewById(R.id.comment_count);
         btn_more = view.findViewById(R.id.btn_more);
 
-        story_text.setHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 206)));
+        story_text.setMinHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 204)));
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

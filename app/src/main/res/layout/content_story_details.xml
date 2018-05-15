@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="@dimen/close_button_height"
+        android:layout_marginBottom="80dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -144,78 +144,6 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_light" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="#fff"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp">
-
-                    <LinearLayout
-                        android:id="@+id/t"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="4dp">
-
-                        <com.jullae.ui.custom.SquareImageView
-                            android:id="@+id/btn_like"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:gravity="center_vertical"
-                            android:paddingTop="2dp"
-                            android:scaleType="center"
-                            android:visibility="invisible"
-                            app:srcCompat="@drawable/ic_unlike" />
-
-                        <TextView
-                            android:id="@+id/like_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:textAppearance="@style/text_14.light.secondary"
-                            tools:text="12 likes" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
-                        android:layout_toRightOf="@+id/t"
-                        android:gravity="center_vertical|end">
-
-
-                        <TextView
-                            android:id="@+id/comment_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textAppearance="@style/text_14.light.secondary"
-                            tools:text="30 comments" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/btn_more"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ripple_effect"
-                        android:padding="6dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_more_vert_black_24dp" />
-                </RelativeLayout>
 
                 <include layout="@layout/vertical_divider_light" />
 
@@ -276,6 +204,79 @@
 
         </LinearLayout>
     </ScrollView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/close_button_height"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/t"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="6dp">
+
+            <com.jullae.ui.custom.SquareImageView
+                android:id="@+id/btn_like"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingTop="2dp"
+                android:scaleType="center"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_unlike" />
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/text_14.light.secondary"
+                tools:text="12 likes" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/t"
+            android:gravity="center_vertical|end">
+
+
+            <TextView
+                android:id="@+id/comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="@style/text_14.light.secondary"
+                tools:text="30 comments" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_more"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ripple_effect"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="#bdbdbd" />
+    </RelativeLayout>
 
 
     <include layout="@layout/close_button" />
