@@ -62,7 +62,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         picOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        calculateoffset = (((ApplicationClass) activity.getApplication()).getDpWidth() - 24) / 2;
+        calculateoffset = AppUtils.convertdpTopx((((int) ((ApplicationClass) activity.getApplication()).getDpWidth()) / 2) - 128);
     }
 
 
@@ -147,7 +147,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-
     public void onLikesListFetchSuccess(LikesModel likesModel) {
         likeAdapter.add(likesModel.getLikes());
     }
@@ -178,12 +177,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         });
         //displaying the popup
         popup.show();
-    }
-
-    public interface ReqListener {
-        void onSuccess();
-
-        void onFail();
     }
 
     public void showReportStoryDialog(final int adapterPosition) {
@@ -228,6 +221,12 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         });
 
+    }
+
+    public interface ReqListener {
+        void onSuccess();
+
+        void onFail();
     }
 
     private class HomeFeedViewHolder extends RecyclerView.ViewHolder {

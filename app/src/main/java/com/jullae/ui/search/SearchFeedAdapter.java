@@ -95,6 +95,12 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
             story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
+            writer_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
+                }
+            });
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -45,10 +45,10 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
     }
 
     public boolean checkNonEmptyFields(String title, String content) {
-        if (!TextUtils.isEmpty(title)) {
+        if (TextUtils.isEmpty(title)) {
             getMvpView().onTitleEmpty();
             return false;
-        } else if (!TextUtils.isEmpty(content)) {
+        } else if (TextUtils.isEmpty(content)) {
             getMvpView().onContentEmpty();
             return false;
         } else return true;

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
+import com.jullae.ui.fragments.ProfileFragment;
 
 public class ProfileVisitorActivity extends AppCompatActivity {
 
@@ -17,7 +19,16 @@ public class ProfileVisitorActivity extends AppCompatActivity {
         if (penname == null)
             throw new NullPointerException("penname cannot be empty! Make sure you have passed penname to the activity");
 
-        showProfileVisitorFragment(penname);
+        if (!penname.equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()))
+            showProfileVisitorFragment(penname);
+        else showProfileFragment();
+    }
+
+    private void showProfileFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.container, new ProfileFragment()).commit();
     }
 
 

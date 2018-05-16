@@ -39,6 +39,7 @@ public class ApplicationClass extends Application {
         return dpWidth;
     }
 
+
     public float getDensity() {
         return density;
     }

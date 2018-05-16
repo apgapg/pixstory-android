@@ -78,9 +78,11 @@ public class AppUtils {
     }
 
     public static Intent buildVisitorProfileActivityIntent(Context mContext, String writer_penname) {
-        Intent i = new Intent(mContext, ProfileVisitorActivity.class);
-        i.putExtra("penname", writer_penname);
-        return i;
+        {
+            Intent i = new Intent(mContext, ProfileVisitorActivity.class);
+            i.putExtra("penname", writer_penname);
+            return i;
+        }
 
     }
 

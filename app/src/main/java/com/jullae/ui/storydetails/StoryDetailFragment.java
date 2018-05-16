@@ -136,8 +136,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private void setUpFollowedButton() {
         user_followed = view.findViewById(R.id.user_followed);
         user_followed.setVisibility(View.VISIBLE);
-        Log.d("dsd", "setUpFollowedButton: " + story_id);
-        Log.d("frr", "setUpFollowedButton: " + storyModel.getIs_followed());
+
         if (storyModel.getIs_followed().equals("true")) {
             updateUIFollowed();
         } else {
@@ -295,6 +294,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                     @Override
                     public void onSuccess(CommentModel commentModel) {
                         updateCommentUI(1);
+
                         commentsAdapter.addComment(commentModel);
                     }
 
@@ -362,6 +362,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         recyclerView.setLayoutManager(linearLayoutManager);
         commentsAdapter = new CommentsAdapter(getmContext());
         recyclerView.setAdapter(commentsAdapter);
+
+
         commentsAdapter.add(storyModel.getCommentModelList());
     }
 

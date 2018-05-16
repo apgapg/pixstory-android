@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -69,6 +71,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         button_message = view.findViewById(R.id.button_message);
         view.findViewById(R.id.button_edit_profile).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.ivMore).setVisibility(View.INVISIBLE);
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -81,6 +84,17 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         mPresentor = new ProfileVisitorPresentor();
 
         button_message.setVisibility(View.INVISIBLE);
+
+        LinearLayout close_container = (LinearLayout) inflater.inflate(R.layout.close_button, (CoordinatorLayout) view.findViewById(R.id.rootview), false);
+        close_container.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmContext().finish();
+            }
+        });
+
+
+        ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
 
         return view;
     }
@@ -97,7 +111,6 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
-        //  ((StoryDetailActivity) getmContext()).removeListener();
         super.onDestroyView();
 
     }

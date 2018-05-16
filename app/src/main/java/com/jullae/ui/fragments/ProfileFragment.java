@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +40,7 @@ import com.jullae.ui.home.profile.bookmarkTab.BookmarkTabFragment;
 import com.jullae.ui.home.profile.draftTab.DraftTabFragment;
 import com.jullae.ui.home.profile.message.ConversationAdapter;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
+import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.ReqListener;
@@ -79,7 +82,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         view = binding.getRoot();
         // view = inflater.inflate(R.layout.fragment_profile, container, false);
-
         user_image = view.findViewById(R.id.image_avatar);
 
         button_message = view.findViewById(R.id.button_message);
@@ -133,6 +135,20 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         mPresentor = new ProfileFragmentPresentor();
 
+        if (getmContext() instanceof ProfileVisitorActivity) {
+            user_image.setOnClickListener(null);
+            LinearLayout close_container = (LinearLayout) inflater.inflate(R.layout.close_button, (CoordinatorLayout) view.findViewById(R.id.rootview), false);
+            close_container.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getmContext().finish();
+                }
+            });
+
+            ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
+
+        }
+
         return view;
     }
 
@@ -159,7 +175,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mProfileModel.setFollowing_count(profileModel.getFollowing_count());
         mProfileModel.setStories_count(profileModel.getStories_count());
         mProfileModel.setPictures_count(profileModel.getPictures_count());
-        ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
+        if (getmContext() instanceof HomeActivity)
+            ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
 
     }
 
@@ -382,7 +399,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
-        ((HomeActivity) getmContext()).removeListener();
+        if (getmContext() instanceof HomeActivity)
+            ((HomeActivity) getmContext()).removeListener();
         super.onDestroyView();
 
     }

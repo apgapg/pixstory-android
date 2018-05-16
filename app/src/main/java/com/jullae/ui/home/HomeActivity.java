@@ -89,7 +89,11 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         mPresentor = new HomeActivityPresentor();
         mPresentor.attachView(this);
 
+
         showFragment(new HomeFragment(), false);
+        if (getIntent().getBooleanExtra("showprofile", false)) {
+            showHomeFragment(2);
+        }
         //client
 
         //Initialize the button and bottomNavigation for listener.
@@ -541,7 +545,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     }
 
 
-
     private void onImageChosenByUser(String uri) {
         Log.d(TAG, "onImageChosenByUser: " + uri);
         // showAddPictureDialog(uri);
@@ -602,7 +605,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
         freshFeedFragment.setArguments(bundle);
         showFragment(freshFeedFragment, true);
     }
-
 
 
     public void showCropImage(ProfileFragment.ImagePickListener imagePickListener) {

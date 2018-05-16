@@ -9,10 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="6dp"
         android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp">
+        android:paddingTop="4dp"
+        android:paddingRight="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,12 +29,12 @@
                 android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/image_avatar"
-                android:textSize="14dp"
+                android:gravity="center_vertical"
                 android:textAppearance="@style/text_14.regular.primary"
+                android:textSize="14dp"
                 tools:text="Suketu Balaji" />
 
             <TextView
@@ -56,14 +55,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
-
             android:paddingLeft="2dp"
+            android:textAppearance="@style/text_14.regular.secondary"
             android:textSize="14dp"
 
             tools:text="The major attractions in Las Vegas are the casinos and the hotels, although in recent years other new attractions have begun to emerge Most casinos emerge casinos recent years other attract ...  " />
 
     </LinearLayout>
 
-    <include layout="@layout/vertical_divider_light" />
 
 </LinearLayout>
