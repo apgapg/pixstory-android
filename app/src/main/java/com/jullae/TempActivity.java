@@ -18,7 +18,7 @@ public class TempActivity extends AppCompatActivity {
         textView = findViewById(R.id.text);
 
         /*ImageView imageView = findViewById(R.id.image);
-        GlideApp.with(this).load("https://jullaepictures.s3.amazonaws.com/pictures/36/image/medium/cropped1376548356.jpg?AWSAccessKeyId=AKIAITZE3X6NSNXDCDSQ&Expires=1524842664&Signature=52QPRAHB%2FYgBdQe0LVif5peORIM%3D").into(imageView);
+        private Stringth(this).load("https://jullaepictures.s3.amazonaws.com/pictures/36/image/medium/cropped1376548356.jpg?AWSAccessKeyId=AKIAITZE3X6NSNXDCDSQ&Expires=1524842664&Signature=52QPRAHB%2FYgBdQe0LVif5peORIM%3D").into(imageView);
    */
 
         final Thread thread = new Thread(new Runnable() {

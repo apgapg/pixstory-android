@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PictureAllStoryHolder viewHolder = (PictureAllStoryHolder) holder;
 
-        GlideApp.with(mContext).load(messagelist.get(position).getWriter_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.user_image);
+        GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getWriter_avatar(), viewHolder.user_image);
 
         viewHolder.user_name.setText(messagelist.get(position).getWriter_name());
 

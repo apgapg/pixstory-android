@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.home.profile.draftTab.DraftTabAdapter;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 import java.util.ArrayList;
@@ -60,7 +60,8 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
         PictureModel pictureModel = messagelist.get(position).getPictureModel();
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
-        GlideApp.with(mContext).load(pictureModel.getPicture_url_small()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.image);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
+        //  private Stringth(mContext).load(pictureModel.getPicture_url_small()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.image);
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");

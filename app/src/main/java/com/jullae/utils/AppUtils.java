@@ -18,9 +18,7 @@ import android.widget.TextView;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jullae.ApplicationClass;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.SearchActivity;
 import com.jullae.data.AppDataManager;
@@ -197,8 +195,8 @@ public class AppUtils {
         pic_like_count.setText(pictureModel.getLike_count() + " likes");
         pic_story_count.setText(pictureModel.getStory_count() + " stories");
 
-        GlideApp.with(mContext).load(pictureModel.getPicture_url()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(image);
-        GlideApp.with(mContext).load(pictureModel.getPhotographer_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(user_photo);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url(), image);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPhotographer_avatar(), user_photo);
         dialogBuilder.setView(view);
 
         final AlertDialog dialog = dialogBuilder.create();

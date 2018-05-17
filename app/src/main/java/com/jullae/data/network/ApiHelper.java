@@ -195,11 +195,11 @@ public class ApiHelper {
         String reportType = null;
         if (reportTypeStory == Constants.REPORT_TYPE_STORY) {
 
-            reportType = "StoryModel";
+            reportType = "Story";
 
         } else if (reportTypeStory == Constants.REPORT_TYPE_PICTURE) {
 
-            reportType = "PictureModel";
+            reportType = "Picture";
         }
 
         return AndroidNetworking.post(BASE_URL + url)
@@ -210,8 +210,6 @@ public class ApiHelper {
                 .setPriority(Priority.HIGH)
                 .logReponseBody()
                 .build();
-
-
     }
 
     public ANRequest emailLoginReq(String email, String password) {
@@ -354,6 +352,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("content", content)
                 .addBodyParameter("picture_id", picture_id)
                 .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 
@@ -518,6 +517,13 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addPathParameter("id", keyUserId)
                 .addBodyParameter("old_password", oldpassword)
                 .addBodyParameter("new_password", newpassword)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest makeStoryDeleteReq(String story_id) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_PASSWORD_CHANGE)
+                .addHeaders(headers)
                 .setPriority(Priority.HIGH)
                 .build();
     }

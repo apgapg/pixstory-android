@@ -34,7 +34,7 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
 
             @Override
             public void onError(ANError anError) {
-                NetworkUtils.parseResponse(TAG, anError);
+                NetworkUtils.parseError(TAG, anError);
                 if (isViewAttached()) {
                     getMvpView().onStoryPublishFail();
                     getMvpView().hideProgressBar();

@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
@@ -21,6 +20,7 @@ import com.jullae.data.db.model.DraftModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
         PictureModel pictureModel = messagelist.get(position).getPictureModel();
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
-        Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         viewHolder.story_title.setText(storyModel.getStory_title());
         viewHolder.story_text.setText(storyModel.getStory_text());

@@ -195,6 +195,11 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
 
     }
 
+    public void sendStoryDeleteReq(String story_id) {
+        checkViewAttached();
+        AppDataManager.getInstance().getmApiHelper().makeStoryDeleteReq(story_id);
+    }
+
 
     public interface CommentsListener {
         void onSuccess(CommentModel storyCommentModel);

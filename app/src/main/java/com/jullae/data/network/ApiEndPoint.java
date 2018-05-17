@@ -17,6 +17,7 @@ public class ApiEndPoint {
     public static final String ENDPOINT_UNFOLLOW = "/user/{id}/unfollow";
     public static final String ENDPOINT_STORY_DETAILS = "/story/{id}/view";
     public static final String ENDPOINT_PASSWORD_CHANGE = "/user/{id}/update_password";
+    public static final String ENDPOINT_STORY_DELETE = "/user/{id}/update_password";
 
     public static final String ENDPOINT_EMAIL_SIGNUP = "/custom_registration";
     public static final String ENDPOINT_EMAIL_LOGIN = "/custom_authentication";

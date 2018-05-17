@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
 
         holder.user_name.setText(messagelist.get(position).getUser_name());
 
-        GlideApp.with(context).load(messagelist.get(position).getUser_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder.user_image);
+        GlideUtils.loadImagefromUrl(context, messagelist.get(position).getUser_avatar(), holder.user_image);
         holder.comment_text.setText(messagelist.get(position).getComment());
 
     }

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
@@ -18,6 +17,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         PictureModel pictureModel = messagelist.get(position).getPictureModel();
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
-        Glide.with(mContext).load(pictureModel.getPicture_url_small()).apply(picOptions).into(viewHolder.image);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
         if (pictureModel.getPicture_title() != null && pictureModel.getPicture_title().isEmpty()) {
             viewHolder.pic_text_buy.setText("by");
             viewHolder.pic_title.setVisibility(View.VISIBLE);
@@ -75,8 +75,8 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, StoryModel storyModel) {
         viewHolder.user_name.setText(pictureModel.getPhotographer_penname().trim());
         viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
-        Glide.with(mContext).load(pictureModel.getPhotographer_avatar()).into(viewHolder.user_image);
-        Glide.with(mContext).load(storyModel.getWriter_avatar()).into(viewHolder.writer_photo);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPhotographer_avatar(), viewHolder.user_image);
+        GlideUtils.loadImagefromUrl(mContext, storyModel.getWriter_avatar(), viewHolder.writer_photo);
 
     }
 
@@ -109,7 +109,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView writer_name, story_title, story_text;
         private TextView pic_like_count, story_like_count;
         private TextView pic_story_count, story_comment_count, text_view_more_story;
-        private TextView pic_text_buy;
+        private TextView pic_text_buy, write_story;
 
         public FreshFeedsViewHolder(View inflate) {
             super(inflate);
@@ -124,12 +124,20 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             text_view_more_story = inflate.findViewById(R.id.text_view_more_story);
 
 
+            write_story = inflate.findViewById(R.id.write_story);
+
             writer_name = inflate.findViewById(R.id.writer_name);
             pic_like_count = inflate.findViewById(R.id.pic_like_count);
             pic_story_count = inflate.findViewById(R.id.pic_comment_count);
             story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
+            write_story.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
+                }
+            });
             pic_text_buy = inflate.findViewById(R.id.pic_text_by);
 
             text_view_more_story.setOnClickListener(new View.OnClickListener() {

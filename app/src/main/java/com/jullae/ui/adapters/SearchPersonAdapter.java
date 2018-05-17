@@ -13,11 +13,10 @@ import android.widget.TextView;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.SearchPeopleMainModel;
+import com.jullae.utils.GlideUtils;
 import com.jullae.utils.NetworkUtils;
 
 import java.util.ArrayList;
@@ -51,7 +50,8 @@ public class SearchPersonAdapter extends ArrayAdapter<SearchPeopleMainModel.Sear
         ImageView user_avatar = view.findViewById(R.id.image_avatar);
         user_name.setText(getItem(position).getUser_name());
         user_penname.setText(getItem(position).getUser_penname());
-        GlideApp.with(context).load(getItem(position).getUser_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(user_avatar);
+        GlideUtils.loadImagefromUrl(context, getItem(position).getUser_avatar(), user_avatar);
+
         return view;
     }
 

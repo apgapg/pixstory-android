@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
@@ -20,6 +19,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
         PictureModel pictureModel = messagelist.get(position);
 
 
-        Glide.with(mContext).load(pictureModel.getPicture_url()).apply(picOptions).into(viewHolder.image);
+        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
         viewHolder.user_name.setText(pictureModel.getPhotographer_name().trim());
         viewHolder.picture_like_count.setText(pictureModel.getLike_count() + " likes");
         viewHolder.picture_comment_count.setText(pictureModel.getStory_count() + " stories");

@@ -10,6 +10,46 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+    <LinearLayout
+        android:id="@+id/container_extra_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/black_opa_10" />
+
+        <TextView
+            android:id="@+id/edit_story"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="Edit Story"
+            android:textColor="#424242"
+
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/black_opa_10" />
+
+        <TextView
+            android:id="@+id/delete_story"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="Delete Story"
+            android:textColor="#424242"
+
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.7dp"

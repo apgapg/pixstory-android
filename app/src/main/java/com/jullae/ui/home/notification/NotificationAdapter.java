@@ -11,12 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.NotificationModel;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,16 +66,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof NotificationType1ViewHolder) {
 
             NotificationType1ViewHolder holder1 = (NotificationType1ViewHolder) holder;
-            GlideApp.with(mContext).load(messagelist.get(position).getActor_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder1.user_image);
+            GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getActor_avatar(), holder1.user_image);
 
         } else if (holder instanceof NotificationType3ViewHolder) {
             NotificationType3ViewHolder holder3 = (NotificationType3ViewHolder) holder;
-            GlideApp.with(mContext).load(messagelist.get(position).getPicture_url_thumb()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into((holder3).image);
+            GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getPicture_url_thumb(), holder3.image);
+
         } else if (holder instanceof NotificationType4ViewHolder) {
             NotificationType4ViewHolder holder4 = (NotificationType4ViewHolder) holder;
-            GlideApp.with(mContext).load(messagelist.get(position).getActor_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder4.user_image);
 
-            GlideApp.with(mContext).load(messagelist.get(position).getPicture_url_thumb()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into((holder4).image);
+            GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getActor_avatar(), holder4.user_image);
+            GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getPicture_url_thumb(), holder4.image);
 
         }
 

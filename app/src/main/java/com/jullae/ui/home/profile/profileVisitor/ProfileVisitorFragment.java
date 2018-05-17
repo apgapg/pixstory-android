@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jullae.R;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.UserPrefsModel;
@@ -26,6 +25,7 @@ import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.profile.message.MessageActivity;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
+import com.jullae.utils.GlideUtils;
 
 /**
  * Created by Rahul Abrol on 12/26/17.
@@ -123,7 +123,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     @Override
     public void onProfileFetchSuccess(final ProfileModel profileModel) {
         try {
-            Glide.with(getmContext()).load(profileModel.getUser_dp_url()).into(user_image);
+            GlideUtils.loadImagefromUrl(getmContext(), profileModel.getUser_dp_url(), user_image);
             user_name.setText(profileModel.getName());
             user_penname.setText(profileModel.getPenname());
             user_bio.setText(profileModel.getBio());

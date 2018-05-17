@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.data.db.model.ConversationModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     public void onBindViewHolder(@NonNull final ConversationHolder holder, final int position) {
         holder.user_name.setText(messagelist.get(position).getName());
         holder.user_penname.setText(messagelist.get(position).getPenname());
-        Glide.with(context).load(messagelist.get(position).getUser_avatar()).apply(picOptions).into(holder.user_image);
+        GlideUtils.loadImagefromUrl(context, messagelist.get(position).getUser_avatar(), holder.user_image);
     }
 
 

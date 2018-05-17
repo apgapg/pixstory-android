@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.jullae.NotificationActivity;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
@@ -39,6 +38,7 @@ import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.GlideUtils;
 import com.jullae.utils.KeyboardUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 import com.karumi.dexter.Dexter;
@@ -571,7 +571,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
         final EditText field_title = view.findViewById(R.id.field_title);
 
-        Glide.with(HomeActivity.this).load(uri).into((ImageView) view.findViewById(R.id.image));
+        GlideUtils.loadImagefromUrl(HomeActivity.this, uri.toString(), (ImageView) view.findViewById(R.id.image));
 
 
         view.findViewById(R.id.text_submit).setOnClickListener(new View.OnClickListener() {

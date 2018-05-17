@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.ConversationModel;
@@ -43,6 +42,7 @@ import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 import com.jullae.utils.ReqListener;
 import com.jullae.utils.dialog.MyProgressDialog;
 
@@ -106,7 +106,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 ((HomeActivity) getmContext()).showCropImage(new ImagePickListener() {
                     @Override
                     public void onImagePickSucccess(Uri uri) {
-                        Glide.with(getmContext()).load(uri).into(user_image);
+                        GlideUtils.loadImagefromUrl(getmContext(), (uri).toString(), user_image);
                         File file = new File(uri.getPath());
                         updateDpReq(file);
                     }
@@ -158,11 +158,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mPresentor.attachView(this);
         mProfileModel = mPresentor.getStaticUserData();
 
-
-//        Glide.with(getmContext()).load(mProfileModel.getUser_avatar()).into(user_image);
-    /*    user_name.setText(mProfileModel.getName());
-        user_penname.setText(mProfileModel.getUser_penname());
-        user_bio.setText(mProfileModel.getUser_bio());*/
 
         binding.setProfileModel(mProfileModel);
         mPresentor.loadProfile(mProfileModel.getPenname());
@@ -382,7 +377,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     @Override
     public void onProfilePicUpdateFail() {
-        Glide.with(getmContext()).load(mProfileModel.getUser_dp_url()).into(user_image);
+        GlideUtils.loadImagefromUrl(getmContext(), mProfileModel.getUser_dp_url(), user_image);
         Toast.makeText(getmContext().getApplicationContext(), "Failed to update avatar!", Toast.LENGTH_SHORT).show();
 
     }
@@ -390,7 +385,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     @Override
     public void onProfilePicUpdateSuccess(String profile_dp_url) {
         view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-        Glide.with(getmContext()).load(profile_dp_url).into(user_image);
+        GlideUtils.loadImagefromUrl(getmContext(), profile_dp_url, user_image);
         Toast.makeText(getmContext().getApplicationContext(), "Avatar updated successfully!", Toast.LENGTH_SHORT).show();
 
 

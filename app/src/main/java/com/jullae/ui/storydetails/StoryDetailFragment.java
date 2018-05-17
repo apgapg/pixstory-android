@@ -1,6 +1,7 @@
 package com.jullae.ui.storydetails;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -22,10 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.StoryModel;
@@ -34,6 +35,7 @@ import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.GlideUtils;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -95,7 +97,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 getmContext().finish();
             }
         });
-        setupMoreBottomSheet();
+        //  setupMoreBottomSheet();
         setupAddComment();
 
 
@@ -124,13 +126,14 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     }
 
     private void setProfiledata() {
-        story_title.setText(storyModel.getStory_title());
+        if (storyModel.getStory_title() != null)
+            story_title.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
         user_penname.setText(storyModel.getWriter_name());
         // story_text.setText(Html.fromHtml(storyModel.getStory_text()));
         story_text.setHtml(storyModel.getStory_text());
         comment_count.setText(storyModel.getComment_count() + " comments");
-        Glide.with(this).load(storyModel.getWriter_avatar()).into(user_image);
+        GlideUtils.loadImagefromUrl(getmContext(), storyModel.getWriter_avatar(), user_image);
     }
 
     private void setUpFollowedButton() {
@@ -171,6 +174,10 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private void setupMoreBottomSheet() {
         View bottomSheet = view.findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        if (storyModel.getWriter_id().equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId()))
+            view.findViewById(R.id.container_extra_options).setVisibility(View.VISIBLE);
+
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -205,6 +212,19 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
             }
         });
+
+        view.findViewById(R.id.edit_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //AppUtils.showWriteStoryDialogWithData(getmContext(),storyModel.);
+            }
+        });
+        view.findViewById(R.id.delete_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteStoryDialog();
+            }
+        });
         view.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,6 +252,33 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 mPresentor.saveStory(storyModel.getStory_id());
             }
         });
+    }
+
+    private void showDeleteStoryDialog() {
+        android.support.v7.app.AlertDialog.Builder builder1 = new android.support.v7.app.AlertDialog.Builder(getmContext());
+        builder1.setTitle("Delete Story!");
+        builder1.setMessage("Are you sure you want to delete this story?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mPresentor.sendStoryDeleteReq(storyModel.getStory_id());
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        android.support.v7.app.AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 
     private void showReportStoryDialog() {
@@ -527,6 +574,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         setProfiledata();
         if (!storyModel.getIs_self())
             setUpFollowedButton();
+        setupMoreBottomSheet();
         setupComments();
         setupLike();
     }

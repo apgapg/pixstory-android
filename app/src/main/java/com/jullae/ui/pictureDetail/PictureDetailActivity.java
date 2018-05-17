@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.HomeFeedSingleModel;
@@ -16,6 +15,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.GlideUtils;
 
 import java.util.List;
 
@@ -50,8 +50,8 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         setUpRecyclerView();
 
         if (pictureModel != null) {
-            Glide.with(this).load(pictureModel.getPicture_url()).into(image);
-            Glide.with(this).load(pictureModel.getPhotographer_avatar()).into(user_image);
+            GlideUtils.loadImagefromUrl(this, pictureModel.getPicture_url(), image);
+            GlideUtils.loadImagefromUrl(this, pictureModel.getPhotographer_avatar(), user_image);
             user_name.setText(pictureModel.getPhotographer_name());
             pic_title.setText(pictureModel.getPicture_title());
             pic_like_count.setText(pictureModel.getLike_count() + " likes");
@@ -90,8 +90,6 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         });
 
 
-
-
     }
 
     private void setUpRecyclerView() {
@@ -116,8 +114,8 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
 
     @Override
     public void onFetchFeedSuccess(HomeFeedSingleModel.Feed homeFeedModel) {
-        Glide.with(this).load(homeFeedModel.getPicture_url()).into(image);
-        Glide.with(this).load(homeFeedModel.getPhotographer_avatar()).into(user_image);
+        GlideUtils.loadImagefromUrl(this, homeFeedModel.getPicture_url(), image);
+        GlideUtils.loadImagefromUrl(this, homeFeedModel.getPhotographer_avatar(), user_image);
         user_name.setText(homeFeedModel.getPhotographer_name());
         pic_title.setText(homeFeedModel.getPicture_title());
         pic_like_count.setText(homeFeedModel.getLike_count() + " likes");

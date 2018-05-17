@@ -24,32 +24,32 @@ public class HomeFeedModel {
     public class Feed {
 
 
-        String id;
+        private String id;
 
-        String picture_id;
+        private String picture_id;
 
-        String photographer_name;
-        String photographer_penname;
+        private String photographer_name;
+        private String photographer_penname;
 
-        String photographer_avatar;
+        private String photographer_avatar;
 
-        String picture_title;
+        private String picture_title;
 
-        String created_at;
+        private String created_at;
 
-        String picture_url;
+        private String picture_url;
 
-        String like_count;
+        private String like_count;
 
-        String story_count;
+        private String story_count;
 
-        String nav_story_id;
+        private String nav_story_id;
 
-        String is_liked;
+        private String is_liked;
 
-        String is_followed;
+        private String is_followed;
 
-        String is_self;
+        private String is_self;
 
         List<StoryModel> stories;
 
@@ -115,7 +115,7 @@ public class HomeFeedModel {
             return picture_url;
         }
 
-        public Object getPhotographer_avatar() {
+        public String getPhotographer_avatar() {
             return photographer_avatar;
         }
 

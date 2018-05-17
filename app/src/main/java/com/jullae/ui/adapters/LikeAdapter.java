@@ -14,11 +14,10 @@ import android.widget.TextView;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
+import com.jullae.utils.GlideUtils;
 import com.jullae.utils.NetworkUtils;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
         holder.user_name.setText(messagelist.get(position).getUser_name());
         holder.user_penname.setText(messagelist.get(position).getUser_penname());
 
-        GlideApp.with(context).load(messagelist.get(position).getUser_avatar()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(holder.user_image);
+        GlideUtils.loadImagefromUrl(context, messagelist.get(position).getUser_avatar(), holder.user_image);
         if (messagelist.get(position).getUser_followed().equals("true")) {
             holder.user_followed.setTextColor(Color.parseColor("#ffffff"));
             holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_active));

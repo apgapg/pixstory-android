@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.ApplicationClass;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
@@ -35,6 +33,7 @@ import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +75,13 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
-        GlideApp.with(mContext).load(messagelist.get(position).getPicture_url()).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.image);
+        GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getPicture_url(), viewHolder.image);
 
         viewHolder.user_name.setText(messagelist.get(position).getPhotographer_name());
         viewHolder.user_penname.setText(messagelist.get(position).getPhotographer_penname());
 
-        Glide.with(mContext).load(messagelist.get(position).getPhotographer_avatar()).apply(picOptions).into(viewHolder.user_image);
+        GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getPhotographer_avatar(), viewHolder.user_image);
+
 
         viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
         viewHolder.story_count.setText(messagelist.get(position).getStory_count() + " stories");

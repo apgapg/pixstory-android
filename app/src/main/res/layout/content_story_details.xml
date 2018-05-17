@@ -24,6 +24,7 @@
             android:textAppearance="@style/text_14.regular.primary"
             android:textSize="18dp"
             android:textStyle="bold"
+            android:text="Untitled"
             tools:text="@string/title" />
 
         <include layout="@layout/vertical_divider_light" />

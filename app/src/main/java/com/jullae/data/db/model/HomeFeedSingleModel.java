@@ -118,7 +118,7 @@ public class HomeFeedSingleModel {
             return picture_url;
         }
 
-        public Object getPhotographer_avatar() {
+        public String getPhotographer_avatar() {
             return photographer_avatar;
         }
 

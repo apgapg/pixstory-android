@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
@@ -20,6 +19,7 @@ import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             StoryModel storyModel = (StoryModel) messagelist.get(position);
             HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
 
-            Glide.with(mContext).load(storyModel.getWriter_avatar()).apply(picOptions).into(viewHolder.user_image);
+            GlideUtils.loadImagefromUrl(mContext, storyModel.getWriter_avatar(), viewHolder.user_image);
 
             viewHolder.user_name.setText(storyModel.getWriter_name());
 
