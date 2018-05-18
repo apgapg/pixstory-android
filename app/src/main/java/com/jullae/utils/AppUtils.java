@@ -44,6 +44,7 @@ public class AppUtils {
     public static final int REQUEST_CODE_WRTIE_STORY = 23;
     public static final int REQUEST_CODE_SEARCH_TAG = 33;
     public static final int REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB = 27;
+    public static final int REQUEST_CODE_PROFILE_PIC_CAPTURE = 423;
     private static final String TAG = AppUtils.class.getName();
 
     public static String getDeviceId(Context context) {

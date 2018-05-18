@@ -17,6 +17,7 @@ public class PictureModel {
     private String is_followed;
     private String is_self;
 
+
     public String getPicture_url() {
         return picture_url;
     }
@@ -29,7 +30,7 @@ public class PictureModel {
         return photographer_name;
     }
 
-    private String getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 

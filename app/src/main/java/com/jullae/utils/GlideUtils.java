@@ -1,6 +1,7 @@
 package com.jullae.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.model.GlideUrl;
@@ -10,6 +11,11 @@ public class GlideUtils {
 
     public static void loadImagefromUrl(Context mContext, String url, ImageView imageView) {
         GlideApp.with(mContext).load(new CustomGlideUrl(url)).into(imageView);
+
+    }
+
+    public static void loadImagefromUri(Context mContext, Uri uri, ImageView imageView) {
+        GlideApp.with(mContext).load(uri).into(imageView);
 
     }
 

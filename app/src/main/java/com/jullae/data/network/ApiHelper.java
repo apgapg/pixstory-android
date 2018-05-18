@@ -271,6 +271,7 @@ public class ApiHelper {
                 .addHeaders(headers)
                 .addPathParameter("id", userid)
                 .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 

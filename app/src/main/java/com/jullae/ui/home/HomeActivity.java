@@ -1,21 +1,17 @@
 package com.jullae.ui.home;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -33,7 +29,6 @@ import com.jullae.data.db.model.SearchPeopleMainModel;
 import com.jullae.ui.adapters.SearchPersonAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.HomeFragment;
-import com.jullae.ui.fragments.ProfileFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.utils.AppUtils;
@@ -41,24 +36,11 @@ import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.KeyboardUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.kbeanie.multipicker.api.ImagePicker;
-import com.kbeanie.multipicker.api.Picker;
-import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
-import com.kbeanie.multipicker.api.entity.ChosenImage;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
-import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -68,13 +50,13 @@ import java.util.Random;
  * feed items, add, edit stories,images,remove etc.
  */
 public class HomeActivity extends BaseActivity implements HomeActivityView {
+    private static final String TAG = HomeActivity.class.getName();
     private static final int CAMERA_REQUEST = 24;
     private static final int REQ_CODE_ADD_PICTURE = 45;
     private BottomSheetDialogFragment bottomSheetDialogFragment;
     private Button addButton;
     private ImageView tab_home, tab_explore, tab_profile;
     private BottomSheetBehavior<View> mBottomSheetBehavior;
-    private ProfileFragment.ImagePickListener imagePickListener;
     private ImagePicker imagePicker;
     private Uri imageToUploadUri;
     private HomeActivityPresentor mPresentor;
@@ -249,150 +231,10 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     }
 
 
- /*   private void showImageChooseDialog() {
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        View view = this.getLayoutInflater().inflate(R.layout.dialog_choose_image, null);
-
-        dialogBuilder.setView(view);
-
-        final AlertDialog dialog = dialogBuilder.create();
-        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-
-        view.findViewById(R.id.text_open_camera).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkCameraPermission();
-                } else {
-                    startImageCapture();
-                }
-
-            }
-        });
-        view.findViewById(R.id.text_gallery).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkstoragepermissionforimage();
-                } else {
-                    chooseImage();
-
-                }
-
-            }
-        });
-
-
-    }*/
-
-    private void checkCameraPermission() {
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted())
-                            startImageCapture();
-                        else {
-                            Log.d(TAG, "onPermissionDenied: ");
-                            Toast.makeText(HomeActivity.this, "Please allow the permission to proceed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-    }
-
-    private void startImageCapture() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        Random r = new Random();
-        int i1 = r.nextInt(1000) + 100;
-        File fs = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Farm2Fork");
-        if (!fs.exists())
-            fs.mkdirs();
-        File f = new File(fs, +i1 + ".jpg");
-        imageToUploadUri = FileProvider.getUriForFile(HomeActivity.this, HomeActivity.this.getApplicationContext().getPackageName() + ".provider", f);
-
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageToUploadUri);
-        cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
-    }
-
-    public void checkstoragepermissionforimage() {
-        Dexter.withActivity(this)
-                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
-                        chooseImage();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(HomeActivity.this, "Please allow the permission to proceed", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-
-                        token.continuePermissionRequest();
-                    }
-
-                }).check();
-
-    }
-
-    public void chooseImage() {
-        imagePicker = new ImagePicker(this);
-        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
-                                               @Override
-                                               public void onImagesChosen(List<ChosenImage> images) {
-                                                   if (images != null) {
-                                                       if (images.size() > 0) {
-                                                           onImageChosenByUser(images.get(0).getQueryUri());
-
-                                                       } else Log.d(TAG, "onImagesChosen: empty");
-                                                   } else
-                                                       Log.e(TAG, "onError: onimagechoosen: ");
-
-                                               }
-
-                                               @Override
-                                               public void onError(String message) {
-                                                   // Do error handling
-                                                   Log.e(TAG, "onError: " + message);
-                                               }
-                                           }
-
-        );
-
-        imagePicker.shouldGenerateMetadata(true);
-        imagePicker.shouldGenerateThumbnails(false);
-        imagePicker.pickImage();
-    }
-
-
     private void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-           /* if (b)
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-           */
+
         if (shouldAddToBackStack)
             fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
         else fragmentTransaction.replace(R.id.container, fragment).commit();
@@ -457,27 +299,9 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode,
-                                    final Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri imageUri = result.getUri();
-                if (imagePickListener != null)
-                    imagePickListener.onImagePickSucccess(imageUri);
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-                if (imagePickListener != null)
-
-                    imagePickListener.onImagePickFail();
-
-                Log.d(TAG, "onActivityResult: " + error);
-
-            }
-        }
-
+        Log.d(TAG, "onActivityResult: " + requestCode);
         if (requestCode == REQ_CODE_ADD_PICTURE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -492,63 +316,14 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
             }
         }
-        //  imageChooser.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            onImageChosenByUser(String.valueOf(imageToUploadUri));
-        } else {
-            Log.d(TAG, "onActivityResult: Image cant be captured");
-            imageToUploadUri = null;
-        }
 
-        if (resultCode == RESULT_OK) {
-            if (requestCode == Picker.PICK_IMAGE_DEVICE) {
-                if (imagePicker == null) {
-                    imagePicker = new ImagePicker(this);
-                    imagePicker.setImagePickerCallback(new ImagePickerCallback() {
-                                                           @Override
-                                                           public void onImagesChosen(List<ChosenImage> images) {
-                                                               if (images != null)
-                                                                   if (images.size() > 0) {
-
-                                                                       onImageChosenByUser(images.get(0).getQueryUri());
-
-                                                                   } else Log.d(TAG, "onImagesChosen: empty");
-                                                               else
-                                                                   Log.e(TAG, "onError: onimagechoosen: ");
-
-                                                           }
-
-                                                           @Override
-                                                           public void onError(String message) {
-                                                               // Do error handling
-                                                               Log.e(TAG, "onError: " + message);
-                                                           }
-                                                       }
-
-                    );
-                }
-                imagePicker.submit(data);
-            }
-        }
-
-        if (requestCode == AppUtils.REQUEST_CODE_WRTIE_STORY && resultCode == Activity.RESULT_OK) {
-
-            AppUtils.sendRefreshBroadcast(HomeActivity.this, Constants.REFRESH_HOME_FEEDS);
-        }
         if (requestCode == AppUtils.REQUEST_CODE_SEARCH_TAG && resultCode == Activity.RESULT_OK) {
             AppUtils.showSearchActivity(HomeActivity.this, data.getStringExtra("searchtag"));
         }
         if (requestCode == AppUtils.REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB && resultCode == Activity.RESULT_OK) {
             AppUtils.sendRefreshBroadcast(HomeActivity.this, Constants.REFRESH_PICTURES_TAB);
         }
-    }
-
-
-    private void onImageChosenByUser(String uri) {
-        Log.d(TAG, "onImageChosenByUser: " + uri);
-        // showAddPictureDialog(uri);
-
     }
 
 
@@ -571,7 +346,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
         final EditText field_title = view.findViewById(R.id.field_title);
 
-        GlideUtils.loadImagefromUrl(HomeActivity.this, uri.toString(), (ImageView) view.findViewById(R.id.image));
+        GlideUtils.loadImagefromUri(HomeActivity.this, uri, (ImageView) view.findViewById(R.id.image));
 
 
         view.findViewById(R.id.text_submit).setOnClickListener(new View.OnClickListener() {
@@ -607,22 +382,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     }
 
 
-    public void showCropImage(ProfileFragment.ImagePickListener imagePickListener) {
-        this.imagePickListener = imagePickListener;
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setFixAspectRatio(true)
-
-                .setRequestedSize(500, 500)
-                .setMinCropResultSize(200, 200)
-                .start(this);
-    }
-
-    public void removeListener() {
-        imagePickListener = null;
-    }
-
     public void showVisitorProfile(String photographer_penname) {
         AppUtils.showVisitorProfile(this, photographer_penname);
     }
@@ -647,8 +406,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     @Override
     public void onPictureUploadSuccess() {
         AppUtils.sendRefreshBroadcast(this, Constants.REFRESH_PICTURES_TAB);
-
-
     }
 
     public void updateNotificationIcon(boolean unread_notifications) {

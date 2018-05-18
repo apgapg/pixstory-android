@@ -56,39 +56,29 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
         checkViewAttached();
         getMvpView().showPicUploadProgress();
         AppDataManager.getInstance().getmApiHelper().makeDpChangeReq(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId(), file)
-                /*.getAsString(new StringRequestListener() {
+                .getAsObject(AvatarResponseModel.class, new ParsedRequestListener<AvatarResponseModel>() {
+
+
                     @Override
-                    public void onResponse(String response) {
-                        Log.d(TAG, "onResponse: "+response);
+                    public void onResponse(AvatarResponseModel avatarResponseModel) {
+                        NetworkUtils.parseResponse(TAG, avatarResponseModel);
+                        AppDataManager.getInstance().getmSharedPrefsHelper().setKeyDpUrl(avatarResponseModel.getProfile_dp_url());
+                        if (isViewAttached()) {
+                            getMvpView().hidePicUploadProgress();
+                            getMvpView().onProfilePicUpdateSuccess(avatarResponseModel.getProfile_dp_url());
+                        }
+
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        NetworkUtils.parseError(TAG, anError);
+                        if (isViewAttached()) {
+                            getMvpView().hidePicUploadProgress();
+                            getMvpView().onProfilePicUpdateFail();
+                        }
                     }
-                }); */.getAsObject(AvatarResponseModel.class, new ParsedRequestListener<AvatarResponseModel>() {
-
-
-            @Override
-            public void onResponse(AvatarResponseModel avatarResponseModel) {
-                NetworkUtils.parseResponse(TAG, avatarResponseModel);
-                AppDataManager.getInstance().getmSharedPrefsHelper().setKeyDpUrl(avatarResponseModel.getProfile_dp_url());
-                if (isViewAttached()) {
-                    getMvpView().hidePicUploadProgress();
-                    getMvpView().onProfilePicUpdateSuccess(avatarResponseModel.getProfile_dp_url());
-                }
-
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-                if (isViewAttached()) {
-                    getMvpView().hidePicUploadProgress();
-                    getMvpView().onProfilePicUpdateFail();
-                }
-            }
-        });
+                });
     }
 
     public void getConversationList() {

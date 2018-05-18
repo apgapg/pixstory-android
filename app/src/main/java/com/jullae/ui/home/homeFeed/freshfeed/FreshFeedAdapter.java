@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.DateUtils;
 import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -31,15 +30,13 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private static final String TAG = FreshFeedAdapter.class.getName();
     private final Activity mContext;
-    private final RequestOptions picOptions;
 
-    List<FreshFeedModel.FreshFeed> messagelist = new ArrayList<FreshFeedModel.FreshFeed>();
+    List<FreshFeedModel.FreshFeed> messagelist = new ArrayList<>();
 
     public FreshFeedAdapter(Activity activity) {
         this.mContext = activity;
 
-        picOptions = new RequestOptions();
-        picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+
     }
 
     @Override
@@ -55,15 +52,16 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
         if (pictureModel.getPicture_title() != null && pictureModel.getPicture_title().isEmpty()) {
-            viewHolder.pic_text_buy.setText("by");
+            viewHolder.pic_text_by.setText("by");
             viewHolder.pic_title.setVisibility(View.VISIBLE);
-            viewHolder.pic_title.setText(pictureModel.getPicture_title().trim());
+            viewHolder.pic_title.setText(pictureModel.getPicture_title().trim().concat(" "));
 
         } else {
             viewHolder.pic_title.setVisibility(View.GONE);
-            viewHolder.pic_text_buy.setText("  By");
+            viewHolder.pic_text_by.setText("By");
         }
 
+        viewHolder.time.setText(DateUtils.formatTimeInAgoFormat(messagelist.get(position).getPictureModel().getCreated_at()));
         viewHolder.story_title.setText(storyModel.getStory_title());
         viewHolder.story_text.setText(storyModel.getStory_text());
         setUserNamesandAvatar(viewHolder, pictureModel, storyModel);
@@ -109,7 +107,8 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView writer_name, story_title, story_text;
         private TextView pic_like_count, story_like_count;
         private TextView pic_story_count, story_comment_count, text_view_more_story;
-        private TextView pic_text_buy, write_story;
+        private TextView pic_text_by, write_story;
+        private TextView time;
 
         public FreshFeedsViewHolder(View inflate) {
             super(inflate);
@@ -122,6 +121,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
             text_view_more_story = inflate.findViewById(R.id.text_view_more_story);
+            time = inflate.findViewById(R.id.text_time);
 
 
             write_story = inflate.findViewById(R.id.write_story);
@@ -138,7 +138,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
                 }
             });
-            pic_text_buy = inflate.findViewById(R.id.pic_text_by);
+            pic_text_by = inflate.findViewById(R.id.pic_text_by);
 
             text_view_more_story.setOnClickListener(new View.OnClickListener() {
                 @Override

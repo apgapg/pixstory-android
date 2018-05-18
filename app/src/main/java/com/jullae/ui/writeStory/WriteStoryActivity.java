@@ -81,6 +81,8 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     @Override
     public void onStoryPublishSuccess() {
+        AppUtils.sendRefreshBroadcast(WriteStoryActivity.this, Constants.REFRESH_HOME_FEEDS);
+
         Toast.makeText(getApplicationContext(), "Story published successfully!", Toast.LENGTH_SHORT).show();
         finish();
     }

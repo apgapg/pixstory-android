@@ -2,7 +2,6 @@ package com.jullae.ui.home.homeFeed.freshfeed;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -30,7 +29,6 @@ import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
-import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
@@ -158,7 +156,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void showMenuOptions(final int adapterPosition, ImageView ivMore) {
         PopupMenu popup = new PopupMenu(mContext, ivMore);
         //inflating menu from xml resource
-        popup.inflate(R.menu.profile_options_email);
+        popup.inflate(R.menu.picture_options);
         //adding click listener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -260,9 +258,9 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(mContext, WriteStoryActivity.class);
-                    i.putExtra("picture_id", messagelist.get(getAdapterPosition()).getPicture_id());
-                    mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_WRTIE_STORY);
+
+                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id());
+
 
                 }
             });

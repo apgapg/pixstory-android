@@ -1,6 +1,7 @@
 package com.jullae.ui.fragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -45,9 +47,13 @@ import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.ReqListener;
 import com.jullae.utils.dialog.MyProgressDialog;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Rahul Abrol on 12/26/17.
@@ -81,7 +87,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         view = binding.getRoot();
-        // view = inflater.inflate(R.layout.fragment_profile, container, false);
         user_image = view.findViewById(R.id.image_avatar);
 
         button_message = view.findViewById(R.id.button_message);
@@ -103,19 +108,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         user_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((HomeActivity) getmContext()).showCropImage(new ImagePickListener() {
-                    @Override
-                    public void onImagePickSucccess(Uri uri) {
-                        GlideUtils.loadImagefromUrl(getmContext(), (uri).toString(), user_image);
-                        File file = new File(uri.getPath());
-                        updateDpReq(file);
-                    }
-
-                    @Override
-                    public void onImagePickFail() {
-                        Toast.makeText(getmContext().getApplicationContext(), "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                startImagePickActivity();
             }
         });
         viewPager = view.findViewById(R.id.viewPager);
@@ -136,7 +129,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mPresentor = new ProfileFragmentPresentor();
 
         if (getmContext() instanceof ProfileVisitorActivity) {
-            user_image.setOnClickListener(null);
             LinearLayout close_container = (LinearLayout) inflater.inflate(R.layout.close_button, (CoordinatorLayout) view.findViewById(R.id.rootview), false);
             close_container.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,6 +143,20 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         return view;
     }
+
+    private void startImagePickActivity() {
+        Intent i = CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setFixAspectRatio(true)
+
+                .setRequestedSize(500, 500)
+                .setMinCropResultSize(200, 200)
+                .getIntent(getmContext());
+
+        this.startActivityForResult(i, AppUtils.REQUEST_CODE_PROFILE_PIC_CAPTURE);
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -391,11 +397,40 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: " + requestCode);
+        if (requestCode == AppUtils.REQUEST_CODE_PROFILE_PIC_CAPTURE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri imageUri = result.getUri();
+                onImagePickSuccess(imageUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Log.d(TAG, "onActivityResult: " + error);
+                onImagePickFail();
+            }
+        }
+
+    }
+
+    private void onImagePickSuccess(Uri uri) {
+        GlideUtils.loadImagefromUri(getmContext(), uri, user_image);
+        File file = new File(uri.getPath());
+        updateDpReq(file);
+    }
+
+
+    private void onImagePickFail() {
+
+    }
+
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
-        if (getmContext() instanceof HomeActivity)
-            ((HomeActivity) getmContext()).removeListener();
+
         super.onDestroyView();
 
     }
@@ -407,12 +442,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         void onPasswordChangeFail();
     }
 
-
-    public interface ImagePickListener {
-        void onImagePickSucccess(Uri uri);
-
-        void onImagePickFail();
-    }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
         SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
