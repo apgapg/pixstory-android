@@ -16,4 +16,13 @@ public interface StoryDetailView extends MvpView {
     void onStoryDetailFetchSuccess(StoryModel storyModel);
 
     void onStoryDetailFetchFail();
+
+    void showProgress();
+
+    void hideProgress();
+
+    void onStoryDeleteSuccess();
+
+
+    void onStoryDeleteFail(String message);
 }

@@ -18,6 +18,8 @@ import com.jullae.utils.Constants;
 import com.jullae.utils.DateUtils;
 import com.jullae.utils.GlideUtils;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         viewHolder.time.setText(DateUtils.formatTimeInAgoFormat(messagelist.get(position).getPictureModel().getCreated_at()));
         viewHolder.story_title.setText(storyModel.getStory_title());
-        viewHolder.story_text.setText(storyModel.getStory_text());
+        viewHolder.story_text.setHtml(storyModel.getStory_text());
         setUserNamesandAvatar(viewHolder, pictureModel, storyModel);
 
         setLikeCommentCount(viewHolder, pictureModel, storyModel);
@@ -104,7 +106,8 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private View rootview;
         private ImageView image, user_image, writer_photo;
         private TextView user_name, pic_title;
-        private TextView writer_name, story_title, story_text;
+        private TextView writer_name, story_title;
+        private HtmlTextView story_text;
         private TextView pic_like_count, story_like_count;
         private TextView pic_story_count, story_comment_count, text_view_more_story;
         private TextView pic_text_by, write_story;

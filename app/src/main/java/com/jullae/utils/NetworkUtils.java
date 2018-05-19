@@ -1,5 +1,11 @@
 package com.jullae.utils;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.androidnetworking.error.ANError;
 import com.google.gson.Gson;
 
@@ -14,6 +20,7 @@ public class NetworkUtils {
     public static final int PASSWORD_WRONG = 703;
     public static final int EMAIL_NOT_REGISTERED = 703;
     public static final int PENNAME_ALREADY_TAKEN = 717;
+    private static final String TAG = NetworkUtils.class.getName();
 
     public static ErrorResponseModel parseError(String TAG, ANError error) {
         if (error.getErrorCode() != 0) {
@@ -45,4 +52,28 @@ public class NetworkUtils {
             Log.d(TAG, "parseResponse: " + response.toString());
         }
     }
+
+
+    public static void registerNetworkChangeListener(Context context, BroadcastReceiver mNetworkChangeReceiver) {
+        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(mNetworkChangeReceiver, intentFilter);
+    }
+
+
+    public static void unRegisterNetworkChangeListener(Context context, BroadcastReceiver broadcastReceiver) {
+        try {
+            context.unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
 }

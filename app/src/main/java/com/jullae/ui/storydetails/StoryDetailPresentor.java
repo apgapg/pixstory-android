@@ -10,6 +10,7 @@ import com.jullae.data.db.model.StoryMainModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.Constants;
+import com.jullae.utils.ErrorResponseModel;
 import com.jullae.utils.NetworkUtils;
 
 public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
@@ -197,7 +198,31 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
 
     public void sendStoryDeleteReq(String story_id) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().makeStoryDeleteReq(story_id);
+        getMvpView().showProgress();
+        AppDataManager.getInstance().getmApiHelper().makeStoryDeleteReq(story_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onStoryDeleteSuccess();
+
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+
+                    getMvpView().onStoryDeleteFail(errorResponseModel.getMessage());
+                }
+
+
+            }
+        });
     }
 
 

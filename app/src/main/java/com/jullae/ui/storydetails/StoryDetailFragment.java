@@ -1,7 +1,11 @@
 package com.jullae.ui.storydetails;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +41,7 @@ import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
+import com.jullae.utils.dialog.MyProgressDialog;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -66,6 +72,20 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private String story_id;
     private SwipeRefreshLayout swipeRefresh;
     private View btn_close;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
+            Log.d("receiver", "Got message: " + refreshMode);
+            switch (refreshMode) {
+                case Constants.REFRESH_STORY:
+                    mPresentor.loadStoryDetails(story_id);
+
+                    break;
+
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -130,7 +150,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             story_title.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
         user_penname.setText(storyModel.getWriter_name());
-        // story_text.setText(Html.fromHtml(storyModel.getStory_text()));
         story_text.setHtml(storyModel.getStory_text());
         comment_count.setText(storyModel.getComment_count() + " comments");
         GlideUtils.loadImagefromUrl(getmContext(), storyModel.getWriter_avatar(), user_image);
@@ -160,7 +179,16 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
         mPresentor.loadStoryDetails(story_id);
-        //  setupComments();
+        setupRefreshBroadcastListener();
+
+
+    }
+
+
+    private void setupRefreshBroadcastListener() {
+        LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.REFRESH_INTENT_FILTER));
+
 
     }
 
@@ -216,12 +244,15 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         view.findViewById(R.id.edit_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //AppUtils.showWriteStoryDialogWithData(getmContext(),storyModel.);
+                closeBottomSheet();
+
+                AppUtils.showEditStoryActivity(getmContext(), storyModel.getStory_id(), storyModel.getStory_title(), storyModel.getStory_text());
             }
         });
         view.findViewById(R.id.delete_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeBottomSheet();
                 showDeleteStoryDialog();
             }
         });
@@ -568,6 +599,14 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     }
 
+    public boolean closeBottomSheet() {
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onStoryDetailFetchSuccess(StoryModel storyModel) {
         this.storyModel = storyModel;
@@ -579,9 +618,32 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         setupLike();
     }
 
+
     @Override
     public void onStoryDetailFetchFail() {
 
+    }
+
+    @Override
+    public void showProgress() {
+        MyProgressDialog.showProgressDialog(getmContext(), "Please Wait!");
+    }
+
+    @Override
+    public void hideProgress() {
+        MyProgressDialog.dismissProgressDialog();
+    }
+
+    @Override
+    public void onStoryDeleteSuccess() {
+        Toast.makeText(getmContext().getApplicationContext(), "Story deleted successfully!", Toast.LENGTH_SHORT).show();
+
+        getmContext().finish();
+    }
+
+    @Override
+    public void onStoryDeleteFail(String message) {
+        Toast.makeText(getmContext().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public interface FollowReqListener {

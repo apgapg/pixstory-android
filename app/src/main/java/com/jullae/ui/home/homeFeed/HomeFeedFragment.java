@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.data.db.model.LikesModel;
@@ -22,6 +23,7 @@ import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.Constants;
+import com.jullae.utils.NetworkUtils;
 
 public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
@@ -46,7 +48,10 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         }
     };
 
+
     private void loadFeeds() {
+        super.onNetworkAvailable();
+        view.findViewById(R.id.network_container).setVisibility(View.GONE);
         recyclerView.scrollToPosition(0);
         mPresentor.loadFeeds();
     }
@@ -60,6 +65,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
                 ((ViewGroup) view.getParent()).removeView(view);
             return view;
         }
+
         view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
         mPresentor = new HomeFeedPresentor();
@@ -100,6 +106,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
                 new IntentFilter(Constants.REFRESH_INTENT_FILTER));
 
+
     }
 
 
@@ -124,7 +131,23 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     @Override
     public void onFetchFeedFail() {
+        if (homeFeedAdapter.getItemCount() == 0) {
+            NetworkUtils.registerNetworkChangeListener(getmContext(), getmNetworkChangeReceiver());
+            view.findViewById(R.id.network_container).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.network_container).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadFeeds();
+                }
+            });
+        } else
+            Toast.makeText(getmContext().getApplicationContext(), "No internet connectivity", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onNetworkAvailable() {
+        Log.d(TAG, "onNetworkAvailable: called");
+        loadFeeds();
     }
 
     @Override

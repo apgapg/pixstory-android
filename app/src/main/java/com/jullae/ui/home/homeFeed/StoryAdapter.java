@@ -21,6 +21,8 @@ import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +69,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             viewHolder.like_count.setText(storyModel.getLike_count() + " likes");
             viewHolder.comment_count.setText(storyModel.getComment_count() + " comments");
-            viewHolder.story_text.setText(storyModel.getStory_text());
+            viewHolder.story_text.setHtml(storyModel.getStory_text());
 
         } else {
 
@@ -109,8 +111,9 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
         private ImageView user_image, image, ivStoryPic, ivEditStory, ivLike, ivMore;
-        private TextView user_name, tvLocation, tvTimeInDays, like_count, comment_count, story_count, story_text;
+        private TextView user_name, tvLocation, tvTimeInDays, like_count, comment_count, story_count;
         private RecyclerView recycler_view_story;
+        private HtmlTextView story_text;
 
         public HomeFeedViewHolder(View inflate) {
             super(inflate);
@@ -125,6 +128,18 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             like_count = inflate.findViewById(R.id.like_count);
             comment_count = inflate.findViewById(R.id.comment_count);
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, StoryDetailActivity.class);
+                    Gson gson = new Gson();
+                    String object = gson.toJson(messagelist.get(getAdapterPosition()));
+                    i.putExtra("object", object);
+                    i.putExtra("profile", false);
+                    mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_SEARCH_TAG);
+                }
+            });
+
+            story_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, StoryDetailActivity.class);

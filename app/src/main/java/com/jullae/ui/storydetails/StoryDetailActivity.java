@@ -3,6 +3,7 @@ package com.jullae.ui.storydetails;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -60,10 +61,13 @@ public class StoryDetailActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-       /* if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
-            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        else*/
-        super.onBackPressed();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment instanceof StoryDetailFragment && fragment.isVisible()) {
+            if (!((StoryDetailFragment) fragment).closeBottomSheet()) {
+                super.onBackPressed();
+            }
+        } else
+            super.onBackPressed();
     }
 
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.ApplicationClass;
+import com.jullae.EditStoryActivity;
 import com.jullae.R;
 import com.jullae.SearchActivity;
 import com.jullae.data.AppDataManager;
@@ -244,5 +245,14 @@ public class AppUtils {
 
     public static float convertdpTopx(int i) {
         return ApplicationClass.density * i;
+    }
+
+
+    public static void showEditStoryActivity(Activity activity, String story_id, String story_title, String story_text) {
+        Intent i = new Intent(activity, EditStoryActivity.class);
+        i.putExtra("story_id", story_id);
+        i.putExtra("story_title", story_title);
+        i.putExtra("story_text", story_text);
+        activity.startActivity(i);
     }
 }

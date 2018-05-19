@@ -9,9 +9,8 @@ import com.jullae.data.AppDataManager;
 public class ApplicationClass extends Application {
 
     public static final String TAG = ApplicationClass.class.getSimpleName();
-    private float dpWidth, dpHeight;
     public static float density;
-
+    private float dpWidth, dpHeight;
 
     @Override
     public void onCreate() {
@@ -20,6 +19,7 @@ public class ApplicationClass extends Application {
         AndroidNetworking.initialize(getApplicationContext());
 
         AppDataManager.initialize(getApplicationContext());
+
 
         setScreenSize();
     }

@@ -45,12 +45,14 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PUBLISH_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_REPORT_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_SAVE_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_SEARCH_TAG;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_DELETE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_DETAILS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_STORY_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_TAG_SUGGESTIONS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNFOLLOW;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_PICTURE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UNLIKE_STORY_URL;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPDATE_EDIT_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPDATE_PROFILE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPLOAD_PICTURE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_VIEW_ALL_STORIES;
@@ -523,9 +525,21 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     }
 
     public ANRequest makeStoryDeleteReq(String story_id) {
-        return AndroidNetworking.post(BASE_URL + ENDPOINT_PASSWORD_CHANGE)
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_STORY_DELETE)
                 .addHeaders(headers)
+                .addQueryParameter("id", story_id)
                 .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest updateStoryReq(String story_id, String title, String story) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_UPDATE_EDIT_STORY)
+                .addHeaders(headers)
+                .addQueryParameter("id", story_id)
+                .addBodyParameter("title", title)
+                .addBodyParameter("content", story)
+                .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 

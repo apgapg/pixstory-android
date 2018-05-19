@@ -285,7 +285,9 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
     @Override
     public void onBackPressed() {
 
-        if (findViewById(R.id.search_container).getVisibility() == View.VISIBLE) {
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else if (findViewById(R.id.search_container).getVisibility() == View.VISIBLE) {
             cleanUpSearchContainer();
         } else if (getSupportFragmentManager().findFragmentById(R.id.container) instanceof HomeFragment && getSupportFragmentManager().findFragmentById(R.id.container).isVisible()) {
             HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.container);
