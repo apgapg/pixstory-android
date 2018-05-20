@@ -39,9 +39,7 @@ import java.util.List;
  */
 
 public class AppUtils {
-    public static final String LOCALE_ENGLISH = "en";
-    public static final String LOCALE_HINDI = "hi";
-    public static final String LOCALE_MARATHI = "mr";
+
     public static final int REQUEST_CODE_WRTIE_STORY = 23;
     public static final int REQUEST_CODE_SEARCH_TAG = 33;
     public static final int REQUEST_CODE_WRITESTORY_FROM_PICTURE_TAB = 27;

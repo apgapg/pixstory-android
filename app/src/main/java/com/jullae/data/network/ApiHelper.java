@@ -512,6 +512,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
                 .setPriority(Priority.HIGH)
+                .logReponseBody()
                 .build();
     }
 

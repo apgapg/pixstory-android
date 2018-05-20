@@ -11,7 +11,7 @@ public class GsonUtils {
     private Gson mGson;
 
     private GsonUtils() {
-        mGson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create();
+        mGson = new GsonBuilder().create();
     }
 
     public synchronized static GsonUtils getInstance() {
