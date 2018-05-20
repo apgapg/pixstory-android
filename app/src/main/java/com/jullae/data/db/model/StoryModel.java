@@ -3,6 +3,7 @@ package com.jullae.data.db.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class StoryModel {
@@ -20,7 +21,7 @@ public class StoryModel {
     private String is_liked;
     private boolean is_self;
     private String is_followed;
-    private String created_at;
+    private Date created_at;
 
     @SerializedName("comments")
     @Expose
@@ -59,7 +60,7 @@ public class StoryModel {
         return story_text;
     }
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
@@ -93,5 +94,9 @@ public class StoryModel {
 
     public void setIs_followed(String is_followed) {
         this.is_followed = is_followed;
+    }
+
+    public void setStory_id(String story_id) {
+        this.story_id = story_id;
     }
 }

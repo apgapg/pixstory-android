@@ -63,7 +63,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewHolder.pic_text_by.setText("By");
         }
 
-        viewHolder.time.setText(DateUtils.formatTimeInAgoFormat(messagelist.get(position).getPictureModel().getCreated_at()));
+        viewHolder.time.setText(DateUtils.getTimeAgo(messagelist.get(position).getPictureModel().getCreated_at()));
         viewHolder.story_title.setText(storyModel.getStory_title());
         viewHolder.story_text.setHtml(storyModel.getStory_text());
         setUserNamesandAvatar(viewHolder, pictureModel, storyModel);

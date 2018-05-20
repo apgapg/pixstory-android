@@ -1,11 +1,11 @@
-package com.jullae;
+package com.jullae.ui.notification;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.jullae.ui.home.notification.NotificationFragment;
+import com.jullae.R;
 
 public class NotificationActivity extends AppCompatActivity {
 

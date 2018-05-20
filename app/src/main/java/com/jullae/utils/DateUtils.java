@@ -1,6 +1,5 @@
 package com.jullae.utils;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,26 +16,7 @@ public class DateUtils {
         return calendar.getTime().getTime();
     }
 
-    public static CharSequence formatTimeInAgoFormat(String dateString) {
-        try {
-            Date date = null;
-
-            date = format.parse(dateString);
-            return android.text.format.DateUtils.getRelativeTimeSpanString(date.getTime(), currentDate(), 0);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    public static String getTimeAgo(String dateString) {
-        Date date = null;
-        try {
-            date = format.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public static String getTimeAgo(Date date) {
 
         long time = date.getTime();
         if (time < 1000000000000L) {
@@ -62,7 +42,12 @@ public class DateUtils {
         } else if (diff < 48 * HOUR_MILLIS) {
             return "yesterday";
         } else {
-            return diff / DAY_MILLIS + " days ago";
+            if (diff / DAY_MILLIS < 30)
+                return diff / DAY_MILLIS + " days ago";
+            else if (((diff / DAY_MILLIS) % 30) < 12)
+                return ((diff / DAY_MILLIS) % 60) + " month ago";
+            else
+                return ((diff / DAY_MILLIS) % (30 * 12)) + " year ago";
         }
     }
 }

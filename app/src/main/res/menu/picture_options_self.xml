@@ -2,9 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu1"
+        android:title="@string/delete_picture" />
+
+    <item
         android:id="@+id/menu2"
         android:title="@string/report_picture" />
-
 
     <item
         android:id="@+id/menu3"

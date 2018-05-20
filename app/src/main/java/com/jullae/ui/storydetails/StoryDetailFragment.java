@@ -1,9 +1,7 @@
 package com.jullae.ui.storydetails;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -14,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -28,8 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.jullae.ApplicationClass;
+import com.jullae.DialogUtils;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.CommentModel;
@@ -41,6 +38,9 @@ import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
+import com.jullae.utils.GsonUtils;
+import com.jullae.utils.NetworkUtils;
+import com.jullae.utils.ToastUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
@@ -69,8 +69,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private TextView story_title, user_name, user_penname;
     private HtmlTextView story_text;
     private ImageView user_image;
-    private String story_id;
-    private SwipeRefreshLayout swipeRefresh;
     private View btn_close;
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -79,7 +77,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             Log.d("receiver", "Got message: " + refreshMode);
             switch (refreshMode) {
                 case Constants.REFRESH_STORY:
-                    mPresentor.loadStoryDetails(story_id);
+                    mPresentor.loadStoryDetails(storyModel.getStory_id());
 
                     break;
 
@@ -97,9 +95,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         }
         view = inflater.inflate(R.layout.content_story_details, container, false);
 
-
-        mPresentor = new StoryDetailPresentor();
-
         story_title = view.findViewById(R.id.text_title);
         btn_close = view.findViewById(R.id.close);
         user_name = view.findViewById(R.id.text_name);
@@ -110,44 +105,48 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         comment_count = view.findViewById(R.id.comment_count);
         btn_more = view.findViewById(R.id.btn_more);
 
-        story_text.setMinHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 204)));
+        setupAddComment();
+
+        getArgumentsData();
+
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getmContext().finish();
             }
         });
-        //  setupMoreBottomSheet();
-        setupAddComment();
-
-
-        Gson gson = new Gson();
-        storyModel = gson.fromJson(getArguments().getString("storymodel"), StoryModel.class);
-        Log.d("sss", "onCreateView: " + storyModel);
-        if (storyModel != null) {
-            story_id = storyModel.getStory_id();
-            setProfiledata();
-            //setUpFollowedButton();
-            //setupLike();
-
-        } else {
-            story_id = getArguments().getString("story_id");
-        }
 
         story_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((StoryDetailActivity) getmContext()).showSearchResults(storyModel.getStory_title()
-                );
+                ((StoryDetailActivity) getmContext()).showSearchResults(storyModel.getStory_title());
             }
         });
+
+        setStoryContainerHeight();
+
+        mPresentor = new StoryDetailPresentor();
 
         return view;
     }
 
-    private void setProfiledata() {
-        if (storyModel.getStory_title() != null)
-            story_title.setText(storyModel.getStory_title());
+    private void setStoryContainerHeight() {
+        story_text.setMinHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 204)));
+    }
+
+    private void getArgumentsData() {
+        AppUtils.checkforNull(getArguments());
+        if (getArguments().getString("story_id") != null) {
+            storyModel = new StoryModel();
+            storyModel.setStory_id(getArguments().getString("story_id"));
+        } else if (getArguments().getString("storymodel") != null) {
+            storyModel = GsonUtils.getInstance().fromJson(getArguments().getString("storymodel"), StoryModel.class);
+            setStoryDetails();
+        }
+    }
+
+    private void setStoryDetails() {
+        story_title.setText(storyModel.getStory_title());
         user_name.setText(storyModel.getWriter_name());
         user_penname.setText(storyModel.getWriter_name());
         story_text.setHtml(storyModel.getStory_text());
@@ -178,18 +177,14 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
-        mPresentor.loadStoryDetails(story_id);
+        mPresentor.loadStoryDetails(storyModel.getStory_id());
         setupRefreshBroadcastListener();
-
-
     }
 
 
     private void setupRefreshBroadcastListener() {
         LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
                 new IntentFilter(Constants.REFRESH_INTENT_FILTER));
-
-
     }
 
     @Override
@@ -253,7 +248,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             @Override
             public void onClick(View v) {
                 closeBottomSheet();
-                showDeleteStoryDialog();
+                DialogUtils.showDeleteStoryDialog(getmContext(), mPresentor, storyModel.getStory_id());
             }
         });
         view.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
@@ -267,10 +262,11 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             @Override
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
-                        showReportStoryDialog();
+                        DialogUtils.showReportStoryDialog(getmContext(), mPresentor, storyModel);
                     }
                 });
             }
@@ -285,76 +281,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         });
     }
 
-    private void showDeleteStoryDialog() {
-        android.support.v7.app.AlertDialog.Builder builder1 = new android.support.v7.app.AlertDialog.Builder(getmContext());
-        builder1.setTitle("Delete Story!");
-        builder1.setMessage("Are you sure you want to delete this story?");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mPresentor.sendStoryDeleteReq(storyModel.getStory_id());
-                    }
-                });
-
-        builder1.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        android.support.v7.app.AlertDialog alert11 = builder1.create();
-        alert11.show();
-
-    }
-
-    private void showReportStoryDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
-        final View view3 = getLayoutInflater().inflate(R.layout.dialog_report_story, null);
-        dialogBuilder.setView(view3);
-
-        final AlertDialog dialog = dialogBuilder.create();
-
-        dialog.show();
-        field_report = view3.findViewById(R.id.field_report);
-        btn_report = view3.findViewById(R.id.report);
-        btn_report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String report = field_report.getText().toString().trim();
-                if (report.length() != 0) {
-
-                    view3.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-                    btn_report.setVisibility(View.INVISIBLE);
-
-                    mPresentor.reportStory(report, storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
-                        @Override
-                        public void onSuccess() {
-                            view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                            dialog.dismiss();
-                            Toast.makeText(getmContext().getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        @Override
-                        public void onFail() {
-                            view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                            btn_report.setVisibility(View.VISIBLE);
-                            Toast.makeText(getmContext().getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-
-                }
-            }
-        });
-
-    }
 
     private void setupAddComment() {
         addCommentField = view.findViewById(R.id.field_add_comment);
@@ -432,7 +358,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             btn_add_comment.setVisibility(View.VISIBLE);
         }
     }
-
 
     private void setupComments() {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -575,7 +500,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         }, isLiked);
     }
 
-
     @Override
     public void onLikesListFetchSuccess(LikesModel likesModel) {
         likeAdapter.add(likesModel.getLikes());
@@ -591,7 +515,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         Toast.makeText(getmContext().getApplicationContext(), "Story added to bookmark!", Toast.LENGTH_SHORT).show();
         AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_BOOKMARKS_TAB);
     }
-
 
     @Override
     public void onSaveStoryFail() {
@@ -610,7 +533,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     @Override
     public void onStoryDetailFetchSuccess(StoryModel storyModel) {
         this.storyModel = storyModel;
-        setProfiledata();
+        setStoryDetails();
         if (!storyModel.getIs_self())
             setUpFollowedButton();
         setupMoreBottomSheet();
@@ -618,9 +541,15 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         setupLike();
     }
 
-
     @Override
     public void onStoryDetailFetchFail() {
+        ToastUtils.showNoInternetToast(getmContext());
+        NetworkUtils.registerNetworkChangeListener(getmContext(), new NetworkUtils.NetworkChangeListener() {
+            @Override
+            public void onNetworkAvailable() {
+                mPresentor.loadStoryDetails(storyModel.getStory_id());
+            }
+        });
 
     }
 
@@ -637,7 +566,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     @Override
     public void onStoryDeleteSuccess() {
         Toast.makeText(getmContext().getApplicationContext(), "Story deleted successfully!", Toast.LENGTH_SHORT).show();
-
         getmContext().finish();
     }
 

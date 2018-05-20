@@ -22,6 +22,7 @@ import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
+import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 
@@ -39,7 +40,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
             int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
             Log.d("receiver", "Got message: " + refreshMode);
             switch (refreshMode) {
-                case Constants.REFRESH_PICTURES_TAB:
+                case Constants.REFRESH_HOME_FEEDS:
                     loadFeeds();
 
                     break;
@@ -50,8 +51,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
 
     private void loadFeeds() {
-        super.onNetworkAvailable();
-        view.findViewById(R.id.network_container).setVisibility(View.GONE);
+        hideNetworkRetryContainer();
         recyclerView.scrollToPosition(0);
         mPresentor.loadFeeds();
     }
@@ -132,33 +132,43 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     @Override
     public void onFetchFeedFail() {
         if (homeFeedAdapter.getItemCount() == 0) {
-            NetworkUtils.registerNetworkChangeListener(getmContext(), getmNetworkChangeReceiver());
-            view.findViewById(R.id.network_container).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.network_container).setOnClickListener(new View.OnClickListener() {
+            showNetworkRetryContainer();
+            NetworkUtils.registerNetworkChangeListener(getmContext(), new NetworkUtils.NetworkChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    loadFeeds();
+                public void onNetworkAvailable() {
+                    if (!mPresentor.isLoadFeedReqRunning())
+                        loadFeeds();
                 }
             });
         } else
             Toast.makeText(getmContext().getApplicationContext(), "No internet connectivity", Toast.LENGTH_SHORT).show();
+
+
     }
 
-    @Override
-    public void onNetworkAvailable() {
-        Log.d(TAG, "onNetworkAvailable: called");
-        loadFeeds();
+    private void showNetworkRetryContainer() {
+        view.findViewById(R.id.network_container).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.network_container).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFeeds();
+            }
+        });
     }
+
+    private void hideNetworkRetryContainer() {
+        view.findViewById(R.id.network_container).setVisibility(View.GONE);
+
+    }
+
 
     @Override
     public void showProgress() {
-        //view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
         swipeRefresh.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        //view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
         swipeRefresh.setRefreshing(false);
 
     }
@@ -171,6 +181,18 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     @Override
     public void onLikesListFetchFail() {
         homeFeedAdapter.onLikesListFetchFail();
+
+    }
+
+    @Override
+    public void onPictureDeleteSuccess() {
+        Toast.makeText(getmContext().getApplicationContext(), "Picture deleted successfully!", Toast.LENGTH_SHORT).show();
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_HOME_FEEDS);
+    }
+
+    @Override
+    public void onPictureDeleteFail(String message) {
+        Toast.makeText(getmContext().getApplicationContext(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
 
     }
 

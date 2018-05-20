@@ -2,6 +2,7 @@ package com.jullae.ui.home.homeFeed.freshfeed;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -156,18 +157,22 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void showMenuOptions(final int adapterPosition, ImageView ivMore) {
         PopupMenu popup = new PopupMenu(mContext, ivMore);
         //inflating menu from xml resource
-        popup.inflate(R.menu.picture_options);
+        if (messagelist.get(adapterPosition).getIs_self() && messagelist.get(adapterPosition).getStory_count() == 0)
+            popup.inflate(R.menu.picture_options_self);
+        else
+            popup.inflate(R.menu.picture_options);
         //adding click listener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu1:
-                        //handle menu1 click
-                        showReportStoryDialog(adapterPosition);
+                        showDeleteStoryDialog(adapterPosition);
                         break;
                     case R.id.menu2:
-                        //handle menu2 click
+                        showReportStoryDialog(adapterPosition);
+                        break;
+                    case R.id.menu3:
                         break;
                 }
                 return false;
@@ -175,6 +180,34 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         });
         //displaying the popup
         popup.show();
+    }
+
+    private void showDeleteStoryDialog(final int adapterPosition) {
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+        builder1.setTitle("Delete Picture!");
+        builder1.setMessage("Are you sure you want to delete this picture?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mPresentor.sendPictureDeleteReq(messagelist.get(adapterPosition).getPicture_id());
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 
     public void showReportStoryDialog(final int adapterPosition) {

@@ -133,8 +133,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     Intent i = new Intent(mContext, StoryDetailActivity.class);
                     Gson gson = new Gson();
                     String object = gson.toJson(messagelist.get(getAdapterPosition()));
-                    i.putExtra("object", object);
-                    i.putExtra("profile", false);
+                    i.putExtra("storymodel", object);
                     mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_SEARCH_TAG);
                 }
             });
@@ -145,8 +144,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     Intent i = new Intent(mContext, StoryDetailActivity.class);
                     Gson gson = new Gson();
                     String object = gson.toJson(messagelist.get(getAdapterPosition()));
-                    i.putExtra("object", object);
-                    i.putExtra("profile", false);
+                    i.putExtra("storymodel", object);
                     mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_SEARCH_TAG);
                 }
             });

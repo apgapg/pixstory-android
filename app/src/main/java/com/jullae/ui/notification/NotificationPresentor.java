@@ -1,4 +1,4 @@
-package com.jullae.ui.home.notification;
+package com.jullae.ui.notification;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;

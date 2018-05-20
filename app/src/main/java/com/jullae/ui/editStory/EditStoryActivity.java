@@ -1,4 +1,4 @@
-package com.jullae;
+package com.jullae.ui.editStory;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jullae.R;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.dialog.MyProgressDialog;
@@ -113,6 +114,8 @@ public class EditStoryActivity extends AppCompatActivity implements EditStoryVie
     public void onStoryUpdateSuccess() {
         Toast.makeText(this.getApplicationContext(), "Story updated successfully!", Toast.LENGTH_SHORT).show();
         AppUtils.sendRefreshBroadcast(this, Constants.REFRESH_STORY);
+        AppUtils.sendRefreshBroadcast(this, Constants.REFRESH_HOME_FEEDS);
+
         finish();
     }
 

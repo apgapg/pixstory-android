@@ -7,18 +7,14 @@ public class BaseResponseModel {
             "message":"Data Ok.",
       }*/
 
-    private String success;
+    private boolean success;
     private int errorcode;
     private String message;
 
-    public BaseResponseModel(String b, int errorCode, String errorMessage) {
+    public BaseResponseModel(boolean b, int errorCode, String errorMessage) {
         this.success = b;
         this.errorcode = errorCode;
         this.message = errorMessage;
-    }
-
-    public int getErrorcode() {
-        return errorcode;
     }
 
     public String getMessage() {

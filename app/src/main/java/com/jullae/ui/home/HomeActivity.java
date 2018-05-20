@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.jullae.NotificationActivity;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.SearchPeopleMainModel;
@@ -31,6 +30,7 @@ import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.HomeFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
+import com.jullae.ui.notification.NotificationActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
@@ -49,7 +49,7 @@ import java.io.File;
  * Class @{@link HomeActivity} used to hold the
  * feed items, add, edit stories,images,remove etc.
  */
-public class HomeActivity extends BaseActivity implements HomeActivityView {
+public class HomeActivity extends BaseActivity implements HomeActivityView, View.OnClickListener {
     private static final String TAG = HomeActivity.class.getName();
     private static final int CAMERA_REQUEST = 24;
     private static final int REQ_CODE_ADD_PICTURE = 45;
@@ -245,7 +245,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView {
 
     @Override
     public void onClick(final View v) {
-        super.onClick(v);
         switch (v.getId()) {
 
             case R.id.tab_explore:

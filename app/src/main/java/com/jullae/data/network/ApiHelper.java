@@ -33,6 +33,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_NOTIFICATION_READ_STATUS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PASSWORD_CHANGE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PEOPLE_SUGGESTIONS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_DELETE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_DETAIL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_PICTURE_LIKES_LIST;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_POPULAR_FEEDS;
@@ -527,15 +528,24 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     public ANRequest makeStoryDeleteReq(String story_id) {
         return AndroidNetworking.post(BASE_URL + ENDPOINT_STORY_DELETE)
                 .addHeaders(headers)
-                .addQueryParameter("id", story_id)
+                .addPathParameter("id", story_id)
+                .setPriority(Priority.HIGH)
+                .build();
+    }
+
+    public ANRequest makePictureDeleteReq(String picture_id) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_PICTURE_DELETE)
+                .addHeaders(headers)
+                .addPathParameter("id", picture_id)
                 .setPriority(Priority.HIGH)
                 .build();
     }
 
     public ANRequest updateStoryReq(String story_id, String title, String story) {
+        Log.d(TAG, "updateStoryReq: " + story_id);
         return AndroidNetworking.post(BASE_URL + ENDPOINT_UPDATE_EDIT_STORY)
                 .addHeaders(headers)
-                .addQueryParameter("id", story_id)
+                .addPathParameter("id", story_id)
                 .addBodyParameter("title", title)
                 .addBodyParameter("content", story)
                 .setPriority(Priority.HIGH)

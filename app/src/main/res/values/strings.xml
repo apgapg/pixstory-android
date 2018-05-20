@@ -48,7 +48,6 @@
     <!--dialog_likes-->
     <string name="follow">Follow</string>
     <string name="see_all">See All</string>
-    <string name="comment.">Comment...</string>
     <string name="comment">comment</string>
     <string name="hide_all">Hide All</string>
     <string name="comments"> comments</string>
@@ -100,6 +99,11 @@
 
     <string name="facebook_app_id">215494812382809</string>
     <string name="fb_login_protocol_scheme">fb215494812382809</string>
+
+    <string name="report_picture">Report Picture</string>
+    <string name="share_on_facebook">Share on Facebook</string>
+    <string name="delete_picture">Delete Picture</string>
+    <string name="no_internet">No internet connectivity</string>
 
 
 </resources>

@@ -15,4 +15,8 @@ public interface HomeFeedView extends MvpView {
     void onLikesListFetchSuccess(LikesModel likesModel);
 
     void onLikesListFetchFail();
+
+    void onPictureDeleteSuccess();
+
+    void onPictureDeleteFail(String message);
 }

@@ -30,21 +30,16 @@ public class StoryDetailActivity extends BaseActivity {
         setContentView(R.layout.content_story_detail);
 
 
-        if (getIntent() != null) {
-            Intent i = getIntent();
-            storyModel = i.getStringExtra("object");
-            story_id = i.getStringExtra("story_id");
-            Bundle bundle = new Bundle();
-            if (getIntent().hasExtra("object"))
-                bundle.putString("storymodel", storyModel);
-            else if (getIntent().hasExtra("story_id"))
-                bundle.putString("story_id", story_id);
-            else throw new NullPointerException("story params cant be null!");
+        Intent i = getIntent();
 
-            showStoryDetailFragment(bundle);
+        Bundle bundle = new Bundle();
+        if (getIntent().hasExtra("storymodel"))
+            bundle.putString("storymodel", i.getStringExtra("storymodel"));
+        else if (getIntent().hasExtra("story_id"))
+            bundle.putString("story_id", i.getStringExtra("story_id"));
+        else throw new NullPointerException("story params cant be null!");
 
-        }
-
+        showStoryDetailFragment(bundle);
 
     }
 

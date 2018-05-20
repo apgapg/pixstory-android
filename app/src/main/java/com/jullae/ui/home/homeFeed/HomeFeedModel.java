@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.jullae.data.db.model.StoryModel;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,39 +25,29 @@ public class HomeFeedModel {
     public class Feed {
 
 
+        List<StoryModel> stories;
         private String id;
-
         private String picture_id;
-
         private String photographer_name;
         private String photographer_penname;
-
         private String photographer_avatar;
-
         private String picture_title;
-
-        private String created_at;
-
+        private Date created_at;
         private String picture_url;
-
         private String like_count;
-
-        private String story_count;
-
+        private int story_count;
         private String nav_story_id;
-
         private String is_liked;
-
         private String is_followed;
-
-        private String is_self;
-
-        List<StoryModel> stories;
-
+        private boolean is_self;
         private int highlightStoryIndex;
 
         public int getHighlightStoryIndex() {
             return highlightStoryIndex;
+        }
+
+        public void setHighlightStoryIndex(int highlightStoryIndex) {
+            this.highlightStoryIndex = highlightStoryIndex;
         }
 
         public String getPhotographer_penname() {
@@ -75,7 +66,7 @@ public class HomeFeedModel {
             this.is_liked = is_liked;
         }
 
-        public String getCreated_at() {
+        public Date getCreated_at() {
             return created_at;
         }
 
@@ -107,7 +98,7 @@ public class HomeFeedModel {
             return picture_id;
         }
 
-        public String getStory_count() {
+        public int getStory_count() {
             return story_count;
         }
 
@@ -123,12 +114,8 @@ public class HomeFeedModel {
             return stories;
         }
 
-        public String getIs_self() {
+        public boolean getIs_self() {
             return is_self;
-        }
-
-        public void setHighlightStoryIndex(int highlightStoryIndex) {
-            this.highlightStoryIndex = highlightStoryIndex;
         }
     }
 

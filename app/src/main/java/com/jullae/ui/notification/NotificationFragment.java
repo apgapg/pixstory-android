@@ -1,4 +1,4 @@
-package com.jullae.ui.home.notification;
+package com.jullae.ui.notification;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

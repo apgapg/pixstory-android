@@ -10,7 +10,7 @@ public class SignUpResponseModel extends BaseResponseModel {
     private String user_id;
     private String token;
 
-    public SignUpResponseModel(String b, int errorCode, String errorMessage) {
+    public SignUpResponseModel(boolean b, int errorCode, String errorMessage) {
         super(b, errorCode, errorMessage);
     }
 

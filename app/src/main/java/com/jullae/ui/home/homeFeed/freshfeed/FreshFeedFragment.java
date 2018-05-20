@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
@@ -81,7 +82,7 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
 
     @Override
     public void onFetchFeedsFail() {
-
+        Toast.makeText(getmContext().getApplicationContext(), "No internet connectivity", Toast.LENGTH_SHORT).show();
     }
 
     @Override

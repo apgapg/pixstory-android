@@ -1,5 +1,7 @@
 package com.jullae.data.db.model;
 
+import java.util.Date;
+
 public class PictureModel {
 
     private String picture_id;
@@ -12,7 +14,7 @@ public class PictureModel {
     private String photographer_avatar;
     private String like_count;
     private String story_count;
-    private String created_at;
+    private Date created_at;
     private String is_liked;
     private String is_followed;
     private String is_self;
@@ -30,7 +32,7 @@ public class PictureModel {
         return photographer_name;
     }
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 

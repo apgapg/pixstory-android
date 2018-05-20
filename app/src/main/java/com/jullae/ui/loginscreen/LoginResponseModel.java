@@ -24,7 +24,7 @@ public class LoginResponseModel extends BaseResponseModel {
              "bio": "IIT Roorkee || Android Developer || Educator at Unacadmey || Bike Lover",
              "avatar": null
      }*/
-    public LoginResponseModel(String b, int errorCode, String errorMessage) {
+    public LoginResponseModel(Boolean b, int errorCode, String errorMessage) {
         super(b, errorCode, errorMessage);
     }
 

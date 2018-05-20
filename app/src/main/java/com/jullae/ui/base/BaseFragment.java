@@ -1,12 +1,8 @@
 package com.jullae.ui.base;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
-
-import com.jullae.utils.NetworkUtils;
 
 /**
  * Created by Rahul Abrol on 12/14/17.
@@ -17,22 +13,7 @@ import com.jullae.utils.NetworkUtils;
 public abstract class BaseFragment extends Fragment {
 
     private Activity mContext;
-    private BroadcastReceiver mNetworkChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (NetworkUtils.isNetworkAvailable(context)) {
-                onNetworkAvailable();
-            }
-        }
-    };
 
-    public void onNetworkAvailable() {
-        NetworkUtils.unRegisterNetworkChangeListener(getmContext(), mNetworkChangeReceiver);
-    }
-
-    public BroadcastReceiver getmNetworkChangeReceiver() {
-        return mNetworkChangeReceiver;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -55,7 +36,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        //NetworkUtils.un
         super.onDestroyView();
     }
 

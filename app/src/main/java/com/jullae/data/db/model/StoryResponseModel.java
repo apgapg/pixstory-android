@@ -3,7 +3,7 @@ package com.jullae.data.db.model;
 import com.jullae.ui.base.BaseResponseModel;
 
 public class StoryResponseModel extends BaseResponseModel {
-    public StoryResponseModel(String b, int errorCode, String errorMessage) {
+    public StoryResponseModel(boolean b, int errorCode, String errorMessage) {
         super(b, errorCode, errorMessage);
     }
 

@@ -1,4 +1,4 @@
-package com.jullae.ui.home.notification;
+package com.jullae.ui.notification;
 
 import com.jullae.data.db.model.NotificationModel;
 import com.jullae.ui.base.MvpView;

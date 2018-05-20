@@ -3,6 +3,7 @@ package com.jullae.utils;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GsonUtils {
 
@@ -10,7 +11,7 @@ public class GsonUtils {
     private Gson mGson;
 
     private GsonUtils() {
-        mGson = new Gson();
+        mGson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create();
     }
 
     public synchronized static GsonUtils getInstance() {

@@ -6,7 +6,7 @@ public class AvatarResponseModel extends BaseResponseModel {
 
     private String avatar;
 
-    public AvatarResponseModel(String b, int errorCode, String errorMessage) {
+    public AvatarResponseModel(boolean b, int errorCode, String errorMessage) {
         super(b, errorCode, errorMessage);
     }
 

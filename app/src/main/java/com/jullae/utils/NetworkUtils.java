@@ -2,9 +2,11 @@ package com.jullae.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.google.gson.Gson;
@@ -33,7 +35,7 @@ public class NetworkUtils {
         } else {
             Log.d(TAG, "onError errorDetail : " + error.getErrorDetail());
             if (error.getErrorDetail().equals("connectionError")) {
-                return new ErrorResponseModel("false", -20, "couldn't connect!");
+                return new ErrorResponseModel(false, -20, "couldn't connect!");
             }
         }
         return null;
@@ -54,20 +56,6 @@ public class NetworkUtils {
     }
 
 
-    public static void registerNetworkChangeListener(Context context, BroadcastReceiver mNetworkChangeReceiver) {
-        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
-        context.registerReceiver(mNetworkChangeReceiver, intentFilter);
-    }
-
-
-    public static void unRegisterNetworkChangeListener(Context context, BroadcastReceiver broadcastReceiver) {
-        try {
-            context.unregisterReceiver(broadcastReceiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -75,5 +63,26 @@ public class NetworkUtils {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+
+    public static void registerNetworkChangeListener(Context context, final NetworkChangeListener networkChangeListener) {
+
+
+        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!isInitialStickyBroadcast()) {
+                    context.unregisterReceiver(this);
+                    if (isNetworkAvailable(context)) {
+                        networkChangeListener.onNetworkAvailable();
+                    }
+                }
+            }
+        }, intentFilter);
+    }
+
+    public interface NetworkChangeListener {
+        void onNetworkAvailable();
+    }
 
 }

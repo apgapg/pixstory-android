@@ -109,7 +109,7 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     Intent i = new Intent(mContext, StoryDetailActivity.class);
                     Gson gson = new Gson();
                     String object = gson.toJson(messagelist.get(getAdapterPosition()));
-                    i.putExtra("object", object);
+                    i.putExtra("storymodel", object);
                     i.putExtra("profile", false);
                     mContext.startActivity(i);
                 }

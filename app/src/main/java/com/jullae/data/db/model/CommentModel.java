@@ -1,5 +1,7 @@
 package com.jullae.data.db.model;
 
+import java.util.Date;
+
 public class CommentModel {
 
     private int id;
@@ -7,7 +9,7 @@ public class CommentModel {
     private String user_name;
     private String user_penname;
     private String user_avatar;
-    private String created_at;
+    private Date created_at;
 
     public int getId() {
         return id;
@@ -29,7 +31,7 @@ public class CommentModel {
         return user_avatar;
     }
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 }

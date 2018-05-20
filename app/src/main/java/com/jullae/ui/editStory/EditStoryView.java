@@ -1,4 +1,4 @@
-package com.jullae;
+package com.jullae.ui.editStory;
 
 import com.jullae.ui.base.MvpView;
 

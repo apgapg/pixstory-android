@@ -9,7 +9,7 @@ public class MessageResponseModel extends BaseResponseModel {
     @Expose
     private MessageModel messageModel;
 
-    public MessageResponseModel(String b, int errorCode, String errorMessage) {
+    public MessageResponseModel(Boolean b, int errorCode, String errorMessage) {
         super(b, errorCode, errorMessage);
     }
 

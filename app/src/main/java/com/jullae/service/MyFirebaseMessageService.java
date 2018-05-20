@@ -20,11 +20,11 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
-import static com.jullae.ui.home.notification.NotificationAdapter.NOTI_TYPE_FOLLOW;
-import static com.jullae.ui.home.notification.NotificationAdapter.NOTI_TYPE_NEW_COMMENT;
-import static com.jullae.ui.home.notification.NotificationAdapter.NOTI_TYPE_NEW_STORY;
-import static com.jullae.ui.home.notification.NotificationAdapter.NOTI_TYPE_PICTURE_LIKE;
-import static com.jullae.ui.home.notification.NotificationAdapter.NOTI_TYPE_STORY_LIKE;
+import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_FOLLOW;
+import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_NEW_COMMENT;
+import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_NEW_STORY;
+import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_PICTURE_LIKE;
+import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_STORY_LIKE;
 
 public class MyFirebaseMessageService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessageService.class.getName();

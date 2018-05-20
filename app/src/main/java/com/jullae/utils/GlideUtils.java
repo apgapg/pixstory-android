@@ -10,7 +10,7 @@ import com.jullae.GlideApp;
 public class GlideUtils {
 
     public static void loadImagefromUrl(Context mContext, String url, ImageView imageView) {
-        GlideApp.with(mContext).load(new CustomGlideUrl(url)).into(imageView);
+        GlideApp.with(mContext).load(new CustomGlideUrl(url)).thumbnail(0.1f).into(imageView);
 
     }
 

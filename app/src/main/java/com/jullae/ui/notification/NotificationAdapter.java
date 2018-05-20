@@ -1,4 +1,4 @@
-package com.jullae.ui.home.notification;
+package com.jullae.ui.notification;
 
 import android.app.Activity;
 import android.content.Intent;

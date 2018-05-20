@@ -7,30 +7,30 @@ import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BasePresentor;
+import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.Constants;
+import com.jullae.utils.ErrorResponseModel;
 import com.jullae.utils.NetworkUtils;
 
 public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
 
     private static final String TAG = HomeFeedPresentor.class.getName();
-    private HomeFeedView view;
+    private boolean isLoadFeedReqRunning;
 
     public HomeFeedPresentor() {
     }
 
-    public void setView(HomeFeedView view) {
-        this.view = view;
-    }
-
     public void loadFeeds() {
+        isLoadFeedReqRunning = true;
         checkViewAttached();
         getMvpView().showProgress();
         AppDataManager.getInstance().getmApiHelper().loadHomeFeeds().getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
             @Override
             public void onResponse(HomeFeedModel homeFeedModel) {
+                isLoadFeedReqRunning = false;
                 NetworkUtils.parseResponse(TAG, homeFeedModel);
                 if (isViewAttached()) {
                     getMvpView().hideProgress();
@@ -40,6 +40,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
             @Override
             public void onError(ANError anError) {
+                isLoadFeedReqRunning = false;
                 NetworkUtils.parseError(TAG, anError);
                 if (isViewAttached()) {
                     getMvpView().hideProgress();
@@ -130,5 +131,37 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
         });
 
 
+    }
+
+    public void sendPictureDeleteReq(String picture_id) {
+        checkViewAttached();
+        getMvpView().showProgress();
+        AppDataManager.getInstance().getmApiHelper().makePictureDeleteReq(picture_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onPictureDeleteSuccess();
+
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideProgress();
+                    getMvpView().onPictureDeleteFail(errorResponseModel.getMessage());
+                }
+
+
+            }
+        });
+    }
+
+    public boolean isLoadFeedReqRunning() {
+        return isLoadFeedReqRunning;
     }
 }
