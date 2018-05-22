@@ -1,7 +1,9 @@
 package com.jullae.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jullae.GlideApp;
 import com.jullae.R;
@@ -25,4 +27,19 @@ public class BindingAdapter {
 
     }
 
+    @android.databinding.BindingAdapter("setfollow")
+    public static void setFollow(TextView textView, Boolean isFollow) {
+        Context context = textView.getContext();
+
+        if (isFollow) {
+            textView.setText("Followed");
+            textView.setTextColor(Color.parseColor("#ffffff"));
+            textView.setBackground(context.getResources().getDrawable(R.drawable.button_active));
+        } else {
+            textView.setText("Follow");
+            textView.setTextColor(context.getResources().getColor(R.color.black75));
+            textView.setBackground(context.getResources().getDrawable(R.drawable.button_border));
+        }
+
+    }
 }

@@ -49,7 +49,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
         recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        searchFeedAdapter = new SearchFeedAdapter(getmContext());
+        searchFeedAdapter = new SearchFeedAdapter(getmContext(), mPresentor);
         recyclerView.setAdapter(searchFeedAdapter);
     }
 

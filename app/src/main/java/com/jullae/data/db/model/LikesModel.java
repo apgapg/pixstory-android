@@ -30,7 +30,7 @@ public class LikesModel {
 
         private String user_penname;
 
-        private String user_followed;
+        private boolean user_followed;
 
         public String getUser_id() {
             return user_id;
@@ -64,11 +64,11 @@ public class LikesModel {
             this.user_penname = user_penname;
         }
 
-        public String getUser_followed() {
+        public boolean getUser_followed() {
             return user_followed;
         }
 
-        public void setUser_followed(String user_followed) {
+        public void setUser_followed(boolean user_followed) {
             this.user_followed = user_followed;
         }
 

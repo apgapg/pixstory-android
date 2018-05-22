@@ -25,10 +25,9 @@ import java.util.List;
 
 public class SearchPeopleFragment extends BaseFragment implements SearchFeedContract.View {
     private View view;
-    private SearchFeedPresentor searchFeedPresentor;
+    private SearchFeedPresentor mPresentor;
     private SearchFeedAdapter searchFeedAdapter;
     private String searchTag;
-    private TextView searchTextView;
     private AutoCompleteTextView autoCompleteTextView;
 
     @Nullable
@@ -41,7 +40,7 @@ public class SearchPeopleFragment extends BaseFragment implements SearchFeedCont
         }
         view = inflater.inflate(R.layout.fragment_search, container, false);
         searchTag = getArguments().getString("searchTag");
-        searchFeedPresentor = new SearchFeedPresentor();
+        mPresentor = new SearchFeedPresentor();
 
 
         autoCompleteTextView = view.findViewById(R.id.search_tag_field);
@@ -68,7 +67,7 @@ public class SearchPeopleFragment extends BaseFragment implements SearchFeedCont
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        searchFeedAdapter = new SearchFeedAdapter(getmContext());
+        searchFeedAdapter = new SearchFeedAdapter(getmContext(), mPresentor);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         //ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(mContext, R.dimen.item_offset);
@@ -81,7 +80,7 @@ public class SearchPeopleFragment extends BaseFragment implements SearchFeedCont
     }
 
     private void onSearchTextChanged(String searchTag) {
-        searchFeedPresentor.loadFeeds(searchTag);
+        mPresentor.loadFeeds(searchTag);
     }
 
     @Override
@@ -98,14 +97,14 @@ public class SearchPeopleFragment extends BaseFragment implements SearchFeedCont
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchFeedPresentor.attachView(this);
-        searchFeedPresentor.loadFeeds(searchTag);
+        mPresentor.attachView(this);
+        mPresentor.loadFeeds(searchTag);
 
     }
 
     @Override
     public void onDestroyView() {
-        searchFeedPresentor.detachView();
+        mPresentor.detachView();
 
         super.onDestroyView();
     }

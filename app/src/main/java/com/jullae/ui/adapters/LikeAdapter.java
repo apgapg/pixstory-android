@@ -1,38 +1,31 @@
 package com.jullae.ui.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.StringRequestListener;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
-import com.jullae.utils.GlideUtils;
+import com.jullae.databinding.ItemLikeBinding;
+import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.NetworkUtils;
+import com.jullae.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Rahul Abrol on 12/20/17.
- * <p>
- * Class @{@link LikeAdapter} used as a adapter of
- * the class @{@link com.jullae.ui.fragments.LikeDialogFragment}
- * to hold the elements of dialog fragment to show the users
- * who like the story.
  */
 
-public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
+public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder> {
 
     private static final String TAG = LikeAdapter.class.getName();
     List<LikesModel.Like> messagelist = new ArrayList();
@@ -46,48 +39,15 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
 
 
     @Override
-    public LikeAdapter.FeedHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        return new LikeAdapter.FeedHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_like, parent, false));
+    public LikeViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        ItemLikeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_like, parent, false);
+        return new LikeViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(final LikeAdapter.FeedHolder holder, final int position) {
-
-        holder.user_name.setText(messagelist.get(position).getUser_name());
-        holder.user_penname.setText(messagelist.get(position).getUser_penname());
-
-        GlideUtils.loadImagefromUrl(context, messagelist.get(position).getUser_avatar(), holder.user_image);
-        if (messagelist.get(position).getUser_followed().equals("true")) {
-            holder.user_followed.setTextColor(Color.parseColor("#ffffff"));
-            holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_active));
-        } else {
-            holder.user_followed.setTextColor(context.getResources().getColor(R.color.black75));
-            holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_border));
-
-        }
-
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull LikeAdapter.FeedHolder holder, int position, @NonNull List<Object> payloads) {
-
-        if (payloads.contains("follow") || payloads.contains("unfollow")) {
-            holder.progress_bar.setVisibility(View.VISIBLE);
-            holder.user_followed.setVisibility(View.INVISIBLE);
-
-        } else if (payloads.contains("follow_true")) {
-            holder.progress_bar.setVisibility(View.INVISIBLE);
-            holder.user_followed.setVisibility(View.VISIBLE);
-            holder.user_followed.setTextColor(Color.parseColor("#ffffff"));
-            holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_active));
-
-        } else if (payloads.contains("unfollow_true")) {
-            holder.progress_bar.setVisibility(View.INVISIBLE);
-            holder.user_followed.setVisibility(View.VISIBLE);
-            holder.user_followed.setTextColor(context.getResources().getColor(R.color.black75));
-            holder.user_followed.setBackground(context.getResources().getDrawable(R.drawable.button_border));
-        } else
-            super.onBindViewHolder(holder, position, payloads);
+    public void onBindViewHolder(final LikeViewHolder holder, final int position) {
+        holder.binding.setLikeModel(messagelist.get(position));
+        holder.binding.executePendingBindings();
     }
 
     @Override
@@ -110,65 +70,44 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.FeedHolder> {
 
     }
 
-    class FeedHolder extends RecyclerView.ViewHolder {
 
-        private ImageView user_image;
-        private TextView user_followed, user_name, user_penname;
-        private ProgressBar progress_bar;
+    class LikeViewHolder extends RecyclerView.ViewHolder {
+        private final ItemLikeBinding binding;
 
-        /**
-         * Constructor to initialize the view Attribute.
-         *
-         * @param itemView itemview
-         */
-        FeedHolder(final View itemView) {
-            super(itemView);
-            user_image = itemView.findViewById(R.id.image_avatar);
-            user_name = itemView.findViewById(R.id.text_name);
-            user_penname = itemView.findViewById(R.id.text_penname);
-            user_followed = itemView.findViewById(R.id.user_followed);
-            progress_bar = itemView.findViewById(R.id.progress_bar);
-
-            user_followed.setOnClickListener(new View.OnClickListener() {
+        LikeViewHolder(ItemLikeBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.userFollowed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String isFollowed = messagelist.get(getAdapterPosition()).getUser_followed();
+                    if (!messagelist.get(getAdapterPosition()).getUser_followed()) {
+                        messagelist.get(getAdapterPosition()).setUser_followed(true);
+                    } else {
+                        messagelist.get(getAdapterPosition()).setUser_followed(false);
+                    }
+                    notifyItemChanged(getAdapterPosition());
 
-                    if (isFollowed.equals("false"))
-                        notifyItemChanged(getAdapterPosition(), "follow");
-                    else notifyItemChanged(getAdapterPosition(), "unfollow");
+                    AppDataManager.getInstance().getmApiHelper().makeFollowReq(messagelist.get(getAdapterPosition()).getUser_id(), !messagelist.get(getAdapterPosition()).getUser_followed()).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
-                    Boolean is_followed;
-                    is_followed = messagelist.get(getAdapterPosition()).getUser_followed().equals("true");
-
-                    AppDataManager.getInstance().getmApiHelper().makeFollowReq(messagelist.get(getAdapterPosition()).getUser_id(), is_followed).getAsString(new StringRequestListener() {
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(BaseResponseModel response) {
                             NetworkUtils.parseResponse(TAG, response);
-                            if (messagelist.get(getAdapterPosition()).getUser_followed().equals("false")) {
-                                notifyItemChanged(getAdapterPosition(), "follow_true");
-                                messagelist.get(getAdapterPosition()).setUser_followed("true");
-                            } else {
-                                notifyItemChanged(getAdapterPosition(), "unfollow_true");
-                                messagelist.get(getAdapterPosition()).setUser_followed("false");
-                            }
                         }
 
                         @Override
                         public void onError(ANError anError) {
                             NetworkUtils.parseError(TAG, anError);
-                            if (messagelist.get(getAdapterPosition()).getUser_followed().equals("true")) {
-                                notifyItemChanged(getAdapterPosition(), "follow_true");
+                            ToastUtils.showNoInternetToast(context);
+                            if (!messagelist.get(getAdapterPosition()).getUser_followed()) {
+                                messagelist.get(getAdapterPosition()).setUser_followed(true);
                             } else {
-                                notifyItemChanged(getAdapterPosition(), "unfollow_true");
+                                messagelist.get(getAdapterPosition()).setUser_followed(false);
                             }
+                            notifyItemChanged(getAdapterPosition());
                         }
                     });
-
-
                 }
             });
         }
-
     }
 }
