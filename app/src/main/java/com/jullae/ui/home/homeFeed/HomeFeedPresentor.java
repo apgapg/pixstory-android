@@ -51,7 +51,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
     }
 
 
-    public void setLike(String id, final HomeFeedAdapter.ReqListener reqListener, String isLiked) {
+    public void setLike(String id, final HomeFeedAdapter.ReqListener reqListener, boolean isLiked) {
         checkViewAttached();
         AppDataManager.getInstance().getmApiHelper().setlikeReq(id, isLiked, Constants.LIKE_TYPE_PICTURE).getAsString(new StringRequestListener() {
             @Override

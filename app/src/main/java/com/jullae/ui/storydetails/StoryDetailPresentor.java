@@ -41,7 +41,7 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
         });
     }
 
-    public void setLike(String id, final StringReqListener reqListener, String isLiked) {
+    public void setLike(String id, final StringReqListener reqListener, boolean isLiked) {
         checkViewAttached();
         AppDataManager.getInstance().getmApiHelper().setlikeReq(id, isLiked, Constants.LIKE_TYPE_STORY).getAsString(new StringRequestListener() {
             @Override

@@ -5,13 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -60,7 +59,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         picOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        calculateoffset = AppUtils.convertdpTopx((((int) ((ApplicationClass) activity.getApplication()).getDpWidth()) / 2) - 128);
+        calculateoffset = AppUtils.convertdpTopx((((int) ((ApplicationClass) activity.getApplication()).getDpWidth()) / 2) - 132);
     }
 
 
@@ -154,8 +153,61 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private void showMenuOptions(final int adapterPosition, ImageView ivMore) {
-        PopupMenu popup = new PopupMenu(mContext, ivMore);
+    private void showMenuOptions(final int adapterPosition) {
+
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        View view;
+        if (messagelist.get(adapterPosition).getIs_self() && messagelist.get(adapterPosition).getStory_count() == 0)
+            view = mContext.getLayoutInflater().inflate(R.layout.picture_options_self, null);
+        else view = mContext.getLayoutInflater().inflate(R.layout.picture_options, null);
+
+
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.menu1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteStoryDialog(adapterPosition);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+
+                    }
+                }, 100);
+
+
+            }
+        });
+        view.findViewById(R.id.menu2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showReportStoryDialog(adapterPosition);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+
+                    }
+                }, 100);
+
+
+            }
+        });
+
+        view.findViewById(R.id.menu3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        dialog.show();
+
+
+       /* PopupMenu popup = new PopupMenu(mContext, ivMore);
         //inflating menu from xml resource
         if (messagelist.get(adapterPosition).getIs_self() && messagelist.get(adapterPosition).getStory_count() == 0)
             popup.inflate(R.menu.picture_options_self);
@@ -179,7 +231,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         });
         //displaying the popup
-        popup.show();
+        popup.show();*/
     }
 
     private void showDeleteStoryDialog(final int adapterPosition) {
@@ -285,7 +337,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showMenuOptions(getAdapterPosition(), ivMore);
+                    showMenuOptions(getAdapterPosition());
                 }
             });
             itemView.findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
@@ -349,14 +401,16 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             else notifyItemChanged(getAdapterPosition(), "unlike");
                             Toast.makeText(mContext.getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
                         }
-                    }, isLiked);
+                    }, Boolean.getBoolean(isLiked));
                 }
             });
 
             like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+                    if (!messagelist.get(getAdapterPosition()).getLike_count().equals("0"))
+
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
                 }
             });
 

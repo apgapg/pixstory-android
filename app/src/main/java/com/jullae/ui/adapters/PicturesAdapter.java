@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
+import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
+import com.jullae.ui.home.profile.pictureTab.PictureTabPresentor;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
@@ -34,11 +37,13 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
     private static final String TAG = PicturesAdapter.class.getName();
     private final Activity mContext;
     private final RequestOptions picOptions;
+    private final PictureTabPresentor mPresentor;
 
     List<PictureModel> messagelist = new ArrayList<>();
 
-    public PicturesAdapter(Activity activity) {
+    public PicturesAdapter(Activity activity, PictureTabPresentor mPresentor) {
         this.mContext = activity;
+        this.mPresentor = mPresentor;
 
         picOptions = new RequestOptions();
         picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
@@ -106,7 +111,39 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()));
+                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()), new AppUtils.LikeClickListener() {
+                        @Override
+                        public void onLikeClick() {
+                            Log.d(TAG, "onLikeClick: " + messagelist.get(getAdapterPosition()).getIs_liked());
+                            if (messagelist.get(getAdapterPosition()).getIs_liked()) {
+                                messagelist.get(getAdapterPosition()).setIs_liked(false);
+                                messagelist.get(getAdapterPosition()).setDecrementLikeCount();
+                            } else {
+                                messagelist.get(getAdapterPosition()).setIs_liked(true);
+                                messagelist.get(getAdapterPosition()).setIncrementLikeCount();
+                            }
+                            mPresentor.setLike(messagelist.get(getAdapterPosition()).getPicture_id(), new HomeFeedAdapter.ReqListener() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onFail() {
+                                    Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                                    if (messagelist.get(getAdapterPosition()).getIs_liked()) {
+                                        messagelist.get(getAdapterPosition()).setIs_liked(false);
+                                        messagelist.get(getAdapterPosition()).setDecrementLikeCount();
+                                    } else {
+                                        messagelist.get(getAdapterPosition()).setIs_liked(true);
+                                        messagelist.get(getAdapterPosition()).setIncrementLikeCount();
+                                    }
+                                }
+                            }, !messagelist.get(getAdapterPosition()).getIs_liked());
+
+
+                        }
+                    });
                 }
             });
 
@@ -130,7 +167,8 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
             picture_like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+                    if (messagelist.get(getAdapterPosition()).getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
                 }
             });
         }

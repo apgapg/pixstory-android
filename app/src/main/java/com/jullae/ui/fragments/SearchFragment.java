@@ -46,7 +46,7 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getmContext().finish();
+                getmContext().onBackPressed();
             }
         });
 
@@ -62,10 +62,6 @@ public class SearchFragment extends BaseFragment implements SearchFeedContract.V
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // autoCompleteTextView.setText("");
-
-
-                        // ((HomeActivity) getmContext()).showSearchActivity(searchTag);
                         onSearchTextChanged(searchTag);
 
                     }

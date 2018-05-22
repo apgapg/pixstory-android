@@ -78,7 +78,9 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         pic_like_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.showLikesDialog(PictureDetailActivity.this, pictureModel.getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+                if (pictureModel.getLike_count() != 0)
+
+                    AppUtils.showLikesDialog(PictureDetailActivity.this, pictureModel.getPicture_id(), Constants.LIKE_TYPE_PICTURE);
             }
         });
 

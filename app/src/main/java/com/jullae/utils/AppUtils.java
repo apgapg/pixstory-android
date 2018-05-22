@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
@@ -24,6 +24,7 @@ import com.jullae.SearchActivity;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.PictureModel;
+import com.jullae.databinding.DialogFullPictureBinding;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.editStory.EditStoryActivity;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
@@ -180,24 +181,14 @@ public class AppUtils {
 
     }
 
-    public static void showFullPictureDialog(Activity mContext, PictureModel pictureModel) {
+    public static void showFullPictureDialog(Activity mContext, final PictureModel pictureModel, final LikeClickListener listener) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-        View view = mContext.getLayoutInflater().inflate(R.layout.dialog_full_picture, null);
-        ImageView image = view.findViewById(R.id.image);
-        ImageView user_photo = view.findViewById(R.id.user_photo);
-        TextView user_name = view.findViewById(R.id.text_name);
-        TextView pic_title = view.findViewById(R.id.pic_title);
-        TextView pic_like_count = view.findViewById(R.id.pic_like_count);
-        TextView pic_story_count = view.findViewById(R.id.pic_comment_count);
-        user_name.setText(pictureModel.getPhotographer_name());
-        pic_title.setText(pictureModel.getPicture_title());
-        pic_like_count.setText(pictureModel.getLike_count() + " likes");
-        pic_story_count.setText(pictureModel.getStory_count() + " stories");
+        DialogFullPictureBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.dialog_full_picture, null, false);
+        View view = binding.getRoot();
+        binding.setPictureModel(pictureModel);
 
-        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url(), image);
-        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPhotographer_avatar(), user_photo);
-        dialogBuilder.setView(view);
+        dialogBuilder.setView(binding.getRoot());
 
         final AlertDialog dialog = dialogBuilder.create();
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
@@ -205,6 +196,16 @@ public class AppUtils {
             public void onClick(View v) {
                 dialog.dismiss();
             }
+        });
+
+        binding.getRoot().findViewById(R.id.image_like).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onLikeClick();
+                /**/
+            }
+
+
         });
         dialog.show();
     }
@@ -215,6 +216,33 @@ public class AppUtils {
         intent.putExtra(Constants.REFRESH_MODE, refreshCode);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
+
+   /* private static void sendLikeReq(String picture_id, boolean b, final AlertDialog dialog) {
+        AppDataManager.getInstance().getmApiHelper().setlikeReq(picture_id, String.valueOf(b), Constants.LIKE_TYPE_PICTURE).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if(dialog.isShowing()){
+
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+if(di)
+            }
+        });
+
+    }
+
+    private static void setToLike(ImageView image_like) {
+        image_like.setImageResource(R.drawable.ic_like);
+    }
+
+    private static void setToUnLike(ImageView image_like, PictureModel pictureModel) {
+        image_like.setImageResource(R.drawable.ic_like);
+    }*/
 
     public static void showLogoutDialog(final Activity context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -245,12 +273,20 @@ public class AppUtils {
         return ApplicationClass.density * i;
     }
 
-
     public static void showEditStoryActivity(Activity activity, String story_id, String story_title, String story_text) {
         Intent i = new Intent(activity, EditStoryActivity.class);
         i.putExtra("story_id", story_id);
         i.putExtra("story_title", story_title);
         i.putExtra("story_text", story_text);
         activity.startActivity(i);
+    }
+
+    public static void changeLike(PictureModel pictureModel) {
+
+    }
+
+
+    public interface LikeClickListener {
+        void onLikeClick();
     }
 }

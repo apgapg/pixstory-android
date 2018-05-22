@@ -111,7 +111,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel());
+                    // AppUtils.==ictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel());
                 }
             });
         }

@@ -1,8 +1,16 @@
 package com.jullae.ui.base;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.jullae.data.AppDataManager;
+import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
+import com.jullae.utils.Constants;
+import com.jullae.utils.NetworkUtils;
+
 public class BasePresentor<T extends MvpView> implements Presentor<T> {
 
 
+    private static final String TAG = BasePresentor.class.getName();
     private T mMvpView;
 
 
@@ -35,4 +43,25 @@ public class BasePresentor<T extends MvpView> implements Presentor<T> {
                     " requesting data to the Presenter");
         }
     }
+
+    public void setLike(String id, final HomeFeedAdapter.ReqListener reqListener, boolean isLiked) {
+        checkViewAttached();
+        AppDataManager.getInstance().getmApiHelper().setlikeReq(id, isLiked, Constants.LIKE_TYPE_PICTURE).getAsString(new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached())
+                    reqListener.onSuccess();
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached())
+                    reqListener.onFail();
+            }
+        });
+    }
+
 }

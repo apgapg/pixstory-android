@@ -19,6 +19,7 @@ import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.ui.home.profile.draftTab.DraftTabAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
@@ -162,7 +163,39 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel());
+                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel(), new AppUtils.LikeClickListener() {
+                        @Override
+                        public void onLikeClick() {
+                            Log.d(TAG, "onLikeClick: " + messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked());
+                            if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
+                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
+                                messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
+                            } else {
+                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
+                                messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
+                            }
+                            mPresentor.setLike(messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), new HomeFeedAdapter.ReqListener() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onFail() {
+                                    Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                                    if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
+                                        messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
+                                        messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
+                                    } else {
+                                        messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
+                                        messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
+                                    }
+                                }
+                            }, !messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked());
+
+
+                        }
+                    });
                 }
             });
         }

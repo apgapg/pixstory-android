@@ -56,7 +56,7 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
 
     public void sendStoryDraftReq(String title, String content, String picture_id) {
         checkViewAttached();
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(content)) {
+        if (checkNonEmptyFields(title, content)) {
             getMvpView().showProgressBar();
             AppDataManager.getInstance().getmApiHelper().draftStory(title, content, picture_id).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 

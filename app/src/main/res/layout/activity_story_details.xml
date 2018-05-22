@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
 
 
-    <include layout="@layout/content_story_details" />
+    <include layout="@layout/fragment_story_details" />
 
     <!-- Bottom Sheet Dialog Content @set app:layout_behavior = "android.support.design.widget.BottomSheetBehavior" -->
     <android.support.v4.widget.NestedScrollView

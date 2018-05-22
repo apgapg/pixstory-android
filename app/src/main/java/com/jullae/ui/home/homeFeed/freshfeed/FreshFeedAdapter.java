@@ -173,14 +173,17 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             pic_like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+                    if (messagelist.get(getAdapterPosition()).getPictureModel().getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), Constants.LIKE_TYPE_PICTURE);
                 }
             });
 
             story_like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
+                    if (!messagelist.get(getAdapterPosition()).getStoryModel().getLike_count().equals("0"))
+
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
                 }
             });
 

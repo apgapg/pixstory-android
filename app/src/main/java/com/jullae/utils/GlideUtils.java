@@ -1,6 +1,7 @@
 package com.jullae.utils;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.widget.ImageView;
 
@@ -11,6 +12,14 @@ public class GlideUtils {
 
     public static void loadImagefromUrl(Context mContext, String url, ImageView imageView) {
         GlideApp.with(mContext).load(new CustomGlideUrl(url)).thumbnail(0.1f).into(imageView);
+
+    }
+
+    @BindingAdapter("imageUrl")
+    public static void loadImagefromUrl(ImageView imageView, String url) {
+        Context context = imageView.getContext();
+        if (url != null)
+            GlideApp.with(context).load(new CustomGlideUrl(url)).thumbnail(0.1f).into(imageView);
 
     }
 

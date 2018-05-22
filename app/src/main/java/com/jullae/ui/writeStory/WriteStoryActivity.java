@@ -118,7 +118,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     @Override
     public void onContentEmpty() {
-        Toast.makeText(getApplicationContext(), "story cannnot be empty!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Story cannnot be empty!", Toast.LENGTH_SHORT).show();
 
 
     }

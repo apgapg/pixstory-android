@@ -21,9 +21,6 @@ import com.jullae.ui.base.BaseActivity;
 public class StoryDetailActivity extends BaseActivity {
 
 
-    private String storyModel;
-    private String story_id;
-
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

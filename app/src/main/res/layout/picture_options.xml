@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/menu1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="@string/delete_picture"
+        android:textAppearance="@style/text_14.regular.primary"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/menu2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="@string/report_picture"
+        android:textAppearance="@style/text_14.regular.primary" />
+
+
+    <TextView
+        android:id="@+id/menu3"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="@string/share_on_facebook"
+        android:textAppearance="@style/text_14.regular.primary" />
+
+
+</LinearLayout>

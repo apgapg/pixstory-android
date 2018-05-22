@@ -62,7 +62,7 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
         recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        picturesAdapter = new PicturesAdapter(getmContext());
+        picturesAdapter = new PicturesAdapter(getmContext(), mPresentor);
         recyclerView.setAdapter(picturesAdapter);
     }
 

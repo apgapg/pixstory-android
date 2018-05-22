@@ -205,7 +205,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cleanUpSearchContainer();
+                onBackPressed();
             }
         });
 
@@ -215,6 +215,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
     private void cleanUpSearchContainer() {
         findViewById(R.id.search_container).setVisibility(View.GONE);
         autoCompleteTextView.setText("");
+        KeyboardUtils.hideKeyboard(this);
     }
 
     private void showAddImageOption() {
@@ -406,7 +407,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
 
     @Override
     public void onPictureUploadSuccess() {
-        AppUtils.sendRefreshBroadcast(this, Constants.REFRESH_PICTURES_TAB);
+        AppUtils.sendRefreshBroadcast(this, Constants.REFRESH_HOME_FEEDS);
     }
 
     public void updateNotificationIcon(boolean unread_notifications) {

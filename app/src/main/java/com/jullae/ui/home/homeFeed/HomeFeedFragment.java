@@ -42,9 +42,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
             switch (refreshMode) {
                 case Constants.REFRESH_HOME_FEEDS:
                     loadFeeds();
-
                     break;
-
             }
         }
     };

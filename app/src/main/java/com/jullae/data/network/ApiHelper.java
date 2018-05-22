@@ -128,9 +128,9 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest setlikeReq(String id, String isLiked, int likeType) {
+    public ANRequest setlikeReq(String id, boolean isLiked, int likeType) {
         String url;
-        if (isLiked.equals("false")) {
+        if (!isLiked) {
             if (likeType == Constants.LIKE_TYPE_PICTURE)
                 url = ENDPOINT_LIKE_PICTURE_URL;
             else url = ENDPOINT_LIKE_STORY_URL;

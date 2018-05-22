@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -32,18 +33,16 @@ import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.databinding.FragmentStoryDetailsBinding;
 import com.jullae.ui.adapters.CommentsAdapter;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
-import com.jullae.utils.GlideUtils;
 import com.jullae.utils.GsonUtils;
 import com.jullae.utils.NetworkUtils;
 import com.jullae.utils.ToastUtils;
 import com.jullae.utils.dialog.MyProgressDialog;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 public class StoryDetailFragment extends BaseFragment implements StoryDetailView {
 
@@ -54,21 +53,14 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private TextView like_count;
     private StoryModel storyModel;
     private TextView user_followed;
-    private TextView comment_count;
     private CommentsAdapter commentsAdapter;
     private EditText addCommentField;
     private ImageView btn_add_comment;
     private View progressBarComment;
-    private View btn_more;
     private BottomSheetBehavior<View> mBottomSheetBehavior;
-    private EditText field_report;
-    private TextView btn_report;
-    private LikeAdapter likeAdapter;
+
     private View view;
     private StoryDetailPresentor mPresentor;
-    private TextView story_title, user_name, user_penname;
-    private HtmlTextView story_text;
-    private ImageView user_image;
     private View btn_close;
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -84,6 +76,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         }
     };
+    private FragmentStoryDetailsBinding binding;
+    private LikeAdapter likeAdapter;
 
     @Nullable
     @Override
@@ -93,22 +87,13 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 ((ViewGroup) view.getParent()).removeView(view);
             return view;
         }
-        view = inflater.inflate(R.layout.content_story_details, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story_details, container, false);
+        view = binding.getRoot();
 
-        story_title = view.findViewById(R.id.text_title);
         btn_close = view.findViewById(R.id.close);
-        user_name = view.findViewById(R.id.text_name);
-        user_image = view.findViewById(R.id.image_avatar);
-        user_penname = view.findViewById(R.id.text_penname);
-        story_text = view.findViewById(R.id.story_text);
         like_count = view.findViewById(R.id.like_count);
-        comment_count = view.findViewById(R.id.comment_count);
-        btn_more = view.findViewById(R.id.btn_more);
-
         setupAddComment();
-
         getArgumentsData();
-
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,22 +101,32 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
-        story_title.setOnClickListener(new View.OnClickListener() {
+        setStoryContainerHeight();
+        view.findViewById(R.id.text_title).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((StoryDetailActivity) getmContext()).showSearchResults(storyModel.getStory_title());
+
             }
         });
-
-        setStoryContainerHeight();
-
+        view.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
         mPresentor = new StoryDetailPresentor();
 
         return view;
     }
 
+
     private void setStoryContainerHeight() {
-        story_text.setMinHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 204)));
+        ((TextView) view.findViewById(R.id.story_text)).setMinHeight((int) AppUtils.convertdpTopx((int) (((ApplicationClass) getmContext().getApplication()).getDpHeight() - 204)));
     }
 
     private void getArgumentsData() {
@@ -141,18 +136,10 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             storyModel.setStory_id(getArguments().getString("story_id"));
         } else if (getArguments().getString("storymodel") != null) {
             storyModel = GsonUtils.getInstance().fromJson(getArguments().getString("storymodel"), StoryModel.class);
-            setStoryDetails();
+            binding.setStoryModel(this.storyModel);
         }
     }
 
-    private void setStoryDetails() {
-        story_title.setText(storyModel.getStory_title());
-        user_name.setText(storyModel.getWriter_name());
-        user_penname.setText(storyModel.getWriter_name());
-        story_text.setHtml(storyModel.getStory_text());
-        comment_count.setText(storyModel.getComment_count() + " comments");
-        GlideUtils.loadImagefromUrl(getmContext(), storyModel.getWriter_avatar(), user_image);
-    }
 
     private void setUpFollowedButton() {
         user_followed = view.findViewById(R.id.user_followed);
@@ -217,16 +204,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
-        btn_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-            }
-        });
 
         view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,6 +277,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                         updateCommentUI(1);
 
                         commentsAdapter.addComment(commentModel);
+                        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_HOME_FEEDS);
                     }
 
                     @Override
@@ -458,7 +436,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         like_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.showLikesDialog(getmContext(), storyModel.getStory_id(), Constants.LIKE_TYPE_STORY);
+                if (!storyModel.getLike_count().equals("0"))
+
+                    AppUtils.showLikesDialog(getmContext(), storyModel.getStory_id(), Constants.LIKE_TYPE_STORY);
             }
         });
     }
@@ -485,7 +465,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     }
 
     private void makeLikeRequest(String isLiked, final StoryModel storyModel) {
-        mPresentor.setLike(storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+        /*mPresentor.setLike(storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
             @Override
             public void onSuccess() {
             }
@@ -497,7 +477,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 else updatetoUnlike();
                 Toast.makeText(getmContext().getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
             }
-        }, isLiked);
+        }, isLiked);*/
     }
 
     @Override
@@ -533,7 +513,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     @Override
     public void onStoryDetailFetchSuccess(StoryModel storyModel) {
         this.storyModel = storyModel;
-        setStoryDetails();
+        binding.setStoryModel(this.storyModel);
+
         if (!storyModel.getIs_self())
             setUpFollowedButton();
         setupMoreBottomSheet();
@@ -574,12 +555,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         Toast.makeText(getmContext().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+
     public interface FollowReqListener {
         void onSuccess();
 
         void onFail();
     }
-
 
     public interface ReqListener {
         void onSuccess();

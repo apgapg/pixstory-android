@@ -1,8 +1,13 @@
 package com.jullae.data.db.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.android.databinding.library.baseAdapters.BR;
+
 import java.util.Date;
 
-public class PictureModel {
+public class PictureModel extends BaseObservable {
 
     private String picture_id;
     private String picture_title;
@@ -12,10 +17,10 @@ public class PictureModel {
     private String photographer_name;
     private String photographer_penname;
     private String photographer_avatar;
-    private String like_count;
+    private int like_count;
     private String story_count;
     private Date created_at;
-    private String is_liked;
+    private boolean is_liked;
     private String is_followed;
     private String is_self;
 
@@ -40,8 +45,14 @@ public class PictureModel {
         return is_followed;
     }
 
-    public String getLike_count() {
+    @Bindable
+    public int getLike_count() {
         return like_count;
+    }
+
+    public void setLike_count(int like_count) {
+        this.like_count = like_count;
+        notifyPropertyChanged(BR.like_count);
     }
 
     public String getPhotographer_penname() {
@@ -50,10 +61,6 @@ public class PictureModel {
 
     public String getPicture_id() {
         return picture_id;
-    }
-
-    private String getIs_liked() {
-        return is_liked;
     }
 
     private String getIs_self() {
@@ -74,5 +81,26 @@ public class PictureModel {
 
     public String getStory_count() {
         return story_count;
+    }
+
+    @Bindable
+    public boolean getIs_liked() {
+        return is_liked;
+    }
+
+    public void setIs_liked(boolean is_liked) {
+        this.is_liked = is_liked;
+        notifyPropertyChanged(BR.is_liked);
+    }
+
+    public void setDecrementLikeCount() {
+        this.like_count--;
+        notifyPropertyChanged(BR.like_count);
+
+    }
+
+    public void setIncrementLikeCount() {
+        this.like_count++;
+        notifyPropertyChanged(BR.like_count);
     }
 }
