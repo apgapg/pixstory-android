@@ -2,6 +2,7 @@ package com.jullae.ui.adapters;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +46,15 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
     }
 
     @Override
+    public void onBindViewHolder(@NonNull LikeViewHolder holder, int position, @NonNull List<Object> payloads) {
+
+        if (!payloads.isEmpty()) {
+            holder.binding.executePendingBindings();
+        } else
+            super.onBindViewHolder(holder, position, payloads);
+    }
+
+    @Override
     public void onBindViewHolder(final LikeViewHolder holder, final int position) {
         holder.binding.setLikeModel(messagelist.get(position));
         holder.binding.executePendingBindings();
@@ -85,7 +95,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                     } else {
                         messagelist.get(getAdapterPosition()).setUser_followed(false);
                     }
-                    notifyItemChanged(getAdapterPosition());
+                    notifyItemChanged(getAdapterPosition(), "follow");
 
                     AppDataManager.getInstance().getmApiHelper().makeFollowReq(messagelist.get(getAdapterPosition()).getUser_id(), !messagelist.get(getAdapterPosition()).getUser_followed()).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
 
@@ -103,7 +113,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                             } else {
                                 messagelist.get(getAdapterPosition()).setUser_followed(false);
                             }
-                            notifyItemChanged(getAdapterPosition());
+                            notifyItemChanged(getAdapterPosition(), "follow");
                         }
                     });
                 }

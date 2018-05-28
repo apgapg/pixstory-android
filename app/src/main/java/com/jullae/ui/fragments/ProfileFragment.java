@@ -45,8 +45,8 @@ import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
+import com.jullae.utils.MyProgressDialog;
 import com.jullae.utils.ReqListener;
-import com.jullae.utils.dialog.MyProgressDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

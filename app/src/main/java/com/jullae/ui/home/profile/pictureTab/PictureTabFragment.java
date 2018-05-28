@@ -41,6 +41,9 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
                 case Constants.REFRESH_PICTURES_TAB:
                     mPresentor.loadFeeds(penname);
                     break;
+                case Constants.REFRESH_HOME_FEEDS:
+                    mPresentor.loadFeeds(penname);
+                    break;
 
             }
         }
@@ -101,6 +104,6 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     }
 
     /*public void refreshfeeds() {
-        mPresentor.loadFeeds(penname);
+        mPresentor.loadData(penname);
     }*/
 }

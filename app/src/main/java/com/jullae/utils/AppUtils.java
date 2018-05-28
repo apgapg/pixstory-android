@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -181,7 +182,7 @@ public class AppUtils {
 
     }
 
-    public static void showFullPictureDialog(Activity mContext, final PictureModel pictureModel, final LikeClickListener listener) {
+    public static void showFullPictureDialog(final Activity mContext, final PictureModel pictureModel, final LikeClickListener listener) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         DialogFullPictureBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.dialog_full_picture, null, false);
@@ -206,6 +207,20 @@ public class AppUtils {
             }
 
 
+        });
+
+        binding.writeStory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showWriteStoryDialog(mContext, pictureModel.getPicture_id());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                }, 300);
+
+            }
         });
         dialog.show();
     }

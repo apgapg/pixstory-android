@@ -22,7 +22,7 @@ import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
-import com.jullae.utils.dialog.MyProgressDialog;
+import com.jullae.utils.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;

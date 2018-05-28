@@ -62,6 +62,8 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
             mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
         }
 
+        mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
+
         user_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

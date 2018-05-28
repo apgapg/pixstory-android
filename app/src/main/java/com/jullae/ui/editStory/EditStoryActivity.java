@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.jullae.R;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
-import com.jullae.utils.dialog.MyProgressDialog;
+import com.jullae.utils.MyProgressDialog;
 
 import java.util.Arrays;
 

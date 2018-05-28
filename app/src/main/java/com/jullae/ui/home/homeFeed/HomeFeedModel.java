@@ -1,7 +1,11 @@
 package com.jullae.ui.home.homeFeed;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.jullae.BR;
 import com.jullae.data.db.model.StoryModel;
 
 import java.util.Date;
@@ -22,7 +26,7 @@ public class HomeFeedModel {
         return feedlist;
     }
 
-    public class Feed {
+    public class Feed extends BaseObservable {
 
 
         List<StoryModel> stories;
@@ -34,10 +38,10 @@ public class HomeFeedModel {
         private String picture_title;
         private Date created_at;
         private String picture_url;
-        private String like_count;
+        private int like_count;
         private int story_count;
         private String nav_story_id;
-        private String is_liked;
+        private boolean is_liked;
         private String is_followed;
         private boolean is_self;
         private int highlightStoryIndex;
@@ -58,12 +62,15 @@ public class HomeFeedModel {
             return is_followed;
         }
 
-        public String getIs_liked() {
+        @Bindable
+        public boolean getIs_liked() {
             return is_liked;
         }
 
-        public void setIs_liked(String is_liked) {
+        public void setIs_liked(boolean is_liked) {
             this.is_liked = is_liked;
+            notifyPropertyChanged(BR.is_liked);
+
         }
 
         public Date getCreated_at() {
@@ -82,11 +89,12 @@ public class HomeFeedModel {
             return photographer_name;
         }
 
-        public String getLike_count() {
+        @Bindable
+        public int getLike_count() {
             return like_count;
         }
 
-        public void setLike_count(String like_count) {
+        public void setLike_count(int like_count) {
             this.like_count = like_count;
         }
 
@@ -116,6 +124,16 @@ public class HomeFeedModel {
 
         public boolean getIs_self() {
             return is_self;
+        }
+
+        public void setDecrementLikeCount() {
+            this.like_count--;
+            notifyPropertyChanged(BR.like_count);
+        }
+
+        public void setIncrementLikeCount() {
+            this.like_count++;
+            notifyPropertyChanged(BR.like_count);
         }
     }
 

@@ -1,6 +1,5 @@
 package com.jullae.ui.home.homeFeed;
 
-import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.base.MvpView;
 
 public interface HomeFeedView extends MvpView {
@@ -12,9 +11,7 @@ public interface HomeFeedView extends MvpView {
 
     void hideProgress();
 
-    void onLikesListFetchSuccess(LikesModel likesModel);
 
-    void onLikesListFetchFail();
 
     void onPictureDeleteSuccess();
 

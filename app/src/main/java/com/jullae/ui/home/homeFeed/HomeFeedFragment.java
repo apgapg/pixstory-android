@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jullae.R;
-import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
@@ -168,17 +167,6 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     @Override
     public void hideProgress() {
         swipeRefresh.setRefreshing(false);
-
-    }
-
-    @Override
-    public void onLikesListFetchSuccess(LikesModel likesModel) {
-        homeFeedAdapter.onLikesListFetchSuccess(likesModel);
-    }
-
-    @Override
-    public void onLikesListFetchFail() {
-        homeFeedAdapter.onLikesListFetchFail();
 
     }
 

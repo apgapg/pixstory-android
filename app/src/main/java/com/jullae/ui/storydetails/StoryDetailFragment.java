@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jullae.ApplicationClass;
-import com.jullae.DialogUtils;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.CommentModel;
@@ -39,10 +38,11 @@ import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GsonUtils;
+import com.jullae.utils.MyProgressDialog;
 import com.jullae.utils.NetworkUtils;
 import com.jullae.utils.ToastUtils;
-import com.jullae.utils.dialog.MyProgressDialog;
 
 public class StoryDetailFragment extends BaseFragment implements StoryDetailView {
 

@@ -1,133 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="pictureModel"
+            type="com.jullae.data.db.model.PictureModel" />
+    </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="#fff"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="#fff"
+            android:orientation="horizontal">
 
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingBottom="6dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="6dp"
-            android:scaleType="centerCrop" />
-
-        <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="6dp"
-            android:paddingRight="4dp"
-            android:paddingTop="4dp">
-
-
-            <TextView
-                android:id="@+id/picture_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textAppearance="@style/text_14.regular.primary"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="8dp"
+                android:paddingTop="6dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="6dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{pictureModel.picture_url}" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="6dp"
+                android:paddingTop="4dp"
+                android:paddingRight="4dp">
+
 
                 <TextView
+                    android:id="@+id/picture_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by"
+                    android:text="@{pictureModel.picture_title}"
+                    android:textAppearance="@style/text_14.regular.primary"
+                    android:textStyle="bold" />
 
-
-                    android:textAppearance="@style/text_12.light.secondary" />
-
-
-                <TextView
-                    android:id="@+id/user_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="4dp"
-                    android:text="Username"
-                    android:textAppearance="@style/text_12.medium.primary" />
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="by"
 
 
-            <TextView
-                android:id="@+id/text_write_story"
-                android:layout_width="130dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/button_border"
-                android:gravity="center"
-                android:text="WRITE A STORY"
-                android:textColor="#424242"
-                android:textSize="12dp" />
+                        android:textAppearance="@style/text_12.light.secondary" />
 
-            <TextView
-                android:id="@+id/view_all_stories"
-                android:layout_width="130dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="4dp"
 
-                android:background="@drawable/button_border"
-                android:gravity="center"
-                android:text="VIEW ALL STORIES"
-                android:textColor="#424242"
-                android:textSize="12dp" />
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="@{pictureModel.photographer_name}"
+                        android:textAppearance="@style/text_12.medium.primary" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/story_like_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="4dp"
-
-                    android:paddingTop="4dp"
-                    android:text="3 likes"
-
-                    android:textAppearance="@style/text_12.light.secondary" />
+                </LinearLayout>
 
 
                 <TextView
-                    android:id="@+id/story_comment_count"
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
+                    android:id="@+id/text_write_story"
+                    android:layout_width="130dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/button_border"
                     android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:paddingTop="4dp"
-                    android:text="1 stories"
+                    android:text="WRITE A STORY"
+                    android:textColor="#424242"
+                    android:textSize="12dp" />
 
-                    android:textAppearance="@style/text_12.light.secondary" />
+                <TextView
+                    android:id="@+id/view_all_stories"
+                    android:layout_width="130dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="4dp"
+
+                    android:background="@drawable/button_border"
+                    android:gravity="center"
+                    android:text="VIEW ALL STORIES"
+                    android:textColor="#424242"
+                    android:textSize="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/story_like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingTop="4dp"
+                        android:paddingRight="4dp"
+
+                        android:paddingBottom="4dp"
+                        android:text="@{pictureModel.like_count+ ` likes`}"
+
+                        android:textAppearance="@style/text_12.light.secondary" />
 
 
+                    <TextView
+                        android:id="@+id/story_comment_count"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingLeft="4dp"
+                        android:paddingTop="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="4dp"
+                        android:text="@{pictureModel.story_count+ ` stories`}"
+
+                        android:textAppearance="@style/text_12.light.secondary" />
+
+
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
 
-
+        <include layout="@layout/vertical_divider_light" />
     </LinearLayout>
-
-    <include layout="@layout/vertical_divider_light" />
-</LinearLayout>
+</layout>

@@ -23,7 +23,7 @@ import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.ui.home.profile.draftTab.DraftTabAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
-import com.jullae.utils.dialog.MyProgressDialog;
+import com.jullae.utils.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;

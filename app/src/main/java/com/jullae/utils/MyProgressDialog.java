@@ -1,4 +1,4 @@
-package com.jullae.utils.dialog;
+package com.jullae.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;

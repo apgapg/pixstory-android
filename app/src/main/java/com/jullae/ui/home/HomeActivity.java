@@ -28,6 +28,7 @@ import com.jullae.data.db.model.SearchPeopleMainModel;
 import com.jullae.ui.adapters.SearchPersonAdapter;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.fragments.HomeFragment;
+import com.jullae.ui.home.addStory.AddStoryFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.FreshFeedFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.notification.NotificationActivity;
@@ -35,7 +36,7 @@ import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.KeyboardUtils;
-import com.jullae.utils.dialog.MyProgressDialog;
+import com.jullae.utils.MyProgressDialog;
 import com.kbeanie.multipicker.api.ImagePicker;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -137,6 +138,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             }
         });
 
+
         findViewById(R.id.text_add_picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +148,20 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                     public void run() {
                         showAddImageOption();
                         // showImageChooseDialog();
+
+                    }
+                }, 300);
+            }
+        });
+        findViewById(R.id.text_add_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        showFragment(new AddStoryFragment(), true);                        // showImageChooseDialog();
 
                     }
                 }, 300);

@@ -1,7 +1,11 @@
 package com.jullae.data.db.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.jullae.BR;
 
 import java.util.List;
 
@@ -20,7 +24,7 @@ public class LikesModel {
     }
 
 
-    public class Like {
+    public class Like extends BaseObservable {
 
 
         private String user_id;
@@ -64,12 +68,14 @@ public class LikesModel {
             this.user_penname = user_penname;
         }
 
+        @Bindable
         public boolean getUser_followed() {
             return user_followed;
         }
 
         public void setUser_followed(boolean user_followed) {
             this.user_followed = user_followed;
+            notifyPropertyChanged(BR.user_followed);
         }
 
 

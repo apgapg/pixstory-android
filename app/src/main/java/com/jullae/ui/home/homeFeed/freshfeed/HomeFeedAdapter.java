@@ -3,8 +3,7 @@ package com.jullae.ui.home.homeFeed.freshfeed;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,16 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
-import com.jullae.data.db.model.LikesModel;
-import com.jullae.ui.adapters.LikeAdapter;
+import com.jullae.databinding.ItemHomeFeedBinding;
 import com.jullae.ui.custom.ItemOffLRsetDecoration;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
@@ -31,7 +26,6 @@ import com.jullae.ui.home.homeFeed.StoryAdapter;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
-import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,94 +35,52 @@ import java.util.List;
  * Created by master on 1/5/17.
  */
 
-public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFeedViewHolder> {
 
     private static final String TAG = HomeFeedAdapter.class.getName();
     private final Activity mContext;
-    private final RequestOptions picOptions;
     private final HomeFeedPresentor mPresentor;
     private final float calculateoffset;
 
     List<HomeFeedModel.Feed> messagelist = new ArrayList<HomeFeedModel.Feed>();
-    private LikeAdapter likeAdapter;
 
     public HomeFeedAdapter(Activity activity, HomeFeedPresentor homeFeedPresentor) {
         this.mContext = activity;
 
         this.mPresentor = homeFeedPresentor;
 
-        picOptions = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         calculateoffset = AppUtils.convertdpTopx((((int) ((ApplicationClass) activity.getApplication()).getDpWidth()) / 2) - 132);
     }
 
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HomeFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_feed, parent, false));
+    public HomeFeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemHomeFeedBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_home_feed, parent, false);
+        return new HomeFeedViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
-
-        GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getPicture_url(), viewHolder.image);
-
-        viewHolder.user_name.setText(messagelist.get(position).getPhotographer_name());
-        viewHolder.user_penname.setText(messagelist.get(position).getPhotographer_penname());
-
-        GlideUtils.loadImagefromUrl(mContext, messagelist.get(position).getPhotographer_avatar(), viewHolder.user_image);
+    public void onBindViewHolder(@NonNull HomeFeedViewHolder viewHolder, int position) {
 
 
-        viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
-        viewHolder.story_count.setText(messagelist.get(position).getStory_count() + " stories");
         if (messagelist.get(position).getStories().size() != 0) {
-            viewHolder.storyAdapter.add(messagelist.get(position).getStories());
-            Log.d(TAG, "onBindViewHolder: " + messagelist.get(position).getHighlightStoryIndex());
-            viewHolder.linearLayoutManager.scrollToPositionWithOffset(messagelist.get(position).getHighlightStoryIndex(), (int) calculateoffset);
-        } else viewHolder.storyAdapter.addEmptyMessage(messagelist.get(position).getPicture_id());
+            ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).add(messagelist.get(position).getStories());
+            ((LinearLayoutManager) viewHolder.binding.recyclerViewStory.getLayoutManager()).scrollToPositionWithOffset(messagelist.get(position).getHighlightStoryIndex(), (int) calculateoffset);
+        } else
+            ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).addEmptyMessage(messagelist.get(position).getPicture_id());
 
+        viewHolder.binding.setFeed(messagelist.get(position));
+        viewHolder.binding.executePendingBindings();
 
-        if (messagelist.get(position).getIs_liked().equals("false")) {
-            viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);
-            viewHolder.like_count.setTextColor(Color.parseColor("#9e9e9e"));
-            viewHolder.like_count.setTypeface(Typeface.DEFAULT);
-        } else {
-            viewHolder.btn_like.setImageResource(R.drawable.ic_like);
-            viewHolder.like_count.setTextColor(Color.parseColor("#424242"));
-            viewHolder.like_count.setTypeface(Typeface.DEFAULT_BOLD);
-
-        }
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
-        HomeFeedViewHolder viewHolder = (HomeFeedViewHolder) holder;
-
-        if (payloads.contains("like")) {
-            messagelist.get(position).setIs_liked("true");
-            viewHolder.btn_like.setImageResource(R.drawable.ic_like);
-            viewHolder.like_count.setText(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) + 1) + " likes");
-            messagelist.get(position).setLike_count(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) + 1));
-            viewHolder.like_count.setTextColor(Color.parseColor("#424242"));
-            viewHolder.like_count.setTypeface(Typeface.DEFAULT_BOLD);
-
-
-        } else if (payloads.contains("unlike")) {
-            messagelist.get(position).setIs_liked("false");
-            viewHolder.btn_like.setImageResource(R.drawable.ic_unlike);
-            if (Integer.parseInt(messagelist.get(position).getLike_count()) != 0) {
-                viewHolder.like_count.setText(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) - 1) + " likes");
-                messagelist.get(position).setLike_count(String.valueOf(Integer.parseInt(messagelist.get(position).getLike_count()) - 1));
-
-            }
-            viewHolder.like_count.setTextColor(Color.parseColor("#9e9e9e"));
-            viewHolder.like_count.setTypeface(Typeface.DEFAULT);
-
-
-        } else
+    public void onBindViewHolder(@NonNull HomeFeedViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (!payloads.isEmpty())
+            holder.binding.executePendingBindings();
+        else
             super.onBindViewHolder(holder, position, payloads);
     }
 
@@ -142,15 +94,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());
         notifyDataSetChanged();
-    }
-
-
-    public void onLikesListFetchSuccess(LikesModel likesModel) {
-        likeAdapter.add(likesModel.getLikes());
-    }
-
-    public void onLikesListFetchFail() {
-
     }
 
     private void showMenuOptions(final int adapterPosition) {
@@ -206,32 +149,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         });
         dialog.show();
 
-
-       /* PopupMenu popup = new PopupMenu(mContext, ivMore);
-        //inflating menu from xml resource
-        if (messagelist.get(adapterPosition).getIs_self() && messagelist.get(adapterPosition).getStory_count() == 0)
-            popup.inflate(R.menu.picture_options_self);
-        else
-            popup.inflate(R.menu.picture_options);
-        //adding click listener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu1:
-                        showDeleteStoryDialog(adapterPosition);
-                        break;
-                    case R.id.menu2:
-                        showReportStoryDialog(adapterPosition);
-                        break;
-                    case R.id.menu3:
-                        break;
-                }
-                return false;
-            }
-        });
-        //displaying the popup
-        popup.show();*/
     }
 
     private void showDeleteStoryDialog(final int adapterPosition) {
@@ -306,72 +223,65 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+    private void changeLike(int adapterPosition) {
+        if (messagelist.get(adapterPosition).getIs_liked()) {
+            messagelist.get(adapterPosition).setIs_liked(false);
+            messagelist.get(adapterPosition).setDecrementLikeCount();
+        } else {
+            messagelist.get(adapterPosition).setIs_liked(true);
+            messagelist.get(adapterPosition).setIncrementLikeCount();
+        }
+        notifyItemChanged(adapterPosition, "like");
+
+    }
+
     public interface ReqListener {
         void onSuccess();
 
         void onFail();
     }
 
-    private class HomeFeedViewHolder extends RecyclerView.ViewHolder {
+    class HomeFeedViewHolder extends RecyclerView.ViewHolder {
 
 
-        private ImageView user_image, image, ivStoryPic, ivEditStory, btn_like, ivMore;
-        private TextView user_name, user_penname, tvTimeInDays, like_count, story_count;
-        private RecyclerView recycler_view_story;
-        private LinearLayoutManager linearLayoutManager;
-        private StoryAdapter storyAdapter;
+        private final ItemHomeFeedBinding binding;
 
-        public HomeFeedViewHolder(View inflate) {
-            super(inflate);
+        public HomeFeedViewHolder(ItemHomeFeedBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
-            user_image = itemView.findViewById(R.id.image_avatar);
-            image = itemView.findViewById(R.id.image);
-            ivMore = itemView.findViewById(R.id.ivMore);
-            btn_like = itemView.findViewById(R.id.btn_like);
-            user_name = itemView.findViewById(R.id.text_name);
-            user_penname = itemView.findViewById(R.id.text_penname);
-            tvTimeInDays = itemView.findViewById(R.id.tvTimeInDays);
-            like_count = itemView.findViewById(R.id.like_count);
-            story_count = itemView.findViewById(R.id.story_count);
-
-            ivMore.setOnClickListener(new View.OnClickListener() {
+            binding.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showMenuOptions(getAdapterPosition());
                 }
             });
-            itemView.findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
+            binding.textWriteStory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id());
-
-
                 }
             });
-            recycler_view_story = itemView.findViewById(R.id.recycler_view_story);
-            linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
-            recycler_view_story.setLayoutManager(linearLayoutManager);
+            binding.recyclerViewStory.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
 
-            ItemOffLRsetDecoration itemDecoration = new ItemOffLRsetDecoration(mContext, R.dimen.item_offset_4dp);
-            recycler_view_story.addItemDecoration(itemDecoration);
+            binding.recyclerViewStory.addItemDecoration(new ItemOffLRsetDecoration(mContext, R.dimen.item_offset_4dp));
 
-            storyAdapter = new StoryAdapter(mContext);
-            recycler_view_story.setAdapter(storyAdapter);
-            user_name.setOnClickListener(new View.OnClickListener() {
+            binding.recyclerViewStory.setAdapter(new StoryAdapter(mContext));
+
+            binding.textName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
-            user_image.setOnClickListener(new View.OnClickListener() {
+            binding.imageAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
 
-            user_penname.setOnClickListener(new View.OnClickListener() {
+            binding.textPenname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
@@ -379,15 +289,22 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
 
-            btn_like.setOnClickListener(new View.OnClickListener() {
+            binding.likeCount.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (messagelist.get(getAdapterPosition()).getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+
+                }
+            });
+
+            binding.buttonLike.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
 
-                    String isLiked = messagelist.get(getAdapterPosition()).getIs_liked();
-                    if (isLiked.equals("false"))
-                        notifyItemChanged(getAdapterPosition(), "like");
-                    else notifyItemChanged(getAdapterPosition(), "unlike");
-
+                    changeLike(getAdapterPosition());
                     mPresentor.setLike(messagelist.get(getAdapterPosition()).getPicture_id(), new ReqListener() {
                         @Override
                         public void onSuccess() {
@@ -396,28 +313,17 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                         @Override
                         public void onFail() {
-                            if (messagelist.get(getAdapterPosition()).getIs_liked().equals("false"))
-                                notifyItemChanged(getAdapterPosition(), "like");
-                            else notifyItemChanged(getAdapterPosition(), "unlike");
-                            Toast.makeText(mContext.getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                            changeLike(getAdapterPosition());
                         }
-                    }, Boolean.getBoolean(isLiked));
+
+
+                    }, !messagelist.get(getAdapterPosition()).getIs_liked());
+
+
                 }
             });
-
-            like_count.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!messagelist.get(getAdapterPosition()).getLike_count().equals("0"))
-
-                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id(), Constants.LIKE_TYPE_PICTURE);
-                }
-            });
-
-
         }
-
-
     }
 
 

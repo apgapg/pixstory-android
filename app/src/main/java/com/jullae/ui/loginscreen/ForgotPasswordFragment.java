@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.utils.dialog.MyProgressDialog;
+import com.jullae.utils.MyProgressDialog;
 
 public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswordView {
 

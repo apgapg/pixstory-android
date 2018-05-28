@@ -16,6 +16,7 @@ import java.util.HashMap;
 import static com.jullae.BuildConfig.BASE_URL;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_MESSAGE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_PROFILE_DETAILS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ARCHIVED_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_BOOKMARK;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_STORY;
@@ -222,7 +223,7 @@ public class ApiHelper {
                 .addBodyParameter("password", password)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -237,7 +238,7 @@ public class ApiHelper {
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
 
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -246,7 +247,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_STORIES)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -254,7 +255,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_BOOKMARKS)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -264,7 +265,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_PICTURES)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -273,7 +274,7 @@ public class ApiHelper {
                 .addMultipartFile("avatar", file)
                 .addHeaders(headers)
                 .addPathParameter("id", userid)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -282,7 +283,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_DRAFTS)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -292,7 +293,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_PROFILE_VISITOR_INFO)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
 
@@ -301,7 +302,7 @@ public class ApiHelper {
     public ANRequest getConversationList() {
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_CONVERSATION_LIST)
                 .addHeaders(headers)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
 
     }
@@ -316,7 +317,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_MESSAGE_LIST)
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -325,7 +326,7 @@ public class ApiHelper {
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
                 .addBodyParameter("body", message)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -333,7 +334,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_TAG_SUGGESTIONS)
                 .addHeaders(headers)
                 .addQueryParameter("term", text)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -341,7 +342,7 @@ public class ApiHelper {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PEOPLE_SUGGESTIONS)
                 .addHeaders(headers)
                 .addQueryParameter("term", text)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -355,7 +356,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("title", title)
                 .addBodyParameter("content", content)
                 .addBodyParameter("picture_id", picture_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -366,7 +367,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("title", title)
                 .addBodyParameter("content", content)
                 .addBodyParameter("picture_id", picture_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -375,7 +376,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
 
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -384,7 +385,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
 
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -395,7 +396,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addPathParameter("id", user_id)
                 .addBodyParameter("bio", bio)
                 .addBodyParameter("name", name)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -403,7 +404,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_SAVE_STORY)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -412,7 +413,8 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addQueryParameter("picture_id", picture_id)
                 .addQueryParameter("story_id", "0")
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
+                .logReponseBody()
                 .build();
     }
 
@@ -421,7 +423,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addMultipartParameter("picture_title", title)
                 .addMultipartFile("image", file)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -430,7 +432,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.get(BASE_URL + ENDPOINT_NOTIFICATION_LIST)
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -438,7 +440,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_NOTIFICATION_READ_STATUS)
                 .addHeaders(headers)
                 .addPathParameter("id", keyUserId)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -449,7 +451,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("code", idToken)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
 
                 .build();
@@ -462,7 +464,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                     .addBodyParameter("user_id", user_id)
                     .addBodyParameter("penname", penname)
                     .addBodyParameter("email", email)
-                    .setPriority(Priority.HIGH)
+                    .setPriority(Priority.MEDIUM)
                     .logReponseBody()
                     .build();
         } else {
@@ -470,7 +472,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                     .addHeaders("Authorization", "Bearer " + token)
                     .addBodyParameter("user_id", user_id)
                     .addBodyParameter("penname", penname)
-                    .setPriority(Priority.HIGH)
+                    .setPriority(Priority.MEDIUM)
                     .build();
         }
     }
@@ -481,7 +483,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addBodyParameter("token", token)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
 
                 .build();
@@ -492,7 +494,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.get(BASE_URL + ENDPOINT_FORGOT_PASSWORD)
                 .addHeaders(headers)
                 .addQueryParameter("email", email)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -502,7 +504,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addQueryParameter("picture_id", picture_id)
                 /*.addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")*/
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -511,7 +513,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.get(BASE_URL + ENDPOINT_STORY_DETAILS)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
@@ -522,7 +524,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addPathParameter("id", keyUserId)
                 .addBodyParameter("old_password", oldpassword)
                 .addBodyParameter("new_password", newpassword)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -530,7 +532,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_STORY_DELETE)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
@@ -538,18 +540,25 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_PICTURE_DELETE)
                 .addHeaders(headers)
                 .addPathParameter("id", picture_id)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
                 .build();
     }
 
     public ANRequest updateStoryReq(String story_id, String title, String story) {
-        Log.d(TAG, "updateStoryReq: " + story_id);
         return AndroidNetworking.post(BASE_URL + ENDPOINT_UPDATE_EDIT_STORY)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
                 .addBodyParameter("title", title)
                 .addBodyParameter("content", story)
-                .setPriority(Priority.HIGH)
+                .setPriority(Priority.MEDIUM)
+                .logReponseBody()
+                .build();
+    }
+
+    public ANRequest loadPictures() {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_ADD_STORY)
+                .addHeaders(headers)
+                .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }

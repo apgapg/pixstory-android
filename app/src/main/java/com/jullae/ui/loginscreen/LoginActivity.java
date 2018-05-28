@@ -23,7 +23,7 @@ import com.jullae.R;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.ErrorResponseModel;
-import com.jullae.utils.dialog.MyProgressDialog;
+import com.jullae.utils.MyProgressDialog;
 
 import java.util.Arrays;
 

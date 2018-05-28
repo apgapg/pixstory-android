@@ -4,7 +4,6 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.data.AppDataManager;
-import com.jullae.data.db.model.LikesModel;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
@@ -69,28 +68,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
         });
     }
 
-    public void getLikeslist(String id, int pictureLike) {
-        checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().getLikesList(id, pictureLike).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
 
-            @Override
-            public void onResponse(LikesModel likesModel) {
-                NetworkUtils.parseResponse(TAG, likesModel);
-                if (isViewAttached()) {
-                    getMvpView().onLikesListFetchSuccess(likesModel);
-                }
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-                if (isViewAttached()) {
-                    getMvpView().onLikesListFetchFail();
-                }
-            }
-        });
-
-    }
 
     public void makeFollowUserReq(String user_id, final LikeAdapter.FollowReqListener followReqListener, Boolean is_followed) {
         checkViewAttached();

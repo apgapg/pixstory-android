@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="storyModel"
+            type="com.jullae.data.db.model.StoryModel" />
+
+        <variable
+            name="glide"
+            type="com.jullae.utils.GlideUtils" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/rLayoutTitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#fff">
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@{storyModel.story_title}"
+                android:textAppearance="@style/text_14.regular.primary"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <include layout="@layout/vertical_divider_light" />
+
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="80dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:baselineAligned="false"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+
+                    android:paddingRight="10dp"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <com.jullae.ui.custom.CircularImageView
+                            android:id="@+id/image_avatar"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/margin_very_tiny"
+                            app:imageUrl="@{storyModel.writer_avatar}"
+                            tools:srcCompat="@drawable/user_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{storyModel.writer_name}"
+                                android:textAppearance="@style/text_14.medium.primary"
+                                tools:text="Ankit sharma" />
+
+                            <TextView
+                                android:id="@+id/text_penname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{storyModel.writer_penname}"
+
+                                android:textAppearance="@style/text_12.light.secondary"
+                                tools:text="rahulabrol2211" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="22dp"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/user_followed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/button_border"
+                        android:gravity="center"
+                        android:paddingLeft="14dp"
+                        android:paddingTop="6dp"
+
+                        android:paddingRight="14dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/follow"
+                        android:textColor="#757575"
+                        android:textSize="@dimen/text_size_small"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/vertical_divider_light" />
+
+
+                <org.sufficientlysecure.htmltextview.HtmlTextView
+                    android:id="@+id/story_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{storyModel.story_text}"
+                    android:textAppearance="@style/text_14.regular.primary"
+                    android:textSize="14dp"
+
+
+                    tools:text="Las Vegas, in Nevada’s M home to themed hotels with elaborate displays such as fountains synchronized to music as well as replic incorporated in 1911. At the close of the 20th century, it was the most populated American city founded within that century (a similar distinction earned by Chicago in the 1800s). Population growth has accelerated since the 1960s, and between 1990 and 2000 the population nearly doubled, increasing by 85.2%. Rapid growth has continued into the 21st century." />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+
+                    <include layout="@layout/vertical_divider_light" />
+
+                    <TextView
+                        android:id="@+id/comment_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:background="#fff"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="12dp"
+                        android:text="Comments"
+                        android:textAppearance="@style/text_14.medium.primary" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="4dp" />
+
+                    <include layout="@layout/vertical_divider_light" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="#fff">
+
+                        <EditText
+                            android:id="@+id/field_add_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="40dp"
+                            android:background="#fff"
+                            android:hint="Add a comment..."
+                            android:maxLines="8"
+                            android:minHeight="48dp"
+                            android:paddingLeft="14dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="14dp"
+                            android:paddingBottom="8dp"
+                            android:textAppearance="@style/text_14.regular.primary" />
+
+                        <ImageView
+                            android:id="@+id/btn_add_comment"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="12dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_send_inactive_24dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_comment"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="#fff"
+                            android:padding="12dp"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible"
+                            app:srcCompat="@drawable/ic_send_inactive_24dp" />
+
+                        <include layout="@layout/vertical_divider_light" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/close_button_height"
+            android:background="#fff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/t"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="6dp">
+
+                <com.jullae.ui.custom.SquareImageView
+                    android:id="@+id/btn_like"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingTop="2dp"
+                    android:scaleType="center"
+                    android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
+                    app:srcCompat="@drawable/ic_unlike" />
+
+                <TextView
+                    android:id="@+id/like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{storyModel.like_count+` likes`}"
+
+                    android:textAppearance="@style/text_14.light.secondary"
+                    android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
+                    tools:text="12 likes" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/t"
+                android:gravity="center_vertical|end">
+
+
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@{storyModel.comment_count+` comments`}"
+
+                    android:textAppearance="@style/text_14.light.secondary"
+                    android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
+                    tools:text="30 comments" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ripple_effect"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
+                app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="#bdbdbd" />
+        </RelativeLayout>
+
+
+        <include layout="@layout/close_button" />
+
+        <View
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_black"
+            android:visibility="gone" />
+
+        <include layout="@layout/bottom_sheet_story" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
