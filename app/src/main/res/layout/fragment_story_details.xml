@@ -12,9 +12,6 @@
             name="storyModel"
             type="com.jullae.data.db.model.StoryModel" />
 
-        <variable
-            name="glide"
-            type="com.jullae.utils.GlideUtils" />
 
     </data>
 
@@ -151,7 +148,7 @@
                     android:paddingTop="8dp"
                     android:paddingRight="12dp"
                     android:paddingBottom="8dp"
-                    android:text="@{storyModel.story_text}"
+                    app:htmlText="@{storyModel.story_text}"
                     android:textAppearance="@style/text_14.regular.primary"
                     android:textSize="14dp"
 

@@ -102,7 +102,7 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimens_200"
+            android:layout_height="220dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{feed.picture_url}" />
 

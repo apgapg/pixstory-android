@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,14 +14,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -76,6 +76,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private ConversationAdapter conversationAdapter;
     private View button_edit_profile;
     private FragmentProfileBinding binding;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -122,10 +123,17 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         view.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenuOptions(v);
+                showMenuOptions();
             }
         });
 
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresentor.loadProfile(mProfileModel.getPenname());
+            }
+        });
         mPresentor = new ProfileFragmentPresentor();
 
         if (getmContext() instanceof ProfileVisitorActivity) {
@@ -140,6 +148,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
 
         }
+
 
         return view;
     }
@@ -171,6 +180,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     @Override
     public void onProfileFetchSuccess(ProfileModel profileModel) {
+        swipeRefreshLayout.setRefreshing(false);
 
         mProfileModel.setFollower_count(profileModel.getFollower_count());
         mProfileModel.setFollowing_count(profileModel.getFollowing_count());
@@ -183,6 +193,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     @Override
     public void onProfileFetchFail() {
+        swipeRefreshLayout.setRefreshing(false);
 
     }
 
@@ -327,33 +338,58 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
-    private void showMenuOptions(View ivMore) {
-        PopupMenu popup = new PopupMenu(getmContext(), ivMore);
-        //inflating menu from xml resource
+    private void showMenuOptions() {
 
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
+        View view;
+        Log.d(TAG, "showMenuOptions: " + mPresentor.isEmailModeLogin());
         if (mPresentor.isEmailModeLogin())
-            popup.inflate(R.menu.profile_options_email);
-        else popup.inflate(R.menu.profile_options_without_email);
-        //adding click listener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            view = getmContext().getLayoutInflater().inflate(R.layout.profile_options_email, null);
+        else
+            view = getmContext().getLayoutInflater().inflate(R.layout.profile_options_without_email, null);
+
+
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.menu1).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu1:
-                        //handle menu1 click
-                        showPasswordChangeDialog();
-                        break;
-                    case R.id.menu2:
-                        //handle menu2 click
-                        AppUtils.showLogoutDialog(getmContext());
-                        break;
-                }
-                return false;
+            public void onClick(View v) {
+                showPasswordChangeDialog();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+
+                    }
+                }, 100);
+
+
             }
         });
-        //displaying the popup
-        popup.show();
+        view.findViewById(R.id.menu2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AppUtils.showLogoutDialog(getmContext());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+
+                    }
+                }, 100);
+
+
+            }
+        });
+
+
+        dialog.show();
+
     }
+
 
     @Override
     public void showProgressBar() {

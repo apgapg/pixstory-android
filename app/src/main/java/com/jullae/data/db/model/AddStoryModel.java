@@ -1,7 +1,11 @@
 package com.jullae.data.db.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.jullae.BR;
 
 import java.util.List;
 
@@ -17,10 +21,10 @@ public class AddStoryModel {
         return picturesList;
     }
 
-    public class PictureModel {
+    public class PictureModel extends BaseObservable {
         private String picture_id;
         private String picture_url;
-        private String picture_likes;
+        private int picture_likes;
         private String user_id;
         private String user_name;
         private String user_penname;
@@ -34,7 +38,8 @@ public class AddStoryModel {
             return picture_url;
         }
 
-        public String getPicture_likes() {
+        @Bindable
+        public int getPicture_likes() {
             return picture_likes;
         }
 
@@ -50,8 +55,24 @@ public class AddStoryModel {
             return user_penname;
         }
 
+        @Bindable
         public boolean getPic_liked() {
             return pic_liked;
+        }
+
+        public void setPic_liked(boolean pic_liked) {
+            this.pic_liked = pic_liked;
+            notifyPropertyChanged(BR.pic_liked);
+        }
+
+        public void setDecrementLikeCount() {
+            this.picture_likes--;
+            notifyPropertyChanged(BR.picture_likes);
+        }
+
+        public void setIncrementLikeCount() {
+            this.picture_likes++;
+            notifyPropertyChanged(BR.picture_likes);
         }
     }
 }

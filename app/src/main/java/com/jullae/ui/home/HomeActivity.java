@@ -73,7 +73,8 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         mPresentor.attachView(this);
 
 
-        showFragment(new HomeFragment(), false);
+        showHomeFragment();
+
         if (getIntent().getBooleanExtra("showprofile", false)) {
             showHomeFragment(2);
         }
@@ -177,6 +178,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 //showFragment(new NotificationFragment(), true);
             }
         });
+
     }
 
     private void setUpSearchButton() {
@@ -259,6 +261,14 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
 
     }
 
+    private void showHomeFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, new HomeFragment(), HomeFragment.class.getName()).commit();
+
+
+    }
+
 
     @Override
     public void onClick(final View v) {
@@ -279,23 +289,9 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
     }
 
     private void showHomeFragment(int i) {
+        getSupportFragmentManager().popBackStackImmediate();
+        ((HomeFragment) getSupportFragmentManager().findFragmentByTag(HomeFragment.class.getName())).showFragment(i);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (fragment instanceof HomeFragment && fragment.isVisible())
-            ((HomeFragment) getSupportFragmentManager().findFragmentById(R.id.container)).showFragment(i);
-        else {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentManager.popBackStackImmediate();
-
-            Bundle bundle = new Bundle();
-            bundle.putInt("position", i);
-            HomeFragment homeFragment = new HomeFragment();
-            homeFragment.setArguments(bundle);
-
-            fragmentTransaction.replace(R.id.container, homeFragment).commit();
-
-        }
     }
 
     @Override

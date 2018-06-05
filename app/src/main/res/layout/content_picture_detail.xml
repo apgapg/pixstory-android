@@ -55,6 +55,7 @@
             android:text="Username" />
 
         <TextView
+            android:id="@+id/text_date"
             style="@style/textView.feed_secondary_text"
             android:layout_width="wrap_content"
             android:layout_marginRight="8dp"

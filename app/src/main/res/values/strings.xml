@@ -104,6 +104,8 @@
     <string name="share_on_facebook">Share on Facebook</string>
     <string name="delete_picture">Delete Picture</string>
     <string name="no_internet">No internet connectivity</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

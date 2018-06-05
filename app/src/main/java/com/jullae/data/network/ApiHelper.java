@@ -244,10 +244,12 @@ public class ApiHelper {
     }
 
     public ANRequest loadStoryTabFeeds(String penname) {
+
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_STORIES)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
                 .setPriority(Priority.MEDIUM)
+                .logReponseBody()
                 .build();
     }
 
@@ -433,6 +435,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
                 .setPriority(Priority.MEDIUM)
+                .logReponseBody()
                 .build();
     }
 
@@ -448,7 +451,7 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
 
         return AndroidNetworking.post(BASE_URL + ENDPOINT_GOOGLE_LOGIN)
                 .addHeaders(headers)
-                .addBodyParameter("code", idToken)
+                .addBodyParameter("token", idToken)
                 .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
                 .addBodyParameter(DEVICE_TYPE, ANDROID)
                 .setPriority(Priority.MEDIUM)

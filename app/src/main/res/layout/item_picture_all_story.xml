@@ -55,7 +55,7 @@
                 tools:text="6 days ago" />
         </RelativeLayout>
 
-        <TextView
+        <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/story_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

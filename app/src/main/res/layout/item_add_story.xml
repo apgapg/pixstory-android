@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,18 +10,69 @@
             type="com.jullae.data.db.model.AddStoryModel.PictureModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:padding="4dp">
 
-        <ImageView
-            android:id="@+id/image"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/rootview"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:imageUrl="@{pictureModel.picture_url}" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_light_grey1">
 
 
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{pictureModel.picture_url}" />
+
+            <ImageView
+                android:id="@+id/button_like"
+                android:layout_width="32dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image"
+                app:setlike="@{pictureModel.pic_liked}" />
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@{String.valueOf(pictureModel.picture_likes)}"
+                android:textAppearance="@style/text_14.regular.secondary"
+                app:layout_constraintStart_toEndOf="@+id/button_like"
+                app:layout_constraintTop_toBottomOf="@+id/image" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="#bdbdbd"
+                app:layout_constraintBottom_toBottomOf="@+id/image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_add_story"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
+                android:padding="7dp"
+                android:scaleType="centerCrop"
+                android:tint="#9e9e9e"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image"
+                app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
+
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 </layout>

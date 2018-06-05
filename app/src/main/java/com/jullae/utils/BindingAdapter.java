@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.jullae.GlideApp;
 import com.jullae.R;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 public class BindingAdapter {
     @android.databinding.BindingAdapter("imageUrl")
     public static void loadImagefromUrl(ImageView imageView, String url) {
@@ -41,5 +43,11 @@ public class BindingAdapter {
             textView.setBackground(context.getResources().getDrawable(R.drawable.button_border));
         }
 
+    }
+
+    @android.databinding.BindingAdapter("htmlText")
+    public static void setHtmlText(HtmlTextView htmlTextView, String text) {
+        if (text != null)
+            htmlTextView.setHtml(text);
     }
 }

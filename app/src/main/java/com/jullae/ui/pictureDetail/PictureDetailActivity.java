@@ -15,6 +15,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.DateUtils;
 import com.jullae.utils.GlideUtils;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     private PictureDetailPresentor mPresentor;
     private RecyclerView recycler_view;
     private PictureAllStoryAdapter pictureAllStoryAdapter;
+    private TextView textDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         pic_title = findViewById(R.id.pic_title);
         pic_like_count = findViewById(R.id.pic_like_count);
         pic_story_count = findViewById(R.id.pic_comment_count);
-
-
+        textDate = findViewById(R.id.text_date);
         mPresentor = new PictureDetailPresentor();
         mPresentor.attachView(this);
 
@@ -56,6 +57,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
             pic_title.setText(pictureModel.getPicture_title());
             pic_like_count.setText(pictureModel.getLike_count() + " likes");
             pic_story_count.setText(pictureModel.getStory_count() + " stories");
+            textDate.setText(DateUtils.getTimeAgo(pictureModel.getCreated_at()));
             mPresentor.loadStories(pictureModel.getPicture_id());
 
         } else {
@@ -124,6 +126,8 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         pic_title.setText(homeFeedModel.getPicture_title());
         pic_like_count.setText(homeFeedModel.getLike_count() + " likes");
         pic_story_count.setText(homeFeedModel.getStory_count() + " stories");
+        textDate.setText(DateUtils.getTimeAgo(pictureModel.getCreated_at()));
+
         mPresentor.loadStories(homeFeedModel.getPicture_id());
 
     }

@@ -17,6 +17,8 @@ import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         viewHolder.like_count.setText(messagelist.get(position).getLike_count() + " likes");
         viewHolder.comment_count.setText(messagelist.get(position).getComment_count() + " comments");
-        viewHolder.story_text.setText(messagelist.get(position).getStory_text());
+        viewHolder.story_text.setHtml(messagelist.get(position).getStory_text());
 
 
     }
@@ -75,8 +77,9 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
         private ImageView user_image, image, ivStoryPic, ivEditStory, ivLike, ivMore;
-        private TextView user_name, tvLocation, tvTimeInDays, like_count, comment_count, story_count, story_text;
+        private TextView user_name, tvLocation, tvTimeInDays, like_count, comment_count, story_count;
         private RecyclerView recycler_view_story;
+        private HtmlTextView story_text;
 
         public PictureAllStoryHolder(View inflate) {
             super(inflate);

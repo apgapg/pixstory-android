@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.android.databinding:library-3.2.0-alpha16">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-3.2.0-alpha16.aar/d42fcd608943d3a710e279ea35e7dbd7/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-3.2.0-alpha16.aar/d42fcd608943d3a710e279ea35e7dbd7/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/library/3.2.0-alpha16/c5ab5f99292cc8281884247f77980b4522fb5e8a/library-3.2.0-alpha16-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

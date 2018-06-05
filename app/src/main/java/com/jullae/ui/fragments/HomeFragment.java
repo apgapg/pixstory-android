@@ -90,15 +90,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void showFragment(int i) {
-        if (isAdded())
             viewPager.setCurrentItem(i);
     }
 
-    public void refreshFeeds() {
-        if (adapter.getRegisteredFragment(0) != null) {
-            ((HomeFeedFragment) adapter.getRegisteredFragment(0)).refreshFeeds();
-        }
-    }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
         SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();

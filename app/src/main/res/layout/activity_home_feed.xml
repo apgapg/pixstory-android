@@ -37,6 +37,8 @@
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginRight="8dp"
                 android:padding="10dp"
+                android:background="@drawable/ripple_effect"
+
                 android:scaleType="centerCrop"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/ic_bell_normal"
@@ -45,6 +47,8 @@
             <ImageView
                 android:id="@+id/image_search"
                 android:layout_width="40dp"
+                android:background="@drawable/ripple_effect"
+
                 android:layout_height="40dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginRight="48dp"
@@ -138,15 +142,6 @@
             android:paddingRight="16dp"
             android:textAppearance="@style/text_16.regular.primary" />
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:paddingLeft="8dp"
-            android:paddingTop="11dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="5dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_search" />
 
         <include
             layout="@layout/vertical_divider_light"
