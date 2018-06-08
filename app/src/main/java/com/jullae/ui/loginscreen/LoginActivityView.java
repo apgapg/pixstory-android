@@ -14,7 +14,7 @@ public interface LoginActivityView extends MvpView {
 
     void onSignUpSuccess();
 
-    void onSignUpFail();
+    void onSignUpFail(String message);
 
     void onLoginSuccess();
 

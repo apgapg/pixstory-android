@@ -16,4 +16,12 @@ public interface HomeFeedView extends MvpView {
     void onPictureDeleteSuccess();
 
     void onPictureDeleteFail(String message);
+
+    void showLoadMoreFeedProgress();
+
+    void hideLoadMoreFeedProgress();
+
+    void onFetchMoreFeedFail();
+
+    void onFetchMoreFeedSuccess(HomeFeedModel homeFeedModel);
 }

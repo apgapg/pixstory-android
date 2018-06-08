@@ -126,7 +126,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         pic_title.setText(homeFeedModel.getPicture_title());
         pic_like_count.setText(homeFeedModel.getLike_count() + " likes");
         pic_story_count.setText(homeFeedModel.getStory_count() + " stories");
-        textDate.setText(DateUtils.getTimeAgo(pictureModel.getCreated_at()));
+        textDate.setText(DateUtils.getTimeAgo(homeFeedModel.getCreated_at()));
 
         mPresentor.loadStories(homeFeedModel.getPicture_id());
 

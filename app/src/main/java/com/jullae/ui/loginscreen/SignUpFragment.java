@@ -3,6 +3,7 @@ package com.jullae.ui.loginscreen;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,11 @@ import static com.jullae.ui.loginscreen.LoginActivity.LOGIN_MODE_SIGNUP_EMAIL;
 public class SignUpFragment extends BaseFragment {
 
 
+    private static final String TAG = SignUpFragment.class.getName();
     private View view;
     private EditText nameField;
     private EditText pennameField;
-    private int loginMode = 0;
+    private int loginMode = 23;
     private EditText emailField;
 
     @Nullable
@@ -54,6 +56,7 @@ public class SignUpFragment extends BaseFragment {
         view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: " + loginMode);
                 if (loginMode == LOGIN_MODE_SIGNUP_EMAIL)
                     ((LoginActivity) getmContext()).performSignUp(nameField.getText().toString().trim(), pennameField.getText().toString().trim());
                 else if (loginMode == LOGIN_MODE_GOOGLE || loginMode == LOGIN_MODE_FACEBOOK)

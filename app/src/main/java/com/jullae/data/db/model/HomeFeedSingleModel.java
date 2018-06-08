@@ -3,6 +3,7 @@ package com.jullae.data.db.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class HomeFeedSingleModel {
 
         String picture_title;
 
-        String created_at;
+        Date created_at;
 
         String picture_url;
 
@@ -78,7 +79,7 @@ public class HomeFeedSingleModel {
             this.is_liked = is_liked;
         }
 
-        public String getCreated_at() {
+        public Date getCreated_at() {
             return created_at;
         }
 

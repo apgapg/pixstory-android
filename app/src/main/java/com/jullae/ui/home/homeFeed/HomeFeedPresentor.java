@@ -1,5 +1,7 @@
 package com.jullae.ui.home.homeFeed;
 
+import android.os.Handler;
+
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
@@ -18,6 +20,8 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     private static final String TAG = HomeFeedPresentor.class.getName();
     private boolean isLoadFeedReqRunning;
+    private boolean isLoadMoreFeedReqRunning;
+    private int count = 2;
 
     public HomeFeedPresentor() {
     }
@@ -26,7 +30,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
         isLoadFeedReqRunning = true;
         checkViewAttached();
         getMvpView().showProgress();
-        AppDataManager.getInstance().getmApiHelper().loadHomeFeeds().getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadHomeFeeds(1).getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
             @Override
             public void onResponse(HomeFeedModel homeFeedModel) {
                 isLoadFeedReqRunning = false;
@@ -67,7 +71,6 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
             }
         });
     }
-
 
 
     public void makeFollowUserReq(String user_id, final LikeAdapter.FollowReqListener followReqListener, Boolean is_followed) {
@@ -141,5 +144,42 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     public boolean isLoadFeedReqRunning() {
         return isLoadFeedReqRunning;
+    }
+
+    public void loadMoreFeeds() {
+        checkViewAttached();
+        getMvpView().showLoadMoreFeedProgress();
+        if (!isLoadMoreFeedReqRunning) {
+            isLoadMoreFeedReqRunning = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AppDataManager.getInstance().getmApiHelper().loadHomeFeeds(count).getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
+                        @Override
+                        public void onResponse(HomeFeedModel homeFeedModel) {
+                            isLoadMoreFeedReqRunning = false;
+                            NetworkUtils.parseResponse(TAG, homeFeedModel);
+                            if (isViewAttached()) {
+                                count++;
+                                getMvpView().hideLoadMoreFeedProgress();
+
+                                getMvpView().onFetchMoreFeedSuccess(homeFeedModel);
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            isLoadMoreFeedReqRunning = false;
+                            NetworkUtils.parseError(TAG, anError);
+                            if (isViewAttached()) {
+                                getMvpView().hideLoadMoreFeedProgress();
+                                getMvpView().onFetchMoreFeedFail();
+                            }
+                        }
+                    });
+
+                }
+            }, 1000);
+        }
     }
 }

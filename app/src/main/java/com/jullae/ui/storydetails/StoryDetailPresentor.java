@@ -84,28 +84,6 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
     }
 
 
-    public void loadComments(String story_id, final CommentsListener commentsListener) {
-        checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadComments(story_id).getAsObject(CommentModel.class, new ParsedRequestListener<CommentModel>() {
-
-            @Override
-            public void onResponse(CommentModel commentModel) {
-                NetworkUtils.parseResponse(TAG, commentModel);
-                if (isViewAttached())
-                    commentsListener.onSuccess(commentModel);
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-                if (isViewAttached())
-                    commentsListener.onFail();
-            }
-        });
-
-
-    }
-
     public void sendcommentReq(final String comment, String story_id, final StoryDetailPresentor.ReqListener reqListener) {
         checkViewAttached();
         AppDataManager.getInstance().getmApiHelper().sendCommentReq(comment, story_id).getAsObject(CommentModel.class, new ParsedRequestListener<CommentModel>() {

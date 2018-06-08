@@ -90,6 +90,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story_details, container, false);
         view = binding.getRoot();
 
+        view.findViewById(R.id.recycler_view).setNestedScrollingEnabled(false);
         btn_close = view.findViewById(R.id.close);
         like_count = view.findViewById(R.id.like_count);
         setupAddComment();
@@ -119,6 +120,13 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 }
             }
         });
+
+        binding.showMoreCommentsContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((StoryDetailActivity) getContext()).showCommentFragment(storyModel.getStory_id());
+            }
+        });
         mPresentor = new StoryDetailPresentor();
 
         return view;
@@ -137,6 +145,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         } else if (getArguments().getString("storymodel") != null) {
             storyModel = GsonUtils.getInstance().fromJson(getArguments().getString("storymodel"), StoryModel.class);
             binding.setStoryModel(this.storyModel);
+
         }
     }
 
@@ -503,10 +512,11 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     }
 
     public boolean closeBottomSheet() {
-        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            return true;
-        }
+        if (mBottomSheetBehavior != null)
+            if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                return true;
+            }
         return false;
     }
 

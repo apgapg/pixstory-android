@@ -26,10 +26,15 @@ public class StoryModel extends BaseObservable {
     private boolean is_self;
     private String is_followed;
     private Date created_at;
+    private boolean has_more_comments;
 
     @SerializedName("comments")
     @Expose
     private List<CommentModel> commentModelList;
+
+    public boolean isHas_more_comments() {
+        return has_more_comments;
+    }
 
     public List<CommentModel> getCommentModelList() {
         return commentModelList;

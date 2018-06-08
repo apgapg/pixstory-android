@@ -16,6 +16,7 @@ final class ApiEndPoint {
     static final String ENDPOINT_FOLLOW = "/user/{id}/follow";
     static final String ENDPOINT_UNFOLLOW = "/user/{id}/unfollow";
     static final String ENDPOINT_STORY_DETAILS = "/story/{id}/view";
+    static final String ENDPOINT_COMMENT = "/story/{id}/comments";
     static final String ENDPOINT_PASSWORD_CHANGE = "/user/{id}/update_password";
     static final String ENDPOINT_UPDATE_EDIT_STORY = "/story/{id}/update";
     static final String ENDPOINT_ADD_STORY = "/discover/nonstory_pictures";

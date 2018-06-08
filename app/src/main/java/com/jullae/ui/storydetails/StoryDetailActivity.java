@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.jullae.R;
 import com.jullae.ui.base.BaseActivity;
+import com.jullae.ui.comment.CommentFragment;
 
 /**
  * Created by Rahul Abrol on 12/20/17.
@@ -46,8 +47,6 @@ public class StoryDetailActivity extends BaseActivity {
         StoryDetailFragment storyDetailFragment = new StoryDetailFragment();
         storyDetailFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.container, storyDetailFragment).commit();
-
-
     }
 
     @Override
@@ -67,5 +66,16 @@ public class StoryDetailActivity extends BaseActivity {
         i.putExtra("searchtag", story_title);
         setResult(RESULT_OK, i);
         finish();
+    }
+
+    public void showCommentFragment(String story_id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("story_id", story_id);
+        CommentFragment commentFragment = new CommentFragment();
+        commentFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, commentFragment).addToBackStack(null).commit();
+
     }
 }

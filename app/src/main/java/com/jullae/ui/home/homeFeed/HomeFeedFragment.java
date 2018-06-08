@@ -30,7 +30,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     private static final String TAG = HomeFeedFragment.class.getName();
     private View view;
     private HomeFeedPresentor mPresentor;
-    private HomeFeedAdapter homeFeedAdapter;
+    private HomeFeedAdapter mAdapter;
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerView;
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -45,6 +45,10 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
             }
         }
     };
+    private int visibleItemCount;
+    private int totalItemCount;
+    private int pastVisiblesItems;
+    private boolean loading = true;
 
 
     private void loadFeeds() {
@@ -70,14 +74,15 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         swipeRefresh = view.findViewById(R.id.swiperefresh);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        homeFeedAdapter = new HomeFeedAdapter(getmContext(), mPresentor);
+        setScrollListener();
+        mAdapter = new HomeFeedAdapter(getmContext(), mPresentor);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(homeFeedAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -86,6 +91,29 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
             }
         });
         return view;
+    }
+
+    private void setScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreFeeds();
+
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
@@ -123,12 +151,12 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
                     homeFeedModel.getFeedList().get(i).setHighlightStoryIndex(j);
             }
         }
-        homeFeedAdapter.add(homeFeedModel.getFeedList());
+        mAdapter.add(homeFeedModel.getFeedList());
     }
 
     @Override
     public void onFetchFeedFail() {
-        if (homeFeedAdapter.getItemCount() == 0) {
+        if (mAdapter.getItemCount() == 0) {
             showNetworkRetryContainer();
             NetworkUtils.registerNetworkChangeListener(getmContext(), new NetworkUtils.NetworkChangeListener() {
                 @Override
@@ -180,6 +208,29 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     public void onPictureDeleteFail(String message) {
         Toast.makeText(getmContext().getApplicationContext(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void showLoadMoreFeedProgress() {
+        view.findViewById(R.id.container_load_more).setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideLoadMoreFeedProgress() {
+        view.findViewById(R.id.container_load_more).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onFetchMoreFeedFail() {
+        //  ToastUtils.showNoInternetToast(getmContext());
+    }
+
+    @Override
+    public void onFetchMoreFeedSuccess(HomeFeedModel homeFeedModel) {
+        recyclerView.stopScroll();
+
+        mAdapter.addMore(homeFeedModel.getFeedList());
     }
 
     public void refreshFeeds() {

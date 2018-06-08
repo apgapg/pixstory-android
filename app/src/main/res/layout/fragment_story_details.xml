@@ -32,7 +32,12 @@
 
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
+                android:ellipsize="end"
                 android:gravity="center"
+                android:lines="1"
+
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="@{storyModel.story_title}"
                 android:textAppearance="@style/text_14.regular.primary"
                 android:textSize="18dp"
@@ -44,7 +49,7 @@
         </RelativeLayout>
 
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="48dp"
@@ -148,9 +153,9 @@
                     android:paddingTop="8dp"
                     android:paddingRight="12dp"
                     android:paddingBottom="8dp"
-                    app:htmlText="@{storyModel.story_text}"
                     android:textAppearance="@style/text_14.regular.primary"
                     android:textSize="14dp"
+                    app:htmlText="@{storyModel.story_text}"
 
 
                     tools:text="Las Vegas, in Nevada’s M home to themed hotels with elaborate displays such as fountains synchronized to music as well as replic incorporated in 1911. At the close of the 20th century, it was the most populated American city founded within that century (a similar distinction earned by Chicago in the 1800s). Population growth has accelerated since the 1960s, and between 1990 and 2000 the population nearly doubled, increasing by 85.2%. Rapid growth has continued into the 21st century." />
@@ -182,7 +187,28 @@
                         android:background="@color/white"
                         android:paddingBottom="4dp" />
 
+
+                    <RelativeLayout
+                        android:id="@+id/show_more_comments_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="#fff"
+                        android:visibility="@{storyModel.has_more_comments?View.VISIBLE:View.GONE}">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/circle_border"
+                            android:padding="4dp"
+                            android:scaleType="centerCrop"
+                            android:tint="@color/icon_color"
+                            app:srcCompat="@drawable/ic_add_black_24dp" />
+
+                    </RelativeLayout>
+
                     <include layout="@layout/vertical_divider_light" />
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -234,7 +260,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
 
         <RelativeLayout

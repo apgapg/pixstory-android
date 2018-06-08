@@ -117,6 +117,17 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     mContext.startActivity(i);
                 }
             });
+            story_text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, StoryDetailActivity.class);
+                    Gson gson = new Gson();
+                    String object = gson.toJson(messagelist.get(getAdapterPosition()));
+                    i.putExtra("storymodel", object);
+                    i.putExtra("profile", false);
+                    mContext.startActivity(i);
+                }
+            });
             user_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

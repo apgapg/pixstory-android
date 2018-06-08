@@ -18,6 +18,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_MESSAGE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_PROFILE_DETAILS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ARCHIVED_FEEDS;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_COMMENT;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_BOOKMARK;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_LOGIN;
@@ -118,12 +119,11 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest loadHomeFeeds() {
+    public ANRequest loadHomeFeeds(int count) {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_HOME_FEEDS)
                 .addHeaders(headers)
-                .addQueryParameter("term", "karakoram")
-                /*.addPathParameter("pageNumber", "0")
-                .addQueryParameter("limit", "3")*/
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", "10")
                 .setPriority(Priority.HIGH)
                 .logReponseBody()
                 .build();
@@ -177,7 +177,7 @@ public class ApiHelper {
     }
 
     public ANRequest loadComments(String story_id) {
-        return AndroidNetworking.get(BASE_URL + ENDPOINT_STORY_DETAILS)
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_COMMENT)
                 .addHeaders(headers)
                 .addPathParameter("id", story_id)
                 .setPriority(Priority.HIGH)
@@ -448,7 +448,8 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
     }
 
     public ANRequest googleSignInReq(String idToken) {
-
+        Log.d(TAG, "googleSignInReq: " + idToken);
+        Log.d(TAG, "googleSignInReq: " + FirebaseInstanceId.getInstance().getToken());
         return AndroidNetworking.post(BASE_URL + ENDPOINT_GOOGLE_LOGIN)
                 .addHeaders(headers)
                 .addBodyParameter("token", idToken)

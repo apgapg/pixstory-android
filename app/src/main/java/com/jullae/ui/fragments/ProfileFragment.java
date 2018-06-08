@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -77,6 +78,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private View button_edit_profile;
     private FragmentProfileBinding binding;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private AppBarLayout appBar;
 
     @Nullable
     @Override
@@ -88,6 +90,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         view = binding.getRoot();
+
+        appBar = view.findViewById(R.id.appbar);
         user_image = view.findViewById(R.id.image_avatar);
 
         button_message = view.findViewById(R.id.button_message);
@@ -127,13 +131,25 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Log.d(TAG, "onOffsetChanged: " + verticalOffset);
+                if (verticalOffset == 0) {
+                    swipeRefreshLayout.setEnabled(true);
+                } else swipeRefreshLayout.setEnabled(false);
+            }
+        });
+
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresentor.loadProfile(mProfileModel.getPenname());
             }
         });
+
         mPresentor = new ProfileFragmentPresentor();
 
         if (getmContext() instanceof ProfileVisitorActivity) {

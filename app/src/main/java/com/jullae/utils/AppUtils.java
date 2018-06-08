@@ -93,11 +93,11 @@ public class AppUtils {
         }
     }
 
-    public static void checkforNull(Object object) {
+    public static <T> T checkforNull(T object) {
 
         if (object == null)
             throw new NullPointerException("Object is null");
-
+        else return object;
 
     }
 

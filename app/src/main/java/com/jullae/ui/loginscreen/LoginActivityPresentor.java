@@ -92,10 +92,10 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
 
                 @Override
                 public void onError(ANError anError) {
-                    NetworkUtils.parseError(TAG, anError);
+                    ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
                     if (isViewAttached()) {
                         getMvpView().hideProgress();
-                        getMvpView().onSignUpFail();
+                        getMvpView().onSignUpFail(errorResponseModel.getMessage());
                     }
                 }
             });

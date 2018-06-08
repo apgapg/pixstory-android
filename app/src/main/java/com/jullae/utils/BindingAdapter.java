@@ -2,11 +2,16 @@ package com.jullae.utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jullae.GlideApp;
 import com.jullae.R;
+import com.luseen.autolinklibrary.AutoLinkMode;
+import com.luseen.autolinklibrary.AutoLinkOnClickListener;
+import com.luseen.autolinklibrary.AutoLinkTextView;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -49,5 +54,25 @@ public class BindingAdapter {
     public static void setHtmlText(HtmlTextView htmlTextView, String text) {
         if (text != null)
             htmlTextView.setHtml(text);
+    }
+
+    @android.databinding.BindingAdapter("html")
+    public static void setHtmlText(AutoLinkTextView autoLinkTextView, String text) {
+        autoLinkTextView.addAutoLinkMode(AutoLinkMode.MODE_HASHTAG);
+        autoLinkTextView.setAutoLinkOnClickListener(new AutoLinkOnClickListener() {
+            @Override
+            public void onAutoLinkTextClick(AutoLinkMode autoLinkMode, String matchedText) {
+                Log.d("abc", "onAutoLinkTextClick: " + matchedText);
+            }
+        });
+        if (text != null)
+            autoLinkTextView.setAutoLinkText(text);
+    }
+
+    @android.databinding.BindingAdapter("refreshing")
+    public static void refreshing(SwipeRefreshLayout swipeRefreshLayout, boolean isLoading) {
+        if (isLoading)
+            swipeRefreshLayout.setRefreshing(true);
+        else swipeRefreshLayout.setRefreshing(false);
     }
 }

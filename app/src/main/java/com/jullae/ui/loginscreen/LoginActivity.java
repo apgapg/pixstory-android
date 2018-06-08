@@ -149,8 +149,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     }
 
     @Override
-    public void onSignUpFail() {
-        Toast.makeText(getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
+    public void onSignUpFail(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
     }
 
