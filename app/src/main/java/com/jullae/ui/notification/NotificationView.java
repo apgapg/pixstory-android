@@ -13,4 +13,10 @@ public interface NotificationView extends MvpView {
     void showProgressBar();
 
     void hideProgressBar();
+
+    void hideLoadMoreProgess();
+
+    void showLoadMoreProgess();
+
+    void onMoreNotificationFetch(List<NotificationModel> notificationModelList);
 }

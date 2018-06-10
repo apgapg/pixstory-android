@@ -70,6 +70,7 @@ public class ApiHelper {
     private static final String TAG = ApiHelper.class.getName();
     private static final String DEVICE_TYPE = "device_type";
     private static final String ANDROID = "android";
+    private static final String PER = "10";
     private final HashMap<String, String> headers;
 
     public ApiHelper(String keyToken) {
@@ -81,7 +82,7 @@ public class ApiHelper {
         headers.put("Authorization", "Bearer " + token);
     }
 
-    public ANRequest loadFreshFeeds(int position) {
+    public ANRequest loadFreshFeeds(int position, int count) {
         String end_point;
         switch (position) {
             case 0:
@@ -101,8 +102,8 @@ public class ApiHelper {
         }
         return AndroidNetworking.get(BASE_URL + end_point)
                 .addHeaders(headers)
-                /*.addPathParameter("pageNumber", "0")
-                .addQueryParameter("limit", "3")*/
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", PER)
                 .setPriority(Priority.HIGH)
                 .logReponseBody()
 
@@ -176,9 +177,11 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest loadComments(String story_id) {
+    public ANRequest loadComments(String story_id, int count) {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_COMMENT)
                 .addHeaders(headers)
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", "20")
                 .addPathParameter("id", story_id)
                 .setPriority(Priority.HIGH)
                 .build();
@@ -243,30 +246,36 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest loadStoryTabFeeds(String penname) {
+    public ANRequest loadStoryTabFeeds(String penname, int count) {
 
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_STORIES)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", PER)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
 
-    public ANRequest loadBookmarkTabFeeds(String penname) {
+    public ANRequest loadBookmarkTabFeeds(String penname, int count) {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_BOOKMARKS)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", PER)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
     }
 
-    public ANRequest loadPictureTabFeeds(String penname) {
+    public ANRequest loadPictureTabFeeds(String penname, int count) {
 
         return AndroidNetworking.get(BASE_URL + ENDPOINT_PROFILE_TAB_PICTURES)
                 .addHeaders(headers)
                 .addPathParameter("penname", penname)
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", PER)
                 .setPriority(Priority.MEDIUM)
                 .build();
     }
@@ -281,9 +290,11 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest getDraftList(String penname) {
+    public ANRequest getDraftList(String penname, int count) {
         return AndroidNetworking.get(BASE_URL + ApiEndPoint.ENDPOINT_DRAFTS)
                 .addHeaders(headers)
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", PER)
                 .addPathParameter("penname", penname)
                 .setPriority(Priority.MEDIUM)
                 .build();
@@ -430,10 +441,12 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .build();
     }
 
-    public ANRequest loadNotificationList(String user_id) {
+    public ANRequest loadNotificationList(String user_id, int count) {
         return AndroidNetworking.get(BASE_URL + ENDPOINT_NOTIFICATION_LIST)
                 .addHeaders(headers)
                 .addPathParameter("id", user_id)
+                .addQueryParameter("page", String.valueOf(count))
+                .addQueryParameter("per", PER)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();

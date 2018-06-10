@@ -131,15 +131,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Log.d(TAG, "onOffsetChanged: " + verticalOffset);
-                if (verticalOffset == 0) {
-                    swipeRefreshLayout.setEnabled(true);
-                } else swipeRefreshLayout.setEnabled(false);
-            }
-        });
+
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
@@ -163,6 +155,17 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
             ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
 
+            swipeRefreshLayout.setEnabled(false);
+        } else {
+            appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    Log.d(TAG, "onOffsetChanged: " + verticalOffset);
+                    if (verticalOffset == 0) {
+                        swipeRefreshLayout.setEnabled(true);
+                    } else swipeRefreshLayout.setEnabled(false);
+                }
+            });
         }
 
 

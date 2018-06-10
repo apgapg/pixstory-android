@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,11 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
 
     private static final String TAG = StoryTabFragment.class.getName();
     private View view;
-    private RecyclerView recyclerView;
-    private SearchFeedAdapter searchFeedAdapter;
+    private RecyclerView mRecyclerView;
+    private SearchFeedAdapter mAdapter;
     private StoryTabPresentor mPresentor;
     private String penname;
+    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
 
     @Nullable
     @Override
@@ -46,13 +48,35 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
     }
 
     private void setuprecyclerView() {
-        recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        searchFeedAdapter = new SearchFeedAdapter(getmContext(), mPresentor);
-        recyclerView.setAdapter(searchFeedAdapter);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new SearchFeedAdapter(getmContext(), mPresentor);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void setScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreFeeds(penname);
+
+                    }
+                }
+            }
+        });
+
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -69,11 +93,28 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
 
     @Override
     public void onStoriesFetchSuccess(List<FeedModel> storyModelList) {
-        searchFeedAdapter.add(storyModelList);
+        mAdapter.add(storyModelList);
     }
 
     @Override
     public void onStoriesFetchFail() {
 
+    }
+
+    @Override
+    public void showLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onMoreStoriesFetch(List<FeedModel> storyMainModelList) {
+        mRecyclerView.stopScroll();
+        mAdapter.addAll(storyMainModelList);
     }
 }

@@ -20,7 +20,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     private static final String TAG = HomeFeedPresentor.class.getName();
     private boolean isLoadFeedReqRunning;
-    private boolean isLoadMoreFeedReqRunning;
+    private boolean isLoadingMore;
     private int count = 2;
 
     public HomeFeedPresentor() {
@@ -149,15 +149,15 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
     public void loadMoreFeeds() {
         checkViewAttached();
         getMvpView().showLoadMoreFeedProgress();
-        if (!isLoadMoreFeedReqRunning) {
-            isLoadMoreFeedReqRunning = true;
+        if (!isLoadingMore) {
+            isLoadingMore = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     AppDataManager.getInstance().getmApiHelper().loadHomeFeeds(count).getAsObject(HomeFeedModel.class, new ParsedRequestListener<HomeFeedModel>() {
                         @Override
                         public void onResponse(HomeFeedModel homeFeedModel) {
-                            isLoadMoreFeedReqRunning = false;
+                            isLoadingMore = false;
                             NetworkUtils.parseResponse(TAG, homeFeedModel);
                             if (isViewAttached()) {
                                 count++;
@@ -169,7 +169,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
                         @Override
                         public void onError(ANError anError) {
-                            isLoadMoreFeedReqRunning = false;
+                            isLoadingMore = false;
                             NetworkUtils.parseError(TAG, anError);
                             if (isViewAttached()) {
                                 getMvpView().hideLoadMoreFeedProgress();

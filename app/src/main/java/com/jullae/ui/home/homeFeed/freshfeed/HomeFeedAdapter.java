@@ -236,9 +236,11 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
     }
 
     public void addMore(List<HomeFeedModel.Feed> feedList) {
-        int size = messagelist.size();
+        int intialSize = messagelist.size();
         messagelist.addAll(feedList);
-        notifyDataSetChanged();
+        int finalSize = messagelist.size();
+
+        notifyItemRangeInserted(intialSize, finalSize - intialSize);
     }
 
     public interface ReqListener {

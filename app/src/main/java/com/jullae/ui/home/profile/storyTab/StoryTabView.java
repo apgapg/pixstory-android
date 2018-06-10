@@ -9,4 +9,10 @@ public interface StoryTabView extends MvpView {
     void onStoriesFetchSuccess(List<FeedModel> storyModelList);
 
     void onStoriesFetchFail();
+
+    void showLoadMoreProgess();
+
+    void hideLoadMoreProgess();
+
+    void onMoreStoriesFetch(List<FeedModel> storyMainModelList);
 }

@@ -79,6 +79,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         viewPager.setOffscreenPageLimit(3);
 
+        view.findViewById(R.id.swiperefresh).setEnabled(false);
         viewPager.setAdapter(pagerAdapter);
 
         mPresentor = new ProfileVisitorPresentor();

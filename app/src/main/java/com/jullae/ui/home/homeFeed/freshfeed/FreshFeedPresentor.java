@@ -11,6 +11,8 @@ public class FreshFeedPresentor extends BasePresentor<FreshFeedContract.View> {
 
 
     private static final String TAG = FreshFeedPresentor.class.getName();
+    private int count = 2;
+    private boolean isLoadingMore;
 
     public FreshFeedPresentor() {
     }
@@ -18,7 +20,7 @@ public class FreshFeedPresentor extends BasePresentor<FreshFeedContract.View> {
     public void loadFeeds(int position) {
         checkViewAttached();
         getMvpView().showProgressBar();
-        AppDataManager.getInstance().getmApiHelper().loadFreshFeeds(position).getAsObject(FreshFeedModel.class, new ParsedRequestListener<FreshFeedModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadFreshFeeds(position, 1).getAsObject(FreshFeedModel.class, new ParsedRequestListener<FreshFeedModel>() {
             @Override
             public void onResponse(FreshFeedModel freshFeedModel) {
                 NetworkUtils.parseResponse(TAG, freshFeedModel);
@@ -37,6 +39,39 @@ public class FreshFeedPresentor extends BasePresentor<FreshFeedContract.View> {
                 }
             }
         });
+    }
+
+    public void loadMoreFeeds(int position) {
+        checkViewAttached();
+        getMvpView().showMoreProgress();
+        if (!isLoadingMore) {
+            isLoadingMore = true;
+
+            AppDataManager.getInstance().getmApiHelper().loadFreshFeeds(position, count).getAsObject(FreshFeedModel.class, new ParsedRequestListener<FreshFeedModel>() {
+                @Override
+                public void onResponse(FreshFeedModel freshFeedModel) {
+                    NetworkUtils.parseResponse(TAG, freshFeedModel);
+                    count++;
+                    isLoadingMore = false;
+                    if (isViewAttached()) {
+                        getMvpView().hideMoreProgress();
+                        getMvpView().onFetchMoreFeeds(freshFeedModel.getList());
+                    }
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    NetworkUtils.parseError(TAG, anError);
+                    isLoadingMore = false;
+                    if (isViewAttached()) {
+                        getMvpView().hideMoreProgress();
+
+                    }
+                }
+            });
+
+
+        }
     }
 
 

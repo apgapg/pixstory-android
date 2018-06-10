@@ -27,10 +27,11 @@ import java.util.List;
 public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
     private View view;
-    private RecyclerView recyclerView;
-    private PicturesAdapter picturesAdapter;
+    private RecyclerView mRecyclerView;
+    private PicturesAdapter mAdapter;
     private PictureTabPresentor mPresentor;
     private String penname;
+    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -62,12 +63,37 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     }
 
     private void setuprecyclerView() {
-        recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        picturesAdapter = new PicturesAdapter(getmContext(), mPresentor);
-        recyclerView.setAdapter(picturesAdapter);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new PicturesAdapter(getmContext(), mPresentor);
+        mRecyclerView.setAdapter(mAdapter);
+        setScrollListener();
     }
+
+    private void setScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreFeeds(penname);
+
+                    }
+                }
+            }
+        });
+
+    }
+
 
     private void setupRefreshBroadcastListener() {
         LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
@@ -95,11 +121,29 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
     @Override
     public void onPicturesFetchSuccess(List<PictureModel> pictureModelList) {
-        picturesAdapter.add(pictureModelList);
+        mAdapter.add(pictureModelList);
     }
 
     @Override
     public void onPicturesFetchFail() {
+
+    }
+
+    @Override
+    public void showLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onMorePicturesFetchSuccess(List<PictureModel> pictureModelList) {
+        mRecyclerView.stopScroll();
+        mAdapter.addMore(pictureModelList);
 
     }
 

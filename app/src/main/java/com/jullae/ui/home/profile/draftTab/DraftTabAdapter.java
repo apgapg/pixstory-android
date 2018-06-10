@@ -117,6 +117,13 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
 
     }
 
+    public void addMore(List<DraftModel.FreshFeed> list) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(list);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
     public interface DeleteListener {
         void onSuccess();
 

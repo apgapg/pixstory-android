@@ -13,11 +13,12 @@ import com.jullae.utils.NetworkUtils;
  */
 public class CommentPresentor extends BasePresentor<CommentView> {
     private static final String TAG = CommentPresentor.class.getName();
+    private int count = 2;
 
     public void loadComments(String story_id) {
         checkViewAttached();
         getMvpView().showLoading();
-        AppDataManager.getInstance().getmApiHelper().loadComments(story_id).getAsObject(CommentMainModel.class, new ParsedRequestListener<CommentMainModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadComments(story_id, 1).getAsObject(CommentMainModel.class, new ParsedRequestListener<CommentMainModel>() {
 
             @Override
             public void onResponse(CommentMainModel response) {
@@ -32,6 +33,8 @@ public class CommentPresentor extends BasePresentor<CommentView> {
             public void onError(ANError anError) {
                 NetworkUtils.parseError(TAG, anError);
                 if (isViewAttached()) {
+                    getMvpView().hideLoading();
+
                     getMvpView().onCommentListFail();
                 }
 
@@ -58,6 +61,33 @@ public class CommentPresentor extends BasePresentor<CommentView> {
             }
         });
 
+
+    }
+
+    public void loadMoreComments(String storyid) {
+        checkViewAttached();
+        getMvpView().showLoadingMore();
+        AppDataManager.getInstance().getmApiHelper().loadComments(storyid, count).getAsObject(CommentMainModel.class, new ParsedRequestListener<CommentMainModel>() {
+
+            @Override
+            public void onResponse(CommentMainModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                count++;
+                if (isViewAttached()) {
+                    getMvpView().hideLoadingMore();
+                    getMvpView().onMoreCommentListFetch(response.getCommentModelList());
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideLoadingMore();
+                }
+
+            }
+        });
 
     }
 }

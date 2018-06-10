@@ -79,6 +79,8 @@ dependencies {
 
    implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
     implementation 'com.github.armcha:AutoLinkTextView:0.3.0'
+    implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
+
 
 
 

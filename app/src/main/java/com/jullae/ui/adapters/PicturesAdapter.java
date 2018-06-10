@@ -70,6 +70,13 @@ public class PicturesAdapter extends RecyclerView.Adapter<PicturesAdapter.Pictur
         notifyDataSetChanged();
     }
 
+    public void addMore(List<PictureModel> pictureModelList) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(pictureModelList);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
 
     public interface ReqListener {
         void onSuccess();

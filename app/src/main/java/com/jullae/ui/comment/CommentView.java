@@ -20,4 +20,10 @@ public interface CommentView extends MvpView {
     void onCommentListFetch(List<CommentModel> commentModelList);
 
     void onCommentListFail();
+
+    void onMoreCommentListFetch(List<CommentModel> commentModelList);
+
+    void hideLoadingMore();
+
+    void showLoadingMore();
 }

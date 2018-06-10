@@ -84,6 +84,13 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
         notifyDataSetChanged();
     }
 
+    public void addMore(List<FeedModel> feedModel) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(feedModel);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
     private void showDeleteDraftWarningDialog(final int adapterPosition, final String story_id) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("Remove bookmark?");

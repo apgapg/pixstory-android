@@ -66,6 +66,13 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
         notifyItemInserted(0);
     }
 
+    public void addMore(List<CommentModel> commentModelList) {
+        int intialSize = messagelist.size();
+        messagelist.addAll(commentModelList);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(intialSize, finalSize - intialSize);
+    }
+
 
     class FeedHolder extends RecyclerView.ViewHolder {
 

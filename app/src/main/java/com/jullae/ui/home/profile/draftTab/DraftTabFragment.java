@@ -26,9 +26,10 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
 
     private static final String TAG = DraftTabFragment.class.getName();
     private View view;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private DraftTabPresentor mPresentor;
     private DraftTabAdapter draftTabAdapter;
+    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -62,12 +63,37 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
     }
 
     private void setuprecyclerView() {
-        recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         draftTabAdapter = new DraftTabAdapter(getmContext(), mPresentor);
-        recyclerView.setAdapter(draftTabAdapter);
+        mRecyclerView.setAdapter(draftTabAdapter);
+        setScrollListener();
     }
+
+    private void setScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreDrafts();
+
+                    }
+                }
+            }
+        });
+
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -104,5 +130,22 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
     @Override
     public void onDraftsFetchFail() {
 
+    }
+
+    @Override
+    public void showLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onMoreDraftsFetch(List<DraftModel.FreshFeed> list) {
+        mRecyclerView.stopScroll();
+        draftTabAdapter.addMore(list);
     }
 }

@@ -26,9 +26,10 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
 
     private static final String TAG = BookmarkTabFragment.class.getName();
     private View view;
-    private RecyclerView recyclerView;
-    private BookmarkAdapter bookmarkAdapter;
+    private RecyclerView mRecyclerView;
+    private BookmarkAdapter mAdapter;
     private BookmarkTabPresentor mPresentor;
+    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -60,6 +61,30 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
         return view;
     }
 
+    private void setScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreFeeds();
+
+                    }
+                }
+            }
+        });
+
+    }
+
+
     private void setupRefreshBroadcastListener() {
         LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
                 new IntentFilter(Constants.REFRESH_INTENT_FILTER));
@@ -67,11 +92,12 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
     }
 
     private void setuprecyclerView() {
-        recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        bookmarkAdapter = new BookmarkAdapter(getmContext(), mPresentor);
-        recyclerView.setAdapter(bookmarkAdapter);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new BookmarkAdapter(getmContext(), mPresentor);
+        mRecyclerView.setAdapter(mAdapter);
+        setScrollListener();
     }
 
     @Override
@@ -94,11 +120,30 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
 
     @Override
     public void onBookmarkFetchSuccess(List<FeedModel> storyModelList) {
-        bookmarkAdapter.add(storyModelList);
+        mAdapter.add(storyModelList);
     }
 
     @Override
     public void onBookmarkFetchFail() {
 
+    }
+
+    @Override
+    public void hideMoreProgress() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void showLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+
+    }
+
+    @Override
+    public void onMoreBookmarkFetch(List<FeedModel> storyMainModelList) {
+        mRecyclerView.stopScroll();
+        mAdapter.addMore(storyMainModelList);
     }
 }

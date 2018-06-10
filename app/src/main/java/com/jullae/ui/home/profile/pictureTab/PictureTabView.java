@@ -9,4 +9,10 @@ public interface PictureTabView extends MvpView {
     void onPicturesFetchSuccess(List<PictureModel> pictureModelList);
 
     void onPicturesFetchFail();
+
+    void showLoadMoreProgess();
+
+    void hideLoadMoreProgess();
+
+    void onMorePicturesFetchSuccess(List<PictureModel> pictureModelList);
 }

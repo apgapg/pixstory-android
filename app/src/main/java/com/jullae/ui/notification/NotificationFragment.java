@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,9 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
 
     private View view;
     private NotificationPresentor mPresentor;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private NotificationAdapter notificationAdapter;
+    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
 
     @Nullable
     @Override
@@ -46,13 +48,14 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
     }
 
     private void setUpRecyclerView() {
-        recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_1dp);
-        recyclerView.addItemDecoration(itemDecoration);
+        mRecyclerView.addItemDecoration(itemDecoration);
         notificationAdapter = new NotificationAdapter(getmContext());
-        recyclerView.setAdapter(notificationAdapter);
+        mRecyclerView.setAdapter(notificationAdapter);
+        setScrollListener();
     }
 
     @Override
@@ -63,6 +66,30 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
         mPresentor.loadNotifications();
 
     }
+
+    private void setScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreNotifications();
+
+                    }
+                }
+            }
+        });
+
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -101,5 +128,25 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
     public void hideProgressBar() {
         view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
 
+    }
+
+    @Override
+    public void showLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar2).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadMoreProgess() {
+        view.findViewById(R.id.progress_bar2).setVisibility(View.INVISIBLE);
+
+    }
+
+
+    @Override
+    public void onMoreNotificationFetch(List<NotificationModel> notificationModelList) {
+        mRecyclerView.stopScroll();
+        for (int i = 0; i < notificationModelList.size(); i++)
+            notificationModelList.get(i).setSpannable_text(getmContext());
+        notificationAdapter.addMore(notificationModelList);
     }
 }

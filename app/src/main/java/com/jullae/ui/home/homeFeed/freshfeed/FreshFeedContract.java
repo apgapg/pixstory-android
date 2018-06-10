@@ -14,5 +14,12 @@ public class FreshFeedContract {
         void showProgressBar();
 
         void hideProgressBar();
+
+        void showMoreProgress();
+
+        void hideMoreProgress();
+
+        void onFetchMoreFeeds(List<FreshFeedModel.FreshFeed> list);
+
     }
 }

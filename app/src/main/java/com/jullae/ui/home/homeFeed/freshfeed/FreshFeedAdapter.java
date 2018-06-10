@@ -99,6 +99,13 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
+    public void addMore(List<FreshFeedModel.FreshFeed> list) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(list);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
 
     private class FreshFeedsViewHolder extends RecyclerView.ViewHolder {
 

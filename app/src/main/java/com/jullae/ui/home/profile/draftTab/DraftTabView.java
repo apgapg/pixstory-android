@@ -9,4 +9,10 @@ public interface DraftTabView extends MvpView {
     void onDraftsFetchSuccess(List<DraftModel.FreshFeed> list);
 
     void onDraftsFetchFail();
+
+    void showLoadMoreProgess();
+
+    void hideLoadMoreProgess();
+
+    void onMoreDraftsFetch(List<DraftModel.FreshFeed> list);
 }

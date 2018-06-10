@@ -9,4 +9,10 @@ public interface BookmarkTabView extends MvpView {
     void onBookmarkFetchSuccess(List<FeedModel> storyModelList);
 
     void onBookmarkFetchFail();
+
+    void hideMoreProgress();
+
+    void showLoadMoreProgess();
+
+    void onMoreBookmarkFetch(List<FeedModel> storyMainModelList);
 }

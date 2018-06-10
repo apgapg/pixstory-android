@@ -2,12 +2,15 @@ package com.jullae.ui.comment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,8 @@ public class CommentFragment extends BaseFragment implements CommentView {
     private ImageView btn_add_comment;
     private View progressBarComment;
     private String storyid;
+    private RecyclerView mRecyclerView;
+    private int visibleItemCount, totalItemCount, getVisibleItemCount, pastVisiblesItems;
 
     @Nullable
     @Override
@@ -57,6 +62,12 @@ public class CommentFragment extends BaseFragment implements CommentView {
             @Override
             public void onClick(View v) {
                 ((StoryDetailActivity) getContext()).onBackPressed();
+            }
+        });
+        binding.swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresentor.loadComments(storyid);
             }
         });
         setupComments();
@@ -146,11 +157,35 @@ public class CommentFragment extends BaseFragment implements CommentView {
     }
 
     private void setupComments() {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = new CommentsAdapter(getmContext());
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
+        setScrollListener();
+    }
+
+    private void setScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreComments(storyid);
+
+                    }
+                }
+            }
+        });
+
     }
 
 
@@ -163,6 +198,12 @@ public class CommentFragment extends BaseFragment implements CommentView {
     public void onCommentAddSuccess(CommentModel commentModel) {
         updateCommentUI(1);
         mAdapter.addComment(commentModel);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.scrollToPosition(0);
+            }
+        });
         AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_HOME_FEEDS);
 
     }
@@ -187,5 +228,21 @@ public class CommentFragment extends BaseFragment implements CommentView {
     public void onCommentListFail() {
         ToastUtils.showNoInternetToast(getmContext());
 
+    }
+
+    @Override
+    public void onMoreCommentListFetch(List<CommentModel> commentModelList) {
+        mRecyclerView.stopScroll();
+        mAdapter.addMore(commentModelList);
+    }
+
+    @Override
+    public void hideLoadingMore() {
+        binding.setIsLoadingMore(false);
+    }
+
+    @Override
+    public void showLoadingMore() {
+        binding.setIsLoadingMore(true);
     }
 }

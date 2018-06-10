@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.jullae.ApplicationClass;
 import com.jullae.R;
+import com.jullae.SearchActivity;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
@@ -43,6 +44,7 @@ import com.jullae.utils.GsonUtils;
 import com.jullae.utils.MyProgressDialog;
 import com.jullae.utils.NetworkUtils;
 import com.jullae.utils.ToastUtils;
+import com.volokh.danylo.hashtaghelper.HashTagHelper;
 
 public class StoryDetailFragment extends BaseFragment implements StoryDetailView {
 
@@ -146,7 +148,23 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             storyModel = GsonUtils.getInstance().fromJson(getArguments().getString("storymodel"), StoryModel.class);
             binding.setStoryModel(this.storyModel);
 
+            setHashTag();
+
+
         }
+    }
+
+    private void setHashTag() {
+        HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(getResources().getColor(R.color.blue_light), new HashTagHelper.OnHashTagClickListener() {
+            @Override
+            public void onHashTagClicked(String hashTag) {
+                Intent intent = new Intent(getmContext(), SearchActivity.class);
+                intent.putExtra("searchtag", hashTag);
+                getmContext().startActivity(intent);
+            }
+        });
+
+        mTextHashTagHelper.handle(binding.storyText);
     }
 
 

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class FreshFeedFragment extends BaseFragment implements FreshFeedContract.View {
 
-    private FreshFeedAdapter freshFeedAdapter;
+    private FreshFeedAdapter mAdapter;
     private FreshFeedPresentor mPresentor;
     private View view;
     private int position;
@@ -44,6 +44,9 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
             }
         }
     };
+    private RecyclerView recyclerView;
+    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
+
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         if (view != null) {
@@ -58,24 +61,49 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
 
         position = getArguments().getInt("position");
         swipeRefresh = view.findViewById(R.id.swiperefresh);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        freshFeedAdapter = new FreshFeedAdapter(getmContext());
+        recyclerView = view.findViewById(R.id.recycler_view);
+        mAdapter = new FreshFeedAdapter(getmContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(freshFeedAdapter);
+        recyclerView.setAdapter(mAdapter);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresentor.loadFeeds(position);
             }
         });
+        setScrollListener();
         mPresentor = new FreshFeedPresentor();
 
         return view;
     }
+
+    private void setScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = recyclerView.getLayoutManager().getChildCount();
+                    totalItemCount = recyclerView.getLayoutManager().getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        Log.v("...", "Last Item Wow !");
+
+                        //Do pagination.. i.e. fetch new data
+                        mPresentor.loadMoreFeeds(position);
+
+                    }
+                }
+            }
+        });
+
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -105,7 +133,7 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
 
     @Override
     public void onFetchFeeds(List<FreshFeedModel.FreshFeed> list) {
-        freshFeedAdapter.add(list);
+        mAdapter.add(list);
     }
 
     @Override
@@ -124,5 +152,21 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
         //     progressBar.setVisibility(View.INVISIBLE);
         swipeRefresh.setRefreshing(false);
 
+    }
+
+    @Override
+    public void showMoreProgress() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideMoreProgress() {
+        view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onFetchMoreFeeds(List<FreshFeedModel.FreshFeed> list) {
+        mAdapter.addMore(list);
     }
 }

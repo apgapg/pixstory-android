@@ -22,6 +22,8 @@ import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.story_title.setText(storyModel.getStory_title());
-        viewHolder.story_text.setText(storyModel.getStory_text());
+        viewHolder.story_text.setHtml(storyModel.getStory_text());
 
     }
 
@@ -79,13 +81,21 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
         notifyDataSetChanged();
     }
 
+    public void addAll(List<FeedModel> storyMainModelList) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(storyMainModelList);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
 
     public class SearchFeedViewHolder extends RecyclerView.ViewHolder {
 
 
         private View rootview;
         private ImageView image;
-        private TextView writer_name, story_title, story_text;
+        private TextView writer_name, story_title;
+        private HtmlTextView story_text;
         private TextView story_like_count;
         private TextView story_comment_count;
 

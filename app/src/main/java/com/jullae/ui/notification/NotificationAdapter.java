@@ -147,6 +147,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         mContext.startActivity(i);
     }
 
+    public void addMore(List<NotificationModel> notificationModelList) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(notificationModelList);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
     private class BaseViewHolder extends RecyclerView.ViewHolder {
 
         private TextView text;

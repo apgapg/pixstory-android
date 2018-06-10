@@ -11,13 +11,15 @@ import com.jullae.utils.NetworkUtils;
 
 public class BookmarkTabPresentor extends BasePresentor<BookmarkTabView> {
     private static final String TAG = BookmarkTabPresentor.class.getName();
+    private boolean isLoadingMore;
+    private int count = 2;
 
     public BookmarkTabPresentor() {
     }
 
     public void loadFeeds() {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().loadBookmarkTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname()).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
+        AppDataManager.getInstance().getmApiHelper().loadBookmarkTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname(), 1).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
             @Override
             public void onResponse(StoryListModel storyListModel) {
                 NetworkUtils.parseResponse(TAG, storyListModel);
@@ -61,4 +63,34 @@ public class BookmarkTabPresentor extends BasePresentor<BookmarkTabView> {
         });
     }
 
+    public void loadMoreFeeds() {
+        if (!isLoadingMore) {
+            isLoadingMore = true;
+            getMvpView().showLoadMoreProgess();
+            AppDataManager.getInstance().getmApiHelper().loadBookmarkTabFeeds(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname(), count).getAsObject(StoryListModel.class, new ParsedRequestListener<StoryListModel>() {
+                @Override
+                public void onResponse(StoryListModel storyListModel) {
+                    NetworkUtils.parseResponse(TAG, storyListModel);
+                    count++;
+                    isLoadingMore = false;
+                    if (isViewAttached()) {
+                        getMvpView().hideMoreProgress();
+
+                        getMvpView().onMoreBookmarkFetch(storyListModel.getStoryMainModelList());
+                    }
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    NetworkUtils.parseError(TAG, anError);
+                    isLoadingMore = false;
+                    if (isViewAttached()) {
+                        getMvpView().hideMoreProgress();
+
+                        getMvpView().onBookmarkFetchFail();
+                    }
+                }
+            });
+        }
+    }
 }
