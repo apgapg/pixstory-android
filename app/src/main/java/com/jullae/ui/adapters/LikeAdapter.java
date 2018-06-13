@@ -16,6 +16,7 @@ import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.databinding.ItemLikeBinding;
 import com.jullae.ui.base.BaseResponseModel;
+import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 import com.jullae.utils.ToastUtils;
 
@@ -29,12 +30,14 @@ import java.util.List;
 public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder> {
 
     private static final String TAG = LikeAdapter.class.getName();
+    private final int mode;
     List<LikesModel.Like> messagelist = new ArrayList();
     private Context context;
 
 
-    public LikeAdapter(final Context context) {
+    public LikeAdapter(final Context context, int mode) {
         this.context = context;
+        this.mode = mode;
 
     }
 
@@ -72,6 +75,13 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
         notifyDataSetChanged();
     }
 
+    public void addMore(List<LikesModel.Like> likes) {
+        int initialSize = messagelist.size();
+        messagelist.addAll(likes);
+        int finalSize = messagelist.size();
+        notifyItemRangeInserted(initialSize, finalSize - initialSize);
+    }
+
 
     public interface FollowReqListener {
         void onSuccess();
@@ -87,6 +97,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
         LikeViewHolder(ItemLikeBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            if (mode == Constants.FOLLOWING_LIST)
+                binding.userFollowed.setVisibility(View.INVISIBLE);
             binding.userFollowed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

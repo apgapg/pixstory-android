@@ -45,6 +45,7 @@ import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.MyProgressDialog;
 import com.jullae.utils.ReqListener;
@@ -116,6 +117,18 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 startImagePickActivity();
             }
         });
+        binding.containerFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showFollowersDialog(getmContext(), mProfileModel.getId());
+            }
+        });
+        binding.containerFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showFollowingDialog(getmContext(), mProfileModel.getId());
+            }
+        });
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -130,7 +143,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 showMenuOptions();
             }
         });
-
 
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);

@@ -20,4 +20,6 @@ public class Constants {
     public static final int REFRESH_HOME_FEEDS = 2;
     public static final int REFRESH_DRAFTS_TAB = 3;
     public static final int REFRESH_STORY = 4;
+    public static int FOLLOWERS_LIST = 23;
+    public static int FOLLOWING_LIST = 24;
 }

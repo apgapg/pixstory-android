@@ -156,6 +156,6 @@ public class SharedPrefsHelper {
 
 
     public ProfileModel getPrefsUserData() {
-        return new ProfileModel(getKeyName(), getKeyPenname(), getKeyBio(), getKeyDpUrl());
+        return new ProfileModel(getKeyUserId(), getKeyName(), getKeyPenname(), getKeyBio(), getKeyDpUrl());
     }
 }

@@ -21,8 +21,9 @@ public class ProfileModel extends BaseObservable {
     private String is_self;
     private boolean unread_notifications;
 
-    public ProfileModel(String name, String penname, String bio, String dpUrl) {
+    public ProfileModel(String id, String name, String penname, String bio, String dpUrl) {
 
+        this.id = id;
         this.name = name;
         this.penname = penname;
         this.bio = bio;

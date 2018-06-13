@@ -162,7 +162,7 @@ public class AppUtils {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(linearLayoutManager);
-        final LikeAdapter likeAdapter = new LikeAdapter(mContext);
+        final LikeAdapter likeAdapter = new LikeAdapter(mContext, 0);
         recyclerView.setAdapter(likeAdapter);
         AppDataManager.getInstance().getmApiHelper().getLikesList(picture_id, likeTypePicture).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
 

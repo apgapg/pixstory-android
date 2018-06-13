@@ -31,6 +31,7 @@ android {
             buildConfigField 'String', 'BASE_URL', '"http://13.250.30.62:80/api/v1/"'
             buildConfigField 'boolean', 'WATER_MARK', 'false'
             minifyEnabled true
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources true
         }
@@ -50,7 +51,7 @@ dependencies {
     implementation 'com.android.support:customtabs:27.1.1'
     implementation 'com.android.support:animated-vector-drawable:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     testImplementation 'junit:junit:4.12'
     //libraries
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
