@@ -10,6 +10,7 @@ public class CommentModel {
     private String user_penname;
     private String user_avatar;
     private Date created_at;
+    private boolean is_self;
 
     public int getId() {
         return id;
@@ -33,5 +34,9 @@ public class CommentModel {
 
     public Date getCreated_at() {
         return created_at;
+    }
+
+    public boolean isIs_self() {
+        return is_self;
     }
 }

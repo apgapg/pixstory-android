@@ -50,6 +50,7 @@ final class ApiEndPoint {
     static final String ENDPOINT_PUBLISH_DRAFT = "/story/draft";
     static final String ENDPOINT_DELETE_STORY = "/story/{id}/destroy";
     static final String ENDPOINT_DELETE_BOOKMARK = "/story/{id}/remove_bookmark";
+    static final String ENDPOINT_DELETE_COMMENT = "/comment/{id}/delete";
 
     static final String ENDPOINT_UPDATE_PROFILE = "/user/{id}/update";
     static final String ENDPOINT_SAVE_STORY = "/story/{id}/bookmark";

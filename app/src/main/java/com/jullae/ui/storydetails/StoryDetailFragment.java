@@ -75,6 +75,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
                     break;
 
+                case Constants.REFRESH_COMMENT:
+                    mPresentor.loadStoryDetails(storyModel.getStory_id());
+
+                    break;
+
+
             }
         }
     };

@@ -13,13 +13,14 @@ import android.widget.TextView;
 import com.jullae.R;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHolder> {
+public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 
     private static final String TAG = CommentsAdapter.class.getName();
     List<CommentModel> messagelist = new ArrayList();
@@ -34,12 +35,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
 
     @NonNull
     @Override
-    public CommentsAdapter.FeedHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        return new CommentsAdapter.FeedHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_comment, parent, false));
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_comment, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CommentsAdapter.FeedHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         holder.user_name.setText(messagelist.get(position).getUser_name());
 
@@ -74,7 +75,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
     }
 
 
-    class FeedHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView user_image;
         private TextView user_name, comment_text;
@@ -84,7 +85,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
          *
          * @param itemView itemview
          */
-        FeedHolder(final View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             user_image = itemView.findViewById(R.id.image_avatar);
             user_name = itemView.findViewById(R.id.text_name);
@@ -101,6 +102,17 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.FeedHo
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(context, messagelist.get(getAdapterPosition()).getUser_penname());
 
+                }
+            });
+
+            itemView.findViewById(R.id.container_comment).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (messagelist.get(getAdapterPosition()).isIs_self()) {
+                        DialogUtils.showCommentDeleteWarning(context, String.valueOf(messagelist.get(getAdapterPosition()).getId()));
+                        return true;
+                    } else
+                        return false;
                 }
             });
         }

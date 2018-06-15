@@ -20,6 +20,7 @@ import com.jullae.data.db.model.FollowingModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.DialogFollowersBinding;
 import com.jullae.ui.adapters.LikeAdapter;
+import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.customview.PagingRecyclerView;
 
@@ -234,4 +235,52 @@ public class DialogUtils {
 
     }
 
+    public static void showCommentDeleteWarning(final Context context, final String commentId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Are you sure you want to delete this comment?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                MyProgressDialog.showProgressDialog(context, "Please Wait!");
+                makeDeleteCommentReq(context, commentId);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+
+        //creating alert dialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private static void makeDeleteCommentReq(final Context context, String commentId) {
+        AppDataManager.getInstance().getmApiHelper().makeCommentDeleteReq(commentId).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                MyProgressDialog.dismissProgressDialog();
+                AppUtils.sendRefreshBroadcast(context, Constants.REFRESH_COMMENT);
+                AppUtils.sendRefreshBroadcast(context, Constants.REFRESH_HOME_FEEDS);
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                MyProgressDialog.dismissProgressDialog();
+                ToastUtils.showSomethingWentWrongToast(context);
+            }
+        });
+
+    }
 }

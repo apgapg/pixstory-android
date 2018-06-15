@@ -1,10 +1,15 @@
 package com.jullae.ui.comment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +48,18 @@ public class CommentFragment extends BaseFragment implements CommentView {
     private String storyid;
     private RecyclerView mRecyclerView;
     private int visibleItemCount, totalItemCount, getVisibleItemCount, pastVisiblesItems;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
+            Log.d("receiver", "Got message: " + refreshMode);
+            switch (refreshMode) {
+                case Constants.REFRESH_COMMENT:
+                    mPresentor.loadComments(storyid);
+                    break;
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -83,12 +100,25 @@ public class CommentFragment extends BaseFragment implements CommentView {
         mPresentor.attachView(this);
         mPresentor.loadComments(AppUtils.checkforNull(storyid));
 
+        setupRefreshBroadcastListener();
+
+
+    }
+
+
+    private void setupRefreshBroadcastListener() {
+        LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.REFRESH_INTENT_FILTER));
+
+
     }
 
 
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
+        LocalBroadcastManager.getInstance(getmContext()).unregisterReceiver(mMessageReceiver);
+
         super.onDestroyView();
     }
 

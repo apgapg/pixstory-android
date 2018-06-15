@@ -20,6 +20,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ADD_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_ARCHIVED_FEEDS;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_COMMENT;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_BOOKMARK;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_COMMENT;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_DELETE_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_LOGIN;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_EMAIL_SIGNUP;
@@ -602,6 +603,15 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .addPathParameter("id", userId)
                 .addQueryParameter("page", String.valueOf(count))
                 .addQueryParameter("per", PER)
+                .setPriority(Priority.MEDIUM)
+                .logReponseBody()
+                .build();
+    }
+
+    public ANRequest makeCommentDeleteReq(String commentId) {
+        return AndroidNetworking.post(BASE_URL + ENDPOINT_DELETE_COMMENT)
+                .addHeaders(headers)
+                .addPathParameter("id", commentId)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();

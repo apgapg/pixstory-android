@@ -15,4 +15,8 @@ public class ToastUtils {
         Toast.makeText(context.getApplicationContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
     }
 
+    public static void showSomethingWentWrongToast(Context context) {
+        Toast.makeText(context.getApplicationContext(), R.string.something_wrong, Toast.LENGTH_SHORT).show();
+
+    }
 }
