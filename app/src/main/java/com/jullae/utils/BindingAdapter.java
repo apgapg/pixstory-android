@@ -3,6 +3,7 @@ package com.jullae.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkOnClickListener;
 import com.luseen.autolinklibrary.AutoLinkTextView;
 
-import org.sufficientlysecure.htmltextview.HtmlTextView;
+import java.util.Date;
 
 public class BindingAdapter {
     @android.databinding.BindingAdapter("imageUrl")
@@ -51,9 +52,15 @@ public class BindingAdapter {
     }
 
     @android.databinding.BindingAdapter("htmlText")
-    public static void setHtmlText(HtmlTextView htmlTextView, String text) {
+    public static void setHtmlText(TextView htmlTextView, String text) {
         if (text != null)
-            htmlTextView.setHtml(text);
+            htmlTextView.setText(Html.fromHtml(text));
+    }
+
+    @android.databinding.BindingAdapter("setDate")
+    public static void setDate(TextView textView, Date date) {
+        textView.setText(DateUtils.getTimeAgo(date));
+
     }
 
     @android.databinding.BindingAdapter("html")

@@ -1,5 +1,7 @@
 package com.jullae.ui.loginscreen;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -105,17 +108,36 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         signInButton.findViewById(R.id.sign_in_button).setOnClickListener(this);
 
 
+
     }
 
     private void updateUI(int mode) {
+        editTextEmail.setText("");
+        editTextPassword.setText("");
         if (mode == SHOW_SIGNUP) {
-            buttonLogin.setText("Sign In");
-            button_forgotPassword.setVisibility(View.INVISIBLE);
+            buttonLogin.setText("Sign Up");
+
+            button_forgotPassword.animate().alpha(0.0f).setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).setListener(new AnimatorListenerAdapter() {
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    button_forgotPassword.setVisibility(View.INVISIBLE);
+                    super.onAnimationEnd(animation);
+                }
+            });
             buttonSignUp.setText(R.string.logIn);
             emailLoginMode = SHOW_SIGNUP;
         } else if (mode == SHOW_LOGIN) {
             buttonLogin.setText("Login");
-            button_forgotPassword.setVisibility(View.INVISIBLE);
+            button_forgotPassword.animate().alpha(1.0f).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(300).setListener(new AnimatorListenerAdapter() {
+
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    button_forgotPassword.setVisibility(View.VISIBLE);
+
+                    super.onAnimationStart(animation);
+                }
+            });
             buttonSignUp.setText(R.string.signUp);
             emailLoginMode = SHOW_LOGIN;
 

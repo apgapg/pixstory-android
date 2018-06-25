@@ -50,6 +50,13 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
         setUpRecyclerView();
         setupAddMessage();
 
+        findViewById(R.id.tvClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mPresentor.loadMessage(user_id);
     }
 

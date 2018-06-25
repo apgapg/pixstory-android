@@ -443,12 +443,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         like_count.setText(storyModel.getLike_count() + " likes");
         if (storyModel.getIs_liked().equals("false")) {
             btn_like.setImageResource(R.drawable.ic_unlike);
-            like_count.setTextColor(Color.parseColor("#9e9e9e"));
-            like_count.setTypeface(Typeface.DEFAULT);
         } else {
             btn_like.setImageResource(R.drawable.ic_like);
-            like_count.setTextColor(Color.parseColor("#424242"));
-            like_count.setTypeface(Typeface.DEFAULT_BOLD);
         }
 
         btn_like.setOnClickListener(new View.OnClickListener() {

@@ -3,6 +3,7 @@ package com.jullae.ui.search;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,6 @@ import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.story_title.setText(storyModel.getStory_title());
-        viewHolder.story_text.setHtml(storyModel.getStory_text());
+        viewHolder.story_text.setText(Html.fromHtml(storyModel.getStory_text()));
 
     }
 
@@ -95,7 +94,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
         private View rootview;
         private ImageView image;
         private TextView writer_name, story_title;
-        private HtmlTextView story_text;
+        private TextView story_text;
         private TextView story_like_count;
         private TextView story_comment_count;
 

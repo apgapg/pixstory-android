@@ -28,24 +28,24 @@ public class DateUtils {
 
         final long diff = now - time;
         if (diff < MINUTE_MILLIS) {
-            return "moments ago";
+            return "s";
         } else if (diff < 2 * MINUTE_MILLIS) {
-            return "a minute ago";
+            return "1m";
         } else if (diff < 60 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + " minutes ago";
+            return diff / MINUTE_MILLIS + "m";
         } else if (diff < 2 * HOUR_MILLIS) {
-            return "an hour ago";
+            return "1h";
         } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " hours ago";
+            return diff / HOUR_MILLIS + "h";
         } else if (diff < 48 * HOUR_MILLIS) {
-            return "yesterday";
+            return "1d";
         } else {
             if (diff / DAY_MILLIS < 30)
-                return diff / DAY_MILLIS + " days ago";
+                return diff / DAY_MILLIS + "d";
             else if (((diff / DAY_MILLIS) % 30) < 12)
-                return ((diff / DAY_MILLIS) % 60) + " month ago";
+                return ((diff / DAY_MILLIS) % 60) + "mon";
             else
-                return ((diff / DAY_MILLIS) % (30 * 12)) + " year ago";
+                return ((diff / DAY_MILLIS) % (30 * 12)) + "yr";
         }
     }
 }

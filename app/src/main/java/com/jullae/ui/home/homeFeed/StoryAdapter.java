@@ -3,6 +3,7 @@ package com.jullae.ui.home.homeFeed;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +21,6 @@ import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +68,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             viewHolder.like_count.setText(storyModel.getLike_count() + " likes");
             viewHolder.comment_count.setText(storyModel.getComment_count() + " comments");
-            viewHolder.story_text.setHtml(storyModel.getStory_text());
+            viewHolder.story_text.setText(Html.fromHtml(storyModel.getStory_text()));
 
         } else {
 
@@ -113,7 +112,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private ImageView user_image, image, ivStoryPic, ivEditStory, ivLike, ivMore;
         private TextView user_name, tvLocation, tvTimeInDays, like_count, comment_count, story_count;
         private RecyclerView recycler_view_story;
-        private HtmlTextView story_text;
+        private TextView story_text;
 
         public HomeFeedViewHolder(View inflate) {
             super(inflate);

@@ -23,7 +23,7 @@
         <RelativeLayout
             android:id="@+id/rLayoutTitle"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:background="#fff">
 
             <TextView
@@ -33,17 +33,16 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:lines="1"
 
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="@{storyModel.story_title}"
+                android:textAllCaps="true"
                 android:textAppearance="@style/text_14.regular.primary"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-
-            <include layout="@layout/vertical_divider_light" />
+                android:textSize="26dp"
+                tools:text="Title" />
 
 
         </RelativeLayout>
@@ -52,8 +51,8 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginBottom="76dp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -68,10 +67,10 @@
                     android:background="@color/white"
                     android:baselineAligned="false"
                     android:gravity="center"
-                    android:paddingLeft="10dp"
+                    android:paddingLeft="14dp"
                     android:paddingTop="8dp"
 
-                    android:paddingRight="10dp"
+                    android:paddingRight="14dp"
                     android:paddingBottom="8dp">
 
                     <LinearLayout
@@ -97,16 +96,16 @@
                                 android:id="@+id/text_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{storyModel.writer_name}"
-                                android:textAppearance="@style/text_14.medium.primary"
+                                android:text="@{storyModel.writer_penname}"
+                                android:textAllCaps="true"
+                                android:textAppearance="@style/text_14.regular.primary"
+                                android:textSize="14.0sp"
                                 tools:text="Ankit sharma" />
 
                             <TextView
-                                android:id="@+id/text_penname"
+                                android:id="@+id/text_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{storyModel.writer_penname}"
-
                                 android:textAppearance="@style/text_12.light.secondary"
                                 tools:text="rahulabrol2211" />
                         </LinearLayout>
@@ -142,19 +141,18 @@
 
                 </RelativeLayout>
 
-                <include layout="@layout/vertical_divider_light" />
 
-
-                <org.sufficientlysecure.htmltextview.HtmlTextView
+                <TextView
                     android:id="@+id/story_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#fff"
                     android:paddingLeft="12dp"
                     android:paddingTop="8dp"
+
                     android:paddingRight="12dp"
                     android:paddingBottom="8dp"
-                    android:textAppearance="@style/text_14.regular.primary"
-                    android:textSize="14dp"
+                    android:textAppearance="@style/text_16.regular.primary"
                     app:htmlText="@{storyModel.story_text}"
 
 
@@ -167,17 +165,17 @@
                     android:orientation="vertical">
 
 
-                    <include layout="@layout/vertical_divider_light" />
-
                     <TextView
                         android:id="@+id/comment_header"
                         android:layout_width="match_parent"
-                        android:layout_height="32dp"
+                        android:layout_height="36dp"
                         android:background="#fff"
                         android:gravity="center_vertical"
                         android:paddingLeft="12dp"
                         android:text="Comments"
-                        android:textAppearance="@style/text_14.medium.primary" />
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/text_14.regular.primary"
+                        android:textSize="16sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view"
@@ -207,22 +205,20 @@
 
                     </RelativeLayout>
 
-                    <include layout="@layout/vertical_divider_light" />
-
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:background="#fff">
+                        android:background="#E9EBEE">
 
                         <EditText
                             android:id="@+id/field_add_comment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="40dp"
-                            android:background="#fff"
-                            android:hint="Add a comment..."
+                            android:background="@android:color/transparent"
+                            android:hint="Add your comment"
                             android:maxLines="8"
                             android:minHeight="48dp"
                             android:paddingLeft="14dp"
@@ -253,7 +249,6 @@
                             android:visibility="invisible"
                             app:srcCompat="@drawable/ic_send_inactive_24dp" />
 
-                        <include layout="@layout/vertical_divider_light" />
                     </RelativeLayout>
 
 
@@ -265,12 +260,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="@dimen/close_button_height"
             android:background="#fff"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="4dp">
 
             <LinearLayout
                 android:id="@+id/t"
@@ -286,7 +282,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
-                    android:paddingTop="2dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="2dp"
                     android:scaleType="center"
                     android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
                     app:srcCompat="@drawable/ic_unlike" />
@@ -296,31 +293,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@{storyModel.like_count+` likes`}"
-
-                    android:textAppearance="@style/text_14.light.secondary"
+                    android:text="@{storyModel.like_count}"
+                    android:textAppearance="@style/text_16.regular.primary"
+                    android:textSize="18sp"
                     android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
-                    tools:text="12 likes" />
+                    tools:text="12" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/t"
                 android:gravity="center_vertical|end">
 
+                <com.jullae.ui.custom.SquareImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingTop="2dp"
+                    android:scaleType="center"
+                    android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
+
+                    app:srcCompat="@drawable/ic_insert_comment_black_24dp" />
 
                 <TextView
                     android:id="@+id/comment_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@{storyModel.comment_count+` comments`}"
-
-                    android:textAppearance="@style/text_14.light.secondary"
+                    android:text="@{storyModel.comment_count}"
+                    android:textAppearance="@style/text_14.regular.primary"
+                    android:textSize="18sp"
                     android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
-                    tools:text="30 comments" />
+                    tools:text="30" />
 
             </LinearLayout>
 
@@ -336,14 +341,31 @@
                 android:visibility="@{storyModel.story_title==null?View.INVISIBLE:View.VISIBLE}"
                 app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.7dp"
-                android:background="#bdbdbd" />
+
         </RelativeLayout>
 
 
-        <include layout="@layout/close_button" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/close_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@color/cyan_500"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/close"
+                android:layout_width="match_parent"
+                android:layout_height="38.6dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="X"
+                android:textAppearance="@style/text_16.regular.secondary"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
 
         <View
             android:id="@+id/bg"

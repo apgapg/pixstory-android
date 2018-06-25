@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            app:elevation="0dp"
             android:orientation="vertical">
 
             <FrameLayout
@@ -41,7 +42,8 @@
                     android:layout_marginLeft="56dp"
                     android:gravity="center"
                     android:text="Comments"
-                    android:textAppearance="@style/text_16.medium.primary"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/text_16.light.primary"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -54,9 +56,9 @@
                     android:layout_marginRight="8dp"
                     android:background="@drawable/ripple_effect"
 
-                    android:padding="8dp"
+                    android:padding="4dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+                    app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
 
             </FrameLayout>
@@ -80,7 +82,6 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingLeft="2dp"
-                android:paddingTop="4dp"
                 android:paddingRight="2dp"
                 android:paddingBottom="40dp" />
 
@@ -99,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#fff">
+            android:background="#E9EBEE">
 
 
             <EditText
@@ -107,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:background="#fff"
-                android:hint="Add a comment..."
+                android:background="@android:color/transparent"
+                android:hint="Add your comment"
                 android:maxLines="8"
                 android:minHeight="48dp"
                 android:paddingLeft="14dp"
@@ -139,10 +140,6 @@
                 android:visibility="invisible"
                 app:srcCompat="@drawable/ic_send_inactive_24dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.7dp"
-                android:background="@color/divider" />
 
         </RelativeLayout>
 

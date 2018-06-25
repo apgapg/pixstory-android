@@ -6,23 +6,11 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:orientation="vertical"
+
     app:behavior_hideable="true"
-    app:behavior_peekHeight="40dp"
+    app:behavior_peekHeight="0dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-    <Button
-        android:id="@+id/addButton"
-        style="@style/buttonStyle"
-        android:layout_height="@dimen/height_40"
-        android:layout_gravity="bottom|center_horizontal"
-        android:background="@drawable/round_button"
-        android:text="@string/plus"
-        android:textSize="@dimen/text_size_xx_large" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/black_opa_10" />
 
     <TextView
         android:id="@+id/text_add_picture"

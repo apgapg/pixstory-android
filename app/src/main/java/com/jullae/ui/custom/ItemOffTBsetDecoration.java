@@ -27,6 +27,15 @@ public class ItemOffTBsetDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
                                RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        outRect.set(0, mItemOffset, 0, mItemOffset);
+        if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1 && parent.getChildAdapterPosition(view) != 0) {
+            outRect.set(0, mItemOffset, 0, mItemOffset);
+        } else if (parent.getChildAdapterPosition(view) == parent.getAdapter().getItemCount() - 1) {
+
+            outRect.set(0, mItemOffset, 0, 0);
+
+        } else {
+            outRect.set(0, 0, 0, mItemOffset);
+
+        }
     }
 }

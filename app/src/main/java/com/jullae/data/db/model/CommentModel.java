@@ -1,5 +1,11 @@
 package com.jullae.data.db.model;
 
+import android.content.Context;
+import android.text.style.TextAppearanceSpan;
+
+import com.binaryfork.spanny.Spanny;
+import com.jullae.R;
+
 import java.util.Date;
 
 public class CommentModel {
@@ -11,6 +17,7 @@ public class CommentModel {
     private String user_avatar;
     private Date created_at;
     private boolean is_self;
+    private Spanny spannable_text;
 
     public int getId() {
         return id;
@@ -38,5 +45,11 @@ public class CommentModel {
 
     public boolean isIs_self() {
         return is_self;
+    }
+
+
+    public Spanny getSpannable_text(Context context) {
+        return this.spannable_text = new Spanny(user_penname + " ", new TextAppearanceSpan(context, R.style.text_14_medium_primary))
+                .append(comment, new TextAppearanceSpan(context, R.style.text_14_regular_secondary));
     }
 }

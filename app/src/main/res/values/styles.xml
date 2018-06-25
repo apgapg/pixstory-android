@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/merriweather</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -326,7 +327,7 @@
 
 
     <style name="text_14.regular.primary">
-        <item name="android:textColor">#DE000000</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="text_14.regular.secondary">
@@ -383,7 +384,7 @@
     </style>
 
     <style name="text_12.light.primary">
-        <item name="android:textColor">#DE000000</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="text_12.light.secondary">
@@ -487,7 +488,7 @@
     </style>
 
     <style name="text_16.light.primary">
-        <item name="android:textColor">#DE000000</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="text_16.light.secondary">

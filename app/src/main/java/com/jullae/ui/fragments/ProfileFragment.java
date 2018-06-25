@@ -16,8 +16,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -269,39 +267,10 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     }
 
     private void showConversationDialog() {
-        showMessageDialog();
-    }
-
-    private void showMessageDialog() {
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
-        View view = getmContext().getLayoutInflater().inflate(R.layout.dialog_conversation, null);
-
-        setupRecyclerView(view);
-        dialogBuilder.setView(view);
-
-        final AlertDialog dialog = dialogBuilder.create();
-        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-
+        DialogUtils.showMessageDialog(getmContext());
     }
 
 
-    private void setupRecyclerView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        conversationAdapter = new ConversationAdapter(getmContext());
-        recyclerView.setAdapter(conversationAdapter);
-
-        mPresentor.getConversationList();
-    }
 
     private void showPasswordChangeDialog() {
 

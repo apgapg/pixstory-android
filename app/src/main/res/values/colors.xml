@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">#d8d8d8</color>
+    <color name="colorPrimary">#0277BD</color>
+    <color name="colorPrimaryDark">#004C8C</color>
     <color name="colorAccent">#47515D</color>
     <color name="colorAppName">#47515D</color>
     <color name="facebookButtonBackground">#3C589E</color>
     <color name="white">#FFFFFF</color>
-    <color name="appBackground">#f8f8f8</color>
+    <color name="appBackground">#E9EBEE</color>
     <color name="buttonBorder">#E0E0E0</color>
     <color name="invalidWarning">#FF0000</color>
-
+    <color name="indigo_700">#303F9F</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="blue_A700">#2962FF</color>
     <color name="white_light">#CCFFFFFF</color>
     <color name="white_very_light">#90FFFFFF</color>
     <color name="black">#212121</color>
@@ -42,9 +44,12 @@
     <color name="radio_btn_color">#bdc6cf</color>
     <color name="divider">#AA757575</color>
     <color name="black75">#757575</color>
+    <color name="grey_400">#BDBDBD</color>
 
-    <color name="primary_text">#DE000000</color>
+    <color name="cyan_500">#00BCD4</color>
+    <color name="primary_text">#555</color>
     <color name="secondary_text">#8A000000</color>
     <color name="icon_color">@color/divider</color>
+    <color name="tab_icon_grey">#929495</color>
 </resources>
 

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,6 +34,7 @@ import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.notification.NotificationActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.KeyboardUtils;
 import com.jullae.utils.MyProgressDialog;
@@ -55,7 +56,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
     private static final int CAMERA_REQUEST = 24;
     private static final int REQ_CODE_ADD_PICTURE = 45;
     private BottomSheetDialogFragment bottomSheetDialogFragment;
-    private Button addButton;
+    private FloatingActionButton fab;
     private ImageView tab_home, tab_explore, tab_profile;
     private BottomSheetBehavior<View> mBottomSheetBehavior;
     private ImagePicker imagePicker;
@@ -81,8 +82,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         //client
 
         //Initialize the button and bottomNavigation for listener.
-        addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(this);
+        fab = findViewById(R.id.addButton);
 
         setUpSearchButton();
         tab_explore = findViewById(R.id.tab_explore);
@@ -92,6 +92,8 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         tab_explore.setOnClickListener(this);
         tab_profile.setOnClickListener(this);
         tab_home.setOnClickListener(this);
+
+        tab_home.setColorFilter(getResources().getColor(R.color.colorPrimary));
 
 
         //Find bottom Sheet ID
@@ -104,6 +106,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)
                     findViewById(R.id.bg).setVisibility(View.GONE);
+
             }
 
             @Override
@@ -113,12 +116,14 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             }
         });
 
-        findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    fab.hide();
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 } else {
+                    fab.show();
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
@@ -128,6 +133,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             @Override
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                fab.show();
 
             }
         });
@@ -176,6 +182,13 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 button_notification.setImageResource(R.drawable.ic_bell_normal);
                 startActivity(new Intent(HomeActivity.this, NotificationActivity.class));
                 //showFragment(new NotificationFragment(), true);
+            }
+        });
+
+        findViewById(R.id.image_message).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showMessageDialog(HomeActivity.this);
             }
         });
 
@@ -275,12 +288,23 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         switch (v.getId()) {
 
             case R.id.tab_explore:
+                tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_explore.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 showHomeFragment(1);
                 break;
             case R.id.tab_home:
+                tab_home.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                tab_explore.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+
                 showHomeFragment(0);
                 break;
             case R.id.tab_profile:
+                tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_explore.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_profile.setColorFilter(getResources().getColor(R.color.colorPrimary));
+
                 showHomeFragment(2);
                 break;
             default:

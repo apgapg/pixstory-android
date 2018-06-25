@@ -108,9 +108,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     private void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-           /* if (b)
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-           */
+
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         if (shouldAddToBackStack)
             fragmentTransaction.replace(R.id.container, fragment).addToBackStack(null).commit();
         else fragmentTransaction.replace(R.id.container, fragment).commit();

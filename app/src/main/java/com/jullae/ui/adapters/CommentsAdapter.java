@@ -42,10 +42,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        holder.user_name.setText(messagelist.get(position).getUser_name());
 
         GlideUtils.loadImagefromUrl(context, messagelist.get(position).getUser_avatar(), holder.user_image);
-        holder.comment_text.setText(messagelist.get(position).getComment());
+        holder.text.setText(messagelist.get(position).getSpannable_text(context));
 
     }
 
@@ -78,7 +77,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView user_image;
-        private TextView user_name, comment_text;
+        private TextView text;
 
         /**
          * Constructor to initialize the view Attribute.
@@ -88,8 +87,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         ViewHolder(final View itemView) {
             super(itemView);
             user_image = itemView.findViewById(R.id.image_avatar);
-            user_name = itemView.findViewById(R.id.text_name);
-            comment_text = itemView.findViewById(R.id.comment_text);
+            text = itemView.findViewById(R.id.text);
 
             user_image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,7 +95,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
                     AppUtils.showVisitorProfile(context, messagelist.get(getAdapterPosition()).getUser_penname());
                 }
             });
-            user_name.setOnClickListener(new View.OnClickListener() {
+            text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(context, messagelist.get(getAdapterPosition()).getUser_penname());

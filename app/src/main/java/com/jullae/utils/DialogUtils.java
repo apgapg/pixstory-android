@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,12 +16,14 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
+import com.jullae.data.db.model.ConversationModel;
 import com.jullae.data.db.model.FollowersModel;
 import com.jullae.data.db.model.FollowingModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.DialogFollowersBinding;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseResponseModel;
+import com.jullae.ui.home.profile.message.ConversationAdapter;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.customview.PagingRecyclerView;
 
@@ -282,5 +285,48 @@ public class DialogUtils {
             }
         });
 
+    }
+
+    public static void showMessageDialog(Activity activity) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+        View view = activity.getLayoutInflater().inflate(R.layout.dialog_conversation, null);
+
+        setupRecyclerView(view, activity);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    private static void setupRecyclerView(View view, Activity activity) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        final ConversationAdapter conversationAdapter = new ConversationAdapter(activity);
+        recyclerView.setAdapter(conversationAdapter);
+
+        AppDataManager.getInstance().getmApiHelper().getConversationList().getAsObject(ConversationModel.class, new ParsedRequestListener<ConversationModel>() {
+
+            @Override
+            public void onResponse(ConversationModel conversationModel) {
+                NetworkUtils.parseResponse(TAG, conversationModel);
+                conversationAdapter.add(conversationModel.getConversationList());
+            }
+
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+
+            }
+        });
     }
 }

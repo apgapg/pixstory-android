@@ -1,68 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/container_comment"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="12dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingTop="4dp"
-        android:paddingRight="8dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="24dp">
+    <com.jullae.ui.custom.CircularImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="6dp"
+        android:paddingTop="2dp" />
 
-            <com.jullae.ui.custom.CircularImageView
-                android:id="@+id/image_avatar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="2dp"
-                android:paddingTop="2dp" />
-
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/image_avatar"
-                android:gravity="center_vertical"
-                android:textAppearance="@style/text_14.regular.primary"
-                android:textSize="14dp"
-                tools:text="Suketu Balaji" />
-
-            <TextView
-                android:id="@+id/tvCmntTime"
-                style="@style/textViewStyle.line_1"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:textColor="@color/grey_light7"
-                android:textSize="@dimen/text_size_small"
-                tools:text="6 days ago" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/comment_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ellipsize="end"
-            android:paddingLeft="2dp"
-            android:textAppearance="@style/text_14.regular.secondary"
-            android:textSize="14dp"
-
-            tools:text="The major attractions in Las Vegas are the casinos and the hotels, although in recent years other new attractions have begun to emerge Most casinos emerge casinos recent years other attract ...  " />
-
-    </LinearLayout>
-
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="12dp"
+        android:textAppearance="@style/text_14.regular.primary"
+        android:textSize="14dp"
+        tools:text="Suketu Balaji" />
 
 </LinearLayout>

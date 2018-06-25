@@ -276,7 +276,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
 
             binding.recyclerViewStory.setAdapter(new StoryAdapter(mContext));
 
-            binding.textName.setOnClickListener(new View.OnClickListener() {
+            binding.textPenname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
@@ -289,12 +289,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
                 }
             });
 
-            binding.textPenname.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
-                }
-            });
 
 
             binding.likeCount.setOnClickListener(new View.OnClickListener() {

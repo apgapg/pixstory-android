@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootview"
     android:layout_width="@dimen/story_card_height_home_feed"
     android:layout_height="@dimen/story_card_width_home_feed"
-    android:layout_marginTop="4dp"
-
     android:background="@drawable/shape_round_rectangle_grey"
     android:orientation="vertical"
-    android:paddingBottom="4dp"
-    android:paddingTop="4dp">
+    android:paddingLeft="8dp"
+    android:paddingTop="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="8dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="1dp">
 
 
     <LinearLayout
@@ -17,54 +20,50 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="22dp"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="2dp">
+        android:paddingLeft="6dp"
+        android:paddingTop="6dp"
+        android:paddingRight="6dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="32dp"
             android:layout_marginBottom="4dp">
 
             <com.jullae.ui.custom.CircularImageView
                 android:id="@+id/image_avatar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerVertical="true"
                 android:src="#99bdbdbd" />
 
             <TextView
                 android:id="@+id/text_name"
+                android:layout_centerVertical="true"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/image_avatar"
+                android:fontFamily="@font/merriweather"
                 android:gravity="center_vertical"
-                android:layout_centerVertical="true"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:layout_toRightOf="@+id/image_avatar"
-                android:textAppearance="@style/text_14.medium.primary"
+                android:textAppearance="@style/text_12.regular.primary"
+                android:textColor="@color/colorPrimaryDark"
                 tools:text="Suketu Balaji" />
 
-            <TextView
-                android:id="@+id/tvCmntTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
 
-                android:layout_centerVertical="true"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:textAppearance="@style/text_12.light.secondary"
-                tools:text="6 days ago" />
         </RelativeLayout>
 
-        <org.sufficientlysecure.htmltextview.HtmlTextView
+        <TextView
             android:id="@+id/story_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/merriweather"
+
+
             android:ellipsize="end"
             android:lines="6"
-            android:textAppearance="@style/text_12.regular.secondary"
+            android:textAppearance="@style/text_14.regular.primary"
 
             tools:text="although in recedwjqqwdfejkfnwkjenfjkwenfkjwenfkjewfnjkwenfkjweffjfnwekjfnewkjfnwejnfwekjfnwekjfnewfkjkfnewjkfnkewkjnfenwnfwejkfwejnwefwekfnkwefnjwekfknwefjwekfwnwqjdwqnt years other new attractions have begun to emerge Most casinos emerge casinos recent years other attract ...  " />
 
@@ -74,7 +73,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:paddingLeft="2dp">
 
@@ -84,19 +83,24 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingLeft="6dp"
+            android:fontFamily="@font/merriweather"
+
             android:paddingRight="4dp"
-            android:textAppearance="@style/text_12.light.secondary"
+            android:textAppearance="@style/text_12.regular"
+            android:textColor="@color/cyan_500"
             tools:text="3 likes" />
 
         <TextView
             android:id="@+id/comment_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-
             android:gravity="center"
-            android:paddingLeft="4dp"
+            android:fontFamily="@font/merriweather"
+
+            android:paddingLeft="2dp"
             android:paddingRight="4dp"
-            android:textAppearance="@style/text_12.light.secondary"
+            android:textAppearance="@style/text_12.regular"
+            android:textColor="@color/cyan_500"
             tools:text="6 Comments" />
     </LinearLayout>
-</RelativeLayout>
+</android.support.v7.widget.CardView>
