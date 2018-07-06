@@ -30,9 +30,9 @@
             android:layout_width="40dp"
 
             android:layout_height="40dp"
+            android:layout_gravity="end|center_vertical"
             android:layout_marginRight="4dp"
             android:background="@drawable/ripple_effect"
-            android:layout_gravity="end|center_vertical"
             android:padding="10dp"
             android:rotation="45"
             android:scaleType="centerCrop"
@@ -42,7 +42,7 @@
 
     <include layout="@layout/vertical_divider_light" />
 
-    <EditText
+    <com.jullae.ui.custom.knife.KnifeText
         android:id="@+id/field_story"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -57,6 +57,84 @@
         android:paddingRight="12dp"
         android:paddingBottom="8dp"
         android:textAppearance="@style/text_14.regular.primary" />
+
+    <include layout="@layout/vertical_divider_light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <com.jullae.ui.custom.SquareImageView
+            android:id="@+id/image_bold"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#e0e0e0"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_bold_text_option" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="#bdbdbd" />
+
+        <com.jullae.ui.custom.SquareImageView
+            android:id="@+id/image_italic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#e0e0e0"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_italicize_text" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="#bdbdbd" />
+
+        <com.jullae.ui.custom.SquareImageView
+            android:id="@+id/image_underline"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#e0e0e0"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_underlined_text" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="#bdbdbd" />
+
+        <com.jullae.ui.custom.SquareImageView
+            android:id="@+id/image_bullets"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#e0e0e0"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_list_with_bullets" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="#bdbdbd" />
+
+        <com.jullae.ui.custom.SquareImageView
+            android:id="@+id/image_link"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#e0e0e0"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_link_symbol" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="#bdbdbd" />
+    </LinearLayout>
 
     <include layout="@layout/vertical_divider_light" />
 

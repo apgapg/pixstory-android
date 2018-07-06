@@ -77,7 +77,7 @@
     <dimen name="tab_icon">36dp</dimen>
     <dimen name="item_offset_4dp">4dp</dimen>
     <dimen name="item_offset_2dp">2dp</dimen>
-    <dimen name="profile_count_text">18dp</dimen>
+    <dimen name="profile_count_text">24dp</dimen>
     <dimen name="item_offset_1dp">1dp</dimen>
     <dimen name="search_bar_width">200dp</dimen>
     <dimen name="story_card_width_home_feed">148dp</dimen>

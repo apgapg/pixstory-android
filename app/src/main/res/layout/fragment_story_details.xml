@@ -106,6 +106,7 @@
                                 android:id="@+id/text_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                app:setDate="@{storyModel.created_at}"
                                 android:textAppearance="@style/text_12.light.secondary"
                                 tools:text="rahulabrol2211" />
                         </LinearLayout>
@@ -149,6 +150,7 @@
                     android:background="#fff"
                     android:paddingLeft="12dp"
                     android:paddingTop="8dp"
+                    android:lineSpacingExtra="2dp"
 
                     android:paddingRight="12dp"
                     android:paddingBottom="8dp"

@@ -10,15 +10,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jullae.R;
+import com.jullae.ui.custom.knife.KnifeText;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.MyProgressDialog;
+import com.jullae.utils.ToastUtils;
 
 public class WriteStoryActivity extends AppCompatActivity implements WriteStoryView {
 
     private WriteStoryPresentor mPresentor;
     private String picture_id;
-    private EditText field_story, field_title;
+    private EditText field_title;
+    private KnifeText field_story;
+    private View imageBold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,84 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
             @Override
             public void onClick(View v) {
                 mPresentor.sendStoryDraftReq(field_title.getText().toString().trim(), field_story.getText().toString().trim(), picture_id);
+            }
+        });
+
+        setUpTextStyling();
+
+
+    }
+
+    private void setUpTextStyling() {
+        setupBold();
+        setupItalic();
+        setupUnderline();
+        setupBullets();
+    }
+
+    private void setupBullets() {
+        findViewById(R.id.image_bullets).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                field_story.bullet(!field_story.contains(KnifeText.FORMAT_BULLET));
+            }
+        });
+        findViewById(R.id.image_bullets).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtils.showToast(WriteStoryActivity.this, "bullets");
+                return true;
+            }
+        });
+    }
+
+    private void setupUnderline() {
+        findViewById(R.id.image_underline).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                field_story.underline(!field_story.contains(KnifeText.FORMAT_UNDERLINED));
+            }
+        });
+        findViewById(R.id.image_underline).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtils.showToast(WriteStoryActivity.this, "underline");
+                return true;
+            }
+        });
+    }
+
+    private void setupItalic() {
+
+        findViewById(R.id.image_italic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                field_story.italic(!field_story.contains(KnifeText.FORMAT_ITALIC));
+            }
+        });
+        findViewById(R.id.image_italic).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtils.showToast(WriteStoryActivity.this, "italic");
+                return true;
+            }
+        });
+    }
+
+    private void setupBold() {
+        findViewById(R.id.image_bold).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                field_story.bold(!field_story.contains(KnifeText.FORMAT_BOLD));
+
+
+            }
+        });
+        findViewById(R.id.image_bold).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtils.showToast(WriteStoryActivity.this, "bold");
+                return true;
             }
         });
     }

@@ -69,7 +69,6 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         user_stories = view.findViewById(R.id.text_stories);
         user_pictures = view.findViewById(R.id.text_pictures);
 
-        button_message = view.findViewById(R.id.button_message);
         view.findViewById(R.id.button_edit_profile).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.ivMore).setVisibility(View.INVISIBLE);
         viewPager = view.findViewById(R.id.viewPager);

@@ -72,7 +72,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private ProfileModel mProfileModel;
-    private ImageView button_message;
     private ConversationAdapter conversationAdapter;
     private View button_edit_profile;
     private FragmentProfileBinding binding;
@@ -93,7 +92,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         appBar = view.findViewById(R.id.appbar);
         user_image = view.findViewById(R.id.image_avatar);
 
-        button_message = view.findViewById(R.id.button_message);
         button_edit_profile = view.findViewById(R.id.button_edit_profile);
 
         button_edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -103,12 +101,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-        button_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showConversationDialog();
-            }
-        });
+
         user_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +124,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
+
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         viewPager.setOffscreenPageLimit(3);
 
@@ -142,6 +136,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
+        setupTabIcons();
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
@@ -180,6 +175,12 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
 
         return view;
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_outline_bookmark_border_24px);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_outline_save_24px);
     }
 
     private void startImagePickActivity() {
@@ -529,21 +530,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             return registeredFragments.get(position);
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return tabs[0];
-                case 1:
-                    return tabs[1];
-                case 2:
-                    return tabs[2];
-                case 3:
-                    return tabs[3];
-                default:
-                    return super.getPageTitle(position);
-            }
-        }
 
         @Override
         public int getCount() {

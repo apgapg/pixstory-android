@@ -16,6 +16,7 @@
         android:paddingTop="44dp"
         android:text="@string/app_name"
         android:textColor="#212121"
+        android:textAppearance="@style/text_14.medium"
         android:textSize="24sp"
         android:textStyle="bold" />
 

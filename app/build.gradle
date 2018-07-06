@@ -77,11 +77,9 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
 
-   implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
+    implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
     implementation 'com.github.armcha:AutoLinkTextView:0.3.0'
     implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
-
-
 
 
 }

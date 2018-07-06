@@ -6,5 +6,16 @@
         <attr name="myborderOverlay" format="boolean" />
         <attr name="myfillColor" format="color" />
     </declare-styleable>
-
+    <declare-styleable name="KnifeText">
+        <attr name="bulletColor" format="reference|color" />
+        <attr name="bulletRadius" format="reference|dimension" />
+        <attr name="bulletGapWidth" format="reference|dimension" />
+        <attr name="historyEnable" format="reference|boolean" />
+        <attr name="historySize" format="reference|integer" />
+        <attr name="linkColor" format="reference|color" />
+        <attr name="linkUnderline" format="reference|boolean" />
+        <attr name="quoteColor" format="reference|color" />
+        <attr name="quoteStripeWidth" format="reference|dimension" />
+        <attr name="quoteCapWidth" format="reference|dimension" />
+    </declare-styleable>
 </resources>

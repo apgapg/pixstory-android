@@ -152,6 +152,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             storyModel.setStory_id(getArguments().getString("story_id"));
         } else if (getArguments().getString("storymodel") != null) {
             storyModel = GsonUtils.getInstance().fromJson(getArguments().getString("storymodel"), StoryModel.class);
+
             binding.setStoryModel(this.storyModel);
 
             setHashTag();

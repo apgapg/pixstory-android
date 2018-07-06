@@ -59,7 +59,8 @@ public class BindingAdapter {
 
     @android.databinding.BindingAdapter("setDate")
     public static void setDate(TextView textView, Date date) {
-        textView.setText(DateUtils.getTimeAgo(date));
+        if (date != null)
+            textView.setText(DateUtils.getTimeAgo(date));
 
     }
 
