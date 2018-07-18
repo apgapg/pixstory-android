@@ -1,6 +1,5 @@
 package com.jullae.ui.home.homeFeed;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.androidnetworking.error.ANError;
@@ -16,7 +15,6 @@ import com.jullae.ui.fragments.ProfileFragment;
 import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
 import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
-import com.jullae.utils.ReqListener;
 
 import java.io.File;
 
@@ -102,11 +100,11 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
         });
     }
 
-    public void updateProfile(final String name, final String bio, final ReqListener reqListener) {
+   /* public void updateProfile(final String name, final String bio, final ReqListener reqListener) {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(bio)) {
             checkViewAttached();
             getMvpView().showProgressBar();
-            AppDataManager.getInstance().getmApiHelper().updateProfileReq(name, bio, AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId())
+            AppDataManager.getInstance().getmApiHelper().updateProfileReq(name, bio, AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId(), imagefile)
                     .getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
                         @Override
                         public void onResponse(BaseResponseModel response) {
@@ -131,7 +129,7 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
                         }
                     });
         }
-    }
+    }*/
 
     public boolean isEmailModeLogin() {
         Log.d(TAG, "isEmailModeLogin: " + AppDataManager.getInstance().getmSharedPrefsHelper().getKeyProvider());

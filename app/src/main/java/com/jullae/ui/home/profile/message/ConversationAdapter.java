@@ -93,6 +93,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                     Intent i = new Intent(context, MessageActivity.class);
                     i.putExtra("user_id", messagelist.get(getAdapterPosition()).getUser_id());
                     i.putExtra("user_name", messagelist.get(getAdapterPosition()).getName());
+                    i.putExtra("user_avatar", messagelist.get(getAdapterPosition()).getUser_avatar());
                     context.startActivity(i);
                 }
             });

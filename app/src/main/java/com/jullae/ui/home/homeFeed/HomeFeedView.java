@@ -5,7 +5,7 @@ import com.jullae.ui.base.MvpView;
 public interface HomeFeedView extends MvpView {
     void onFetchFeedSuccess(HomeFeedModel homeFeedModel);
 
-    void onFetchFeedFail();
+    void onFetchFeedFail(String message);
 
     void showProgress();
 

@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.error.ANError;
@@ -23,6 +24,7 @@ import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.DialogFollowersBinding;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BaseResponseModel;
+import com.jullae.ui.common.MessageListActivity;
 import com.jullae.ui.home.profile.message.ConversationAdapter;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.customview.PagingRecyclerView;
@@ -53,43 +55,86 @@ public class DialogUtils {
 
         final AlertDialog dialog = dialogBuilder.create();
 
-        final EditText field_report = view.findViewById(R.id.field_report);
-        final View btn_report = view.findViewById(R.id.report);
-        btn_report.setOnClickListener(new View.OnClickListener() {
+
+        view.findViewById(R.id.t1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String report = field_report.getText().toString().trim();
-                if (report.length() != 0) {
+                onReportTextClick(view, dialog, mPresentor, storyModel, context);
+            }
+        });
 
-                    view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-                    btn_report.setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.t2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    mPresentor.reportStory(report, storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
-                        @Override
-                        public void onSuccess() {
-                            view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                            dialog.dismiss();
-                            Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+                onReportTextClick(view, dialog, mPresentor, storyModel, context);
+            }
+        });
 
-                        }
+        view.findViewById(R.id.t3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                        @Override
-                        public void onFail() {
-                            view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                            btn_report.setVisibility(View.VISIBLE);
-                            Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
+                onReportTextClick(view, dialog, mPresentor, storyModel, context);
+            }
+        });
 
-                }
+        view.findViewById(R.id.t4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportTextClick(view, dialog, mPresentor, storyModel, context);
             }
         });
 
         dialog.show();
 
 
+    }
+
+    private static void onReportTextClick(final View view, final AlertDialog dialog, StoryDetailPresentor mPresentor, StoryModel storyModel, final Activity context) {
+
+
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+        mPresentor.reportStory(((TextView) view).getText().toString(), storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+            @Override
+            public void onSuccess() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+
+                showReportStorySuccessDialog(context);
+                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private static void showReportStorySuccessDialog(Activity context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final View view = context.getLayoutInflater().inflate(R.layout.dialog_report_success, null);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     public static void showFollowersDialog(final Activity mContext, final String userId) {
@@ -289,7 +334,10 @@ public class DialogUtils {
 
     public static void showMessageDialog(Activity activity) {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+        activity.startActivity(new Intent(activity, MessageListActivity.class));
+
+
+      /*  AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
         View view = activity.getLayoutInflater().inflate(R.layout.dialog_conversation, null);
 
         setupRecyclerView(view, activity);
@@ -302,7 +350,7 @@ public class DialogUtils {
                 dialog.dismiss();
             }
         });
-        dialog.show();
+        dialog.show();*/
 
     }
 

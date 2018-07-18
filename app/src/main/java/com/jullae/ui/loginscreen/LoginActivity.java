@@ -25,6 +25,7 @@ import com.jullae.utils.AppUtils;
 import com.jullae.utils.ErrorResponseModel;
 import com.jullae.utils.MyProgressDialog;
 
+import java.io.File;
 import java.util.Arrays;
 
 import static com.jullae.ui.loginscreen.LoginFragment.RC_SIGN_IN;
@@ -257,8 +258,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         mPresentor.performEmailLogin(email, password, emailLoginMode);
     }
 
-    public void performSignUp(String name, String penname) {
-        mPresentor.performSignUp(email, password, name, penname, loginMode);
+    public void performSignUp(String name, String penname, String bio, File imageFile) {
+        mPresentor.performSignUp(email, password, name, penname, bio, loginMode, imageFile);
     }
 
     @Override

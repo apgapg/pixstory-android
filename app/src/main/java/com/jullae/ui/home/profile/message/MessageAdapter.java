@@ -8,12 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.jullae.data.db.model.MessageModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
@@ -54,12 +52,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     @Override
     public void onBindViewHolder(@NonNull final MessageHolder holder, final int position) {
 
-        if (!messagelist.get(position).getSent_by_id().equals(currentUserId))
-            holder.user_name.setText(messagelist.get(position).getSent_by_name());
-        else holder.user_name.setText("You");
 
         holder.message.setText(messagelist.get(position).getMessage());
-        GlideApp.with(context).load(messagelist.get(position).getSent_by_avatar()).into(holder.image_user);
     }
 
     @Override
@@ -97,7 +91,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     class MessageHolder extends RecyclerView.ViewHolder {
 
         private TextView user_name, message;
-        private ImageView image_user;
 
         /**
          * Constructor to initialize the view Attribute.
@@ -108,7 +101,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             super(itemView);
             user_name = itemView.findViewById(R.id.text_name);
             message = itemView.findViewById(R.id.text_message);
-            image_user = itemView.findViewById(R.id.image_user);
 
         }
 

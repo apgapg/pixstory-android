@@ -66,6 +66,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(final int position) {
+                ((HomeActivity) getmContext()).onPageSelected(position);
                 //if Fragment 0 is opened then show Button else hide.
                /* if (position == 0) {
                     addButton.setVisibility(View.VISIBLE);

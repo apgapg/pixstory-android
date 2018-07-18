@@ -42,6 +42,12 @@ public class NotificationFragment extends BaseFragment implements NotificationVi
                 getmContext().finish();
             }
         });
+        view.findViewById(R.id.close1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmContext().finish();
+            }
+        });
         setUpRecyclerView();
 
         return view;

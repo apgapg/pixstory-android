@@ -7,54 +7,31 @@
 
     <FrameLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="100dp"
-        android:minWidth="100dp"
-        android:layout_height="wrap_content"
         android:background="@drawable/message_self"
+        android:minWidth="100dp"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
         android:paddingLeft="8dp"
 
+        android:paddingTop="4dp"
+
         android:paddingRight="4dp"
-        android:paddingTop="4dp">
+        android:paddingBottom="4dp">
 
 
-        <com.jullae.ui.custom.CircularImageView
-            android:id="@+id/image_user"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="4dp" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/text_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginRight="38dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="You"
-                android:layout_gravity="end"
-
-                android:textColor="#424242"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_message"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_height="wrap_content"
-
-                android:textColor="#757575"
-                android:textSize="14dp"
-                tools:text='"This is a test"' />
-        </LinearLayout>
+            android:gravity="center_vertical"
+            android:minHeight="32dp"
+            android:padding="4dp"
+            android:textColor="@color/primary_text"
+            android:textSize="14dp"
+            tools:text='"This is a test"' />
     </FrameLayout>
 
 

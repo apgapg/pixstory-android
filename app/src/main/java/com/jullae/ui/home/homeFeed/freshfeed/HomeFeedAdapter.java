@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jullae.ApplicationClass;
@@ -23,7 +21,6 @@ import com.jullae.ui.custom.ItemOffLRsetDecoration;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
-import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 
@@ -128,7 +125,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
             @Override
             public void onClick(View v) {
 
-                showReportStoryDialog(adapterPosition);
+             /*   showReportStoryDialog(adapterPosition);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -136,7 +133,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
 
                     }
                 }, 100);
-
+*/
 
             }
         });
@@ -179,7 +176,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
 
     }
 
-    public void showReportStoryDialog(final int adapterPosition) {
+   /* public void showReportStoryDialog(final int adapterPosition) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         final View view3 = mContext.getLayoutInflater().inflate(R.layout.dialog_report_story, null);
         dialogBuilder.setView(view3);
@@ -221,7 +218,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
             }
         });
 
-    }
+    }*/
 
     private void changeLike(int adapterPosition) {
         if (messagelist.get(adapterPosition).getIs_liked()) {

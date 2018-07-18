@@ -11,6 +11,8 @@ import com.jullae.utils.AppUtils;
 import com.jullae.utils.ErrorResponseModel;
 import com.jullae.utils.NetworkUtils;
 
+import java.io.File;
+
 import static com.jullae.utils.Constants.SHOW_LOGIN;
 import static com.jullae.utils.Constants.SHOW_SIGNUP;
 
@@ -69,13 +71,13 @@ public class LoginActivityPresentor extends BasePresentor<LoginActivityView> {
         });
     }
 
-    public void performSignUp(final String email, final String password, final String name, final String penname, int loginMode) {
+    public void performSignUp(final String email, final String password, final String name, final String penname, String bio, int loginMode, File imageFile) {
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(name) || TextUtils.isEmpty(penname)) {
             getMvpView().signUpValidationError();
         } else {
             getMvpView().showProgress();
-            AppDataManager.getInstance().getmApiHelper().signUpReq(email, password, name, penname).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
+            AppDataManager.getInstance().getmApiHelper().signUpReq(email, password, name, penname, bio, imageFile).getAsObject(LoginResponseModel.class, new ParsedRequestListener<LoginResponseModel>() {
                 @Override
                 public void onResponse(LoginResponseModel loginResponseModel) {
                     NetworkUtils.parseResponse(TAG, loginResponseModel);

@@ -44,10 +44,16 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
             @Override
             public void onError(ANError anError) {
                 isLoadFeedReqRunning = false;
-                NetworkUtils.parseError(TAG, anError);
+                ErrorResponseModel errorResponseModel = NetworkUtils.parseError(TAG, anError);
+                if (errorResponseModel.getErrorcode() == 706) {
+                    if (isViewAttached()) {
+                        getMvpView().hideProgress();
+                        getMvpView().onFetchFeedFail(errorResponseModel.getMessage());
+                    }
+                } else
                 if (isViewAttached()) {
                     getMvpView().hideProgress();
-                    getMvpView().onFetchFeedFail();
+                    getMvpView().onFetchFeedFail("");
                 }
             }
         });

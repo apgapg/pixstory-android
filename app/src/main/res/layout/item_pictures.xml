@@ -80,7 +80,7 @@
                     android:layout_width="130dp"
                     android:layout_height="28dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/button_border"
+                    android:background="@drawable/button_border1"
                     android:gravity="center"
                     android:text="WRITE A STORY"
                     android:textColor="#424242"
@@ -92,7 +92,7 @@
                     android:layout_height="28dp"
                     android:layout_marginTop="4dp"
 
-                    android:background="@drawable/button_border"
+                    android:background="@drawable/button_border1"
                     android:gravity="center"
                     android:text="VIEW ALL STORIES"
                     android:textColor="#424242"

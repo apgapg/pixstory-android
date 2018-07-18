@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.data.db.model.MessageModel;
+import com.jullae.utils.GlideUtils;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
 
     private RecyclerView recyclerView;
     private MessagePresentor mPresentor;
-    private String user_id;
+    private String user_id, user_avatar;
     private MessageAdapter messageAdapter;
     private String currentUserId;
     private EditText addMessageField;
@@ -38,6 +39,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
         if (getIntent() != null) {
             user_id = getIntent().getStringExtra("user_id");
             user_name = getIntent().getStringExtra("user_name");
+            user_avatar = getIntent().getStringExtra("user_avatar");
         }
         mPresentor = new MessagePresentor();
         mPresentor.attachView(this);
@@ -45,7 +47,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
         progressBar = findViewById(R.id.progress_bar);
 
         TextView title = findViewById(R.id.title);
-        title.setText("Chat with " + user_name);
+        title.setText(user_name);
         currentUserId = mPresentor.getCurrentUserId();
         setUpRecyclerView();
         setupAddMessage();
@@ -57,6 +59,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
             }
         });
 
+        GlideUtils.loadImagefromUrl(this, user_avatar, (ImageView) findViewById(R.id.user_photo));
         mPresentor.loadMessage(user_id);
     }
 

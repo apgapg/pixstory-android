@@ -15,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:background="#fff"
         android:gravity="center"
-        android:text="CLOSE"
+        android:text="X"
         android:textAppearance="@style/text_14.medium.secondary" />
 
     <include layout="@layout/vertical_divider_light" />

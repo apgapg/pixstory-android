@@ -36,6 +36,7 @@ import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.ProfileFragmentPresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
+import com.jullae.ui.home.profile.ProfileEditActivity;
 import com.jullae.ui.home.profile.bookmarkTab.BookmarkTabFragment;
 import com.jullae.ui.home.profile.draftTab.DraftTabFragment;
 import com.jullae.ui.home.profile.message.ConversationAdapter;
@@ -46,7 +47,6 @@ import com.jullae.utils.AppUtils;
 import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.MyProgressDialog;
-import com.jullae.utils.ReqListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -97,7 +97,14 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         button_edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditProfileDialog();
+
+                // showEditProfileDialog();
+
+                Intent i = new Intent(getContext(), ProfileEditActivity.class);
+                i.putExtra("name", mProfileModel.getName());
+                i.putExtra("bio", mProfileModel.getBio());
+                i.putExtra("photo", mProfileModel.getUser_dp_url());
+                getContext().startActivity(i);
             }
         });
 
@@ -179,6 +186,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_outline_camera_alt_24px);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_outline_bookmark_border_24px);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_outline_save_24px);
     }
@@ -245,7 +253,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-        view.findViewById(R.id.text_update_profile).setOnClickListener(new View.OnClickListener() {
+       /* view.findViewById(R.id.text_update_profile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresentor.updateProfile(fieldName.getText().toString().trim(), fieldBio.getText().toString(), new ReqListener() {
@@ -263,14 +271,13 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                     }
                 });
             }
-        });
+        });*/
         dialog.show();
     }
 
     private void showConversationDialog() {
         DialogUtils.showMessageDialog(getmContext());
     }
-
 
 
     private void showPasswordChangeDialog() {

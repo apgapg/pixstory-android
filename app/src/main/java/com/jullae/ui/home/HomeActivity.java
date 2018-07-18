@@ -292,6 +292,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 tab_explore.setColorFilter(getResources().getColor(R.color.colorPrimary));
                 tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 showHomeFragment(1);
+                fab.hide();
                 break;
             case R.id.tab_home:
                 tab_home.setColorFilter(getResources().getColor(R.color.colorPrimary));
@@ -299,6 +300,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
 
                 showHomeFragment(0);
+                fab.show();
                 break;
             case R.id.tab_profile:
                 tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
@@ -306,6 +308,8 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 tab_profile.setColorFilter(getResources().getColor(R.color.colorPrimary));
 
                 showHomeFragment(2);
+                fab.hide();
+
                 break;
             default:
                 break;
@@ -457,6 +461,31 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
 
     public void showSearchActivity(String searchTag) {
         AppUtils.showSearchActivity(this, searchTag);
+    }
+
+    public void onPageSelected(int position) {
+        switch (position) {
+
+            case 1:
+                tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_explore.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                break;
+            case 0:
+                tab_home.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                tab_explore.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+
+                break;
+            case 2:
+                tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_explore.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                tab_profile.setColorFilter(getResources().getColor(R.color.colorPrimary));
+
+                break;
+            default:
+                break;
+        }
     }
 
 

@@ -3,27 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="56dp"
         android:background="#fff"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/close1"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:alpha="0.72"
+            android:padding="9dp"
+            android:scaleType="centerCrop"
+            android:tint="@color/secondary_text"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
         <TextView
             android:id="@+id/text_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
 
-            android:layout_height="47.3dp"
-            android:layout_centerInParent="true"
+            android:layout_height="55.3dp"
             android:gravity="center"
             android:text="Notifications"
             android:textAppearance="@style/text_14.regular.primary"
             android:textSize="18dp"
             android:textStyle="bold" />
 
-        <include layout="@layout/vertical_divider_light" />
 
     </LinearLayout>
 

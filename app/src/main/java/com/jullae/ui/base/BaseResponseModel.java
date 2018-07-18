@@ -21,5 +21,7 @@ public class BaseResponseModel {
         return message;
     }
 
-
+    public int getErrorcode() {
+        return errorcode;
+    }
 }

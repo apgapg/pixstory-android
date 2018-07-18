@@ -1,25 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground"
 
     android:orientation="vertical">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="A bit more about you!"
+        android:textColor="@color/primary_text"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.jullae.ui.custom.CircularImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            app:srcCompat="@drawable/default_pic" />
+
+        <ImageView
+            android:id="@+id/add_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/image"
+            android:padding="4dp"
+            android:tint="#757575"
+            app:srcCompat="@drawable/ic_outline_camera_alt_24px" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="4dp"
+        android:text="Name*"
+
+
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp" />
+
     <EditText
         android:id="@+id/name_field"
         android:layout_width="240dp"
-        android:layout_height="44dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        tools:visibility="visible"
-        android:drawableLeft="@android:drawable/ic_dialog_email"
-        android:drawablePadding="4dp"
-        android:hint="Name"
         android:inputType="textEmailAddress"
-        android:textSize="14dp" />
+        android:textSize="14dp"
+        tools:visibility="visible" />
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="4dp"
+        android:text="Penname*"
+
+
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp" />
+
 
     <EditText
         android:id="@+id/penname_field"
@@ -27,48 +82,52 @@
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
 
-        android:drawableLeft="@android:drawable/ic_dialog_email"
-        android:drawablePadding="4dp"
-        android:hint="penname"
         android:inputType="textEmailAddress"
         android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="4dp"
+        android:text="Email"
+
+
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp" />
+
 
     <EditText
         android:id="@+id/email_field"
         android:layout_width="240dp"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
-        android:drawableLeft="@android:drawable/ic_dialog_email"
-        android:drawablePadding="4dp"
-        android:hint="email"
-        android:inputType="textEmailAddress"
         android:textSize="14dp"
-        android:visibility="gone"
+
         tools:visibility="visible" />
 
-
-    <Button
-        android:id="@+id/button_signup"
-        style="@style/smallCaseButton"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-
-        android:background="@drawable/border_light_grey"
-        android:text="Sign In"
-        android:textSize="18sp" />
-
     <TextView
-        android:id="@+id/forgot_password"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="@string/forgotPassword"
-        android:textColor="#757575"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:id="@+id/bio_text"
+        android:paddingLeft="4dp"
+        android:text="Bio(optional)"
+
+
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp" />
+
+
+    <EditText
+        android:id="@+id/bio_field"
+        android:layout_width="240dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:maxLength="160"
+        android:textSize="14dp"
+        tools:visibility="visible" />
+
 
     <Space
         android:layout_width="wrap_content"
@@ -80,17 +139,19 @@
 
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/terms_and_conditons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/termsConditions"
-        android:textAlignment="center"
-        android:textSize="10sp" />
 
+    <include layout="@layout/vertical_divider_light" />
+
+    <ImageView
+        android:id="@+id/button_signup"
+        style="@style/smallCaseButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:padding="4dp"
+        android:text="Sign In"
+        android:textSize="18sp"
+        android:tint="#757575"
+        app:srcCompat="@drawable/ic_done" />
 
 </LinearLayout>

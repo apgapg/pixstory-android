@@ -1,6 +1,5 @@
 package com.jullae.ui.home.profile.profileVisitor;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,7 +21,6 @@ import com.jullae.R;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.ui.home.profile.message.MessageActivity;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.GlideUtils;
@@ -46,7 +44,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     private TabLayout tabLayout;
     private UserPrefsModel userPrefsModel;
     private String penname;
-    private View button_message;
+    //private View button_message;
 
     @Nullable
     @Override
@@ -69,8 +67,8 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         user_stories = view.findViewById(R.id.text_stories);
         user_pictures = view.findViewById(R.id.text_pictures);
 
-        view.findViewById(R.id.button_edit_profile).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.ivMore).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.button_edit_profile).setVisibility(View.GONE);
+        view.findViewById(R.id.ivMore).setVisibility(View.GONE);
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -83,7 +81,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         mPresentor = new ProfileVisitorPresentor();
 
-        button_message.setVisibility(View.INVISIBLE);
+        //button_message.setVisibility(View.INVISIBLE);
 
         LinearLayout close_container = (LinearLayout) inflater.inflate(R.layout.close_button, (CoordinatorLayout) view.findViewById(R.id.rootview), false);
         close_container.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
@@ -132,8 +130,8 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
             user_stories.setText(profileModel.getStories_count());
             user_pictures.setText(profileModel.getPictures_count());
 
-            button_message.setVisibility(View.VISIBLE);
-            button_message.setOnClickListener(new View.OnClickListener() {
+            //button_message.setVisibility(View.VISIBLE);
+            /*button_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -143,7 +141,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
                     getmContext().startActivity(i);
                 }
-            });
+            });*/
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -48,7 +48,7 @@
 
     <color name="cyan_500">#00BCD4</color>
     <color name="primary_text">#333</color>
-    <color name="secondary_text">#8A000000</color>
+    <color name="secondary_text">#8A313131</color>
     <color name="icon_color">@color/divider</color>
     <color name="tab_icon_grey">#929495</color>
 </resources>

@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jullae.R;
@@ -29,6 +31,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     private static final String TAG = HomeFeedFragment.class.getName();
     private View view;
+
     private HomeFeedPresentor mPresentor;
     private HomeFeedAdapter mAdapter;
     private SwipeRefreshLayout swipeRefresh;
@@ -49,6 +52,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     private int totalItemCount;
     private int pastVisiblesItems;
     private boolean loading = true;
+    private FloatingActionButton fab;
 
 
     private void loadFeeds() {
@@ -67,11 +71,13 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
             return view;
         }
 
+
         view = inflater.inflate(R.layout.fragment_home_feed, container, false);
 
         mPresentor = new HomeFeedPresentor();
 
         swipeRefresh = view.findViewById(R.id.swiperefresh);
+        fab = view.findViewById(R.id.addButton);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         setScrollListener();
@@ -155,8 +161,12 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
     }
 
     @Override
-    public void onFetchFeedFail() {
-        if (mAdapter.getItemCount() == 0) {
+    public void onFetchFeedFail(String message) {
+        if (!message.isEmpty()) {
+            view.findViewById(R.id.no_feeds).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.no_feeds)).setText(message);
+
+        } else if (mAdapter.getItemCount() == 0) {
             showNetworkRetryContainer();
             NetworkUtils.registerNetworkChangeListener(getmContext(), new NetworkUtils.NetworkChangeListener() {
                 @Override
@@ -189,6 +199,8 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     @Override
     public void showProgress() {
+        view.findViewById(R.id.no_feeds).setVisibility(View.INVISIBLE);
+
         swipeRefresh.setRefreshing(true);
     }
 

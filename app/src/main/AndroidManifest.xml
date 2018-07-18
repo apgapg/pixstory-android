@@ -23,8 +23,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait" />
@@ -69,7 +67,7 @@
         <activity
             android:name=".ui.loginscreen.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,7 +78,6 @@
             android:name=".ui.storydetails.StoryDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -91,7 +88,6 @@
                     android:host="54.255.200.53"
                     android:port="8081"
                     android:scheme="http" />
-
             </intent-filter>
         </activity>
         <activity
@@ -122,12 +118,13 @@
         <activity android:name=".ui.search.userSearch.UserSearchActivity" />
         <activity
             android:name=".ui.notification.NotificationActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.editStory.EditStoryActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.common.LikesActivity" />
+        <activity android:name=".ui.common.MessageListActivity" />
+        <activity android:name=".ui.home.profile.ProfileEditActivity"></activity>
     </application>
 
 </manifest>

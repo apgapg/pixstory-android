@@ -8,31 +8,29 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.SearchActivity;
 import com.jullae.data.AppDataManager;
-import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.databinding.DialogFullPictureBinding;
-import com.jullae.ui.adapters.LikeAdapter;
+import com.jullae.ui.common.LikesActivity;
 import com.jullae.ui.editStory.EditStoryActivity;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.loginscreen.LoginActivity;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.List;
 
@@ -142,15 +140,23 @@ public class AppUtils {
     }
 
 
-    public static void showLikesDialog(Activity mContext, String picture_id, int likeTypePicture) {
+    public static void showLikesDialog(Activity mContext, String picture_id, int likeType) {
+
+        Intent i = new Intent(mContext, LikesActivity.class);
+        i.putExtra("pictureid", picture_id);
+        i.putExtra("liketype", likeType);
+        mContext.startActivity(i);
 
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+
+        /*AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         View view = mContext.getLayoutInflater().inflate(R.layout.dialog_likes, null);
 
         dialogBuilder.setView(view);
 
+
         final AlertDialog dialog = dialogBuilder.create();
+
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +170,7 @@ public class AppUtils {
         recyclerView.setLayoutManager(linearLayoutManager);
         final LikeAdapter likeAdapter = new LikeAdapter(mContext, 0);
         recyclerView.setAdapter(likeAdapter);
-        AppDataManager.getInstance().getmApiHelper().getLikesList(picture_id, likeTypePicture).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
+        AppDataManager.getInstance().getmApiHelper().getLikesList(picture_id, likeType).getAsObject(LikesModel.class, new ParsedRequestListener<LikesModel>() {
 
             @Override
             public void onResponse(LikesModel likesModel) {
@@ -178,7 +184,7 @@ public class AppUtils {
 
             }
         });
-
+*/
 
     }
 
@@ -299,6 +305,33 @@ if(di)
     public static void changeLike(PictureModel pictureModel) {
 
     }
+
+    public static void startImagePickActivity(Fragment context) {
+        Intent i = CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setFixAspectRatio(true)
+
+                .setRequestedSize(500, 500)
+                .setMinCropResultSize(200, 200)
+                .getIntent(context.getContext());
+
+        context.startActivityForResult(i, AppUtils.REQUEST_CODE_PROFILE_PIC_CAPTURE);
+    }
+
+    public static void startImagePickActivity(Activity context) {
+        Intent i = CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setFixAspectRatio(true)
+
+                .setRequestedSize(500, 500)
+                .setMinCropResultSize(200, 200)
+                .getIntent(context);
+
+        context.startActivityForResult(i, AppUtils.REQUEST_CODE_PROFILE_PIC_CAPTURE);
+    }
+
 
 
     public interface LikeClickListener {

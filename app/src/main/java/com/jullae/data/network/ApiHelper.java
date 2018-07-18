@@ -235,19 +235,35 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest signUpReq(String email, String password, String name, String penname) {
-        return AndroidNetworking.post(BASE_URL + ENDPOINT_EMAIL_SIGNUP)
+    public ANRequest signUpReq(String email, String password, String name, String penname, String bio, File imageFile) {
+        if (bio == null)
+            bio = "";
+        if (imageFile != null) return AndroidNetworking.upload(BASE_URL + ENDPOINT_EMAIL_SIGNUP)
                 .addHeaders(headers)
-                .addBodyParameter("email", email)
-                .addBodyParameter("password", password)
-                .addBodyParameter("name", name)
-                .addBodyParameter("penname", penname)
-                .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
-                .addBodyParameter(DEVICE_TYPE, ANDROID)
-
+                .addMultipartFile("avatar", imageFile)
+                .addMultipartParameter("email", email)
+                .addMultipartParameter("password", password)
+                .addMultipartParameter("name", name)
+                .addMultipartParameter("penname", penname)
+                .addMultipartParameter("bio", bio)
+                .addMultipartParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                .addMultipartParameter(DEVICE_TYPE, ANDROID)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
+        else
+            return AndroidNetworking.post(BASE_URL + ENDPOINT_EMAIL_SIGNUP)
+                    .addHeaders(headers)
+                    .addBodyParameter("email", email)
+                    .addBodyParameter("password", password)
+                    .addBodyParameter("name", name)
+                    .addBodyParameter("penname", penname)
+                    .addBodyParameter("bio", bio)
+                    .addBodyParameter("fcm_token", FirebaseInstanceId.getInstance().getToken())
+                    .addBodyParameter(DEVICE_TYPE, ANDROID)
+                    .setPriority(Priority.MEDIUM)
+                    .logReponseBody()
+                    .build();
     }
 
     public ANRequest loadStoryTabFeeds(String penname, int count) {
@@ -406,15 +422,26 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .build();
     }
 
-    public ANRequest updateProfileReq(String name, String bio, String user_id) {
+    public ANRequest updateProfileReq(String name, String bio, String user_id, File imagefile) {
+        if (imagefile != null)
 
-        return AndroidNetworking.post(BASE_URL + ENDPOINT_UPDATE_PROFILE)
-                .addHeaders(headers)
-                .addPathParameter("id", user_id)
-                .addBodyParameter("bio", bio)
-                .addBodyParameter("name", name)
-                .setPriority(Priority.MEDIUM)
-                .build();
+            return AndroidNetworking.upload(BASE_URL + ENDPOINT_UPDATE_PROFILE)
+                    .addHeaders(headers)
+                    .addMultipartFile("avatar", imagefile)
+                    .addPathParameter("id", user_id)
+                    .addMultipartParameter("bio", bio)
+                    .addMultipartParameter("name", name)
+                    .setPriority(Priority.MEDIUM)
+                    .logReponseBody()
+                    .build();
+        else
+            return AndroidNetworking.post(BASE_URL + ENDPOINT_UPDATE_PROFILE)
+                    .addHeaders(headers)
+                    .addPathParameter("id", user_id)
+                    .addBodyParameter("bio", bio)
+                    .addBodyParameter("name", name)
+                    .setPriority(Priority.MEDIUM)
+                    .build();
     }
 
     public ANRequest sendStorySaveReq(String story_id) {

@@ -11,29 +11,31 @@
         android:layout_height="52dp"
         android:background="#fff">
 
+        <com.jullae.ui.custom.CircularImageView
+            android:id="@+id/user_photo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="48dp" />
         <TextView
             android:id="@+id/title"
             style="@style/textViewStyle.line_1"
             android:layout_width="wrap_content"
             android:text="Message"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="56dp"
+            android:layout_marginLeft="92dp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/tvClose"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:padding="12dp"
+            android:padding="8dp"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
-        <include
-            layout="@layout/vertical_divider_light"
-            android:layout_width="match_parent"
-            android:layout_height="0.7dp"
-            android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -48,6 +50,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:background="#ebebeb"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
@@ -57,17 +60,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
 
-            android:layout_height="wrap_content"
-            android:background="#fff">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/field_add_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:background="#fff"
+                android:background="@android:color/transparent"
                 android:hint="Add a message..."
                 android:maxLines="8"
+                android:textColor="@color/primary_text"
+                android:textColorHint="@color/secondary_text"
                 android:minHeight="48dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="14dp"

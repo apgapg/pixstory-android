@@ -45,7 +45,7 @@ public class BindingAdapter {
             textView.setBackground(context.getResources().getDrawable(R.drawable.button_active));
         } else {
             textView.setText("Follow");
-            textView.setTextColor(context.getResources().getColor(R.color.black75));
+            textView.setTextColor(context.getResources().getColor(R.color.white));
             textView.setBackground(context.getResources().getDrawable(R.drawable.button_border));
         }
 
