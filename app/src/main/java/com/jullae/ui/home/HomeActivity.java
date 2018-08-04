@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
@@ -65,6 +66,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
     private ImageView button_notification;
     private View button_search;
     private AutoCompleteTextView autoCompleteTextView;
+    private AppBarLayout appBar;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -83,7 +85,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
 
         //Initialize the button and bottomNavigation for listener.
         fab = findViewById(R.id.addButton);
-
+        appBar = findViewById(R.id.appbar);
         setUpSearchButton();
         tab_explore = findViewById(R.id.tab_explore);
         tab_profile = findViewById(R.id.tab_profile);
@@ -464,9 +466,12 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
     }
 
     public void onPageSelected(int position) {
+        appBar.setExpanded(true);
+
         switch (position) {
 
             case 1:
+
                 tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 tab_explore.setColorFilter(getResources().getColor(R.color.colorPrimary));
                 tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));

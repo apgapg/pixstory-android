@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:orientation="horizontal"
-            android:paddingTop="2dp"
+            android:paddingTop="6dp"
             android:paddingBottom="2dp"
 
             >
@@ -73,14 +73,15 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/text_delete_bookmark"
+            android:id="@+id/text_view_other"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Remove bookmark"
+            android:text="View other stories"
 
 
             android:textAppearance="@style/text_12.regular.secondary" />
+
 
     </LinearLayout>
 

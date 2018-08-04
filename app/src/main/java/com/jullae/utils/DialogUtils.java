@@ -20,12 +20,15 @@ import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.ConversationModel;
 import com.jullae.data.db.model.FollowersModel;
 import com.jullae.data.db.model.FollowingModel;
+import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.DialogFollowersBinding;
 import com.jullae.ui.adapters.LikeAdapter;
+import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.common.MessageListActivity;
 import com.jullae.ui.home.profile.message.ConversationAdapter;
+import com.jullae.ui.home.profile.pictureTab.PictureTabPresentor;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 import com.jullae.utils.customview.PagingRecyclerView;
 
@@ -93,12 +96,84 @@ public class DialogUtils {
 
     }
 
-    private static void onReportTextClick(final View view, final AlertDialog dialog, StoryDetailPresentor mPresentor, StoryModel storyModel, final Activity context) {
+
+    public static void showReportPictureDialog(final Activity context, final BasePresentor mPresentor, final PictureModel pictureModel) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final View view = context.getLayoutInflater().inflate(R.layout.dialog_report_story, null);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+
+        view.findViewById(R.id.t1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+            }
+        });
+
+        view.findViewById(R.id.t2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+            }
+        });
+
+        view.findViewById(R.id.t3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+            }
+        });
+
+        view.findViewById(R.id.t4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+            }
+        });
+
+        dialog.show();
+
+
+    }
+
+    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, StoryModel storyModel, final Activity context) {
 
 
         view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 
-        mPresentor.reportStory(((TextView) view).getText().toString(), storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+        mPresentor.report(((TextView) view).getText().toString(), storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+            @Override
+            public void onSuccess() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+
+                showReportStorySuccessDialog(context);
+                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, PictureModel pictureModel, final Activity context) {
+
+
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+        mPresentor.report(((TextView) view).getText().toString(), pictureModel.getPicture_id(), new StoryDetailPresentor.StringReqListener() {
             @Override
             public void onSuccess() {
                 view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
@@ -136,6 +211,59 @@ public class DialogUtils {
 
         dialog.show();
     }
+
+    public static void showPictureMoreOptions(final Activity context, final PictureTabPresentor mPresentor, final PictureModel pictureModel) {
+
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        View view;
+        view = context.getLayoutInflater().inflate(R.layout.picture_options, null);
+
+        if (pictureModel.getIs_self() && (pictureModel.getStory_count() == 0)) {
+            view.findViewById(R.id.delete).setVisibility(View.VISIBLE);
+        }
+
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+
+        view.findViewById(R.id.report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showReportPictureDialog(context, mPresentor, pictureModel);
+             /*   showReportStoryDialog(adapterPosition);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+
+                    }
+                }, 100);
+*/
+
+            }
+        });
+
+        view.findViewById(R.id.view_all_creations).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showPictureDetailActivity(context, pictureModel.getPicture_id());
+
+            }
+        });
+
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
 
     public static void showFollowersDialog(final Activity mContext, final String userId) {
 

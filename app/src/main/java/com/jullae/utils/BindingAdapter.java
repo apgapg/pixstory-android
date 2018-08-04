@@ -8,7 +8,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jullae.GlideApp;
 import com.jullae.R;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkOnClickListener;
@@ -17,13 +16,13 @@ import com.luseen.autolinklibrary.AutoLinkTextView;
 import java.util.Date;
 
 public class BindingAdapter {
-    @android.databinding.BindingAdapter("imageUrl")
+ /*   @android.databinding.BindingAdapter("imageUrl")
     public static void loadImagefromUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
         if (url != null)
             GlideApp.with(context).load(new GlideUtils.CustomGlideUrl(url)).thumbnail(0.1f).into(imageView);
 
-    }
+    }*/
 
     @android.databinding.BindingAdapter("setlike")
     public static void setLike(ImageView imageView, Boolean isLike) {

@@ -109,12 +109,12 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         });
 
 
-        user_image.setOnClickListener(new View.OnClickListener() {
+       /* //user_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startImagePickActivity();
             }
-        });
+        });*/
         binding.containerFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,8 +185,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     }
 
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_outline_camera_alt_24px);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px_white);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_outline_camera_alt_24px_white);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_outline_bookmark_border_24px);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_outline_save_24px);
     }
@@ -287,6 +287,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         final EditText field_old_password = view.findViewById(R.id.field_old_password);
         final EditText field_new_password = view.findViewById(R.id.field_new_password);
+        final EditText field_confirm_new_password = view.findViewById(R.id.field_confirm_new_password);
 
 
         dialogBuilder.setView(view);
@@ -301,10 +302,16 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         view.findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(field_old_password.getText().toString())) {
+                if (TextUtils.isEmpty(field_old_password.getText().toString().trim())) {
                     Toast.makeText(getmContext().getApplicationContext(), "Please enter your old password", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(field_old_password.getText().toString())) {
+                } else if (TextUtils.isEmpty(field_new_password.getText().toString().trim())) {
                     Toast.makeText(getmContext().getApplicationContext(), "Please enter your new password", Toast.LENGTH_SHORT).show();
+
+                } else if (TextUtils.isEmpty(field_confirm_new_password.getText().toString().trim())) {
+                    Toast.makeText(getmContext().getApplicationContext(), "Please confirm again your new password", Toast.LENGTH_SHORT).show();
+
+                } else if (field_confirm_new_password.getText().toString().trim().equals(field_new_password.getText().toString().trim())) {
+                    Toast.makeText(getmContext().getApplicationContext(), "New Passwords don't match. Confirm again your new password", Toast.LENGTH_SHORT).show();
 
                 } else {
                     view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);

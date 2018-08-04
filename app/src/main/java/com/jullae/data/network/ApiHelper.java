@@ -201,7 +201,7 @@ public class ApiHelper {
                 .build();
     }
 
-    public ANRequest reportStory(String report, String id, int reportTypeStory) {
+    public ANRequest report(String report, String id, int reportTypeStory) {
         String url = ENDPOINT_REPORT_STORY;
         String reportType = null;
         if (reportTypeStory == Constants.REPORT_TYPE_STORY) {

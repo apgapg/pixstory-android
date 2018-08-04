@@ -18,11 +18,11 @@ public class PictureModel extends BaseObservable {
     private String photographer_penname;
     private String photographer_avatar;
     private int like_count;
-    private String story_count;
+    private int story_count;
     private Date created_at;
     private boolean is_liked;
     private String is_followed;
-    private String is_self;
+    private boolean is_self;
 
 
     public String getPicture_url() {
@@ -63,7 +63,7 @@ public class PictureModel extends BaseObservable {
         return picture_id;
     }
 
-    private String getIs_self() {
+    public boolean getIs_self() {
         return is_self;
     }
 
@@ -79,7 +79,8 @@ public class PictureModel extends BaseObservable {
         return picture_url_small;
     }
 
-    public String getStory_count() {
+    @Bindable
+    public int getStory_count() {
         return story_count;
     }
 

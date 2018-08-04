@@ -1,27 +1,25 @@
-package com.jullae.ui.home.profile.draftTab;
+package com.jullae.ui.adapters;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jullae.R;
-import com.jullae.data.db.model.DraftModel;
+import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
-import com.jullae.utils.MyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +29,16 @@ import java.util.List;
  * Created by master on 1/5/17.
  */
 
-public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.SearchFeedViewHolder> {
+public class StoryTabAdapter extends RecyclerView.Adapter<StoryTabAdapter.SearchFeedViewHolder> {
 
-    private static final String TAG = DraftTabAdapter.class.getName();
+    private static final String TAG = StoryTabAdapter.class.getName();
     private final Activity mContext;
     private final RequestOptions picOptions;
-    private final DraftTabPresentor mPresentor;
+    private final BasePresentor mPresentor;
 
-    List<DraftModel.FreshFeed> messagelist = new ArrayList<>();
+    List<FeedModel> messagelist = new ArrayList<FeedModel>();
 
-    public DraftTabAdapter(Activity activity, DraftTabPresentor mPresentor) {
+    public StoryTabAdapter(Activity activity, BasePresentor mPresentor) {
         this.mContext = activity;
         this.mPresentor = mPresentor;
         picOptions = new RequestOptions();
@@ -50,7 +48,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
     @NonNull
     @Override
     public SearchFeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new SearchFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_drafts, parent, false));
+        return new SearchFeedViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_story_tab_feeds, parent, false));
     }
 
     @Override
@@ -59,8 +57,10 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
         GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
+        viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
+        viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.story_title.setText(storyModel.getStory_title());
-        viewHolder.story_text.setText(storyModel.getStory_text());
+        viewHolder.story_text.setText(Html.fromHtml(storyModel.getStory_text()));
 
     }
 
@@ -70,71 +70,30 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
         return messagelist.size();
     }
 
-    public void add(List<DraftModel.FreshFeed> list) {
+    public void add(List<FeedModel> list) {
         messagelist.clear();
         messagelist.addAll(list);
         Log.d(TAG, "add: list size: " + list.size());
         notifyDataSetChanged();
     }
 
-    private void showDeleteDraftWarningDialog(final int adapterPosition, final String story_id) {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-        alertDialog.setTitle("Delete draft!");
-        alertDialog.setMessage("Are you sure you want to delete this draft?");
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                MyProgressDialog.showProgressDialog(mContext, "Please Wait!");
-                mPresentor.sendDeleteDraftReq(story_id, new DeleteListener() {
-                    @Override
-                    public void onSuccess() {
-                        MyProgressDialog.dismissProgressDialog();
-                        Toast.makeText(mContext.getApplicationContext(), "Draft deleted successfully", Toast.LENGTH_SHORT).show();
-                        messagelist.remove(adapterPosition);
-                        notifyItemRemoved(adapterPosition);
-                    }
-
-                    @Override
-                    public void onFail() {
-                        MyProgressDialog.dismissProgressDialog();
-
-                        Toast.makeText(mContext.getApplicationContext(), "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        alertDialog.show();
-
-    }
-
-    public void addMore(List<DraftModel.FreshFeed> list) {
+    public void addAll(List<FeedModel> storyMainModelList) {
         int initialSize = messagelist.size();
-        messagelist.addAll(list);
+        messagelist.addAll(storyMainModelList);
         int finalSize = messagelist.size();
         notifyItemRangeInserted(initialSize, finalSize - initialSize);
     }
 
-    public interface DeleteListener {
-        void onSuccess();
-
-        void onFail();
-    }
 
     public class SearchFeedViewHolder extends RecyclerView.ViewHolder {
 
 
         private View rootview;
         private ImageView image;
-        private TextView story_title, story_text;
-
+        private TextView story_title;
+        private TextView story_text;
+        private TextView story_like_count;
+        private TextView story_comment_count;
 
         public SearchFeedViewHolder(View inflate) {
             super(inflate);
@@ -142,15 +101,18 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
             image = inflate.findViewById(R.id.image);
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
+            story_like_count = inflate.findViewById(R.id.story_like_count);
+            story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
-            inflate.findViewById(R.id.text_delete_draft).setOnClickListener(new View.OnClickListener() {
+
+            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDeleteDraftWarningDialog(getAdapterPosition(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
+                    AppUtils.showStoryDetailActivity(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
 
                 }
             });
-           /* image.setOnClickListener(new View.OnClickListener() {
+          /*  image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel(), new AppUtils.LikeClickListener() {
@@ -188,14 +150,6 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
                 }
             });*/
 
-            inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppUtils.showWriteStoryDialogWithData(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_title(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_text());
-
-
-                }
-            });
         }
     }
 }

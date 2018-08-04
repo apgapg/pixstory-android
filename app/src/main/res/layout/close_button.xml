@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/close_button_height"
     android:layout_alignParentBottom="true"
@@ -8,15 +9,16 @@
 
     <include layout="@layout/vertical_divider_light" />
 
-    <TextView
+    <ImageView
         android:id="@+id/close"
         android:layout_width="match_parent"
         android:layout_height="38.6dp"
         android:layout_alignParentBottom="true"
         android:background="#fff"
-        android:gravity="center"
-        android:text="X"
-        android:textAppearance="@style/text_14.medium.secondary" />
+        android:padding="4dp"
+        android:rotation="45"
+        android:tint="#757575"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
 
     <include layout="@layout/vertical_divider_light" />
 

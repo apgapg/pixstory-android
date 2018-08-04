@@ -19,7 +19,6 @@ import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
-import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.ui.home.profile.draftTab.DraftTabAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.GlideUtils;
@@ -63,7 +62,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
 
         GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
         //  private Stringth(mContext).load(pictureModel.getPicture_url_small()).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.image);
-        viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.story_title.setText(storyModel.getStory_title());
@@ -140,7 +138,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
 
         private View rootview;
         private ImageView image;
-        private TextView writer_name, story_title, story_text;
+        private TextView story_title, story_text;
         private TextView story_like_count;
         private TextView story_comment_count;
 
@@ -150,7 +148,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
             image = inflate.findViewById(R.id.image);
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
-            writer_name = inflate.findViewById(R.id.writer_name);
             story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
@@ -167,7 +164,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
 
                 }
             });
-            image.setOnClickListener(new View.OnClickListener() {
+           /* image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel(), new AppUtils.LikeClickListener() {
@@ -204,7 +201,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
                         }
                     });
                 }
-            });
+            });*/
         }
     }
 }

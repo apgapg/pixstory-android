@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
+import com.jullae.ui.adapters.StoryTabAdapter;
 import com.jullae.ui.base.BaseFragment;
-import com.jullae.ui.search.SearchFeedAdapter;
+import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.utils.AppUtils;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
     private static final String TAG = StoryTabFragment.class.getName();
     private View view;
     private RecyclerView mRecyclerView;
-    private SearchFeedAdapter mAdapter;
+    private StoryTabAdapter mAdapter;
     private StoryTabPresentor mPresentor;
     private String penname;
     private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
@@ -51,7 +52,9 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
         mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new SearchFeedAdapter(getmContext(), mPresentor);
+        ItemOffTBsetDecoration itemOffTBsetDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_2dp);
+        mRecyclerView.addItemDecoration(itemOffTBsetDecoration);
+        mAdapter = new StoryTabAdapter(getmContext(), mPresentor);
         mRecyclerView.setAdapter(mAdapter);
     }
 

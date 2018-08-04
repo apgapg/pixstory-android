@@ -130,6 +130,8 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 }
             });
+
+
           /*  write_story.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

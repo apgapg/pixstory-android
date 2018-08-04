@@ -180,7 +180,7 @@ public class DetailSheetFragment extends BottomSheetDialogFragment {
  *//*
 
     private void reportUser() {
-        Call<CommonResponse> data = client.reportStory(id);
+        Call<CommonResponse> data = client.report(id);
         data.enqueue(new ResponseResolver<CommonResponse>(getContext(), true, false) {
             @Override
             public void success(final CommonResponse likeModel) {

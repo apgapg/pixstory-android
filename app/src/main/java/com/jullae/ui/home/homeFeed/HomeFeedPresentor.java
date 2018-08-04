@@ -101,7 +101,7 @@ public class HomeFeedPresentor extends BasePresentor<HomeFeedView> {
 
     public void reportPicture(String report, String picture_id, final StoryDetailPresentor.StringReqListener stringReqListener) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().reportStory(report, picture_id, Constants.REPORT_TYPE_PICTURE).getAsString(new StringRequestListener() {
+        AppDataManager.getInstance().getmApiHelper().report(report, picture_id, Constants.REPORT_TYPE_PICTURE).getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 NetworkUtils.parseResponse(TAG, response);

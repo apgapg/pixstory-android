@@ -106,26 +106,6 @@ public class StoryDetailPresentor extends BasePresentor<StoryDetailView> {
 
     }
 
-    public void reportStory(String report, String story_id, final StringReqListener stringReqListener) {
-        checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().reportStory(report, story_id, Constants.REPORT_TYPE_STORY).getAsString(new StringRequestListener() {
-            @Override
-            public void onResponse(String response) {
-                NetworkUtils.parseResponse(TAG, response);
-                if (isViewAttached())
-                    stringReqListener.onSuccess();
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-                if (isViewAttached())
-                    stringReqListener.onFail();
-            }
-        });
-
-
-    }
 
     public void saveStory(String story_id) {
         checkViewAttached();

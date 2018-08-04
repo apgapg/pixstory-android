@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingRight="4dp"
     android:layout_height="wrap_content"
     android:layout_margin="2dp">
 
@@ -15,10 +16,10 @@
         android:orientation="horizontal"
         android:paddingLeft="8dp"
 
-        android:paddingTop="4dp"
+        android:paddingTop="2dp"
 
         android:paddingRight="4dp"
-        android:paddingBottom="4dp">
+        android:paddingBottom="2dp">
 
 
         <TextView

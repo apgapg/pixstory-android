@@ -16,6 +16,7 @@ public class DateUtils {
 
     public static String getTimeAgo(Date date) {
 
+
         long time = date.getTime();
         if (time < 1000000000000L) {
             time *= 1000;
@@ -28,7 +29,7 @@ public class DateUtils {
 
         final long diff = now - time;
         if (diff < MINUTE_MILLIS) {
-            return "s";
+            return "just now";
         } else if (diff < 2 * MINUTE_MILLIS) {
             return "1m";
         } else if (diff < 60 * MINUTE_MILLIS) {
@@ -40,12 +41,12 @@ public class DateUtils {
         } else if (diff < 48 * HOUR_MILLIS) {
             return "1d";
         } else {
-            if (diff / DAY_MILLIS < 30)
+            if (diff / DAY_MILLIS < 31)
                 return diff / DAY_MILLIS + "d";
-            else if (((diff / DAY_MILLIS) % 30) < 12)
-                return ((diff / DAY_MILLIS) % 60) + "mon";
+            else if (((diff / DAY_MILLIS) / 30) < 12)
+                return ((diff / DAY_MILLIS) / 30) + "mon";
             else
-                return ((diff / DAY_MILLIS) % (30 * 12)) + "yr";
+                return ((diff / DAY_MILLIS) / (30 * 12)) + "yr";
         }
     }
 }

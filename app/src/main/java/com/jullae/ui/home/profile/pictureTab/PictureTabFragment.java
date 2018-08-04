@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
-import com.jullae.ui.adapters.PicturesAdapter;
+import com.jullae.ui.adapters.PicturesTabAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
@@ -28,7 +28,7 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
     private View view;
     private RecyclerView mRecyclerView;
-    private PicturesAdapter mAdapter;
+    private PicturesTabAdapter mAdapter;
     private PictureTabPresentor mPresentor;
     private String penname;
     private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
@@ -66,7 +66,8 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
         mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new PicturesAdapter(getmContext(), mPresentor);
+
+        mAdapter = new PicturesTabAdapter(getmContext(), mPresentor);
         mRecyclerView.setAdapter(mAdapter);
         setScrollListener();
     }

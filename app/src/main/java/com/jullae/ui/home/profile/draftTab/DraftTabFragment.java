@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.jullae.R;
 import com.jullae.data.db.model.DraftModel;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.utils.Constants;
 
 import java.util.List;
@@ -66,6 +67,8 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
         mRecyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        ItemOffTBsetDecoration itemOffTBsetDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_2dp);
+        mRecyclerView.addItemDecoration(itemOffTBsetDecoration);
         draftTabAdapter = new DraftTabAdapter(getmContext(), mPresentor);
         mRecyclerView.setAdapter(draftTabAdapter);
         setScrollListener();

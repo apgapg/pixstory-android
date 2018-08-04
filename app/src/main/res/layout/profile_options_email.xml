@@ -12,7 +12,8 @@
         android:id="@+id/menu1"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#fff"
+        android:background="?attr/selectableItemBackground"
+
         android:gravity="center"
         android:text="@string/change_password"
         android:textAppearance="@style/text_14.regular.primary" />
@@ -21,7 +22,7 @@
         android:id="@+id/menu2"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#fff"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
         android:text="@string/logout"
         android:textAppearance="@style/text_14.regular.primary" />

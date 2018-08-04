@@ -67,6 +67,14 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         user_stories = view.findViewById(R.id.text_stories);
         user_pictures = view.findViewById(R.id.text_pictures);
 
+        view.findViewById(R.id.backcontainer).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmContext().finish();
+            }
+        });
+
         view.findViewById(R.id.button_edit_profile).setVisibility(View.GONE);
         view.findViewById(R.id.ivMore).setVisibility(View.GONE);
         viewPager = view.findViewById(R.id.viewPager);
@@ -90,13 +98,18 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
                 getmContext().finish();
             }
         });
-
+        setupTabIcons();
 
         ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
 
         return view;
     }
 
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px_white);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_outline_camera_alt_24px_white);
+
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -152,7 +165,6 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     private class PagerAdapter extends FragmentStatePagerAdapter {
         SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
-        String[] tabs = {"Pics", "Story"};
 
         private PagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -195,23 +207,12 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
             return registeredFragments.get(position);
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return tabs[0];
-                case 1:
-                    return tabs[1];
 
-                default:
-                    return super.getPageTitle(position);
-            }
-        }
 
         @Override
         public int getCount() {
 
-            return tabs.length;
+            return 2;
         }
 
 

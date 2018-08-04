@@ -15,7 +15,8 @@
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/shape_rectangle_grey"
-        android:hint="Search for a tag..."
+        android:hint="             SEARCH FOR TAG"
+
         android:lines="1"
         android:paddingLeft="8dp"
 
@@ -25,14 +26,14 @@
 
     <LinearLayout
         android:layout_width="240dp"
-        android:layout_height="280dp"
+        android:layout_height="320dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="240dp"
-            android:layout_height="140dp"
+            android:layout_height="160dp"
             android:orientation="horizontal">
 
 
@@ -96,7 +97,7 @@
 
         <LinearLayout
             android:layout_width="240dp"
-            android:layout_height="140dp"
+            android:layout_height="160dp"
             android:orientation="horizontal">
 
             <RelativeLayout
