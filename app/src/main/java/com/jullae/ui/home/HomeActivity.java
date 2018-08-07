@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import com.jullae.ui.notification.NotificationActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.DialogUtils;
-import com.jullae.utils.GlideUtils;
 import com.jullae.utils.KeyboardUtils;
 import com.jullae.utils.MyProgressDialog;
 import com.kbeanie.multipicker.api.ImagePicker;
@@ -121,13 +119,15 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+
+                showOptions(HomeActivity.this);
+             /*   if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     fab.hide();
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 } else {
                     fab.show();
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
+                }*/
             }
         });
 
@@ -194,6 +194,42 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             }
         });
 
+    }
+
+    private void showOptions(Activity context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final View view = context.getLayoutInflater().inflate(R.layout.bottom_sheet_content, null);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+
+        view.findViewById(R.id.text_add_picture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddImageOption();
+                dialog.hide();
+            }
+        });
+
+        view.findViewById(R.id.text_add_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFragment(new AddStoryFragment(), true);
+                dialog.hide();
+
+            }
+        });
+
+        view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+
+
+        dialog.show();
     }
 
     private void setUpSearchButton() {
@@ -373,7 +409,11 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
 
     private void showAddPictureDialog(final Uri uri) {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        File file = new File(uri.getPath());
+        mPresentor.submitPicture(file);
+
+
+    /*    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         View view = this.getLayoutInflater().inflate(R.layout.dialog_add_picture, null);
 
         dialogBuilder.setView(view);
@@ -412,7 +452,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 });
             }
         });
-
+*/
 
     }
 
@@ -475,17 +515,19 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 tab_explore.setColorFilter(getResources().getColor(R.color.colorPrimary));
                 tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
+                fab.hide();
                 break;
             case 0:
                 tab_home.setColorFilter(getResources().getColor(R.color.colorPrimary));
                 tab_explore.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 tab_profile.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
-
+                fab.show();
                 break;
             case 2:
                 tab_home.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 tab_explore.setColorFilter(getResources().getColor(R.color.tab_icon_grey));
                 tab_profile.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                fab.hide();
 
                 break;
             default:

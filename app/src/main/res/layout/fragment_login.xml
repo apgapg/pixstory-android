@@ -4,22 +4,26 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:isScrollContainer="true"
+    android:paddingLeft="48dp"
+    android:paddingRight="48dp"
     android:orientation="vertical"
     tools:context=".ui.loginscreen.LoginActivity">
 
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:layout_marginBottom="12dp" />
 
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_width="248dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal" />
 
@@ -62,7 +66,7 @@
 
     <EditText
         android:id="@+id/username_field"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_baseline_email_24px"
@@ -74,7 +78,7 @@
 
     <EditText
         android:id="@+id/password_field"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_baseline_lock_24px"
@@ -87,7 +91,7 @@
     <Button
         android:id="@+id/button_login"
         style="@style/smallCaseButton"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"

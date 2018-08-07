@@ -80,7 +80,7 @@
     <dimen name="profile_count_text">24dp</dimen>
     <dimen name="item_offset_1dp">1dp</dimen>
     <dimen name="search_bar_width">240dp</dimen>
-    <dimen name="story_card_width_home_feed">152dp</dimen>
+    <dimen name="story_card_width_home_feed">158dp</dimen>
     <dimen name="story_card_height_home_feed">250dp</dimen>
     <dimen name="close_button_height">40dp</dimen>
     <dimen name="loading_container_height">60dp</dimen>

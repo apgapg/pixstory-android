@@ -15,6 +15,7 @@ import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -29,11 +30,13 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private static final String TAG = FreshFeedAdapter.class.getName();
     private final Activity mContext;
+    private final FreshFeedPresentor mPresentor;
 
     List<FreshFeedModel.FreshFeed> messagelist = new ArrayList<>();
 
-    public FreshFeedAdapter(Activity activity) {
+    public FreshFeedAdapter(Activity activity, FreshFeedPresentor mPresentor) {
         this.mContext = activity;
+        this.mPresentor = mPresentor;
 
 
     }
@@ -139,6 +142,13 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });*/
             pic_text_by = inflate.findViewById(R.id.pic_text_by);
+            inflate.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (messagelist.get(getAdapterPosition()).getPictureModel().getLike_count() != 0)
+                        DialogUtils.showPictureMoreOptions(mContext, mPresentor, messagelist.get(getAdapterPosition()).getPictureModel());
+                }
+            });
 
 
             user_name.setOnClickListener(new View.OnClickListener() {

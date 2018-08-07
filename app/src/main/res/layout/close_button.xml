@@ -9,16 +9,25 @@
 
     <include layout="@layout/vertical_divider_light" />
 
-    <ImageView
-        android:id="@+id/close"
+    <FrameLayout
+        android:layout_height="wrap_content"
+
         android:layout_width="match_parent"
-        android:layout_height="38.6dp"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
-        android:padding="4dp"
-        android:rotation="45"
-        android:tint="#757575"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+        android:background="#fff">
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="match_parent"
+            android:layout_height="38.6dp"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:rotation="45"
+            android:tint="#757575"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
+    </FrameLayout>
+
 
     <include layout="@layout/vertical_divider_light" />
 

@@ -33,7 +33,7 @@
             android:layout_gravity="end|center_vertical"
             android:layout_marginRight="4dp"
             android:background="@drawable/ripple_effect"
-            android:padding="10dp"
+            android:padding="6dp"
             android:rotation="45"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_add_black_24dp" />

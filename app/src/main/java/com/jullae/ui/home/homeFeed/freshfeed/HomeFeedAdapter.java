@@ -23,6 +23,7 @@ import com.jullae.ui.home.homeFeed.HomeFeedPresentor;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -258,7 +259,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
             binding.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showMenuOptions(getAdapterPosition());
+                    //   showMenuOptions(getAdapterPosition());
+                    DialogUtils.showPictureMoreOptions(mContext, mPresentor, messagelist.get(getAdapterPosition()));
                 }
             });
             binding.textWriteStory.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,6 @@
 package com.jullae.ui.home.addStory;
 
-import com.jullae.data.db.model.AddStoryModel;
+import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.base.MvpView;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface AddStoryView extends MvpView {
 
     void hideProgressBar();
 
-    void onListFetch(List<AddStoryModel.PictureModel> picturesList);
+    void onListFetch(List<PictureModel> picturesList);
 
     void onListFetchFail();
 }

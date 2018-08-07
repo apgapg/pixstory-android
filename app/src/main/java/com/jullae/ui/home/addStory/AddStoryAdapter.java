@@ -1,3 +1,4 @@
+/*
 package com.jullae.ui.home.addStory;
 
 import android.app.Activity;
@@ -21,9 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+*/
 /**
  * Created by master on 1/5/17.
- */
+ *//*
+
 
 public class AddStoryAdapter extends RecyclerView.Adapter<AddStoryAdapter.AddStoryViewHolder> {
 
@@ -143,3 +146,4 @@ public class AddStoryAdapter extends RecyclerView.Adapter<AddStoryAdapter.AddSto
     }
 
 }
+*/

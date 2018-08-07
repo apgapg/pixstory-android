@@ -13,7 +13,7 @@
     <string name="signUp">Dont have an account? <a style='text-decoration:none' href="#">Sign Up</a></string>
     <string name="logIn">Already have an account? <a style='text-decoration:none' href="#">Log In</a></string>
     <string name="registerLogin">Already a member? <a style='text-decoration:none' href="#">Login</a></string>
-    <string name="termsConditions">By signing in, you are agreeing to the PixStory terms of service and privacy policy</string>
+    <string name="termsConditions">By signing in, you are agreeing to the Jullae terms of service and privacy policy</string>
 
     <string name="error_message_email">Enter Valid Email</string>
     <string name="empty_password">Password cant be empty</string>

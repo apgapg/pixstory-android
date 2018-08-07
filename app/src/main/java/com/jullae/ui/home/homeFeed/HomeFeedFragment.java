@@ -85,7 +85,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);
+        ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_2dp);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);

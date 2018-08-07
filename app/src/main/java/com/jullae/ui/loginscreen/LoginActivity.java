@@ -133,7 +133,12 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         this.email = email;
         this.password = password;
         setLoginMode(LOGIN_MODE_SIGNUP_EMAIL);
-        showFragment(new SignUpFragment(), true);
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putInt("loginmode", loginMode);
+        SignUpFragment signUpFragment = new SignUpFragment();
+        signUpFragment.setArguments(bundle);
+        showFragment(signUpFragment, true);
     }
 
     @Override

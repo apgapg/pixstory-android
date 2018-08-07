@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootview"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/story_card_width_home_feed"
     android:layout_marginTop="4dp"
 
     android:background="@drawable/shape_round_rectangle_grey"
@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="28dp"
         android:lines="2"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"

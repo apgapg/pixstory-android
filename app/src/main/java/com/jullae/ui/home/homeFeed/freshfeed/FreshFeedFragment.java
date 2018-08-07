@@ -62,7 +62,7 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
         position = getArguments().getInt("position");
         swipeRefresh = view.findViewById(R.id.swiperefresh);
         recyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new FreshFeedAdapter(getmContext());
+        mAdapter = new FreshFeedAdapter(getmContext(), mPresentor);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getmContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);

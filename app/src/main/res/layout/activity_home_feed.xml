@@ -143,6 +143,7 @@
             android:dropDownHeight="240dp"
             android:hint="Search for people..."
             android:lines="1"
+            android:drawableLeft="@drawable/ic_search"
             android:paddingLeft="44dp"
             android:paddingRight="16dp"
             android:textAppearance="@style/text_16.regular.primary" />

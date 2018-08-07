@@ -1,5 +1,7 @@
 package com.jullae.ui.storydetails;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -121,11 +123,19 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         view.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                showOptions(getmContext());
+
+
+                /*
+
+
                 if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 } else {
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
+                }*/
             }
         });
 
@@ -138,6 +148,67 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         mPresentor = new StoryDetailPresentor();
 
         return view;
+    }
+
+    private void showOptions(Activity context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final View view = context.getLayoutInflater().inflate(R.layout.bottom_sheet_story, null);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+        view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            }
+        });
+
+        view.findViewById(R.id.edit_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeBottomSheet();
+
+                AppUtils.showEditStoryActivity(getmContext(), storyModel.getStory_id(), storyModel.getStory_title(), storyModel.getStory_text());
+            }
+        });
+        view.findViewById(R.id.delete_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeBottomSheet();
+                DialogUtils.showDeleteStoryDialog(getmContext(), mPresentor, storyModel.getStory_id());
+            }
+        });
+        view.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        view.findViewById(R.id.report_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        DialogUtils.showReportStoryDialog(getmContext(), mPresentor, storyModel);
+                    }
+                });
+            }
+        });
+
+        view.findViewById(R.id.text_save_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                mPresentor.saveStory(storyModel.getStory_id());
+            }
+        });
+
+        dialog.show();
     }
 
 
@@ -548,7 +619,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
         if (!storyModel.getIs_self())
             setUpFollowedButton();
-        setupMoreBottomSheet();
+        //setupMoreBottomSheet();
         setupComments();
         setupLike();
     }

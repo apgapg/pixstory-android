@@ -1,7 +1,5 @@
 package com.jullae.ui.home;
 
-import android.text.TextUtils;
-
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.data.AppDataManager;
@@ -17,7 +15,7 @@ public class HomeActivityPresentor extends BasePresentor<HomeActivityView> {
     public HomeActivityPresentor() {
     }
 
-    public void submitPicture(String title, File file, final HomeActivity.AddPictureListener addPictureListener) {
+    /*public void submitPicture(String title, File file, final HomeActivity.AddPictureListener addPictureListener) {
         checkViewAttached();
         getMvpView().showProgressBar();
         if (!TextUtils.isEmpty(title)) {
@@ -43,5 +41,32 @@ public class HomeActivityPresentor extends BasePresentor<HomeActivityView> {
                 }
             });
         } else addPictureListener.onPictureTitleEmpty();
+    }*/
+
+    public void submitPicture(File file) {
+        checkViewAttached();
+        getMvpView().showProgressBar();
+
+        AppDataManager.getInstance().getmApiHelper().makeUploadPictureReq(file).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+            @Override
+            public void onResponse(BaseResponseModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached()) {
+                    getMvpView().hideProgressBar();
+                    getMvpView().onPictureUploadSuccess();
+                }
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                if (isViewAttached()) {
+                    getMvpView().hideProgressBar();
+                }
+            }
+        });
     }
+
 }

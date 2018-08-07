@@ -15,8 +15,8 @@ import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.databinding.ItemPicturesBinding;
+import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
-import com.jullae.ui.home.profile.pictureTab.PictureTabPresentor;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
@@ -35,11 +35,11 @@ public class PicturesTabAdapter extends RecyclerView.Adapter<PicturesTabAdapter.
 
     private static final String TAG = PicturesTabAdapter.class.getName();
     private final Activity mContext;
-    private final PictureTabPresentor mPresentor;
+    private final BasePresentor mPresentor;
 
     List<PictureModel> messagelist = new ArrayList<>();
 
-    public PicturesTabAdapter(Activity activity, PictureTabPresentor mPresentor) {
+    public PicturesTabAdapter(Activity activity, BasePresentor mPresentor) {
         this.mContext = activity;
         this.mPresentor = mPresentor;
 

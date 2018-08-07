@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jullae.R;
-import com.jullae.data.db.model.AddStoryModel;
+import com.jullae.data.db.model.PictureModel;
+import com.jullae.ui.adapters.PicturesTabAdapter;
 import com.jullae.ui.base.BaseFragment;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class AddStoryFragment extends BaseFragment implements AddStoryView {
     private View view;
     private SwipeRefreshLayout swipeRefresh;
     private AddStoryPresentor mPresentor;
-    private AddStoryAdapter mAdapter;
+    private PicturesTabAdapter mAdapter;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -39,9 +40,9 @@ public class AddStoryFragment extends BaseFragment implements AddStoryView {
 
         swipeRefresh = view.findViewById(R.id.swiperefresh);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        mAdapter = new AddStoryAdapter(getmContext(), mPresentor);
+        mAdapter = new PicturesTabAdapter(getmContext(), mPresentor);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getmContext(), 2, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getmContext(), 1, GridLayoutManager.VERTICAL, false);
 
 
      /* ItemOffTBsetDecoration itemDecoration = new ItemOffTBsetDecoration(getmContext(), R.dimen.item_offset_4dp);
@@ -85,7 +86,7 @@ public class AddStoryFragment extends BaseFragment implements AddStoryView {
     }
 
     @Override
-    public void onListFetch(List<AddStoryModel.PictureModel> picturesList) {
+    public void onListFetch(List<PictureModel> picturesList) {
         mAdapter.add(picturesList);
     }
 

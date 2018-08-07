@@ -462,10 +462,9 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .build();
     }
 
-    public ANRequest makeUploadPictureReq(String title, File file) {
+    public ANRequest makeUploadPictureReq(File file) {
         return AndroidNetworking.upload(BASE_URL + ENDPOINT_UPLOAD_PICTURE)
                 .addHeaders(headers)
-                .addMultipartParameter("picture_title", title)
                 .addMultipartFile("image", file)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
