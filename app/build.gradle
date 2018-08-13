@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 assemble.dependsOn('lint')
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.1'
+    buildToolsVersion '28.0.2'
     dataBinding {
         enabled = true
     }

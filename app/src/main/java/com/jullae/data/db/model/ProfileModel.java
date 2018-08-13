@@ -48,9 +48,13 @@ public class ProfileModel extends BaseObservable {
     }
 
     @Bindable
-
-    public String getUser_dp_url() {
+    public String getUser_avatar() {
         return user_avatar;
+    }
+
+    public void setUser_avatar(String user_avatar) {
+        this.user_avatar = user_avatar;
+        notifyPropertyChanged(BR.user_avatar);
     }
 
     @Bindable

@@ -103,7 +103,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 Intent i = new Intent(getContext(), ProfileEditActivity.class);
                 i.putExtra("name", mProfileModel.getName());
                 i.putExtra("bio", mProfileModel.getBio());
-                i.putExtra("photo", mProfileModel.getUser_dp_url());
+                i.putExtra("photo", mProfileModel.getUser_avatar());
                 getContext().startActivity(i);
             }
         });
@@ -224,6 +224,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mProfileModel.setFollowing_count(profileModel.getFollowing_count());
         mProfileModel.setStories_count(profileModel.getStories_count());
         mProfileModel.setPictures_count(profileModel.getPictures_count());
+        mProfileModel.setUser_avatar(profileModel.getUser_avatar());
+
         if (getmContext() instanceof HomeActivity)
             ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
 
@@ -235,7 +237,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     }
 
-    private void showEditProfileDialog() {
+   /* private void showEditProfileDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
         View view = getmContext().getLayoutInflater().inflate(R.layout.dialog_edit_profile, null);
         final EditText fieldName = view.findViewById(R.id.field_name);
@@ -253,7 +255,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-       /* view.findViewById(R.id.text_update_profile).setOnClickListener(new View.OnClickListener() {
+       *//* view.findViewById(R.id.text_update_profile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresentor.updateProfile(fieldName.getText().toString().trim(), fieldBio.getText().toString(), new ReqListener() {
@@ -271,14 +273,14 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                     }
                 });
             }
-        });*/
+        });*//*
         dialog.show();
     }
 
     private void showConversationDialog() {
         DialogUtils.showMessageDialog(getmContext());
     }
-
+*/
 
     private void showPasswordChangeDialog() {
 
@@ -434,7 +436,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     @Override
     public void onProfilePicUpdateFail() {
-        GlideUtils.loadImagefromUrl(getmContext(), mProfileModel.getUser_dp_url(), user_image);
+        GlideUtils.loadImagefromUrl(getmContext(), mProfileModel.getUser_avatar(), user_image);
         Toast.makeText(getmContext().getApplicationContext(), "Failed to update avatar!", Toast.LENGTH_SHORT).show();
 
     }

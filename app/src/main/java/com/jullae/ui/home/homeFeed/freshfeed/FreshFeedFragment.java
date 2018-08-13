@@ -57,9 +57,11 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
 
 
         view = inflater.inflate(R.layout.fragment_fresh_feed, container, false);
+        mPresentor = new FreshFeedPresentor();
 
 
         position = getArguments().getInt("position");
+
         swipeRefresh = view.findViewById(R.id.swiperefresh);
         recyclerView = view.findViewById(R.id.recycler_view);
         mAdapter = new FreshFeedAdapter(getmContext(), mPresentor);
@@ -76,7 +78,6 @@ public class FreshFeedFragment extends BaseFragment implements FreshFeedContract
             }
         });
         setScrollListener();
-        mPresentor = new FreshFeedPresentor();
 
         return view;
     }

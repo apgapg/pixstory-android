@@ -610,29 +610,28 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                 .build();
     }
 
-    public ANRequest getFollowersList(String userId, int count) {
-
-        return AndroidNetworking.get(BASE_URL + ENDPOINT_FOLLOWERS_LIST)
-                .addHeaders(headers)
-                .addPathParameter("id", userId)
-                .addQueryParameter("page", String.valueOf(count))
-                .addQueryParameter("per", PER)
-                .setPriority(Priority.MEDIUM)
-                .logReponseBody()
-                .build();
+    public ANRequest getFollowersList(String userId, int count, boolean isFollowerPage) {
+        if (isFollowerPage)
+            return AndroidNetworking.get(BASE_URL + ENDPOINT_FOLLOWERS_LIST)
+                    .addHeaders(headers)
+                    .addPathParameter("id", userId)
+                    .addQueryParameter("page", String.valueOf(count))
+                    .addQueryParameter("per", PER)
+                    .setPriority(Priority.MEDIUM)
+                    .logReponseBody()
+                    .build();
+        else
+            return AndroidNetworking.get(BASE_URL + ENDPOINT_FOLLOWINGS_LIST)
+                    .addHeaders(headers)
+                    .addPathParameter("id", userId)
+                    .addQueryParameter("page", String.valueOf(count))
+                    .addQueryParameter("per", PER)
+                    .setPriority(Priority.MEDIUM)
+                    .logReponseBody()
+                    .build();
     }
 
-    public ANRequest getFollowingList(String userId, int count) {
 
-        return AndroidNetworking.get(BASE_URL + ENDPOINT_FOLLOWINGS_LIST)
-                .addHeaders(headers)
-                .addPathParameter("id", userId)
-                .addQueryParameter("page", String.valueOf(count))
-                .addQueryParameter("per", PER)
-                .setPriority(Priority.MEDIUM)
-                .logReponseBody()
-                .build();
-    }
 
     public ANRequest makeCommentDeleteReq(String commentId) {
         return AndroidNetworking.post(BASE_URL + ENDPOINT_DELETE_COMMENT)

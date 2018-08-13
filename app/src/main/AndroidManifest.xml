@@ -124,7 +124,11 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.common.LikesActivity" />
         <activity android:name=".ui.common.MessageListActivity" />
-        <activity android:name=".ui.home.profile.ProfileEditActivity"></activity>
+        <activity android:name=".ui.home.profile.ProfileEditActivity" />
+        <activity
+            android:name=".ui.FollowersActivity"
+            android:label="@string/title_activity_followers"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
