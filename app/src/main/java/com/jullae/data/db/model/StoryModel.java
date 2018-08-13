@@ -20,7 +20,7 @@ public class StoryModel extends BaseObservable {
     private String writer_penname;
     private String writer_avatar;
     private String story_text;
-    private String like_count;
+    private int like_count;
     private String comment_count;
     private String is_liked;
     private boolean is_self;
@@ -66,11 +66,12 @@ public class StoryModel extends BaseObservable {
 
     }
 
-    public String getLike_count() {
+    @Bindable
+    public int getLike_count() {
         return like_count;
     }
 
-    public void setLike_count(String like_count) {
+    public void setLike_count(int like_count) {
         this.like_count = like_count;
     }
 

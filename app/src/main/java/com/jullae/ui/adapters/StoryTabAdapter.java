@@ -19,6 +19,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class StoryTabAdapter extends RecyclerView.Adapter<StoryTabAdapter.Search
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
         GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
-        viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
+        viewHolder.story_like_count.setText("" + storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.story_title.setText(storyModel.getStory_title());
         viewHolder.story_text.setText(Html.fromHtml(storyModel.getStory_text()));
@@ -98,6 +99,7 @@ public class StoryTabAdapter extends RecyclerView.Adapter<StoryTabAdapter.Search
         public SearchFeedViewHolder(View inflate) {
             super(inflate);
 
+            rootview = inflate.findViewById(R.id.rootview);
             image = inflate.findViewById(R.id.image);
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
@@ -109,6 +111,15 @@ public class StoryTabAdapter extends RecyclerView.Adapter<StoryTabAdapter.Search
                 @Override
                 public void onClick(View v) {
                     AppUtils.showStoryDetailActivity(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id());
+
+                }
+            });
+
+            inflate.findViewById(R.id.story_like_count).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (messagelist.get(getAdapterPosition()).getStoryModel().getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
 
                 }
             });

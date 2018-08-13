@@ -150,43 +150,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
 
                 }
             });
-           /* image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel(), new AppUtils.LikeClickListener() {
-                        @Override
-                        public void onLikeClick() {
-                            if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
-                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
-                                messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
-                            } else {
-                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
-                                messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
-                            }
-                            mPresentor.setLike(messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), new HomeFeedAdapter.ReqListener() {
-                                @Override
-                                public void onSuccess() {
 
-                                }
-
-                                @Override
-                                public void onFail() {
-                                    Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                                    if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
-                                    } else {
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
-                                    }
-                                }
-                            }, !messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked());
-
-
-                        }
-                    });
-                }
-            });*/
 
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override

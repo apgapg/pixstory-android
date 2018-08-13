@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 assemble.dependsOn('lint')
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.1'
     dataBinding {
         enabled = true
     }
@@ -71,17 +71,13 @@ dependencies {
     implementation 'com.binaryfork:spanny:1.0.4'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
-
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation 'android.arch.lifecycle:viewmodel:1.1.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
-
     implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
     implementation 'com.github.armcha:AutoLinkTextView:0.3.0'
     implementation 'com.github.danylovolokh:hashtag-helper:1.1.0'
-
-
 }
 
 apply plugin: 'com.google.gms.google-services'

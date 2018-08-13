@@ -16,7 +16,6 @@ import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.databinding.ItemLikeBinding;
 import com.jullae.ui.base.BaseResponseModel;
-import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 import com.jullae.utils.ToastUtils;
 
@@ -97,8 +96,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
         LikeViewHolder(ItemLikeBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            if (mode == Constants.FOLLOWING_LIST)
-                binding.userFollowed.setVisibility(View.INVISIBLE);
+        /*    if (mode == Constants.FOLLOWING_LIST)
+                binding.userFollowed.setVisibility(View.INVISIBLE);*/
             binding.userFollowed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

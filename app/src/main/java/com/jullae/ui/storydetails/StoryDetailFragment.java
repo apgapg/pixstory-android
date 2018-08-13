@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.jullae.ApplicationClass;
 import com.jullae.R;
 import com.jullae.SearchActivity;
-import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.CommentModel;
 import com.jullae.data.db.model.LikesModel;
 import com.jullae.data.db.model.StoryModel;
@@ -221,6 +220,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         if (getArguments().getString("story_id") != null) {
             storyModel = new StoryModel();
             storyModel.setStory_id(getArguments().getString("story_id"));
+
         } else if (getArguments().getString("storymodel") != null) {
             storyModel = GsonUtils.getInstance().fromJson(getArguments().getString("storymodel"), StoryModel.class);
 
@@ -286,82 +286,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     }
 
 
-    private void setupMoreBottomSheet() {
-        View bottomSheet = view.findViewById(R.id.bottom_sheet);
-        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-        if (storyModel.getWriter_id().equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId()))
-            view.findViewById(R.id.container_extra_options).setVisibility(View.VISIBLE);
-
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED)
-                    view.findViewById(R.id.bg).setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                view.findViewById(R.id.bg).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.bg).setAlpha(slideOffset);
-            }
-        });
-
-
-        view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-            }
-        });
-
-        view.findViewById(R.id.edit_story).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeBottomSheet();
-
-                AppUtils.showEditStoryActivity(getmContext(), storyModel.getStory_id(), storyModel.getStory_title(), storyModel.getStory_text());
-            }
-        });
-        view.findViewById(R.id.delete_story).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeBottomSheet();
-                DialogUtils.showDeleteStoryDialog(getmContext(), mPresentor, storyModel.getStory_id());
-            }
-        });
-        view.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
-
-        view.findViewById(R.id.report_story).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        DialogUtils.showReportStoryDialog(getmContext(), mPresentor, storyModel);
-                    }
-                });
-            }
-        });
-
-        view.findViewById(R.id.text_save_story).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                mPresentor.saveStory(storyModel.getStory_id());
-            }
-        });
-    }
 
 
     private void setupAddComment() {
@@ -537,7 +462,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         like_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!storyModel.getLike_count().equals("0"))
+                if (storyModel.getLike_count() != 0)
 
                     AppUtils.showLikesDialog(getmContext(), storyModel.getStory_id(), Constants.LIKE_TYPE_STORY);
             }
@@ -547,9 +472,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private void updatetoUnlike() {
         storyModel.setIs_liked("false");
         btn_like.setImageResource(R.drawable.ic_unlike);
-        if (Integer.parseInt(storyModel.getLike_count()) != 0) {
-            like_count.setText(String.valueOf(Integer.parseInt(storyModel.getLike_count()) - 1) + " likes");
-            storyModel.setLike_count(String.valueOf(Integer.parseInt(storyModel.getLike_count()) - 1));
+        if ((storyModel.getLike_count()) != 0) {
+            like_count.setText(String.valueOf((storyModel.getLike_count()) - 1) + " likes");
+            storyModel.setLike_count((storyModel.getLike_count() - 1));
         }
         like_count.setTextColor(Color.parseColor("#9e9e9e"));
         like_count.setTypeface(Typeface.DEFAULT);
@@ -559,8 +484,8 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private void updateToLike() {
         storyModel.setIs_liked("true");
         btn_like.setImageResource(R.drawable.ic_like);
-        like_count.setText(String.valueOf(Integer.parseInt(storyModel.getLike_count()) + 1) + " likes");
-        storyModel.setLike_count(String.valueOf(Integer.parseInt(storyModel.getLike_count()) + 1));
+        like_count.setText(String.valueOf((storyModel.getLike_count()) + 1) + " likes");
+        storyModel.setLike_count(((storyModel.getLike_count()) + 1));
         like_count.setTextColor(Color.parseColor("#424242"));
         like_count.setTypeface(Typeface.DEFAULT_BOLD);
     }

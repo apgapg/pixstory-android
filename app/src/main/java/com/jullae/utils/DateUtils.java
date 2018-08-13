@@ -24,7 +24,7 @@ public class DateUtils {
 
         long now = currentDate();
         if (time > now || time <= 0) {
-            return "in the future";
+            return "just now";
         }
 
         final long diff = now - time;

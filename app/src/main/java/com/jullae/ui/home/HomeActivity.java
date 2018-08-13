@@ -131,14 +131,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             }
         });
 
-        findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                fab.show();
 
-            }
-        });
         findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,13 +211,6 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
                 showFragment(new AddStoryFragment(), true);
                 dialog.hide();
 
-            }
-        });
-
-        view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.hide();
             }
         });
 

@@ -41,36 +41,6 @@
             android:paddingBottom="2dp"
             android:textColor="#424242" />
 
-        <LinearLayout
-            android:id="@+id/aab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="horizontal"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-
-            >
-
-            <TextView
-                android:id="@+id/story_like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:text="3 likes"
-                android:textAppearance="@style/text_12.regular.secondary" />
-
-            <TextView
-                android:id="@+id/story_comment_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-
-                android:text="1 comments"
-                android:textAppearance="@style/text_12.regular.secondary" />
-
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/text_delete_draft"
