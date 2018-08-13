@@ -84,8 +84,8 @@
                                     android:layout_width="90dp"
                                     android:layout_height="90dp"
                                     android:padding="4dp"
-
-                                    android:src="#bdbdbd" />
+                                    android:src="#bdbdbd"
+                                    app:imageUrl="@{profileModel.user_avatar}" />
 
                                 <ProgressBar
                                     android:id="@+id/progress_bar"
@@ -130,8 +130,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="4dp"
                                     android:layout_marginBottom="8dp"
+                                    android:layout_marginTop="4dp"
                                     android:ellipsize="end"
                                     android:gravity="center"
                                     android:maxLines="3"
@@ -165,8 +165,8 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="right"
-                            android:layout_marginTop="4dp"
                             android:layout_marginRight="4dp"
+                            android:layout_marginTop="4dp"
                             android:background="@drawable/ripple_effect"
                             android:padding="6dp"
                             android:scaleType="centerCrop"

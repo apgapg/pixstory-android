@@ -1,5 +1,7 @@
 package com.jullae.data.db.model;
 
+import android.databinding.BaseObservable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,7 +24,7 @@ public class FreshFeedModel {
     }
 
 
-    public class FreshFeed {
+    public class FreshFeed extends BaseObservable {
         @SerializedName("picture")
         @Expose
         private PictureModel pictureModel;

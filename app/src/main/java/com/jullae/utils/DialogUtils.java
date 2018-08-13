@@ -23,6 +23,7 @@ import com.jullae.data.db.model.FollowingModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.DialogFollowersBinding;
+import com.jullae.ui.FollowersActivity;
 import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
@@ -392,6 +393,13 @@ public class DialogUtils {
 
     public static void showFollowersDialog(final Activity mContext, final String userId) {
 
+        Intent i = new Intent(mContext, FollowersActivity.class);
+        i.putExtra("follower", true);
+        i.putExtra("userId", userId);
+        mContext.startActivity(i);
+
+
+/*
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         final DialogFollowersBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.dialog_followers, null, false);
@@ -460,13 +468,18 @@ public class DialogUtils {
 
             }
         });
+*/
 
     }
 
     public static void showFollowingDialog(final Activity mContext, final String userId) {
 
+        Intent i = new Intent(mContext, FollowersActivity.class);
+        i.putExtra("follower", false);
+        i.putExtra("userId", userId);
+        mContext.startActivity(i);
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+       /* AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         final DialogFollowersBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.dialog_followers, null, false);
         dialogBuilder.setView(binding.getRoot());
 
@@ -533,7 +546,7 @@ public class DialogUtils {
 
             }
         });
-
+*/
     }
 
     public static void showCommentDeleteWarning(final Context context, final String commentId) {

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.armcha:AutoLinkTextView-0.3.0">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AutoLinkTextView-0.3.0.aar/a16dd8817f9484008a50e929d313e08c/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AutoLinkTextView-0.3.0.aar/a16dd8817f9484008a50e929d313e08c/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AutoLinkTextView-0.3.0.aar/1edca6a5a855b5dbab6fae98109c180c/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/AutoLinkTextView-0.3.0.aar/1edca6a5a855b5dbab6fae98109c180c/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

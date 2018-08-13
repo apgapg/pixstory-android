@@ -1,6 +1,8 @@
 package com.jullae.ui.home.homeFeed.freshfeed;
 
 import android.app.Activity;
+import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -9,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.databinding.ItemFreshFeedsBinding;
+import com.jullae.ui.adapters.PicturesTabAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
@@ -43,35 +48,25 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new FreshFeedsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fresh_feeds, parent, false));
+        ItemFreshFeedsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_fresh_feeds, parent, false);
+        return new FreshFeedsViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FreshFeedsViewHolder viewHolder = (FreshFeedsViewHolder) holder;
-        PictureModel pictureModel = messagelist.get(position).getPictureModel();
-        StoryModel storyModel = messagelist.get(position).getStoryModel();
-
-        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
-
-        viewHolder.story_text.setText(Html.fromHtml(storyModel.getStory_text()));
-        setUserNamesandAvatar(viewHolder, pictureModel, storyModel);
-
-        setLikeCommentCount(viewHolder, pictureModel, storyModel);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        ((FreshFeedsViewHolder) viewHolder).binding.setModel(messagelist.get(position));
+        ((FreshFeedsViewHolder) viewHolder).binding.executePendingBindings();
     }
 
-    private void setUserNamesandAvatar(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, StoryModel storyModel) {
-        viewHolder.user_name.setText(pictureModel.getPhotographer_penname().trim());
-        viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
-        GlideUtils.loadImagefromUrl(mContext, pictureModel.getPhotographer_avatar(), viewHolder.user_image);
-
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (!payloads.isEmpty())
+            ((FreshFeedsViewHolder) holder).binding.executePendingBindings();
+        else
+            super.onBindViewHolder(holder, position, payloads);
     }
 
-    private void setLikeCommentCount(FreshFeedsViewHolder viewHolder, PictureModel pictureModel, StoryModel storyModel) {
-        viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
-        viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
 
-    }
 
     @Override
     public int getItemCount() {
@@ -96,53 +91,25 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private class FreshFeedsViewHolder extends RecyclerView.ViewHolder {
 
 
-        private View rootview;
-        private ImageView image, user_image;
-        private TextView user_name, pic_title;
-        private TextView writer_name, story_title;
-        private TextView story_text;
-        private TextView pic_like_count, story_like_count;
-        private TextView pic_story_count, story_comment_count;
-        private TextView pic_text_by, write_story;
+        private  ItemFreshFeedsBinding binding;
 
-        public FreshFeedsViewHolder(final View inflate) {
-            super(inflate);
-
-            image = inflate.findViewById(R.id.image);
-            user_image = inflate.findViewById(R.id.user_photo);
-            user_name = inflate.findViewById(R.id.text_name);
-            pic_title = inflate.findViewById(R.id.pic_title);
-            story_title = inflate.findViewById(R.id.story_title);
-            story_text = inflate.findViewById(R.id.story_text);
+        FreshFeedsViewHolder(final ItemFreshFeedsBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
 
-            write_story = inflate.findViewById(R.id.write_story);
-
-            writer_name = inflate.findViewById(R.id.writer_name);
-            pic_like_count = inflate.findViewById(R.id.pic_like_count);
-            pic_story_count = inflate.findViewById(R.id.pic_comment_count);
-            story_like_count = inflate.findViewById(R.id.story_like_count);
-            story_comment_count = inflate.findViewById(R.id.story_comment_count);
-
-            image.setOnClickListener(new View.OnClickListener() {
+            binding.getRoot().findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (inflate.findViewById(R.id.container_story).getVisibility() == View.VISIBLE)
-                        inflate.findViewById(R.id.container_story).setVisibility(View.INVISIBLE);
-                    else inflate.findViewById(R.id.container_story).setVisibility(View.VISIBLE);
+                    if (binding.getRoot().findViewById(R.id.container_story).getVisibility() == View.VISIBLE)
+                        binding.getRoot().findViewById(R.id.container_story).setVisibility(View.INVISIBLE);
+                    else
+                        binding.getRoot().findViewById(R.id.container_story).setVisibility(View.VISIBLE);
 
                 }
             });
 
-
-          /*  write_story.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
-                }
-            });*/
-            pic_text_by = inflate.findViewById(R.id.pic_text_by);
-            inflate.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
+            binding.getRoot().findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (messagelist.get(getAdapterPosition()).getPictureModel().getLike_count() != 0)
@@ -151,38 +118,57 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
 
 
-            user_name.setOnClickListener(new View.OnClickListener() {
+            binding.getRoot().findViewById(R.id.text_name).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
                 }
             });
-            user_image.setOnClickListener(new View.OnClickListener() {
+            binding.getRoot().findViewById(R.id.user_photo).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
                 }
             });
+            binding.buttonLike.setOnClickListener(new View.OnClickListener() {
 
-
-
-          /*  pic_like_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (messagelist.get(getAdapterPosition()).getPictureModel().getLike_count() != 0)
-                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), Constants.LIKE_TYPE_PICTURE);
-                }
-            });*/
 
-           /* story_like_count.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!messagelist.get(getAdapterPosition()).getStoryModel().getLike_count().equals("0"))
+                    changeLike(getAdapterPosition());
+                    mPresentor.setLike(messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), new HomeFeedAdapter.ReqListener() {
+                        @Override
+                        public void onSuccess() {
 
-                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
+                        }
+
+                        @Override
+                        public void onFail() {
+                            Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                            if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
+                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
+                                messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
+                            } else {
+                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
+                                messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
+                            }
+                        }
+                    }, !messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked());
                 }
             });
-*/
+
+
+        }
+
+        private void changeLike(int adapterPosition) {
+            if (messagelist.get(adapterPosition).getPictureModel().getIs_liked()) {
+                messagelist.get(adapterPosition).getPictureModel().setIs_liked(false);
+                messagelist.get(adapterPosition).getPictureModel().setDecrementLikeCount();
+            } else {
+                messagelist.get(adapterPosition).getPictureModel().setIs_liked(true);
+                messagelist.get(adapterPosition).getPictureModel().setIncrementLikeCount();
+            }
+            notifyItemChanged(adapterPosition, "like");
 
         }
     }

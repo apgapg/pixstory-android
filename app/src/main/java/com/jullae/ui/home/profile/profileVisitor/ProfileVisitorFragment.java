@@ -134,7 +134,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     @Override
     public void onProfileFetchSuccess(final ProfileModel profileModel) {
         try {
-            GlideUtils.loadImagefromUrl(getmContext(), profileModel.getUser_dp_url(), user_image);
+            GlideUtils.loadImagefromUrl(getmContext(), profileModel.getUser_avatar(), user_image);
             user_name.setText(profileModel.getName());
             user_penname.setText(profileModel.getPenname());
             user_bio.setText(profileModel.getBio());

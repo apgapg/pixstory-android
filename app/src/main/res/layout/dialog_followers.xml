@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,13 +10,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@drawable/bg_round_dialog"
+        android:background="#fff"
 
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/close1"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:alpha="0.72"
+                android:padding="9dp"
+                android:scaleType="centerCrop"
+                android:tint="@color/secondary_text"
+                app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="Followers"
+                android:textAppearance="@style/text_14.medium.secondary"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <com.jullae.utils.customview.PagingRecyclerView
                 android:id="@+id/recycler_view"
@@ -37,17 +64,8 @@
                 tools:visibility="visible" />
         </RelativeLayout>
 
-        <include layout="@layout/vertical_divider" />
 
-        <TextView
-            android:id="@+id/close"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="CLOSE"
-            android:textColor="#424242"
-            android:textSize="12dp"
-            android:textStyle="bold" />
+        <include layout="@layout/close_button"/>
+
     </LinearLayout>
 </layout>

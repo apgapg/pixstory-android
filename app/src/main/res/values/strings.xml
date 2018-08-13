@@ -106,6 +106,7 @@
     <string name="no_internet">No internet connectivity</string>
     <string name="change_password">Change Password</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_followers">FollowersActivity</string>
 
 
 </resources>
