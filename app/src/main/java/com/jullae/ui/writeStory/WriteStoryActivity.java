@@ -86,7 +86,9 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         findViewById(R.id.image_bullets).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                field_story.bullet(!field_story.contains(KnifeText.FORMAT_BULLET));
+                if (field_story.hasSelection())
+                    field_story.bullet(!field_story.contains(KnifeText.FORMAT_BULLET));
+                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
             }
         });
         findViewById(R.id.image_bullets).setOnLongClickListener(new View.OnLongClickListener() {
@@ -102,7 +104,10 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         findViewById(R.id.image_underline).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                field_story.underline(!field_story.contains(KnifeText.FORMAT_UNDERLINED));
+                if (field_story.hasSelection())
+                    field_story.underline(!field_story.contains(KnifeText.FORMAT_UNDERLINED));
+                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
+
             }
         });
         findViewById(R.id.image_underline).setOnLongClickListener(new View.OnLongClickListener() {
@@ -119,7 +124,10 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         findViewById(R.id.image_italic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                field_story.italic(!field_story.contains(KnifeText.FORMAT_ITALIC));
+                if (field_story.hasSelection())
+                    field_story.italic(!field_story.contains(KnifeText.FORMAT_ITALIC));
+                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
+
             }
         });
         findViewById(R.id.image_italic).setOnLongClickListener(new View.OnLongClickListener() {
@@ -135,7 +143,9 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         findViewById(R.id.image_bold).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                field_story.bold(!field_story.contains(KnifeText.FORMAT_BOLD));
+                if (field_story.hasSelection())
+                    field_story.bold(!field_story.contains(KnifeText.FORMAT_BOLD));
+                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
 
 
             }
