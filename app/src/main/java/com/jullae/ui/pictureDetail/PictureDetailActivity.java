@@ -1,97 +1,76 @@
 package com.jullae.ui.pictureDetail;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jullae.R;
-import com.jullae.data.db.model.HomeFeedSingleModel;
-import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
+import com.jullae.databinding.ContentPictureDetailBinding;
+import com.jullae.ui.custom.ItemOffLRsetDecoration;
+import com.jullae.ui.home.homeFeed.HomeFeedModel;
+import com.jullae.ui.home.homeFeed.StoryAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
-import com.jullae.utils.DateUtils;
-import com.jullae.utils.GlideUtils;
 
 import java.util.List;
 
 public class PictureDetailActivity extends AppCompatActivity implements PictureDetailView {
 
-    private ImageView image, user_image;
-    private TextView user_name, pic_title, pic_like_count, pic_story_count;
-    private PictureModel pictureModel;
     private PictureDetailPresentor mPresentor;
     private RecyclerView recycler_view;
     private PictureAllStoryAdapter pictureAllStoryAdapter;
-    private TextView textDate;
+    private ContentPictureDetailBinding binding;
+    private StoryAdapter storyAdaper;
+    private HomeFeedModel.Feed model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_picture_detail);
-
-        image = findViewById(R.id.image);
-        user_image = findViewById(R.id.user_photo);
-        user_name = findViewById(R.id.text_name);
-        pic_title = findViewById(R.id.pic_title);
-        pic_like_count = findViewById(R.id.pic_like_count);
-        pic_story_count = findViewById(R.id.pic_comment_count);
-        textDate = findViewById(R.id.text_date);
+        //   setContentView(R.layout.content_picture_detail);
+        final ContentPictureDetailBinding binding = DataBindingUtil.setContentView(
+                this, R.layout.content_picture_detail);
+        this.binding = binding;
         mPresentor = new PictureDetailPresentor();
         mPresentor.attachView(this);
 
         Gson gson = new Gson();
-        pictureModel = gson.fromJson(getIntent().getStringExtra("pictureModel"), PictureModel.class);
-
         setUpRecyclerView();
 
-        if (pictureModel != null) {
-            GlideUtils.loadImagefromUrl(this, pictureModel.getPicture_url(), image);
-            GlideUtils.loadImagefromUrl(this, pictureModel.getPhotographer_avatar(), user_image);
-            user_name.setText(pictureModel.getPhotographer_name());
-            pic_title.setText(pictureModel.getPicture_title());
-            pic_like_count.setText(pictureModel.getLike_count() + " likes");
-            pic_story_count.setText(pictureModel.getStory_count() + " stories");
-            textDate.setText(DateUtils.getTimeAgo(pictureModel.getCreated_at()));
-            mPresentor.loadStories(pictureModel.getPicture_id());
-
-        } else {
-            mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
-        }
 
         mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
 
-        user_name.setOnClickListener(new View.OnClickListener() {
+
+        binding.getRoot().findViewById(R.id.text_penname).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.showVisitorProfile(PictureDetailActivity.this, pictureModel.getPhotographer_penname());
+                AppUtils.showVisitorProfile(PictureDetailActivity.this, model.getPhotographer_penname());
             }
         });
-        user_image.setOnClickListener(new View.OnClickListener() {
+        binding.getRoot().findViewById(R.id.image_avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.showVisitorProfile(PictureDetailActivity.this, pictureModel.getPhotographer_penname());
-            }
-        });
-
-        pic_like_count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (pictureModel.getLike_count() != 0)
-
-                    AppUtils.showLikesDialog(PictureDetailActivity.this, pictureModel.getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+                AppUtils.showVisitorProfile(PictureDetailActivity.this, model.getPhotographer_penname());
             }
         });
 
-        findViewById(R.id.write_story).setOnClickListener(new View.OnClickListener() {
+        binding.getRoot().findViewById(R.id.like_count).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.showWriteStoryDialog(PictureDetailActivity.this, pictureModel.getPicture_id());
+                if (model.getLike_count() != 0)
+
+                    AppUtils.showLikesDialog(PictureDetailActivity.this, model.getPicture_id(), Constants.LIKE_TYPE_PICTURE);
+            }
+        });
+
+        binding.getRoot().findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showWriteStoryDialog(PictureDetailActivity.this, model.getPicture_id());
             }
         });
 
@@ -99,12 +78,13 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     }
 
     private void setUpRecyclerView() {
-        recycler_view = findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recycler_view = findViewById(R.id.recycler_view_story);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recycler_view.setLayoutManager(linearLayoutManager);
+        recycler_view.addItemDecoration(new ItemOffLRsetDecoration(this, R.dimen.item_offset_4dp));
 
-        pictureAllStoryAdapter = new PictureAllStoryAdapter(this);
-        recycler_view.setAdapter(pictureAllStoryAdapter);
+        storyAdaper = new StoryAdapter(this);
+        recycler_view.setAdapter(storyAdaper);
 
     }
 
@@ -119,16 +99,11 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     }
 
     @Override
-    public void onFetchFeedSuccess(HomeFeedSingleModel.Feed homeFeedModel) {
-        GlideUtils.loadImagefromUrl(this, homeFeedModel.getPicture_url(), image);
-        GlideUtils.loadImagefromUrl(this, homeFeedModel.getPhotographer_avatar(), user_image);
-        user_name.setText(homeFeedModel.getPhotographer_name());
-        pic_title.setText(homeFeedModel.getPicture_title());
-        pic_like_count.setText(homeFeedModel.getLike_count() + " likes");
-        pic_story_count.setText(homeFeedModel.getStory_count() + " stories");
-        textDate.setText(DateUtils.getTimeAgo(homeFeedModel.getCreated_at()));
-
-        mPresentor.loadStories(homeFeedModel.getPicture_id());
+    public void onFetchFeedSuccess(HomeFeedModel.Feed homeFeedModel) {
+        this.model = homeFeedModel;
+        binding.setFeed(homeFeedModel);
+        storyAdaper.add(homeFeedModel.getStories());
+        //  mPresentor.loadStories(homeFeedModel.getPicture_id());
 
     }
 

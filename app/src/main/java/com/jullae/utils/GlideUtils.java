@@ -18,7 +18,7 @@ public class GlideUtils {
     @BindingAdapter("imageUrl")
     public static void loadImagefromUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
-        if (url != null)
+        if (url != null && !url.isEmpty())
             GlideApp.with(context).load(new CustomGlideUrl(url)).thumbnail(0.1f).into(imageView);
 
     }

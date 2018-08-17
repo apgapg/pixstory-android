@@ -75,6 +75,12 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     }
 
+    @Override
+    protected void onDestroy() {
+        mPresentor.detachView();
+        super.onDestroy();
+    }
+
     private void setUpTextStyling() {
         setupBold();
         setupItalic();
@@ -157,12 +163,6 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                 return true;
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        mPresentor.detachView();
-        super.onDestroy();
     }
 
     @Override
@@ -259,7 +259,8 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), field_story.getText().toString().trim(), picture_id);
+                        //  Log.d("jb", "onClick: "+field_story.toHtml());
+                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), field_story.toHtml(), picture_id);
                     }
                 });
 

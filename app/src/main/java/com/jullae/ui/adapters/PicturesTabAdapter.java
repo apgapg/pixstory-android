@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.databinding.ItemPicturesBinding;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
-import com.jullae.ui.pictureDetail.PictureDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
@@ -130,7 +128,7 @@ public class PicturesTabAdapter extends RecyclerView.Adapter<PicturesTabAdapter.
                 }
             });
 
-            binding.getRoot().findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+            /*binding.getRoot().findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Gson gson = new Gson();
@@ -139,7 +137,7 @@ public class PicturesTabAdapter extends RecyclerView.Adapter<PicturesTabAdapter.
                     i.putExtra("pictureModel", pictureModel);
                     mContext.startActivity(i);
                 }
-            });
+            });*/
             binding.getRoot().findViewById(R.id.like_count).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
