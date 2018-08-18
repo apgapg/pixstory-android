@@ -4,24 +4,17 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
-import com.jullae.data.db.model.PictureModel;
-import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.ItemFreshFeedsBinding;
-import com.jullae.ui.adapters.PicturesTabAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.DialogUtils;
-import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +105,6 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.getRoot().findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (messagelist.get(getAdapterPosition()).getPictureModel().getLike_count() != 0)
                         DialogUtils.showPictureMoreOptions(mContext, mPresentor, messagelist.get(getAdapterPosition()).getPictureModel());
                 }
             });

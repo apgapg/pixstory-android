@@ -78,6 +78,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private SwipeRefreshLayout swipeRefreshLayout;
     private AppBarLayout appBar;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -186,7 +187,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px_white);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_outline_camera_alt_24px_white);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_edit_white);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_outline_bookmark_border_24px);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_outline_save_24px);
     }

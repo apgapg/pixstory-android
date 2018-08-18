@@ -1,5 +1,6 @@
 package com.jullae.ui.home.profile.profileVisitor;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,10 +21,10 @@ import android.widget.TextView;
 import com.jullae.R;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.UserPrefsModel;
+import com.jullae.databinding.FragmentProfileBinding;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
-import com.jullae.utils.GlideUtils;
 
 /**
  * Created by Rahul Abrol on 12/26/17.
@@ -44,6 +45,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     private TabLayout tabLayout;
     private UserPrefsModel userPrefsModel;
     private String penname;
+    private FragmentProfileBinding binding;
     //private View button_message;
 
     @Nullable
@@ -54,7 +56,8 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
                 ((ViewGroup) view.getParent()).removeView(view);
             return view;
         }
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        view = binding.getRoot();
 
         penname = getArguments().getString("penname");
 
@@ -107,7 +110,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_outline_photo_24px_white);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_outline_camera_alt_24px_white);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_edit_white);
 
     }
 
@@ -134,14 +137,15 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     @Override
     public void onProfileFetchSuccess(final ProfileModel profileModel) {
         try {
-            GlideUtils.loadImagefromUrl(getmContext(), profileModel.getUser_avatar(), user_image);
+          /*  GlideUtils.loadImagefromUrl(getmContext(), profileModel.getUser_avatar(), user_image);
             user_name.setText(profileModel.getName());
             user_penname.setText(profileModel.getPenname());
             user_bio.setText(profileModel.getBio());
             user_followers.setText(profileModel.getFollower_count());
             user_following.setText(profileModel.getFollowing_count());
             user_stories.setText(profileModel.getStories_count());
-            user_pictures.setText(profileModel.getPictures_count());
+            user_pictures.setText(profileModel.getPictures_count());*/
+            binding.setProfileModel(profileModel);
 
             //button_message.setVisibility(View.VISIBLE);
             /*button_message.setOnClickListener(new View.OnClickListener() {

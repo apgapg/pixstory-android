@@ -60,7 +60,6 @@ public class SignUpFragment extends BaseFragment {
             String email = getArguments().getString("email");
             int loginMode = getArguments().getInt("loginmode");
 
-            nameField.setVisibility(View.INVISIBLE);
             if (email == null) {
                 emailField.setVisibility(View.VISIBLE);
                 view.findViewById(R.id.bio_text).setVisibility(View.VISIBLE);

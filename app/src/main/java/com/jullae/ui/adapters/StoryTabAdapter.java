@@ -123,6 +123,24 @@ public class StoryTabAdapter extends RecyclerView.Adapter<StoryTabAdapter.Search
 
                 }
             });
+
+
+            inflate.findViewById(R.id.text_view_other).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
+                }
+            });
+            inflate.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
+                }
+            });
+            /*                AppUtils.showPictureDetailActivity(context, pictureModel.getPicture_id());
+             */
+
+
           /*  image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

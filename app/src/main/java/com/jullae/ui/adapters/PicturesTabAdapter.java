@@ -148,7 +148,6 @@ public class PicturesTabAdapter extends RecyclerView.Adapter<PicturesTabAdapter.
             binding.getRoot().findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (messagelist.get(getAdapterPosition()).getLike_count() != 0)
                         DialogUtils.showPictureMoreOptions(mContext, mPresentor, messagelist.get(getAdapterPosition()));
                 }
             });

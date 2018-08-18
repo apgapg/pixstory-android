@@ -9,6 +9,18 @@
     android:orientation="vertical"
     tools:context=".ui.loginscreen.LoginActivity">
 
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="44dp"
+        android:text="@string/app_name"
+        android:textAppearance="@style/text_14.medium"
+        android:textColor="#212121"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
