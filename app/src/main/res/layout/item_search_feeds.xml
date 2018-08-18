@@ -1,58 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/rootview"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fff">
+    android:background="#fff"
+    android:paddingLeft="10dp"
+    android:paddingTop="4dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="90dp"
+        android:layout_marginRight="104dp"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/story_title"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
-            android:orientation="horizontal"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp">
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:text="Title"
+            android:textAppearance="@style/text_14.regular.primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/story_title"
-                style="@style/textView.feed_primary_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                android:text="Title" />
-
-            <TextView
-                style="@style/textView.feed_secondary_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-
-                android:text="by" />
-
-
-            <TextView
-                android:id="@+id/writer_name"
-                style="@style/textView.feed_primary_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                android:text="Username" />
-
-            <TextView
-                style="@style/textView.feed_secondary_text"
-                android:layout_width="wrap_content"
-
-                android:layout_height="match_parent"
-                android:text="1 day ago" />
-
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/story_text"
@@ -60,59 +36,64 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:lines="4"
+            android:paddingTop="2dp"
             android:paddingBottom="2dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="2dp" />
+            android:textColor="#424242" />
 
         <LinearLayout
             android:id="@+id/aab"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:background="#fff"
             android:orientation="horizontal"
-            android:paddingBottom="8dp">
+            android:paddingTop="6dp"
+            android:paddingBottom="2dp"
+
+            >
 
             <TextView
                 android:id="@+id/story_like_count"
-                style="@style/textView.feed_secondary_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top"
-                android:paddingLeft="10dp"
-                android:paddingRight="8dp"
-                android:text="3 likes" />
+                android:text="3 likes"
+                android:textAppearance="@style/text_12.regular.secondary" />
 
             <TextView
                 android:id="@+id/story_comment_count"
-                style="@style/textView.feed_secondary_text2"
                 android:layout_width="wrap_content"
-
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
                 android:layout_height="wrap_content"
-                android:text="1 comments" />
+                android:paddingLeft="8dp"
+
+                android:text="1 comments"
+                android:textAppearance="@style/text_12.regular.secondary" />
 
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="View other stories"
+
+
+            android:textAppearance="@style/text_12.regular.secondary" />
+
+
     </LinearLayout>
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/profile_tab_item_image_height"
+        android:layout_height="@dimen/profile_tab_item_image_height"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="8dp"
         android:scaleType="centerCrop"
         android:src="#24bdbdbd" />
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/divider" />
 
 </RelativeLayout>

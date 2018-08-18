@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -19,8 +18,8 @@ import com.jullae.data.db.model.FeedModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.base.BasePresentor;
-import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -59,7 +58,6 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
         StoryModel storyModel = messagelist.get(position).getStoryModel();
 
         GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
-        viewHolder.writer_name.setText(storyModel.getWriter_penname().trim());
         viewHolder.story_like_count.setText(storyModel.getLike_count() + " likes");
         viewHolder.story_comment_count.setText(storyModel.getComment_count() + " comments");
         viewHolder.story_title.setText(storyModel.getStory_title());
@@ -93,7 +91,7 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
 
         private View rootview;
         private ImageView image;
-        private TextView writer_name, story_title;
+        private TextView story_title;
         private TextView story_text;
         private TextView story_like_count;
         private TextView story_comment_count;
@@ -104,16 +102,10 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
             image = inflate.findViewById(R.id.image);
             story_title = inflate.findViewById(R.id.story_title);
             story_text = inflate.findViewById(R.id.story_text);
-            writer_name = inflate.findViewById(R.id.writer_name);
             story_like_count = inflate.findViewById(R.id.story_like_count);
             story_comment_count = inflate.findViewById(R.id.story_comment_count);
 
-            writer_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
-                }
-            });
+
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -121,41 +113,27 @@ public class SearchFeedAdapter extends RecyclerView.Adapter<SearchFeedAdapter.Se
 
                 }
             });
-            image.setOnClickListener(new View.OnClickListener() {
+
+            inflate.findViewById(R.id.story_like_count).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showFullPictureDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel(), new AppUtils.LikeClickListener() {
-                        @Override
-                        public void onLikeClick() {
-                            if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
-                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
-                                messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
-                            } else {
-                                messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
-                                messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
-                            }
-                            mPresentor.setLike(messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), new HomeFeedAdapter.ReqListener() {
-                                @Override
-                                public void onSuccess() {
+                    if (messagelist.get(getAdapterPosition()).getStoryModel().getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
 
-                                }
-
-                                @Override
-                                public void onFail() {
-                                    Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                                    if (messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked()) {
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(false);
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setDecrementLikeCount();
-                                    } else {
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setIs_liked(true);
-                                        messagelist.get(getAdapterPosition()).getPictureModel().setIncrementLikeCount();
-                                    }
-                                }
-                            }, !messagelist.get(getAdapterPosition()).getPictureModel().getIs_liked());
+                }
+            });
 
 
-                        }
-                    });
+            inflate.findViewById(R.id.text_view_other).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
+                }
+            });
+            inflate.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
                 }
             });
 

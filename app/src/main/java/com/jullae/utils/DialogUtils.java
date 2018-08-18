@@ -5,10 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,21 +13,14 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
-import com.jullae.data.db.model.ConversationModel;
-import com.jullae.data.db.model.FollowersModel;
-import com.jullae.data.db.model.FollowingModel;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
-import com.jullae.databinding.DialogFollowersBinding;
 import com.jullae.ui.FollowersActivity;
-import com.jullae.ui.adapters.LikeAdapter;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.common.MessageListActivity;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
-import com.jullae.ui.home.profile.message.ConversationAdapter;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
-import com.jullae.utils.customview.PagingRecyclerView;
 
 public class DialogUtils {
     private static final String TAG = DialogUtils.class.getName();
@@ -275,7 +264,6 @@ public class DialogUtils {
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.dismiss();
             }
         });
@@ -305,17 +293,6 @@ public class DialogUtils {
 
                 showReportPictureDialog(context, mPresentor, pictureModel);
                 dialog.dismiss();
-
-             /*   showReportStoryDialog(adapterPosition);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-
-                    }
-                }, 100);
-*/
-
             }
         });
 
@@ -359,15 +336,7 @@ public class DialogUtils {
             public void onClick(View v) {
 
                 showReportPictureDialog(context, mPresentor, pictureModel);
-             /*   showReportStoryDialog(adapterPosition);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-
-                    }
-                }, 100);
-*/
+                dialog.hide();
 
             }
         });
@@ -376,6 +345,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
                 AppUtils.showPictureDetailActivity(context, pictureModel.getPicture_id());
+                dialog.hide();
 
             }
         });
@@ -397,156 +367,14 @@ public class DialogUtils {
         i.putExtra("follower", true);
         i.putExtra("userId", userId);
         mContext.startActivity(i);
-
-
-/*
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-        final DialogFollowersBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.dialog_followers, null, false);
-        dialogBuilder.setView(binding.getRoot());
-
-        final AlertDialog dialog = dialogBuilder.create();
-        binding.close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        final LikeAdapter likeAdapter = new LikeAdapter(mContext, Constants.FOLLOWERS_LIST);
-        binding.recyclerView.setAdapter(likeAdapter);
-        binding.recyclerView.addReachListBottomListener(new PagingRecyclerView.ReachListBottomListener() {
-            private boolean isReqRunning;
-            private int count = 2;
-
-            @Override
-            public void onReachListBottom() {
-
-                if (!isReqRunning) {
-                    isReqRunning = true;
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    AppDataManager.getInstance().getmApiHelper().getFollowersList(userId, count).getAsObject(FollowersModel.class, new ParsedRequestListener<FollowersModel>() {
-                        @Override
-                        public void onResponse(FollowersModel followersModel) {
-                            NetworkUtils.parseResponse(TAG, followersModel);
-                            isReqRunning = false;
-                            count++;
-                            if (dialog.isShowing()) {
-                                binding.progressBar.setVisibility(View.INVISIBLE);
-                                likeAdapter.addMore(followersModel.getLikes());
-                            }
-                        }
-
-                        @Override
-                        public void onError(ANError anError) {
-                            NetworkUtils.parseError(TAG, anError);
-                            isReqRunning = false;
-                            if (dialog.isShowing()) {
-                                binding.progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        AppDataManager.getInstance().getmApiHelper().getFollowersList(userId, 1).getAsObject(FollowersModel.class, new ParsedRequestListener<FollowersModel>() {
-
-            @Override
-            public void onResponse(FollowersModel followersModel) {
-                NetworkUtils.parseResponse(TAG, followersModel);
-                if (dialog.isShowing())
-                    likeAdapter.add(followersModel.getLikes());
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-                ToastUtils.showNoInternetToast(mContext);
-
-            }
-        });
-*/
-
     }
 
     public static void showFollowingDialog(final Activity mContext, final String userId) {
-
         Intent i = new Intent(mContext, FollowersActivity.class);
         i.putExtra("follower", false);
         i.putExtra("userId", userId);
         mContext.startActivity(i);
 
-       /* AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-        final DialogFollowersBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.dialog_followers, null, false);
-        dialogBuilder.setView(binding.getRoot());
-
-        final AlertDialog dialog = dialogBuilder.create();
-        binding.close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-
-
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        final LikeAdapter likeAdapter = new LikeAdapter(mContext, Constants.FOLLOWING_LIST);
-        binding.recyclerView.setAdapter(likeAdapter);
-        binding.recyclerView.addReachListBottomListener(new PagingRecyclerView.ReachListBottomListener() {
-            private boolean isReqRunning;
-            private int count = 2;
-
-            @Override
-            public void onReachListBottom() {
-
-                if (!isReqRunning) {
-                    isReqRunning = true;
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    AppDataManager.getInstance().getmApiHelper().getFollowingList(userId, count).getAsObject(FollowingModel.class, new ParsedRequestListener<FollowingModel>() {
-                        @Override
-                        public void onResponse(FollowingModel followingModel) {
-                            NetworkUtils.parseResponse(TAG, followingModel);
-                            isReqRunning = false;
-                            count++;
-                            if (dialog.isShowing()) {
-                                binding.progressBar.setVisibility(View.INVISIBLE);
-                                likeAdapter.addMore(followingModel.getLikes());
-                            }
-                        }
-
-                        @Override
-                        public void onError(ANError anError) {
-                            NetworkUtils.parseError(TAG, anError);
-                            isReqRunning = false;
-                            if (dialog.isShowing()) {
-                                binding.progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        AppDataManager.getInstance().getmApiHelper().getFollowingList(userId, 1).getAsObject(FollowingModel.class, new ParsedRequestListener<FollowingModel>() {
-
-            @Override
-            public void onResponse(FollowingModel followingModel) {
-                NetworkUtils.parseResponse(TAG, followingModel);
-                if (dialog.isShowing())
-                    likeAdapter.add(followingModel.getLikes());
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-                ToastUtils.showNoInternetToast(mContext);
-
-            }
-        });
-*/
     }
 
     public static void showCommentDeleteWarning(final Context context, final String commentId) {
@@ -601,46 +429,6 @@ public class DialogUtils {
     public static void showMessageDialog(Activity activity) {
 
         activity.startActivity(new Intent(activity, MessageListActivity.class));
-
-
-      /*  AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
-        View view = activity.getLayoutInflater().inflate(R.layout.dialog_conversation, null);
-
-        setupRecyclerView(view, activity);
-        dialogBuilder.setView(view);
-
-        final AlertDialog dialog = dialogBuilder.create();
-        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();*/
-
     }
 
-    private static void setupRecyclerView(View view, Activity activity) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        final ConversationAdapter conversationAdapter = new ConversationAdapter(activity);
-        recyclerView.setAdapter(conversationAdapter);
-
-        AppDataManager.getInstance().getmApiHelper().getConversationList().getAsObject(ConversationModel.class, new ParsedRequestListener<ConversationModel>() {
-
-            @Override
-            public void onResponse(ConversationModel conversationModel) {
-                NetworkUtils.parseResponse(TAG, conversationModel);
-                conversationAdapter.add(conversationModel.getConversationList());
-            }
-
-
-            @Override
-            public void onError(ANError anError) {
-                NetworkUtils.parseError(TAG, anError);
-
-            }
-        });
-    }
 }

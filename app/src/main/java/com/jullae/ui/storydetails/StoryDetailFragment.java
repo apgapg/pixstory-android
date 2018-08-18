@@ -158,10 +158,12 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
+                dialog.hide();
             }
         });
+
+        if (!storyModel.getIs_self())
+            view.findViewById(R.id.edit_story).setVisibility(View.GONE);
 
         view.findViewById(R.id.edit_story).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,12 +180,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 DialogUtils.showDeleteStoryDialog(getmContext(), mPresentor, storyModel.getStory_id());
             }
         });
-        view.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
+
 
         view.findViewById(R.id.report_story).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,9 +281,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         mPresentor.detachView();
         super.onDestroyView();
     }
-
-
-
 
 
     private void setupAddComment() {

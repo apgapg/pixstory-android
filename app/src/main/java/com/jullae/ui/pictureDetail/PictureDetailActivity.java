@@ -45,6 +45,12 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
 
 
+        binding.getRoot().findViewById(R.id.close1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         binding.getRoot().findViewById(R.id.text_penname).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +108,11 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     public void onFetchFeedSuccess(HomeFeedModel.Feed homeFeedModel) {
         this.model = homeFeedModel;
         binding.setFeed(homeFeedModel);
-        storyAdaper.add(homeFeedModel.getStories());
+        if (homeFeedModel.getStories().size() != 0) {
+            storyAdaper.add(homeFeedModel.getStories());
+        } else
+            storyAdaper.addEmptyMessage(homeFeedModel.getPicture_id());
+
         //  mPresentor.loadStories(homeFeedModel.getPicture_id());
 
     }

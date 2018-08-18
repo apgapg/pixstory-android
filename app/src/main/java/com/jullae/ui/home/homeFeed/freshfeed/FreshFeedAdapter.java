@@ -1,6 +1,7 @@
 package com.jullae.ui.home.homeFeed.freshfeed;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.FreshFeedModel;
 import com.jullae.databinding.ItemFreshFeedsBinding;
+import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.DialogUtils;
 
 import java.util.ArrayList;
@@ -60,7 +64,6 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
-
     @Override
     public int getItemCount() {
         return messagelist.size();
@@ -84,7 +87,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private class FreshFeedsViewHolder extends RecyclerView.ViewHolder {
 
 
-        private  ItemFreshFeedsBinding binding;
+        private ItemFreshFeedsBinding binding;
 
         FreshFeedsViewHolder(final ItemFreshFeedsBinding binding) {
             super(binding.getRoot());
@@ -105,7 +108,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.getRoot().findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        DialogUtils.showPictureMoreOptions(mContext, mPresentor, messagelist.get(getAdapterPosition()).getPictureModel());
+                    DialogUtils.showPictureMoreOptions(mContext, mPresentor, messagelist.get(getAdapterPosition()).getPictureModel());
                 }
             });
 
@@ -120,6 +123,30 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());
+                }
+            });
+            binding.getRoot().findViewById(R.id.writer_name).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getWriter_penname());
+                }
+            });
+            binding.getRoot().findViewById(R.id.story_like_count).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (messagelist.get(getAdapterPosition()).getStoryModel().getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
+                }
+            });
+
+            binding.getRoot().findViewById(R.id.story_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, StoryDetailActivity.class);
+                    Gson gson = new Gson();
+                    String object = gson.toJson(messagelist.get(getAdapterPosition()).getStoryModel());
+                    i.putExtra("storymodel", object);
+                    mContext.startActivityForResult(i, AppUtils.REQUEST_CODE_SEARCH_TAG);
                 }
             });
             binding.buttonLike.setOnClickListener(new View.OnClickListener() {
