@@ -42,7 +42,7 @@
     <color name="fb">#475993</color>
     <color name="twitter">#55acee</color>
     <color name="radio_btn_color">#bdc6cf</color>
-    <color name="divider">#87757575</color>
+    <color name="divider">#efefef</color>
     <color name="black75">#757575</color>
     <color name="grey_400">#BDBDBD</color>
 
@@ -51,5 +51,6 @@
     <color name="secondary_text">#8A313131</color>
     <color name="icon_color">@color/divider</color>
     <color name="tab_icon_grey">#929495</color>
+    <color name="divider1">#87757575</color>
 </resources>
 

@@ -34,6 +34,7 @@ public class BindingAdapter {
 
     }
 
+
     @android.databinding.BindingAdapter("setfollow")
     public static void setFollow(TextView textView, Boolean isFollow) {
         Context context = textView.getContext();

@@ -83,7 +83,7 @@
         android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_baseline_email_24px"
         android:drawablePadding="4dp"
-        android:drawableTint="@color/divider"
+        android:drawableTint="@color/divider1"
         android:hint="@string/email_username"
         android:inputType="textEmailAddress"
         android:textSize="14dp" />
@@ -95,7 +95,7 @@
         android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_baseline_lock_24px"
         android:drawablePadding="4dp"
-        android:drawableTint="@color/divider"
+        android:drawableTint="@color/divider1"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="14dp" />

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.data.db.model.DraftModel;
@@ -58,7 +59,6 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
 
 
         mPresentor = new DraftTabPresentor();
-
         setuprecyclerView();
         return view;
     }
@@ -126,8 +126,14 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
 
     @Override
     public void onDraftsFetchSuccess(List<DraftModel.FreshFeed> list) {
-        Log.d(TAG, "onDraftsFetchSuccess: ");
-        draftTabAdapter.add(list);
+        if (list.size() > 0) {
+            view.findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+
+            draftTabAdapter.add(list);
+        } else {
+            view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.empty)).setText("No Drafts here!");
+        }
     }
 
     @Override

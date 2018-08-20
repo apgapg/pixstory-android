@@ -432,7 +432,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         btn_like = view.findViewById(R.id.btn_like);
         btn_like.setVisibility(View.VISIBLE);
         like_count.setText(storyModel.getLike_count() + " likes");
-        if (storyModel.getIs_liked().equals("false")) {
+        if (!storyModel.getIs_liked()) {
             btn_like.setImageResource(R.drawable.ic_unlike);
         } else {
             btn_like.setImageResource(R.drawable.ic_like);
@@ -441,9 +441,9 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String isLiked = storyModel.getIs_liked();
+                boolean isLiked = storyModel.getIs_liked();
                 makeLikeRequest(isLiked, storyModel);
-                if (isLiked.equals("false")) {
+                if (!isLiked) {
                     updateToLike();
                 } else {
                     updatetoUnlike();
@@ -464,7 +464,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     }
 
     private void updatetoUnlike() {
-        storyModel.setIs_liked("false");
+        storyModel.setIs_liked(false);
         btn_like.setImageResource(R.drawable.ic_unlike);
         if ((storyModel.getLike_count()) != 0) {
             like_count.setText(String.valueOf((storyModel.getLike_count()) - 1) + " likes");
@@ -476,7 +476,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     }
 
     private void updateToLike() {
-        storyModel.setIs_liked("true");
+        storyModel.setIs_liked(true);
         btn_like.setImageResource(R.drawable.ic_like);
         like_count.setText(String.valueOf((storyModel.getLike_count()) + 1) + " likes");
         storyModel.setLike_count(((storyModel.getLike_count()) + 1));
@@ -484,20 +484,20 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         like_count.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
-    private void makeLikeRequest(String isLiked, final StoryModel storyModel) {
-        /*mPresentor.setLike(storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+    private void makeLikeRequest(boolean isLiked, final StoryModel storyModel) {
+        mPresentor.setLike(storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
             @Override
             public void onSuccess() {
             }
 
             @Override
             public void onFail() {
-                if (storyModel.getIs_liked().equals("false"))
+                if (!storyModel.getIs_liked())
                     updateToLike();
                 else updatetoUnlike();
                 Toast.makeText(getmContext().getApplicationContext(), "couldn't connect!", Toast.LENGTH_SHORT).show();
             }
-        }, isLiked);*/
+        }, isLiked);
     }
 
     @Override

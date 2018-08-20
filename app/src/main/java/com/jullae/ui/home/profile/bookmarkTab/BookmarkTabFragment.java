@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
@@ -124,7 +125,15 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
 
     @Override
     public void onBookmarkFetchSuccess(List<FeedModel> storyModelList) {
-        mAdapter.add(storyModelList);
+        if (storyModelList.size() > 0) {
+            view.findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+
+            mAdapter.add(storyModelList);
+        } else {
+            view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.empty)).setText("No bookmarks here!");
+        }
+
     }
 
     @Override

@@ -77,7 +77,14 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
 
     @Override
     public void onMessageListFetchSuccess(List<MessageModel> messageList) {
-        messageAdapter.add(messageList);
+        if (messageList.size() > 0) {
+            findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+
+            messageAdapter.add(messageList);
+        } else {
+            findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.empty)).setText("Inbox is Empty!");
+        }
     }
 
 

@@ -22,7 +22,7 @@ public class StoryModel extends BaseObservable {
     private String story_text;
     private int like_count;
     private String comment_count;
-    private String is_liked;
+    private boolean is_liked;
     private boolean is_self;
     private String is_followed;
     private Date created_at;
@@ -63,7 +63,6 @@ public class StoryModel extends BaseObservable {
     public void setStory_title(String story_title) {
         this.story_title = story_title;
         notifyPropertyChanged(BR.story_title);
-
     }
 
     @Bindable
@@ -116,11 +115,11 @@ public class StoryModel extends BaseObservable {
         notifyPropertyChanged(BR.writer_penname);
     }
 
-    public String getIs_liked() {
+    public boolean getIs_liked() {
         return is_liked;
     }
 
-    public void setIs_liked(String is_liked) {
+    public void setIs_liked(boolean is_liked) {
         this.is_liked = is_liked;
     }
 

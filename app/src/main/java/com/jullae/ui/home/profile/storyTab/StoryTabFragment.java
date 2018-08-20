@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.data.db.model.FeedModel;
@@ -96,7 +97,14 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
 
     @Override
     public void onStoriesFetchSuccess(List<FeedModel> storyModelList) {
-        mAdapter.add(storyModelList);
+        if (storyModelList.size() > 0) {
+            view.findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+
+            mAdapter.add(storyModelList);
+        } else {
+            view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.empty)).setText("You have not shared any of your writings with the Community. Share one now!");
+        }
     }
 
     @Override

@@ -66,7 +66,8 @@ public class SignUpFragment extends BaseFragment {
 
             } else {
                 emailField.setVisibility(View.GONE);
-                view.findViewById(R.id.bio_text).setVisibility(View.GONE);
+                view.findViewById(R.id.email_text).setVisibility(View.GONE);
+
 
             }
             this.loginMode = loginMode;

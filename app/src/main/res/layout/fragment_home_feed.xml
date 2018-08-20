@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:visibility="invisible" />
+
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
@@ -35,19 +36,46 @@
         android:layout_centerInParent="true"
         android:visibility="invisible" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/no_feeds"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="80dp"
         android:layout_marginRight="32dp"
-        android:gravity="center"
-        android:paddingTop="8dp"
+        android:background="@drawable/border_grey"
+        android:orientation="vertical"
 
-        android:text=""
-        android:textAppearance="@style/text_16.regular.secondary" />
+        tools:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="32dp"
+            android:gravity="center"
+            android:paddingTop="8dp"
+
+
+            android:text="No posts to show. Please follow other people to see posts from them"
+            android:textAppearance="@style/text_14.regular.primary" />
+
+
+        <Button
+            android:id="@+id/discover"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/cyan_500"
+            android:text="Discover"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
 
 
     <LinearLayout

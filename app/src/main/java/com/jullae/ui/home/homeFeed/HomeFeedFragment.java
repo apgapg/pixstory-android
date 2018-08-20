@@ -16,12 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
@@ -90,6 +90,13 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
 
+        view.findViewById(R.id.discover).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity) getmContext()).showFreshFeedFragment(0);
+            }
+        });
+
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -157,14 +164,18 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
                     homeFeedModel.getFeedList().get(i).setHighlightStoryIndex(j);
             }
         }
-        mAdapter.add(homeFeedModel.getFeedList());
+        if (homeFeedModel.getFeedList().size() > 0)
+            mAdapter.add(homeFeedModel.getFeedList());
+        else {
+            view.findViewById(R.id.no_feeds).setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
     public void onFetchFeedFail(String message) {
         if (!message.isEmpty()) {
             view.findViewById(R.id.no_feeds).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.no_feeds)).setText(message);
 
         } else if (mAdapter.getItemCount() == 0) {
             showNetworkRetryContainer();

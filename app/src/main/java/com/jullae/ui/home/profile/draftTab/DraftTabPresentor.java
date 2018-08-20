@@ -23,7 +23,7 @@ public class DraftTabPresentor extends BasePresentor<DraftTabView> {
             public void onResponse(DraftModel draftModel) {
                 NetworkUtils.parseResponse(TAG, draftModel);
                 if (isViewAttached()) {
-                    getMvpView().onMoreDraftsFetch(draftModel.getList());
+                    getMvpView().onDraftsFetchSuccess(draftModel.getList());
                 }
             }
 
@@ -51,7 +51,7 @@ public class DraftTabPresentor extends BasePresentor<DraftTabView> {
                     if (isViewAttached()) {
                         getMvpView().hideLoadMoreProgess();
 
-                        getMvpView().onDraftsFetchSuccess(draftModel.getList());
+                        getMvpView().onMoreDraftsFetch(draftModel.getList());
                     }
                 }
 

@@ -302,6 +302,13 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 dialog.dismiss();
             }
         });*/
+
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         view.findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

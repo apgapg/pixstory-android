@@ -21,4 +21,16 @@
         android:layout_marginBottom="106dp"
         android:visibility="invisible"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:text=""
+        android:textAppearance="@style/text_14.regular.primary" />
 </RelativeLayout>

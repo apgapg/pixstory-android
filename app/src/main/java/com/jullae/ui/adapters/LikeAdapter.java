@@ -14,6 +14,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.LikesModel;
+import com.jullae.data.prefs.SharedPrefsHelper;
 import com.jullae.databinding.ItemLikeBinding;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.NetworkUtils;
@@ -59,6 +60,9 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
     @Override
     public void onBindViewHolder(final LikeViewHolder holder, final int position) {
         holder.binding.setLikeModel(messagelist.get(position));
+        if (messagelist.get(position).getUser_penname().equals(SharedPrefsHelper.getInstance().getKeyPenname()))
+            holder.binding.userFollowed.setVisibility(View.INVISIBLE);
+        else holder.binding.userFollowed.setVisibility(View.VISIBLE);
         holder.binding.executePendingBindings();
     }
 
@@ -98,6 +102,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
             this.binding = binding;
         /*    if (mode == Constants.FOLLOWING_LIST)
                 binding.userFollowed.setVisibility(View.INVISIBLE);*/
+
+
             binding.userFollowed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

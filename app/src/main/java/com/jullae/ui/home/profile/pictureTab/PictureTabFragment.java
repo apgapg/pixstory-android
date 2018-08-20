@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
@@ -122,7 +123,14 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
     @Override
     public void onPicturesFetchSuccess(List<PictureModel> pictureModelList) {
-        mAdapter.add(pictureModelList);
+        if (pictureModelList.size() > 0) {
+            view.findViewById(R.id.empty).setVisibility(View.INVISIBLE);
+
+            mAdapter.add(pictureModelList);
+        } else {
+            view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            ((TextView) view.findViewById(R.id.empty)).setText("You have not shared any picture with the Community. Share one now!");
+        }
     }
 
     @Override
