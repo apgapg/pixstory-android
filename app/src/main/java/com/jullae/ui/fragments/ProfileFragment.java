@@ -230,6 +230,11 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         if (getmContext() instanceof HomeActivity)
             ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
 
+        pagerAdapter = new PagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        setupTabIcons();
+
+
     }
 
     @Override
