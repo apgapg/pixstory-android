@@ -21,6 +21,7 @@ import com.jullae.data.db.model.PictureModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.home.profile.draftTab.DraftTabAdapter;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.MyProgressDialog;
 
@@ -164,6 +165,15 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
 
                 }
             });
+            inflate.findViewById(R.id.story_like_count).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (messagelist.get(getAdapterPosition()).getStoryModel().getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, messagelist.get(getAdapterPosition()).getStoryModel().getStory_id(), Constants.LIKE_TYPE_STORY);
+
+                }
+            });
+
            /* image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

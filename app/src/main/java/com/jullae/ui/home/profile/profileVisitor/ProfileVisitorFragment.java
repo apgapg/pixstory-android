@@ -25,6 +25,7 @@ import com.jullae.databinding.FragmentProfileBinding;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
+import com.jullae.utils.DialogUtils;
 
 /**
  * Created by Rahul Abrol on 12/26/17.
@@ -46,6 +47,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
     private UserPrefsModel userPrefsModel;
     private String penname;
     private FragmentProfileBinding binding;
+    private ProfileModel mProfileModel;
     //private View button_message;
 
     @Nullable
@@ -105,6 +107,18 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
 
+        binding.containerFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showFollowersDialog(getmContext(), mProfileModel.getId());
+            }
+        });
+        binding.containerFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showFollowingDialog(getmContext(), mProfileModel.getId());
+            }
+        });
         return view;
     }
 
@@ -136,6 +150,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
     @Override
     public void onProfileFetchSuccess(final ProfileModel profileModel) {
+        this.mProfileModel = profileModel;
         try {
           /*  GlideUtils.loadImagefromUrl(getmContext(), profileModel.getUser_avatar(), user_image);
             user_name.setText(profileModel.getName());
@@ -210,7 +225,6 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         public Fragment getRegisteredFragment(int position) {
             return registeredFragments.get(position);
         }
-
 
 
         @Override

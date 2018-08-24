@@ -18,6 +18,7 @@ import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.MyProgressDialog;
 import com.jullae.utils.NetworkUtils;
@@ -78,6 +79,8 @@ public class ProfileEditActivity extends AppCompatActivity {
                                     AppDataManager.getInstance().getmSharedPrefsHelper().setKeyName(name);
                                     AppDataManager.getInstance().getmSharedPrefsHelper().setKeyBio(bio);
                                     MyProgressDialog.dismissProgressDialog();
+                                    AppUtils.sendRefreshBroadcast(ProfileEditActivity.this, Constants.REFRESH_HOME_FEEDS);
+
                                     Toast.makeText(ProfileEditActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }

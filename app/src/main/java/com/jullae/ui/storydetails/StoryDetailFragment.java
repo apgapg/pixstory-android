@@ -8,12 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,7 +58,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     private EditText addCommentField;
     private ImageView btn_add_comment;
     private View progressBarComment;
-    private BottomSheetBehavior<View> mBottomSheetBehavior;
 
     private View view;
     private StoryDetailPresentor mPresentor;
@@ -127,14 +124,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 showOptions(getmContext());
 
 
-                /*
 
-
-                if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }*/
             }
         });
 
@@ -162,22 +152,25 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
-        if (!storyModel.getIs_self())
+        if (!storyModel.getIs_self()) {
             view.findViewById(R.id.edit_story).setVisibility(View.GONE);
+            view.findViewById(R.id.delete_story).setVisibility(View.GONE);
+        }
 
         view.findViewById(R.id.edit_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeBottomSheet();
 
                 AppUtils.showEditStoryActivity(getmContext(), storyModel.getStory_id(), storyModel.getStory_title(), storyModel.getStory_text());
+                dialog.dismiss();
             }
         });
         view.findViewById(R.id.delete_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeBottomSheet();
                 DialogUtils.showDeleteStoryDialog(getmContext(), mPresentor, storyModel.getStory_id());
+                dialog.dismiss();
+
             }
         });
 
@@ -185,22 +178,23 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         view.findViewById(R.id.report_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
                         DialogUtils.showReportStoryDialog(getmContext(), mPresentor, storyModel);
                     }
                 });
+                dialog.dismiss();
+
             }
         });
 
         view.findViewById(R.id.text_save_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 mPresentor.saveStory(storyModel.getStory_id());
+                dialog.dismiss();
+
             }
         });
 
@@ -411,7 +405,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     private void updatUIUnFollowed() {
         user_followed.setText("Follow");
-        user_followed.setTextColor(getResources().getColor(R.color.black75));
+        user_followed.setTextColor(getResources().getColor(R.color.white));
         user_followed.setBackground(getResources().getDrawable(R.drawable.button_border));
 
     }
@@ -465,23 +459,15 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     private void updatetoUnlike() {
         storyModel.setIs_liked(false);
-        btn_like.setImageResource(R.drawable.ic_unlike);
         if ((storyModel.getLike_count()) != 0) {
-            like_count.setText(String.valueOf((storyModel.getLike_count()) - 1) + " likes");
             storyModel.setLike_count((storyModel.getLike_count() - 1));
         }
-        like_count.setTextColor(Color.parseColor("#9e9e9e"));
-        like_count.setTypeface(Typeface.DEFAULT);
 
     }
 
     private void updateToLike() {
         storyModel.setIs_liked(true);
-        btn_like.setImageResource(R.drawable.ic_like);
-        like_count.setText(String.valueOf((storyModel.getLike_count()) + 1) + " likes");
         storyModel.setLike_count(((storyModel.getLike_count()) + 1));
-        like_count.setTextColor(Color.parseColor("#424242"));
-        like_count.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
     private void makeLikeRequest(boolean isLiked, final StoryModel storyModel) {
@@ -522,14 +508,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
     }
 
-    public boolean closeBottomSheet() {
-        if (mBottomSheetBehavior != null)
-            if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                return true;
-            }
-        return false;
-    }
 
     @Override
     public void onStoryDetailFetchSuccess(StoryModel storyModel) {
@@ -538,7 +516,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
 
         if (!storyModel.getIs_self())
             setUpFollowedButton();
-        //setupMoreBottomSheet();
         setupComments();
         setupLike();
     }

@@ -57,6 +57,11 @@ public class ProfileModel extends BaseObservable {
         notifyPropertyChanged(BR.user_avatar);
     }
 
+    public void setBio(String bio) {
+        this.bio = bio;
+        notifyPropertyChanged(BR.bio);
+    }
+
     @Bindable
 
     public String getPenname() {

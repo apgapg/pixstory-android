@@ -72,6 +72,8 @@ public class StoryModel extends BaseObservable {
 
     public void setLike_count(int like_count) {
         this.like_count = like_count;
+        notifyPropertyChanged(BR.like_count);
+
     }
 
     public String getComment_count() {
@@ -115,12 +117,14 @@ public class StoryModel extends BaseObservable {
         notifyPropertyChanged(BR.writer_penname);
     }
 
+    @Bindable
     public boolean getIs_liked() {
         return is_liked;
     }
 
     public void setIs_liked(boolean is_liked) {
         this.is_liked = is_liked;
+        notifyPropertyChanged(BR.is_liked);
     }
 
     public boolean getIs_self() {

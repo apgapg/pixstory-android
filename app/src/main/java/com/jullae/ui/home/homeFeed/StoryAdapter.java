@@ -20,6 +20,7 @@ import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.storydetails.StoryDetailActivity;
 import com.jullae.ui.writeStory.WriteStoryActivity;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -157,6 +158,15 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     ((HomeActivity) mContext).showVisitorProfile(((StoryModel) messagelist.get(getAdapterPosition())).getWriter_penname());
+                }
+            });
+
+            inflate.findViewById(R.id.like_count).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((StoryModel) messagelist.get(getAdapterPosition())).getLike_count() != 0)
+                        AppUtils.showLikesDialog(mContext, ((StoryModel) messagelist.get(getAdapterPosition())).getStory_id(), Constants.LIKE_TYPE_STORY);
+
                 }
             });
 

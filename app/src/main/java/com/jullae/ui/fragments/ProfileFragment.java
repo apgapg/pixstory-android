@@ -1,7 +1,10 @@
 package com.jullae.ui.fragments;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -44,6 +48,7 @@ import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.AppUtils;
+import com.jullae.utils.Constants;
 import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.MyProgressDialog;
@@ -77,6 +82,18 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     private FragmentProfileBinding binding;
     private SwipeRefreshLayout swipeRefreshLayout;
     private AppBarLayout appBar;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
+            Log.d("receiver", "Got message: " + refreshMode);
+            switch (refreshMode) {
+                case Constants.REFRESH_PROFILE:
+                    mPresentor.loadProfile(mProfileModel.getPenname());
+                    break;
+            }
+        }
+    };
 
 
     @Nullable
@@ -215,6 +232,16 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         binding.setProfileModel(mProfileModel);
         mPresentor.loadProfile(mProfileModel.getPenname());
+        setupRefreshBroadcastListener();
+
+    }
+
+
+    private void setupRefreshBroadcastListener() {
+        LocalBroadcastManager.getInstance(getmContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.REFRESH_INTENT_FILTER));
+
+
     }
 
     @Override
@@ -226,6 +253,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mProfileModel.setStories_count(profileModel.getStories_count());
         mProfileModel.setPictures_count(profileModel.getPictures_count());
         mProfileModel.setUser_avatar(profileModel.getUser_avatar());
+        mProfileModel.setBio(profileModel.getUser_avatar());
 
         if (getmContext() instanceof HomeActivity)
             ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
@@ -496,6 +524,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     @Override
     public void onDestroyView() {
         mPresentor.detachView();
+        LocalBroadcastManager.getInstance(getmContext()).unregisterReceiver(mMessageReceiver);
 
         super.onDestroyView();
 

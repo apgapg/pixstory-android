@@ -115,6 +115,7 @@
         android:layout_height="wrap_content"
 
         android:background="#fff"
+        android:maxLength="150"
         android:gravity="top"
         android:hint="describe about yourself..."
         android:lines="2"

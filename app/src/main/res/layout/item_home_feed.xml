@@ -81,7 +81,7 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="@dimen/pic_height"
             android:scaleType="centerCrop"
             app:imageUrl="@{feed.picture_url}" />
 

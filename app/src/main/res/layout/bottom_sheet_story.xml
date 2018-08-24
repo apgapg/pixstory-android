@@ -1,116 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:orientation="vertical"
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="0dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/container_extra_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:paddingTop="8dp"
         tools:visibility="visible">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.7dp"
-            android:background="@color/black_opa_10" />
 
         <TextView
             android:id="@+id/edit_story"
+
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="#fff"
+
+            android:background="?attr/selectableItemBackground"
+
             android:gravity="center"
             android:text="Edit Story"
-            android:textColor="#424242"
+            android:textAllCaps="true"
+            android:textAppearance="@style/text_14.regular.primary"
 
-            android:textStyle="bold" />
+            tools:visibility="visible" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.7dp"
-            android:background="@color/black_opa_10" />
 
         <TextView
             android:id="@+id/delete_story"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#fff"
-            android:gravity="center"
-            android:text="Delete Story"
-            android:textColor="#424242"
 
-            android:textStyle="bold" />
+            android:layout_width="match_parent"
+
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackground"
+
+            android:gravity="center"
+
+            android:text="Delete Story"
+            android:textAllCaps="true"
+            android:textAppearance="@style/text_14.regular.primary"
+
+            tools:visibility="visible" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/black_opa_10" />
 
     <TextView
         android:id="@+id/report_story"
         android:layout_width="match_parent"
+
         android:layout_height="48dp"
-        android:background="#fff"
+        android:background="?attr/selectableItemBackground"
+
         android:gravity="center"
+
         android:text="Report Story"
-        android:textColor="#424242"
+        android:textAllCaps="true"
+        android:textAppearance="@style/text_14.regular.primary"
 
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/black_opa_10" />
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/text_save_story"
         android:layout_width="match_parent"
+
         android:layout_height="48dp"
-        android:background="#fff"
+        android:background="?attr/selectableItemBackground"
+
         android:gravity="center"
+
         android:text="Save Story"
+        android:textAllCaps="true"
+        android:textAppearance="@style/text_14.regular.primary"
 
-        android:textColor="#424242"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/black_opa_10" />
+        tools:visibility="visible" />
 
     <TextView
         android:layout_width="match_parent"
+
         android:layout_height="48dp"
-        android:background="#fff"
+        android:background="?attr/selectableItemBackground"
+
         android:gravity="center"
+
         android:text="Share Story on Facebook"
+        android:textAllCaps="true"
+        android:textAppearance="@style/text_14.regular.primary"
 
-        android:textColor="#424242"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/black_opa_10" />
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/btn_close"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#fff"
+
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+
         android:gravity="center"
+
         android:text="CLOSE"
-        android:textColor="#757575"
-        android:textSize="12dp" />
+        android:textAllCaps="true"
+        android:textAppearance="@style/text_14.regular.primary"
+
+        tools:visibility="visible" />
 </LinearLayout>

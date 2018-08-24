@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jullae.R;
@@ -14,8 +15,10 @@ import com.jullae.databinding.ContentPictureDetailBinding;
 import com.jullae.ui.custom.ItemOffLRsetDecoration;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
+import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.DialogUtils;
 
 import java.util.List;
 
@@ -80,7 +83,47 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
             }
         });
 
+        binding.buttonLike.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+
+                changeLike();
+                mPresentor.setLike(model.getPicture_id(), new HomeFeedAdapter.ReqListener() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(PictureDetailActivity.this.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                        changeLike();
+                    }
+
+
+                }, !model.getIs_liked());
+
+
+            }
+        });
+        binding.ivMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //   showMenuOptions(getAdapterPosition());
+                DialogUtils.showPictureMoreOptions(PictureDetailActivity.this, mPresentor, model);
+            }
+        });
+    }
+
+    private void changeLike() {
+        if (model.getIs_liked()) {
+            model.setIs_liked(false);
+            model.setDecrementLikeCount();
+        } else {
+            model.setIs_liked(true);
+            model.setIncrementLikeCount();
+        }
     }
 
     private void setUpRecyclerView() {
