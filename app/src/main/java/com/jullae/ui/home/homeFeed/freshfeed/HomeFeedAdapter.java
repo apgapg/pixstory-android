@@ -61,6 +61,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
     @Override
     public void onBindViewHolder(@NonNull HomeFeedViewHolder viewHolder, int position) {
 
+        ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).setPictureId(messagelist.get(position).getPicture_id());
 
         if (messagelist.get(position).getStories().size() != 0) {
             ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).add(messagelist.get(position).getStories());
@@ -273,7 +274,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
 
             binding.recyclerViewStory.addItemDecoration(new ItemOffLRsetDecoration(mContext, R.dimen.item_offset_4dp));
 
-            binding.recyclerViewStory.setAdapter(new StoryAdapter(mContext));
+            binding.recyclerViewStory.setAdapter(new StoryAdapter(mContext, null));
 
             binding.textPenname.setOnClickListener(new View.OnClickListener() {
                 @Override

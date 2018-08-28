@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,17 +47,25 @@ public class ExploreFragment extends BaseFragment implements View.OnClickListene
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String searchTag = ((TextView) view).getText().toString();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        autoCompleteTextView.setText("");
 
 
-                        ((HomeActivity) getmContext()).showSearchActivity(searchTag);
+                final String searchTag = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
+                if (searchTag.contains("No results")) {
+                    autoCompleteTextView.setText("");
 
-                    }
-                }, 300);
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            autoCompleteTextView.setText("");
+
+
+                            ((HomeActivity) getmContext()).showSearchActivity(searchTag);
+
+                        }
+                    }, 300);
+                }
             }
         });
 

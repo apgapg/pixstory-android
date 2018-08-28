@@ -30,6 +30,7 @@
                 android:background="#fff">
 
                 <LinearLayout
+                    android:id="@+id/backcontainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
@@ -37,29 +38,33 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <LinearLayout
-                        android:id="@+id/backcontainer"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:orientation="horizontal"
+                        android:layout_height="56dp"
                         android:visibility="gone"
-                        tools:visibility="visible">
+
+                        android:background="@color/cyan_500"
+                        android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/close"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:padding="10dp"
-
-                            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+                            android:id="@+id/close1"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:padding="9dp"
+                            android:scaleType="centerCrop"
+                            android:tint="#ffffff"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="56dp"
+
+                            android:gravity="center"
                             android:text="PROFILE"
-                            android:textAppearance="@style/text_16.regular.primary"
-                            android:textSize="18sp" />
+                            android:textAppearance="@style/text_14.medium.secondary"
+                            android:textColor="#ffffff"
+                            android:textSize="18dp" />
+
                     </LinearLayout>
 
                     <FrameLayout
@@ -130,8 +135,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:layout_marginBottom="8dp"
                                     android:layout_marginTop="4dp"
+                                    android:layout_marginBottom="8dp"
                                     android:ellipsize="end"
                                     android:gravity="center"
                                     android:maxLines="3"
@@ -156,6 +161,20 @@
                                     android:tint="@color/icon_color"
                                     app:srcCompat="@drawable/ic_edit_black_24dp" />
 
+                                <TextView
+                                    android:id="@+id/user_followed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center"
+                                    android:paddingLeft="14dp"
+                                    android:paddingTop="6dp"
+                                    android:paddingRight="14dp"
+                                    android:paddingBottom="6dp"
+                                    android:visibility="gone"
+                                    app:setfollow="@{profileModel.is_followed}"
+                                    tools:visibility="visible" />
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -165,8 +184,8 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="right"
-                            android:layout_marginRight="4dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginRight="4dp"
                             android:background="@drawable/ripple_effect"
                             android:padding="6dp"
                             android:scaleType="centerCrop"

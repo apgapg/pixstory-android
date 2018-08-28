@@ -43,7 +43,7 @@ public class SuggestionMainModel {
         return suggestionModelList;
     }
 
-    public class SuggestionModel {
+    public static class SuggestionModel {
         private String tag_id;
         private String tag_name;
         private String count;

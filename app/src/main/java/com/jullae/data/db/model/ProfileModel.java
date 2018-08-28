@@ -11,7 +11,7 @@ public class ProfileModel extends BaseObservable {
     private String name;
     private String user_avatar;
     private String penname;
-    private String is_followed;
+    private boolean is_followed;
     private String bio;
     private String account_type;
     private String follower_count;
@@ -57,27 +57,30 @@ public class ProfileModel extends BaseObservable {
         notifyPropertyChanged(BR.user_avatar);
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
-        notifyPropertyChanged(BR.bio);
-    }
-
     @Bindable
-
     public String getPenname() {
         return penname;
     }
 
     @Bindable
-
-    public String getIs_followed() {
+    public boolean getIs_followed() {
         return is_followed;
+    }
+
+    public void setIs_followed(boolean is_followed) {
+        this.is_followed = is_followed;
+        notifyPropertyChanged(BR.is_followed);
     }
 
     @Bindable
 
     public String getBio() {
         return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+        notifyPropertyChanged(BR.bio);
     }
 
     @Bindable

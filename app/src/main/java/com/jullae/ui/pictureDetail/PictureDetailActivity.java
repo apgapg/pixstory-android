@@ -132,7 +132,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         recycler_view.setLayoutManager(linearLayoutManager);
         recycler_view.addItemDecoration(new ItemOffLRsetDecoration(this, R.dimen.item_offset_4dp));
 
-        storyAdaper = new StoryAdapter(this);
+        storyAdaper = new StoryAdapter(this, null);
         recycler_view.setAdapter(storyAdaper);
 
     }
@@ -151,7 +151,9 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     public void onFetchFeedSuccess(HomeFeedModel.Feed homeFeedModel) {
         this.model = homeFeedModel;
         binding.setFeed(homeFeedModel);
+        storyAdaper.setPictureId(homeFeedModel.getPicture_id());
         if (homeFeedModel.getStories().size() != 0) {
+
             storyAdaper.add(homeFeedModel.getStories());
         } else
             storyAdaper.addEmptyMessage(homeFeedModel.getPicture_id());

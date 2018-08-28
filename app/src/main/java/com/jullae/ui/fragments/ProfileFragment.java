@@ -411,21 +411,22 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         dialogBuilder.setView(view);
 
         final AlertDialog dialog = dialogBuilder.create();
-        view.findViewById(R.id.menu1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPasswordChangeDialog();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
+        if (view.findViewById(R.id.menu1) != null)
+            view.findViewById(R.id.menu1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPasswordChangeDialog();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
 
-                    }
-                }, 100);
+                        }
+                    }, 100);
 
 
-            }
-        });
+                }
+            });
         view.findViewById(R.id.menu2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

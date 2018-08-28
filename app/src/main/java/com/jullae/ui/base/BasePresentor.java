@@ -86,9 +86,9 @@ public class BasePresentor<T extends MvpView> implements Presentor<T> {
 
     }
 
-    public void reportPicture(String report, String picture_id, final StoryDetailPresentor.StringReqListener stringReqListener) {
+    public void reportUser(String report, String userId, final StoryDetailPresentor.StringReqListener stringReqListener) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().report(report, picture_id, Constants.REPORT_TYPE_PICTURE).getAsString(new StringRequestListener() {
+        AppDataManager.getInstance().getmApiHelper().reportuser(report, userId).getAsString(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 NetworkUtils.parseResponse(TAG, response);

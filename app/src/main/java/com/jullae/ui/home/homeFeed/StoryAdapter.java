@@ -40,10 +40,11 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     List<Object> messagelist = new ArrayList<>();
     private String picture_id;
 
-    public StoryAdapter(Activity activity) {
+    public StoryAdapter(Activity activity, String picture_id) {
         this.mContext = activity;
         picOptions = new RequestOptions();
         picOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        this.picture_id = picture_id;
     }
 
     @Override
@@ -104,6 +105,10 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         messagelist.clear();
         messagelist.add("empty");
         notifyDataSetChanged();
+    }
+
+    public void setPictureId(String picture_id) {
+        this.picture_id = picture_id;
     }
 
 

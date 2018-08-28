@@ -223,6 +223,21 @@ public class ApiHelper {
                 .build();
     }
 
+    public ANRequest reportuser(String report, String id) {
+        String url = ENDPOINT_REPORT_STORY;
+        String reportType = "User";
+
+
+        return AndroidNetworking.post(BASE_URL + url)
+                .addHeaders(headers)
+                .addBodyParameter("reportable_type", reportType)
+                .addBodyParameter("reportable_id", id)
+                .addBodyParameter("reason", report)
+                .setPriority(Priority.HIGH)
+                .logReponseBody()
+                .build();
+    }
+
     public ANRequest emailLoginReq(String email, String password) {
         return AndroidNetworking.post(BASE_URL + ENDPOINT_EMAIL_LOGIN)
                 .addHeaders(headers)
@@ -368,6 +383,7 @@ public class ApiHelper {
                 .addHeaders(headers)
                 .addQueryParameter("term", text)
                 .setPriority(Priority.MEDIUM)
+                .logReponseBody()
                 .build();
     }
 
@@ -630,7 +646,6 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
                     .logReponseBody()
                     .build();
     }
-
 
 
     public ANRequest makeCommentDeleteReq(String commentId) {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jullae.R;
@@ -51,7 +52,7 @@ public class SearchPeopleFragment extends BaseFragment implements SearchFeedCont
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String searchTag = ((TextView) view).getText().toString();
+                final String searchTag = ((TextView) ((LinearLayout) view).getChildAt(0)).getText().toString();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

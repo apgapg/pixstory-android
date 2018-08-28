@@ -18,14 +18,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.UserPrefsModel;
 import com.jullae.databinding.FragmentProfileBinding;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.home.profile.pictureTab.PictureTabFragment;
 import com.jullae.ui.home.profile.storyTab.StoryTabFragment;
 import com.jullae.utils.DialogUtils;
+import com.jullae.utils.NetworkUtils;
+import com.jullae.utils.ToastUtils;
 
 /**
  * Created by Rahul Abrol on 12/26/17.
@@ -73,7 +79,7 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         user_pictures = view.findViewById(R.id.text_pictures);
 
         view.findViewById(R.id.backcontainer).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.close1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getmContext().finish();
@@ -81,7 +87,6 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         });
 
         view.findViewById(R.id.button_edit_profile).setVisibility(View.GONE);
-        view.findViewById(R.id.ivMore).setVisibility(View.GONE);
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -105,6 +110,14 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
         });
         setupTabIcons();
 
+        view.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showProfileMoreOptions(getmContext(), mProfileModel, mPresentor);
+            }
+        });
+
+
         ((CoordinatorLayout) view.findViewById(R.id.rootview)).addView(close_container);
 
         binding.containerFollowers.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +130,37 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
             @Override
             public void onClick(View v) {
                 DialogUtils.showFollowingDialog(getmContext(), mProfileModel.getId());
+            }
+        });
+
+        binding.userFollowed.setVisibility(View.VISIBLE);
+        binding.userFollowed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mProfileModel.getIs_followed()) {
+                    mProfileModel.setIs_followed(true);
+                } else {
+                    mProfileModel.setIs_followed(false);
+                }
+
+                AppDataManager.getInstance().getmApiHelper().makeFollowReq(mProfileModel.getId(), !mProfileModel.getIs_followed()).getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
+
+                    @Override
+                    public void onResponse(BaseResponseModel response) {
+                        NetworkUtils.parseResponse(TAG, response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        NetworkUtils.parseError(TAG, anError);
+                        ToastUtils.showNoInternetToast(getmContext());
+                        if (!mProfileModel.getIs_followed()) {
+                            mProfileModel.setIs_followed(true);
+                        } else {
+                            mProfileModel.setIs_followed(false);
+                        }
+                    }
+                });
             }
         });
         return view;

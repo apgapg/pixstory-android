@@ -14,12 +14,15 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.PictureModel;
+import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.ui.FollowersActivity;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.ui.common.MessageListActivity;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
+import com.jullae.ui.home.profile.message.MessageActivity;
+import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorPresentor;
 import com.jullae.ui.storydetails.StoryDetailPresentor;
 
 public class DialogUtils {
@@ -253,6 +256,31 @@ public class DialogUtils {
 
     }
 
+    private static void onReportUserClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, final Activity context, String id) {
+
+
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+        mPresentor.reportUser(((TextView) view).getText().toString(), id, new StoryDetailPresentor.StringReqListener() {
+            @Override
+            public void onSuccess() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+
+                showReportStorySuccessDialog(context);
+                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private static void showReportStorySuccessDialog(Activity context) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         final View view = context.getLayoutInflater().inflate(R.layout.dialog_report_success, null);
@@ -269,6 +297,45 @@ public class DialogUtils {
         });
 
         dialog.show();
+    }
+
+    public static void showProfileMoreOptions(final Activity context, final ProfileModel profileModel, final ProfileVisitorPresentor mPresentor) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final View view = context.getLayoutInflater().inflate(R.layout.dialog_visitor_profile_options, null);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+        view.findViewById(R.id.report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showReportUserDialog(context, mPresentor, profileModel.getId());
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.message).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, MessageActivity.class);
+                i.putExtra("user_id", profileModel.getId());
+                i.putExtra("user_name", profileModel.getName());
+                i.putExtra("user_avatar", profileModel.getUser_avatar());
+                context.startActivity(i);
+                dialog.dismiss();
+
+            }
+        });
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+
+
     }
 
     public static void showPictureMoreOptions(final Activity context, final BasePresentor mPresentor, final PictureModel pictureModel) {
@@ -357,6 +424,52 @@ public class DialogUtils {
             }
         });
         dialog.show();
+
+
+    }
+
+    public static void showReportUserDialog(final Activity context, final BasePresentor mPresentor, final String id) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        final View view = context.getLayoutInflater().inflate(R.layout.dialog_report_story, null);
+        dialogBuilder.setView(view);
+
+        final AlertDialog dialog = dialogBuilder.create();
+
+
+        view.findViewById(R.id.t1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportUserClick(view, dialog, mPresentor, context, id);
+            }
+        });
+
+        view.findViewById(R.id.t2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportUserClick(view, dialog, mPresentor, context, id);
+            }
+        });
+
+        view.findViewById(R.id.t3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportUserClick(view, dialog, mPresentor, context, id);
+            }
+        });
+
+        view.findViewById(R.id.t4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onReportUserClick(view, dialog, mPresentor, context, id);
+            }
+        });
+
+        dialog.show();
+
 
     }
 
