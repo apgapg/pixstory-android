@@ -174,6 +174,14 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Bookma
                 }
             });
 
+
+            inflate.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
+                }
+            });
+
            /* image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

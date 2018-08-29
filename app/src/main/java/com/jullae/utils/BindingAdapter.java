@@ -51,6 +51,23 @@ public class BindingAdapter {
 
     }
 
+
+    @android.databinding.BindingAdapter("setfollow1")
+    public static void setFollow1(TextView textView, Boolean isFollow) {
+        Context context = textView.getContext();
+
+        if (isFollow) {
+            textView.setText("Followed");
+            textView.setTextColor(Color.parseColor("#ffffff"));
+            textView.setBackground(context.getResources().getDrawable(R.drawable.button_active1));
+        } else {
+            textView.setText("Follow");
+            textView.setTextColor(context.getResources().getColor(R.color.white));
+            textView.setBackground(context.getResources().getDrawable(R.drawable.button_border2));
+        }
+
+    }
+
     @android.databinding.BindingAdapter("htmlText")
     public static void setHtmlText(TextView htmlTextView, String text) {
         if (text != null)

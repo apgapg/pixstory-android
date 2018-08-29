@@ -56,6 +56,8 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
 
     private void loadFeeds() {
+        view.findViewById(R.id.no_feeds).setVisibility(View.INVISIBLE);
+
         hideNetworkRetryContainer();
         recyclerView.scrollToPosition(0);
         mPresentor.loadFeeds();
@@ -89,6 +91,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
+        view.findViewById(R.id.no_feeds).setVisibility(View.INVISIBLE);
 
         view.findViewById(R.id.discover).setOnClickListener(new View.OnClickListener() {
             @Override

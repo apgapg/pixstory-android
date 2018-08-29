@@ -163,7 +163,7 @@
 
                                 <TextView
                                     android:id="@+id/user_followed"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="160dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:gravity="center"
@@ -172,7 +172,7 @@
                                     android:paddingRight="14dp"
                                     android:paddingBottom="6dp"
                                     android:visibility="gone"
-                                    app:setfollow="@{profileModel.is_followed}"
+                                    app:setfollow1="@{profileModel.is_followed}"
                                     tools:visibility="visible" />
 
                             </LinearLayout>
@@ -227,8 +227,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center_horizontal"
+                                android:textAppearance="@style/text_14.regular.primary"
                                 android:text="@{profileModel.stories_count}"
-                                android:textAppearance="@style/text_16.regular.primary"
+                                android:textColor="#999"
                                 android:textSize="@dimen/profile_count_text"
                                 tools:text="20" />
 
@@ -261,9 +262,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center"
+                                android:textAppearance="@style/text_14.regular.primary"
 
                                 android:text="@{profileModel.pictures_count}"
-                                android:textAppearance="@style/text_16.regular.primary"
+                                android:textColor="#999"
                                 android:textSize="@dimen/profile_count_text" />
 
 
@@ -295,9 +297,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:gravity="center"
+                                android:textAppearance="@style/text_14.regular.primary"
 
                                 android:text="@{profileModel.pictures_count}"
-                                android:textAppearance="@style/text_16.regular.primary"
+                                android:textColor="#999"
                                 android:textSize="@dimen/profile_count_text" />
 
 

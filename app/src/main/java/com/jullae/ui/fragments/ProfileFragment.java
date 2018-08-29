@@ -253,7 +253,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         mProfileModel.setStories_count(profileModel.getStories_count());
         mProfileModel.setPictures_count(profileModel.getPictures_count());
         mProfileModel.setUser_avatar(profileModel.getUser_avatar());
-        mProfileModel.setBio(profileModel.getUser_avatar());
+        mProfileModel.setBio(profileModel.getBio());
 
         if (getmContext() instanceof HomeActivity)
             ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());

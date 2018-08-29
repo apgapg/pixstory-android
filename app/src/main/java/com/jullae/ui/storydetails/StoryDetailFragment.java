@@ -128,6 +128,25 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
+        binding.imageAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showVisitorProfile(getmContext(), storyModel.getWriter_penname());
+            }
+        });
+        binding.textName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showVisitorProfile(getmContext(), storyModel.getWriter_penname());
+            }
+        });
+        binding.textDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtils.showVisitorProfile(getmContext(), storyModel.getWriter_penname());
+            }
+        });
+
         binding.showMoreCommentsContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,7 +252,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
-        mTextHashTagHelper.handle(binding.storyText);
+        //  mTextHashTagHelper.handle(binding.storyText);
     }
 
 
@@ -545,6 +564,10 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
     @Override
     public void onStoryDeleteSuccess() {
         Toast.makeText(getmContext().getApplicationContext(), "Story deleted successfully!", Toast.LENGTH_SHORT).show();
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_BOOKMARKS_TAB);
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_HOME_FEEDS);
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_PICTURES_TAB);
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_STORY);
         getmContext().finish();
     }
 

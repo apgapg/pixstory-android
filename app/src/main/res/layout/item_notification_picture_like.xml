@@ -27,6 +27,7 @@
         android:id="@+id/image"
 
         android:layout_width="40dp"
+        android:scaleType="centerCrop"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical" />
 
