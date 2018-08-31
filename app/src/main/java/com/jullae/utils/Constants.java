@@ -22,6 +22,7 @@ public class Constants {
     public static final int REFRESH_STORY = 4;
     public static final int REFRESH_COMMENT = 5;
     public static final int REFRESH_PROFILE = 15;
+    public static final int REFRESH_PROFILE1 = 16;
     public static int FOLLOWERS_LIST = 23;
     public static int FOLLOWING_LIST = 24;
 }

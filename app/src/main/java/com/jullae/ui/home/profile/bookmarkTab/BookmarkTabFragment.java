@@ -42,7 +42,12 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
                 case Constants.REFRESH_BOOKMARKS_TAB:
                     mPresentor.loadFeeds();
                     break;
-
+                case Constants.REFRESH_PROFILE1:
+                    mPresentor.loadFeeds();
+                    break;
+                case Constants.REFRESH_PROFILE:
+                    mPresentor.loadFeeds();
+                    break;
             }
         }
     };
@@ -131,7 +136,8 @@ public class BookmarkTabFragment extends BaseFragment implements BookmarkTabView
             mAdapter.add(storyModelList);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.empty)).setText("No bookmarks here!");
+            ((TextView) view.findViewById(R.id.message)).setText("No bookmarks here!");
+            view.findViewById(R.id.discover).setVisibility(View.GONE);
         }
 
     }

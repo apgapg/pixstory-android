@@ -48,6 +48,12 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
                 case Constants.REFRESH_HOME_FEEDS:
                     mPresentor.loadFeeds(penname);
                     break;
+                case Constants.REFRESH_PROFILE1:
+                    mPresentor.loadFeeds(penname);
+                    break;
+                case Constants.REFRESH_PROFILE:
+                    mPresentor.loadFeeds(penname);
+                    break;
 
             }
         }

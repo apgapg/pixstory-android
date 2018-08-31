@@ -42,6 +42,12 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
                 case Constants.REFRESH_DRAFTS_TAB:
                     mPresentor.loadDrafts();
                     break;
+                case Constants.REFRESH_PROFILE1:
+                    mPresentor.loadDrafts();
+                    break;
+                case Constants.REFRESH_PROFILE:
+                    mPresentor.loadDrafts();
+                    break;
 
             }
         }
@@ -132,7 +138,8 @@ public class DraftTabFragment extends BaseFragment implements DraftTabView {
             draftTabAdapter.add(list);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.empty)).setText("No Drafts here!");
+            ((TextView) view.findViewById(R.id.message)).setText("No Drafts here!");
+            view.findViewById(R.id.discover).setVisibility(View.GONE);
         }
     }
 

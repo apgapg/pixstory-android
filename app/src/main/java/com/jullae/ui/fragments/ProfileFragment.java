@@ -154,6 +154,8 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         viewPager.setOffscreenPageLimit(3);
 
         viewPager.setAdapter(pagerAdapter);
+        setupTabIcons();
+
         view.findViewById(R.id.ivMore).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +163,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-        setupTabIcons();
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
@@ -257,11 +258,13 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
 
         if (getmContext() instanceof HomeActivity)
             ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
+/*
 
         pagerAdapter = new PagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
-        setupTabIcons();
+*/
 
+        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_PROFILE1);
 
     }
 
