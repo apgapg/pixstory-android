@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jullae.R;
@@ -16,6 +17,7 @@ import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.adapters.StoryTabAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.AppUtils;
 
 import java.util.List;
@@ -46,6 +48,12 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
         mPresentor = new StoryTabPresentor();
 
         setuprecyclerView();
+        view.findViewById(R.id.message).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity) getmContext()).showOptions();
+            }
+        });
         return view;
     }
 
@@ -81,6 +89,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
         });
 
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,7 +112,8 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
             mAdapter.add(storyModelList);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.empty)).setText("You have not shared any of your writings with the Community. Share one now!");
+            ((TextView) view.findViewById(R.id.message)).setText("You have not shared any of your writings with the Community. Share one now!");
+            ((Button) view.findViewById(R.id.discover)).setText("Add Story");
         }
     }
 

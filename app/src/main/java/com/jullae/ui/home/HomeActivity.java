@@ -120,7 +120,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             @Override
             public void onClick(View v) {
 
-                showOptions(HomeActivity.this);
+                showOptions();
              /*   if (mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     fab.hide();
                     mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -189,9 +189,9 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
 
     }
 
-    private void showOptions(Activity context) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        final View view = context.getLayoutInflater().inflate(R.layout.bottom_sheet_content, null);
+    public void showOptions() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(HomeActivity.this);
+        final View view = HomeActivity.this.getLayoutInflater().inflate(R.layout.bottom_sheet_content, null);
         dialogBuilder.setView(view);
 
         final AlertDialog dialog = dialogBuilder.create();

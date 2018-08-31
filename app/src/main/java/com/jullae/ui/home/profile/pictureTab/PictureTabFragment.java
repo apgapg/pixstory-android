@@ -14,12 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jullae.R;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.adapters.PicturesTabAdapter;
 import com.jullae.ui.base.BaseFragment;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 
@@ -32,7 +34,7 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
     private PicturesTabAdapter mAdapter;
     private PictureTabPresentor mPresentor;
     private String penname;
-    private int visibleItemCount, pastVisiblesItems, getVisibleItemCount, getPastVisiblesItems, totalItemCount;
+    private int visibleItemCount, pastVisiblesItems, totalItemCount;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -60,6 +62,12 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
         mPresentor = new PictureTabPresentor();
         setuprecyclerView();
+        view.findViewById(R.id.message).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity) getmContext()).showOptions();
+            }
+        });
         return view;
     }
 
@@ -129,7 +137,8 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
             mAdapter.add(pictureModelList);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.empty)).setText("You have not shared any picture with the Community. Share one now!");
+            ((TextView) view.findViewById(R.id.message)).setText("You have not shared any picture with the Community. Share one now!");
+            ((Button) view.findViewById(R.id.discover)).setText("Add Picture");
         }
     }
 
@@ -156,7 +165,4 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
     }
 
-    /*public void refreshfeeds() {
-        mPresentor.loadData(penname);
-    }*/
 }
