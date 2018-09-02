@@ -160,6 +160,14 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
 
                 }
             });
+
+
+            inflate.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUtils.showPictureDetailActivity(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id());
+                }
+            });
         }
     }
 }

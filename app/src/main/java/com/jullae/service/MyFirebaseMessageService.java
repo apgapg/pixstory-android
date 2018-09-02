@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
+import static com.jullae.ui.notification.NotificationAdapter.NOTI_MESSAGE;
 import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_FOLLOW;
 import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_NEW_COMMENT;
 import static com.jullae.ui.notification.NotificationAdapter.NOTI_TYPE_NEW_STORY;
@@ -78,6 +79,9 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
             case NOTI_TYPE_PICTURE_LIKE:
                 i = AppUtils.buildPictureDetailActivityIntent(this, pushNotificationModel.getPicture_id());
                 break;
+            case NOTI_MESSAGE:
+                i = AppUtils.buildMessageActivityIntent(this, pushNotificationModel);
+                break;
             default:
                 i = new Intent(this, HomeActivity.class);
         }
@@ -92,10 +96,10 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setStyle(bigTextStyle)
-                .setContentTitle(pushNotificationModel.getTitle())
                 .setContentText(pushNotificationModel.getSpannable_text());
 
-
+        if (pushNotificationModel.getTitle() != null && !pushNotificationModel.getTitle().isEmpty())
+            mBuilder.setContentTitle(pushNotificationModel.getTitle());
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if (hour < 7 || hour > 22) {

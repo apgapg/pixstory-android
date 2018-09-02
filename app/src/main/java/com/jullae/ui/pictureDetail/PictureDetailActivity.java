@@ -1,18 +1,24 @@
 package com.jullae.ui.pictureDetail;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.jullae.R;
 import com.jullae.data.db.model.StoryModel;
 import com.jullae.databinding.ContentPictureDetailBinding;
 import com.jullae.ui.custom.ItemOffLRsetDecoration;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.HomeFeedModel;
 import com.jullae.ui.home.homeFeed.StoryAdapter;
 import com.jullae.ui.home.homeFeed.freshfeed.HomeFeedAdapter;
@@ -30,6 +36,19 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
     private ContentPictureDetailBinding binding;
     private StoryAdapter storyAdaper;
     private HomeFeedModel.Feed model;
+    private String pictureId;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int refreshMode = intent.getIntExtra(Constants.REFRESH_MODE, -1);
+            Log.d("receiver", "Got message: " + refreshMode);
+            switch (refreshMode) {
+                case Constants.REFRESH_HOME_FEEDS:
+                    mPresentor.loadPictureDetails(pictureId);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +60,10 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         mPresentor = new PictureDetailPresentor();
         mPresentor.attachView(this);
 
-        Gson gson = new Gson();
         setUpRecyclerView();
+        pictureId = getIntent().getStringExtra("picture_id");
 
-
-        mPresentor.loadPictureDetails(getIntent().getStringExtra("picture_id"));
+        mPresentor.loadPictureDetails(pictureId);
 
 
         binding.getRoot().findViewById(R.id.close1).setOnClickListener(new View.OnClickListener() {
@@ -114,6 +132,24 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
                 DialogUtils.showPictureMoreOptions(PictureDetailActivity.this, mPresentor, model);
             }
         });
+        setupRefreshBroadcastListener();
+
+
+    }
+
+
+    private void setupRefreshBroadcastListener() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.REFRESH_INTENT_FILTER));
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+
+        super.onDestroy();
     }
 
     private void changeLike() {
@@ -124,6 +160,14 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
             model.setIs_liked(true);
             model.setIncrementLikeCount();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(PictureDetailActivity.this, HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+        finish();
     }
 
     private void setUpRecyclerView() {

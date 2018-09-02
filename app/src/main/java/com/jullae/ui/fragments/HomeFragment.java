@@ -83,6 +83,7 @@ public class HomeFragment extends BaseFragment {
         if (isAdded()) {
             if (viewPager.getCurrentItem() != 0) {
                 viewPager.setCurrentItem(0);
+                ((HomeActivity) getmContext()).onPageSelected(0);
                 return true;
             } else return false;
 

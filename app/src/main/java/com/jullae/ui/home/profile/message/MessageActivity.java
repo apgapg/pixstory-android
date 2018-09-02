@@ -1,5 +1,6 @@
 package com.jullae.ui.home.profile.message;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.jullae.R;
 import com.jullae.data.db.model.MessageModel;
+import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.GlideUtils;
 
 import java.util.List;
@@ -63,6 +65,15 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
         mPresentor.loadMessage(user_id);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(MessageActivity.this, HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+        finish();
+    }
+
+
     private void setUpRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view);
         messageAdapter = new MessageAdapter(this, currentUserId);
@@ -83,7 +94,7 @@ public class MessageActivity extends AppCompatActivity implements MessageView {
             messageAdapter.add(messageList);
         } else {
             findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.empty)).setText("Inbox is Empty!");
+            ((TextView) findViewById(R.id.empty)).setText("No messages yet!");
         }
     }
 

@@ -45,7 +45,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         fieldName.setText(getIntent().getStringExtra("name"));
         fieldName.setSelection(getIntent().getStringExtra("name").length());
         fieldBio.setText(getIntent().getStringExtra("bio"));
-        fieldBio.setSelection(getIntent().getStringExtra("bio").substring(49).length());
+        fieldBio.setSelection(getIntent().getStringExtra("bio").length());
         String photo = getIntent().getStringExtra("bio");
 
         user_image = findViewById(R.id.image);

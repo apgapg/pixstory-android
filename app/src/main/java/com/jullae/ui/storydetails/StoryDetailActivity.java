@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.jullae.R;
 import com.jullae.ui.base.BaseActivity;
 import com.jullae.ui.comment.CommentFragment;
+import com.jullae.ui.home.HomeActivity;
 
 /**
  * Created by Rahul Abrol on 12/20/17.
@@ -50,15 +51,11 @@ public class StoryDetailActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-       /* Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if (fragment instanceof StoryDetailFragment && fragment.isVisible()) {
-            if (!((StoryDetailFragment) fragment).closeBottomSheet()) {
-                super.onBackPressed();
-            }
-        } else*/
-            super.onBackPressed();
+        Intent i = new Intent(StoryDetailActivity.this, HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+        finish();
     }
-
 
     public void showSearchResults(String story_title) {
         Intent i = new Intent();

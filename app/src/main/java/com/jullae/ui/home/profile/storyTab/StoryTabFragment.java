@@ -18,11 +18,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.FeedModel;
 import com.jullae.ui.adapters.StoryTabAdapter;
 import com.jullae.ui.base.BaseFragment;
 import com.jullae.ui.custom.ItemOffTBsetDecoration;
 import com.jullae.ui.home.HomeActivity;
+import com.jullae.ui.home.addStory.AddStoryFragment;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 
@@ -70,12 +72,14 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
         mPresentor = new StoryTabPresentor();
 
         setuprecyclerView();
-        view.findViewById(R.id.message).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.discover).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((HomeActivity) getmContext()).showOptions();
+                ((HomeActivity) getmContext()).showFragment(new AddStoryFragment(), true);
             }
         });
+
+
         return view;
     }
 
@@ -144,8 +148,13 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
             mAdapter.add(storyModelList);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.message)).setText("You have not shared any of your writings with the Community. Share one now!");
-            ((Button) view.findViewById(R.id.discover)).setText("Add Story");
+            if (penname.equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname())) {
+                ((TextView) view.findViewById(R.id.message)).setText("No stories to show");
+                view.findViewById(R.id.discover).setVisibility(View.GONE);
+            } else {
+                ((TextView) view.findViewById(R.id.message)).setText("You have not shared any of your writings with the Community. Share one now!");
+                ((Button) view.findViewById(R.id.discover)).setText("Add Story");
+            }
         }
     }
 

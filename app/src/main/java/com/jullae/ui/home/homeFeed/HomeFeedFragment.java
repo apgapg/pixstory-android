@@ -96,7 +96,7 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
         view.findViewById(R.id.discover).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((HomeActivity) getmContext()).showFreshFeedFragment(0);
+                ((HomeActivity) getmContext()).showHomeFeedFragment(0);
             }
         });
 

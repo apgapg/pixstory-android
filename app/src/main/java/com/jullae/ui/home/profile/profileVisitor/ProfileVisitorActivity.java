@@ -1,5 +1,6 @@
 package com.jullae.ui.home.profile.profileVisitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.jullae.R;
 import com.jullae.data.AppDataManager;
 import com.jullae.ui.fragments.ProfileFragment;
+import com.jullae.ui.home.HomeActivity;
 
 public class ProfileVisitorActivity extends AppCompatActivity {
 
@@ -31,6 +33,13 @@ public class ProfileVisitorActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.container, new ProfileFragment()).commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(ProfileVisitorActivity.this, HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+        finish();
+    }
 
     private void showProfileVisitorFragment(String penname) {
         FragmentManager fragmentManager = getSupportFragmentManager();

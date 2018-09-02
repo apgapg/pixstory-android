@@ -21,9 +21,11 @@ import com.jullae.R;
 import com.jullae.SearchActivity;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.PictureModel;
+import com.jullae.data.db.model.PushNotificationModel;
 import com.jullae.databinding.DialogFullPictureBinding;
 import com.jullae.ui.common.LikesActivity;
 import com.jullae.ui.editStory.EditStoryActivity;
+import com.jullae.ui.home.profile.message.MessageActivity;
 import com.jullae.ui.home.profile.profileVisitor.ProfileVisitorActivity;
 import com.jullae.ui.loginscreen.LoginActivity;
 import com.jullae.ui.pictureDetail.PictureDetailActivity;
@@ -72,13 +74,17 @@ public class AppUtils {
 
 
     public static void showVisitorProfile(Context mContext, String writer_penname) {
-        mContext.startActivity(buildVisitorProfileActivityIntent(mContext, writer_penname));
+        Intent i = new Intent(mContext, ProfileVisitorActivity.class);
+        i.putExtra("penname", writer_penname);
+        mContext.startActivity(i);
     }
 
     public static Intent buildVisitorProfileActivityIntent(Context mContext, String writer_penname) {
         {
             Intent i = new Intent(mContext, ProfileVisitorActivity.class);
             i.putExtra("penname", writer_penname);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             return i;
         }
 
@@ -119,6 +125,8 @@ public class AppUtils {
     public static Intent buildStoryDetailActivityIntent(Context context, String story_id) {
         Intent i = new Intent(context, StoryDetailActivity.class);
         i.putExtra("story_id", story_id);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         return i;
 
     }
@@ -126,8 +134,21 @@ public class AppUtils {
     public static Intent buildPictureDetailActivityIntent(Context context, String picture_id) {
         Intent i = new Intent(context, PictureDetailActivity.class);
         i.putExtra("picture_id", picture_id);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         return i;
     }
+
+    public static Intent buildMessageActivityIntent(Context context, PushNotificationModel pushNotificationModel) {
+        Intent i = new Intent(context, MessageActivity.class);
+        i.putExtra("user_id", pushNotificationModel.getActor_id());
+        i.putExtra("user_name", pushNotificationModel.getActor_name());
+        i.putExtra("user_avatar", pushNotificationModel.getActor_avatar());
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        return i;
+    }
+
 
     public static void showPictureDetailActivity(Activity mContext, String picture_id) {
         mContext.startActivity(buildPictureDetailActivityIntent(mContext, picture_id));
@@ -331,7 +352,6 @@ if(di)
 
         context.startActivityForResult(i, AppUtils.REQUEST_CODE_PROFILE_PIC_CAPTURE);
     }
-
 
 
     public interface LikeClickListener {

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.PictureModel;
 import com.jullae.ui.adapters.PicturesTabAdapter;
 import com.jullae.ui.base.BaseFragment;
@@ -68,10 +69,10 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
 
         mPresentor = new PictureTabPresentor();
         setuprecyclerView();
-        view.findViewById(R.id.message).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.discover).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((HomeActivity) getmContext()).showOptions();
+                ((HomeActivity) getmContext()).showAddImageOption();
             }
         });
         return view;
@@ -143,8 +144,13 @@ public class PictureTabFragment extends BaseFragment implements PictureTabView {
             mAdapter.add(pictureModelList);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            ((TextView) view.findViewById(R.id.message)).setText("You have not shared any picture with the Community. Share one now!");
-            ((Button) view.findViewById(R.id.discover)).setText("Add Picture");
+            if (penname.equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname())) {
+                ((TextView) view.findViewById(R.id.message)).setText("No pictures to show");
+                view.findViewById(R.id.discover).setVisibility(View.GONE);
+            } else {
+                ((TextView) view.findViewById(R.id.message)).setText("You have not shared any picture with the Community. Share one now!");
+                ((Button) view.findViewById(R.id.discover)).setText("Add Picture");
+            }
         }
     }
 

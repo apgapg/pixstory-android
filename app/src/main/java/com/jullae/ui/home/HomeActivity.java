@@ -273,7 +273,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
         KeyboardUtils.hideKeyboard(this);
     }
 
-    private void showAddImageOption() {
+    public void showAddImageOption() {
         Intent i = CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -287,7 +287,7 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
     }
 
 
-    private void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
+    public void showFragment(Fragment fragment, boolean shouldAddToBackStack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -519,6 +519,11 @@ public class HomeActivity extends BaseActivity implements HomeActivityView, View
             default:
                 break;
         }
+    }
+
+    public void showHomeFeedFragment(int i) {
+        showFreshFeedFragment(0);
+        onPageSelected(1);
     }
 
 

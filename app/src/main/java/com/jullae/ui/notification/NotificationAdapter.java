@@ -32,6 +32,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static final int NOTI_TYPE_NEW_COMMENT = 3;
     public static final int NOTI_TYPE_STORY_LIKE = 4;
     public static final int NOTI_TYPE_PICTURE_LIKE = 5;
+    public static final int NOTI_MESSAGE = 6;
     private static final String TAG = NotificationAdapter.class.getName();
     private final Activity mContext;
 
