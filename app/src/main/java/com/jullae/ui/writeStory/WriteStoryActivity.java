@@ -86,6 +86,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         setupItalic();
         setupUnderline();
         setupBullets();
+        setupQuote();
     }
 
     private void setupBullets() {
@@ -101,6 +102,24 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
             @Override
             public boolean onLongClick(View v) {
                 ToastUtils.showToast(WriteStoryActivity.this, "bullets");
+                return true;
+            }
+        });
+    }
+
+    private void setupQuote() {
+        findViewById(R.id.image_quote).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (field_story.hasSelection())
+                    field_story.quote(!field_story.contains(KnifeText.FORMAT_QUOTE));
+                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
+            }
+        });
+        findViewById(R.id.image_quote).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ToastUtils.showToast(WriteStoryActivity.this, "quote");
                 return true;
             }
         });

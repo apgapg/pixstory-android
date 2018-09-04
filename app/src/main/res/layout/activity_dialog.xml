@@ -122,6 +122,20 @@
             android:background="#bdbdbd" />
 
         <com.jullae.ui.custom.SquareImageView
+            android:id="@+id/image_quote"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#e0e0e0"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_format_quote_black_24dp" />
+
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="#bdbdbd" />
+
+        <com.jullae.ui.custom.SquareImageView
             android:id="@+id/image_link"
             android:layout_width="40dp"
             android:layout_height="40dp"
