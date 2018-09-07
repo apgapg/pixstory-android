@@ -571,7 +571,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
         AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_BOOKMARKS_TAB);
         AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_HOME_FEEDS);
         AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_PICTURES_TAB);
-        AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_STORY);
     }
 
     @Override

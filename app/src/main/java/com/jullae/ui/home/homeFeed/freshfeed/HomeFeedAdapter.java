@@ -187,23 +187,23 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
 
         dialog.show();
         final EditText field_report = view3.findViewById(R.id.field_report);
-        final TextView btn_report = view3.findViewById(R.id.report);
+        final TextView btn_report = view3.findViewById(R.id.reportStory);
         btn_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String report = field_report.getText().toString().trim();
-                if (report.length() != 0) {
+                String reportStory = field_report.getText().toString().trim();
+                if (reportStory.length() != 0) {
 
                     view3.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
                     btn_report.setVisibility(View.INVISIBLE);
 
-                    mPresentor.reportPicture(report, messagelist.get(adapterPosition).getPicture_id(), new StoryDetailPresentor.StringReqListener() {
+                    mPresentor.reportPicture(reportStory, messagelist.get(adapterPosition).getPicture_id(), new StoryDetailPresentor.StringReqListener() {
                         @Override
                         public void onSuccess() {
                             view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
                             dialog.dismiss();
-                            Toast.makeText(mContext.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext.getApplicationContext(), "Your reportStory has been submitted!", Toast.LENGTH_SHORT).show();
 
                         }
 

@@ -69,7 +69,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         binding.getRoot().findViewById(R.id.close1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
         binding.getRoot().findViewById(R.id.text_penname).setOnClickListener(new View.OnClickListener() {

@@ -125,7 +125,7 @@ public class AppUtils {
     public static Intent buildStoryDetailActivityIntent(Context context, String story_id) {
         Intent i = new Intent(context, StoryDetailActivity.class);
         i.putExtra("story_id", story_id);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         return i;
 
@@ -134,7 +134,7 @@ public class AppUtils {
     public static Intent buildPictureDetailActivityIntent(Context context, String picture_id) {
         Intent i = new Intent(context, PictureDetailActivity.class);
         i.putExtra("picture_id", picture_id);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //   i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         return i;
     }
@@ -144,7 +144,7 @@ public class AppUtils {
         i.putExtra("user_id", pushNotificationModel.getActor_id());
         i.putExtra("user_name", pushNotificationModel.getActor_name());
         i.putExtra("user_avatar", pushNotificationModel.getActor_avatar());
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        //   i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         return i;
     }

@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -96,10 +97,13 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setStyle(bigTextStyle)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                        R.mipmap.ic_launcher))
                 .setContentText(pushNotificationModel.getSpannable_text());
 
         if (pushNotificationModel.getTitle() != null && !pushNotificationModel.getTitle().isEmpty())
             mBuilder.setContentTitle(pushNotificationModel.getTitle());
+
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if (hour < 7 || hour > 22) {

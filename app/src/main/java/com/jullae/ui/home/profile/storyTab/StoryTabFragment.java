@@ -148,7 +148,7 @@ public class StoryTabFragment extends BaseFragment implements StoryTabView {
             mAdapter.add(storyModelList);
         } else {
             view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
-            if (penname.equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname())) {
+            if (!penname.equals(AppDataManager.getInstance().getmSharedPrefsHelper().getKeyPenname())) {
                 ((TextView) view.findViewById(R.id.message)).setText("No stories to show");
                 view.findViewById(R.id.discover).setVisibility(View.GONE);
             } else {

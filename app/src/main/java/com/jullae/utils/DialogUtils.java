@@ -89,6 +89,30 @@ public class DialogUtils {
 
     }
 
+    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, StoryModel storyModel, final Activity context) {
+
+
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+        mPresentor.reportStory(((TextView) view).getText().toString(), storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+            @Override
+            public void onSuccess() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+
+                showReportStorySuccessDialog(context);
+                Toast.makeText(context.getApplicationContext(), "Your reportStory has been submitted!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     public static void showReportPictureDialog(final Activity context, final BasePresentor mPresentor, final PictureModel pictureModel) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
@@ -102,7 +126,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t1)).getText());
             }
         });
 
@@ -110,7 +134,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t2)).getText());
             }
         });
 
@@ -118,7 +142,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t3)).getText());
             }
         });
 
@@ -126,12 +150,37 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t4)).getText());
             }
         });
 
         dialog.show();
 
+
+    }
+
+    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, PictureModel pictureModel, final Activity context, CharSequence text) {
+
+
+        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+        mPresentor.reportPicture(text.toString(), pictureModel.getPicture_id(), new StoryDetailPresentor.StringReqListener() {
+            @Override
+            public void onSuccess() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                dialog.dismiss();
+
+                showReportStorySuccessDialog(context);
+                Toast.makeText(context.getApplicationContext(), "Your reportStory has been submitted!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFail() {
+                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -147,7 +196,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t1)).getText());
             }
         });
 
@@ -155,7 +204,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t2)).getText());
             }
         });
 
@@ -163,7 +212,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t3)).getText());
             }
         });
 
@@ -171,7 +220,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
 
-                onReportTextClick(view, dialog, mPresentor, pictureModel, context);
+                onReportTextClick(view, dialog, mPresentor, pictureModel, context, ((TextView) view.findViewById(R.id.t4)).getText());
             }
         });
 
@@ -180,70 +229,19 @@ public class DialogUtils {
 
     }
 
-    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, StoryModel storyModel, final Activity context) {
+    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, HomeFeedModel.Feed pictureModel, final Activity context, CharSequence text) {
 
 
         view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 
-        mPresentor.report(((TextView) view).getText().toString(), storyModel.getStory_id(), new StoryDetailPresentor.StringReqListener() {
+        mPresentor.reportPicture(text.toString(), pictureModel.getPicture_id(), new StoryDetailPresentor.StringReqListener() {
             @Override
             public void onSuccess() {
                 view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
                 dialog.dismiss();
 
                 showReportStorySuccessDialog(context);
-                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onFail() {
-                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-
-    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, PictureModel pictureModel, final Activity context) {
-
-
-        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-
-        mPresentor.report(((TextView) view).getText().toString(), pictureModel.getPicture_id(), new StoryDetailPresentor.StringReqListener() {
-            @Override
-            public void onSuccess() {
-                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                dialog.dismiss();
-
-                showReportStorySuccessDialog(context);
-                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onFail() {
-                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                Toast.makeText(context.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    private static void onReportTextClick(final View view, final AlertDialog dialog, BasePresentor mPresentor, HomeFeedModel.Feed pictureModel, final Activity context) {
-
-
-        view.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-
-        mPresentor.report(((TextView) view).getText().toString(), pictureModel.getPicture_id(), new StoryDetailPresentor.StringReqListener() {
-            @Override
-            public void onSuccess() {
-                view.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                dialog.dismiss();
-
-                showReportStorySuccessDialog(context);
-                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "Your reportStory has been submitted!", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -268,7 +266,7 @@ public class DialogUtils {
                 dialog.dismiss();
 
                 showReportStorySuccessDialog(context);
-                Toast.makeText(context.getApplicationContext(), "Your report has been submitted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "Your reportStory has been submitted!", Toast.LENGTH_SHORT).show();
 
             }
 
