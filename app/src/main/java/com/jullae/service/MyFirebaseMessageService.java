@@ -97,7 +97,7 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setStyle(bigTextStyle)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
                         R.mipmap.ic_launcher))
                 .setContentText(pushNotificationModel.getSpannable_text());
 
