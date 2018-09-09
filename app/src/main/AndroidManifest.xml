@@ -28,6 +28,10 @@
             android:screenOrientation="portrait" />
 
         <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+
+            android:resource="@mipmap/ic_launcher" />
+        <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
@@ -130,5 +134,6 @@
             android:label="@string/title_activity_followers"
             android:theme="@style/AppTheme"></activity>
     </application>
+
 
 </manifest>

@@ -80,7 +80,7 @@ public class NotificationModel {
     }
 
     public void setSpannable_text(Context context) {
-        if (notification_type_id == 1 || notification_type_id == 3 || notification_type_id == 2) {
+        if (notification_type_id == 1 || notification_type_id == 3 || notification_type_id == 2 || notification_type_id == 6) {
             Spanny spanny = new Spanny(actor_name + " ", new TextAppearanceSpan(context, R.style.text_14_medium_primary))
                     .append(text, new TextAppearanceSpan(context, R.style.text_14_regular_secondary));
             this.spannable_text = spanny;
