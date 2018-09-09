@@ -95,6 +95,7 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setStyle(bigTextStyle)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
                         R.mipmap.ic_launcher))
