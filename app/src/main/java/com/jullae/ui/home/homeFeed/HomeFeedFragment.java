@@ -27,6 +27,8 @@ import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.NetworkUtils;
 
+import java.util.ArrayList;
+
 public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
 
     private static final String TAG = HomeFeedFragment.class.getName();
@@ -167,9 +169,11 @@ public class HomeFeedFragment extends BaseFragment implements HomeFeedView {
                     homeFeedModel.getFeedList().get(i).setHighlightStoryIndex(j);
             }
         }
+
         if (homeFeedModel.getFeedList().size() > 0)
             mAdapter.add(homeFeedModel.getFeedList());
         else {
+            mAdapter.add(new ArrayList<HomeFeedModel.Feed>());
             view.findViewById(R.id.no_feeds).setVisibility(View.VISIBLE);
 
         }
