@@ -149,7 +149,7 @@
                         android:paddingRight="12dp"
                         android:paddingBottom="8dp"
                         android:textAppearance="@style/text_16.regular.primary"
-                        app:htmlText="@{storyModel.story_text}"
+                        app:htmlText1="@{storyModel.story_text}"
 
 
                         tools:text="Las Vegas, in Nevada’s M home to themed hotels with elaborate displays such as fountains synchronized to music as well as replic incorporated in 1911. At the close of the 20th century, it was the most populated American city founded within that century (a similar distinction earned by Chicago in the 1800s). Population growth has accelerated since the 1960s, and between 1990 and 2000 the population nearly doubled, increasing by 85.2%. Rapid growth has continued into the 21st century." />

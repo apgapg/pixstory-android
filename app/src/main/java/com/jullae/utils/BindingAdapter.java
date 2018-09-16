@@ -71,6 +71,12 @@ public class BindingAdapter {
     @android.databinding.BindingAdapter("htmlText")
     public static void setHtmlText(TextView htmlTextView, String text) {
         if (text != null)
+            htmlTextView.setText(Html.fromHtml(Html.fromHtml(text).toString()));
+    }
+
+    @android.databinding.BindingAdapter("htmlText1")
+    public static void setHtmlText1(TextView htmlTextView, String text) {
+        if (text != null)
             htmlTextView.setText(Html.fromHtml(text));
     }
 
