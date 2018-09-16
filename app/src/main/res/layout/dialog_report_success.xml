@@ -20,19 +20,10 @@
 
         android:paddingBottom="20dp"
         android:text="Thank you for reporting. We constantly thrive to make this community a better place. We thank you for your contribution."
-        android:textColor="@color/primary_text"
-        android:textSize="12dp"
-        android:textStyle="bold" />
+        android:textAppearance="@style/text_14.regular" />
 
-    <include layout="@layout/vertical_divider_light" />
 
-    <TextView
-        android:id="@+id/close"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:text="x"
-        android:textSize="20dp" />
+    <include layout="@layout/close_button" />
 
 
 </LinearLayout>
