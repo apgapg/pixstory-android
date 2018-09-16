@@ -128,13 +128,13 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
-        binding.imageAvatar.setOnClickListener(new View.OnClickListener() {
+        binding.userAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppUtils.showVisitorProfile(getmContext(), storyModel.getWriter_penname());
             }
         });
-        binding.textName.setOnClickListener(new View.OnClickListener() {
+        binding.userName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppUtils.showVisitorProfile(getmContext(), storyModel.getWriter_penname());

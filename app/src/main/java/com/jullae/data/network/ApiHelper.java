@@ -202,6 +202,7 @@ public class ApiHelper {
     }
 
     public ANRequest report(String report, String id, int reportTypeStory) {
+        Log.d(TAG, "report: wejfdbwekhfvbkefbbenfbse: " + id + "   " + reportTypeStory);
         String url = ENDPOINT_REPORT_STORY;
         String reportType = null;
         if (reportTypeStory == Constants.REPORT_TYPE_STORY) {

@@ -9,25 +9,33 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ebolo.krichtexteditor.RichEditor;
+import com.ebolo.krichtexteditor.fragments.KRichEditorFragment;
+import com.ebolo.krichtexteditor.fragments.Options;
+import com.ebolo.krichtexteditor.ui.widgets.EditorButton;
 import com.jullae.R;
-import com.jullae.ui.custom.knife.KnifeText;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
 import com.jullae.utils.MyProgressDialog;
-import com.jullae.utils.ToastUtils;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
 
 public class WriteStoryActivity extends AppCompatActivity implements WriteStoryView {
 
     private WriteStoryPresentor mPresentor;
     private String picture_id;
     private EditText field_title;
-    private KnifeText field_story;
     private View imageBold;
+    private KRichEditorFragment editorFragment;
+    private String pictureUrl;
+    private String storyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dialog);
+        setContentView(R.layout.activity_write_story);
 
 
         mPresentor = new WriteStoryPresentor();
@@ -42,37 +50,110 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         });
 
         field_title = findViewById(R.id.field_title);
-        field_story = findViewById(R.id.field_story);
 
 
         picture_id = getIntent().getStringExtra("picture_id");
         if (getIntent().getStringExtra("story_title") != null) {
             field_title.setText(getIntent().getStringExtra("story_title"));
         }
-        if (getIntent().getStringExtra("story_text") != null) {
-            field_story.setText(getIntent().getStringExtra("story_text"));
-            field_story.setSelection(getIntent().getStringExtra("story_text").length());
-        }
 
+        storyText = getIntent().getStringExtra("story_text");
+
+
+       /* pictureUrl = getIntent().getStringExtra("image");
+
+        if (pictureUrl != null)
+            GlideUtils.loadImagefromUrl((ImageView) findViewById(R.id.image), pictureUrl);
+*/
         findViewById(R.id.text_publish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPresentor.checkNonEmptyFields(field_title.getText().toString(), field_story.getText().toString())) {
-                    showPublishDialog();
-                }
+                editorFragment.getEditor().getHtml(new RichEditor.OnHtmlReturned() {
+                    @Override
+                    public void process(final String html) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mPresentor.checkNonEmptyFields(field_title.getText().toString(), html)) {
+                                    showPublishDialog();
+                                }
+                            }
+                        });
+
+                    }
+                });
+
             }
         });
 
         findViewById(R.id.text_save_draft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresentor.sendStoryDraftReq(field_title.getText().toString().trim(), field_story.getText().toString().trim(), picture_id);
+                editorFragment.getEditor().getHtml(new RichEditor.OnHtmlReturned() {
+                    @Override
+                    public void process(@NotNull final String html) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPresentor.sendStoryDraftReq(field_title.getText().toString().trim(), html, picture_id);
+
+                            }
+                        });
+                    }
+                });
             }
         });
 
-        setUpTextStyling();
+
+        editorFragment = (KRichEditorFragment) getSupportFragmentManager().findFragmentByTag("EDITOR");
+
+        if (editorFragment == null)
+            editorFragment = KRichEditorFragment.getInstance(
+                    new Options()
+                            .placeHolder("Start Writing Magic!")
+                            .buttonLayout(Arrays.asList(
+                                    EditorButton.UNDO,
+                                    EditorButton.REDO,
+                                    EditorButton.BOLD,
+                                    EditorButton.ITALIC,
+                                    EditorButton.UNDERLINE,
+                                    EditorButton.SUBSCRIPT,
+                                    EditorButton.SUPERSCRIPT,
+                                    EditorButton.STRIKETHROUGH,
+                                    EditorButton.JUSTIFY_LEFT,
+                                    EditorButton.JUSTIFY_CENTER,
+                                    EditorButton.JUSTIFY_RIGHT,
+                                    EditorButton.JUSTIFY_FULL,
+                                    EditorButton.ORDERED,
+                                    EditorButton.UNORDERED,
+                                    EditorButton.CHECK,
+                                    EditorButton.NORMAL,
+                                    EditorButton.H1,
+                                    EditorButton.H2,
+                                    EditorButton.H3,
+                                    EditorButton.H4,
+                                    EditorButton.H5,
+                                    EditorButton.H6,
+                                    EditorButton.INDENT,
+                                    EditorButton.OUTDENT,
+                                    EditorButton.BLOCK_QUOTE,
+                                    EditorButton.BLOCK_CODE,
+                                    EditorButton.CODE_VIEW
+                            ))
+                            .onInitialized(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (storyText != null)
+                                        editorFragment.getEditor().setHtml(storyText);
+                                }
+                            })
+
+            );
 
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, editorFragment, "EDITOR")
+                .commit();
     }
 
     @Override
@@ -81,108 +162,6 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
         super.onDestroy();
     }
 
-    private void setUpTextStyling() {
-        setupBold();
-        setupItalic();
-        setupUnderline();
-        setupBullets();
-        setupQuote();
-    }
-
-    private void setupBullets() {
-        findViewById(R.id.image_bullets).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (field_story.hasSelection())
-                    field_story.bullet(!field_story.contains(KnifeText.FORMAT_BULLET));
-                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
-            }
-        });
-        findViewById(R.id.image_bullets).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ToastUtils.showToast(WriteStoryActivity.this, "bullets");
-                return true;
-            }
-        });
-    }
-
-    private void setupQuote() {
-        findViewById(R.id.image_quote).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (field_story.hasSelection())
-                    field_story.quote(!field_story.contains(KnifeText.FORMAT_QUOTE));
-                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
-            }
-        });
-        findViewById(R.id.image_quote).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ToastUtils.showToast(WriteStoryActivity.this, "quote");
-                return true;
-            }
-        });
-    }
-
-    private void setupUnderline() {
-        findViewById(R.id.image_underline).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (field_story.hasSelection())
-                    field_story.underline(!field_story.contains(KnifeText.FORMAT_UNDERLINED));
-                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
-
-            }
-        });
-        findViewById(R.id.image_underline).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ToastUtils.showToast(WriteStoryActivity.this, "underline");
-                return true;
-            }
-        });
-    }
-
-    private void setupItalic() {
-
-        findViewById(R.id.image_italic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (field_story.hasSelection())
-                    field_story.italic(!field_story.contains(KnifeText.FORMAT_ITALIC));
-                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
-
-            }
-        });
-        findViewById(R.id.image_italic).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ToastUtils.showToast(WriteStoryActivity.this, "italic");
-                return true;
-            }
-        });
-    }
-
-    private void setupBold() {
-        findViewById(R.id.image_bold).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (field_story.hasSelection())
-                    field_story.bold(!field_story.contains(KnifeText.FORMAT_BOLD));
-                else ToastUtils.showToast(WriteStoryActivity.this, "Please select text first!");
-
-
-            }
-        });
-        findViewById(R.id.image_bold).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ToastUtils.showToast(WriteStoryActivity.this, "bold");
-                return true;
-            }
-        });
-    }
 
     @Override
     public void onStoryPublishFail() {
@@ -236,7 +215,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     @Override
     public void onBackPressed() {
-        if (!TextUtils.isEmpty(field_title.getText().toString()) || !TextUtils.isEmpty(field_story.getText().toString())) {
+        if (!TextUtils.isEmpty(field_title.getText().toString()) || !TextUtils.isEmpty(editorFragment.getEditor().getHtml())) {
             showExitDialog();
         } else super.onBackPressed();
     }
@@ -278,8 +257,19 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //  Log.d("jb", "onClick: "+field_story.toHtml());
-                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), field_story.toHtml(), picture_id);
+
+                        editorFragment.getEditor().getHtml(new RichEditor.OnHtmlReturned() {
+                            @Override
+                            public void process(@NotNull final String html) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), html, picture_id);
+
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
 

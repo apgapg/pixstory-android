@@ -78,7 +78,7 @@
                 app:imageUrl="@{pictureModel.photographer_avatar}" />
 
             <TextView
-                android:id="@+id/text_name"
+                android:id="@+id/user_name"
                 style="@style/textView.feed_primary_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

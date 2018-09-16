@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
 
         GlideUtils.loadImagefromUrl(mContext, pictureModel.getPicture_url_small(), viewHolder.image);
         viewHolder.story_title.setText(storyModel.getStory_title());
-        viewHolder.story_text.setText(storyModel.getStory_text());
+        viewHolder.story_text.setText(Html.fromHtml(storyModel.getStory_text()));
 
     }
 
@@ -155,7 +156,7 @@ public class DraftTabAdapter extends RecyclerView.Adapter<DraftTabAdapter.Search
             inflate.findViewById(R.id.rootview).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showWriteStoryDialogWithData(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_title(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_text());
+                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPicture_id(), messagelist.get(getAdapterPosition()).getPictureModel().getPicture_url(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_title(), messagelist.get(getAdapterPosition()).getStoryModel().getStory_text());
 
 
                 }

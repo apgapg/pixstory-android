@@ -45,9 +45,9 @@ public class SearchPersonAdapter extends ArrayAdapter<SearchPeopleMainModel.Sear
                     .inflate(R.layout.item_people_search, parent, false);
         }
 
-        TextView user_name = view.findViewById(R.id.text_name);
+        TextView user_name = view.findViewById(R.id.user_name);
         TextView user_penname = view.findViewById(R.id.text_penname);
-        ImageView user_avatar = view.findViewById(R.id.image_avatar);
+        ImageView user_avatar = view.findViewById(R.id.user_avatar);
         user_name.setText(getItem(position).getUser_name());
         user_penname.setText(getItem(position).getUser_penname());
         GlideUtils.loadImagefromUrl(context, getItem(position).getUser_avatar(), user_avatar);

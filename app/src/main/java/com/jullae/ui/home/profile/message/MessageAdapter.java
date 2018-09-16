@@ -99,7 +99,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
          */
         MessageHolder(final View itemView) {
             super(itemView);
-            user_name = itemView.findViewById(R.id.text_name);
+            user_name = itemView.findViewById(R.id.user_name);
             message = itemView.findViewById(R.id.text_message);
 
         }

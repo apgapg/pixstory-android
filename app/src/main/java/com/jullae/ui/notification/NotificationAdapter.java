@@ -179,7 +179,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(inflate);
 
 
-            user_image = inflate.findViewById(R.id.image_avatar);
+            user_image = inflate.findViewById(R.id.user_avatar);
 
 
         }
@@ -213,7 +213,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(inflate);
 
             image = inflate.findViewById(R.id.image);
-            user_image = inflate.findViewById(R.id.image_avatar);
+            user_image = inflate.findViewById(R.id.user_avatar);
 
         }
     }

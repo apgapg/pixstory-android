@@ -62,12 +62,13 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
     public void onBindViewHolder(@NonNull HomeFeedViewHolder viewHolder, int position) {
 
         ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).setPictureId(messagelist.get(position).getPicture_id());
+        ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).setPictureUrl(messagelist.get(position).getPicture_url());
 
         if (messagelist.get(position).getStories().size() != 0) {
             ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).add(messagelist.get(position).getStories());
             ((LinearLayoutManager) viewHolder.binding.recyclerViewStory.getLayoutManager()).scrollToPositionWithOffset(messagelist.get(position).getHighlightStoryIndex(), (int) calculateoffset);
         } else
-            ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).addEmptyMessage(messagelist.get(position).getPicture_id());
+            ((StoryAdapter) viewHolder.binding.recyclerViewStory.getAdapter()).addEmptyMessage(messagelist.get(position).getPicture_id(), messagelist.get(position).getPicture_url());
 
         viewHolder.binding.setFeed(messagelist.get(position));
         viewHolder.binding.executePendingBindings();
@@ -127,16 +128,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
             @Override
             public void onClick(View v) {
 
-             /*   showReportStoryDialog(adapterPosition);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-
-                    }
-                }, 100);
-*/
-
             }
         });
 
@@ -177,50 +168,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
         alert11.show();
 
     }
-
-   /* public void showReportStoryDialog(final int adapterPosition) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-        final View view3 = mContext.getLayoutInflater().inflate(R.layout.dialog_report_story, null);
-        dialogBuilder.setView(view3);
-
-        final AlertDialog dialog = dialogBuilder.create();
-
-        dialog.show();
-        final EditText field_report = view3.findViewById(R.id.field_report);
-        final TextView btn_report = view3.findViewById(R.id.reportStory);
-        btn_report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String reportStory = field_report.getText().toString().trim();
-                if (reportStory.length() != 0) {
-
-                    view3.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-                    btn_report.setVisibility(View.INVISIBLE);
-
-                    mPresentor.reportPicture(reportStory, messagelist.get(adapterPosition).getPicture_id(), new StoryDetailPresentor.StringReqListener() {
-                        @Override
-                        public void onSuccess() {
-                            view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                            dialog.dismiss();
-                            Toast.makeText(mContext.getApplicationContext(), "Your reportStory has been submitted!", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        @Override
-                        public void onFail() {
-                            view3.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
-                            btn_report.setVisibility(View.VISIBLE);
-                            Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-
-                }
-            }
-        });
-
-    }*/
 
     private void changeLike(int adapterPosition) {
         if (messagelist.get(adapterPosition).getIs_liked()) {
@@ -267,7 +214,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
             binding.textWriteStory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_id());
+                    AppUtils.showWriteStoryDialog(mContext, messagelist.get(getAdapterPosition()).getPicture_url(), messagelist.get(getAdapterPosition()).getPicture_id(), null, null);
                 }
             });
             binding.recyclerViewStory.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
@@ -282,13 +229,12 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
-            binding.imageAvatar.setOnClickListener(new View.OnClickListener() {
+            binding.userAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPhotographer_penname());
                 }
             });
-
 
 
             binding.likeCount.setOnClickListener(new View.OnClickListener() {
@@ -318,7 +264,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.HomeFe
                             Toast.makeText(mContext.getApplicationContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                             changeLike(getAdapterPosition());
                         }
-
 
                     }, !messagelist.get(getAdapterPosition()).getIs_liked());
 

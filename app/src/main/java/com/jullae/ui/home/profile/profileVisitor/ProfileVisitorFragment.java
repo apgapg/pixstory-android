@@ -69,8 +69,8 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
 
         penname = getArguments().getString("penname");
 
-        user_image = view.findViewById(R.id.image_avatar);
-        user_name = view.findViewById(R.id.text_name);
+        user_image = view.findViewById(R.id.user_avatar);
+        user_name = view.findViewById(R.id.user_name);
         user_penname = view.findViewById(R.id.text_penname);
         user_bio = view.findViewById(R.id.user_bio);
         user_followers = view.findViewById(R.id.text_followers);

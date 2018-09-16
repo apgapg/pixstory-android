@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <com.jullae.ui.custom.CircularImageView
-                android:id="@+id/image_avatar"
+                android:id="@+id/user_avatar"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
@@ -39,7 +39,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_name"
+                    android:id="@+id/user_name"
                     style="@style/textViewStyle.line_1"
                     android:ellipsize="end"
                     android:text="@{likeModel.user_name}"

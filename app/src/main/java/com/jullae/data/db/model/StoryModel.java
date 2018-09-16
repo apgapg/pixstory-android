@@ -76,6 +76,7 @@ public class StoryModel extends BaseObservable {
 
     }
 
+    @Bindable
     public String getComment_count() {
         return comment_count;
     }
@@ -95,6 +96,8 @@ public class StoryModel extends BaseObservable {
         return created_at;
     }
 
+
+    @Bindable
     public String getWriter_avatar() {
         return writer_avatar;
     }

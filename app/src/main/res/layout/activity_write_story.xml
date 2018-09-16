@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:isScrollContainer="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_gravity="center_vertical"
+
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/ripple_effect"
+            android:padding="6dp"
+            android:rotation="45"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_save_draft"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Save"
+            android:textAppearance="@style/text_14.medium"
+            android:textColor="@color/cyan_500" />
+
+        <TextView
+            android:id="@+id/text_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Done"
+            android:textAppearance="@style/text_14.medium"
+            android:textColor="@color/cyan_500" />
+
+    </LinearLayout>
+
+
+    <!-- <ImageView
+         android:id="@+id/image"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/pic_height"
+         android:scaleType="centerCrop" />
+-->
+    <EditText
+        android:id="@+id/field_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:hint="TITLE"
+        android:lines="1"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="8dp"
+        android:textAppearance="@style/text_16.medium.primary"
+        android:textSize="20sp" />
+
+
+    <FrameLayout
+        android:id="@+id/fragment_holder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        />
+</LinearLayout>

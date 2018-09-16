@@ -113,7 +113,7 @@ public class FreshFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
 
 
-            binding.getRoot().findViewById(R.id.text_name).setOnClickListener(new View.OnClickListener() {
+            binding.getRoot().findViewById(R.id.user_name).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppUtils.showVisitorProfile(mContext, messagelist.get(getAdapterPosition()).getPictureModel().getPhotographer_penname());

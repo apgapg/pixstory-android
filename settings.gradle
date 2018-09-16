@@ -1,1 +1,1 @@
-include ':app',':android-networking'
+include ':app',':android-networking',':krichtexteditor'

@@ -51,7 +51,7 @@
                     app:imageUrl="@{model.pictureModel.photographer_avatar}" />
 
                 <TextView
-                    android:id="@+id/text_name"
+                    android:id="@+id/user_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

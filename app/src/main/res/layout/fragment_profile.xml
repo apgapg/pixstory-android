@@ -85,7 +85,7 @@
                                 android:layout_marginTop="12dp">
 
                                 <com.jullae.ui.custom.CircularImageView
-                                    android:id="@+id/image_avatar"
+                                    android:id="@+id/user_avatar"
                                     android:layout_width="90dp"
                                     android:layout_height="90dp"
                                     android:padding="4dp"
@@ -111,7 +111,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/text_name"
+                                    android:id="@+id/user_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"

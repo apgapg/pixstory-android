@@ -86,7 +86,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
          */
         ViewHolder(final View itemView) {
             super(itemView);
-            user_image = itemView.findViewById(R.id.image_avatar);
+            user_image = itemView.findViewById(R.id.user_avatar);
             text = itemView.findViewById(R.id.text);
 
             user_image.setOnClickListener(new View.OnClickListener() {

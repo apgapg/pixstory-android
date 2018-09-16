@@ -56,7 +56,7 @@
             android:paddingBottom="10dp">
 
             <com.jullae.ui.custom.CircularImageView
-                android:id="@+id/image_avatar"
+                android:id="@+id/user_avatar"
                 android:layout_width="32dp"
 
                 android:layout_height="32dp"

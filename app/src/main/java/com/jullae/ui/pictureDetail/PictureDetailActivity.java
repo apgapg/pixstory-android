@@ -78,7 +78,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
                 AppUtils.showVisitorProfile(PictureDetailActivity.this, model.getPhotographer_penname());
             }
         });
-        binding.getRoot().findViewById(R.id.image_avatar).setOnClickListener(new View.OnClickListener() {
+        binding.getRoot().findViewById(R.id.user_avatar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppUtils.showVisitorProfile(PictureDetailActivity.this, model.getPhotographer_penname());
@@ -97,7 +97,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
         binding.getRoot().findViewById(R.id.text_write_story).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.showWriteStoryDialog(PictureDetailActivity.this, model.getPicture_id());
+                AppUtils.showWriteStoryDialog(PictureDetailActivity.this, model.getPicture_url(), model.getPicture_id(), null, null);
             }
         });
 
@@ -200,7 +200,7 @@ public class PictureDetailActivity extends AppCompatActivity implements PictureD
 
             storyAdaper.add(homeFeedModel.getStories());
         } else
-            storyAdaper.addEmptyMessage(homeFeedModel.getPicture_id());
+            storyAdaper.addEmptyMessage(homeFeedModel.getPicture_id(), homeFeedModel.getPicture_url());
 
         //  mPresentor.loadStories(homeFeedModel.getPicture_id());
 

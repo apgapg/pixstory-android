@@ -85,8 +85,8 @@ public class PictureAllStoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             ivMore = inflate.findViewById(R.id.ivMore);
             ivLike = inflate.findViewById(R.id.btn_like);
-            user_name = inflate.findViewById(R.id.text_name);
-            user_image = inflate.findViewById(R.id.image_avatar);
+            user_name = inflate.findViewById(R.id.user_name);
+            user_image = inflate.findViewById(R.id.user_avatar);
             story_text = inflate.findViewById(R.id.story_text);
             tvLocation = inflate.findViewById(R.id.penname_field);
             tvTimeInDays = inflate.findViewById(R.id.tvTimeInDays);

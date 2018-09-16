@@ -158,6 +158,8 @@ public class PicturesTabAdapter extends RecyclerView.Adapter<PicturesTabAdapter.
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, WriteStoryActivity.class);
                     i.putExtra("picture_id", messagelist.get(getAdapterPosition()).getPicture_id());
+                    i.putExtra("image", messagelist.get(getAdapterPosition()).getPicture_url());
+
                     mContext.startActivity(i);
                 }
             });

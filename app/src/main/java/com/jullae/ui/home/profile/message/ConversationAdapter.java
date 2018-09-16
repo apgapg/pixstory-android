@@ -83,8 +83,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         ConversationHolder(final View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.rootview);
-            user_image = itemView.findViewById(R.id.image_avatar);
-            user_name = itemView.findViewById(R.id.text_name);
+            user_image = itemView.findViewById(R.id.user_avatar);
+            user_name = itemView.findViewById(R.id.user_name);
             user_penname = itemView.findViewById(R.id.text_penname);
 
             container.setOnClickListener(new View.OnClickListener() {

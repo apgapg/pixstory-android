@@ -108,7 +108,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         view = binding.getRoot();
 
         appBar = view.findViewById(R.id.appbar);
-        user_image = view.findViewById(R.id.image_avatar);
+        user_image = view.findViewById(R.id.user_avatar);
 
         button_edit_profile = view.findViewById(R.id.button_edit_profile);
 
