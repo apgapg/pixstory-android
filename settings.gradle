@@ -1,1 +1,1 @@
-include ':app',':android-networking',':krichtexteditor'
+include ':app',':android-networking',':krichtexteditor',':hashtag-helper'

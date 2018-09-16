@@ -124,7 +124,6 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
                 showOptions(getmContext());
 
 
-
             }
         });
 
@@ -252,7 +251,7 @@ public class StoryDetailFragment extends BaseFragment implements StoryDetailView
             }
         });
 
-        //  mTextHashTagHelper.handle(binding.storyText);
+        mTextHashTagHelper.handle(binding.storyText, storyModel.getStory_text());
     }
 
 
