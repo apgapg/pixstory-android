@@ -37,7 +37,7 @@ final class ApiEndPoint {
     static final String ENDPOINT_PROFILE_TAB_BOOKMARKS = "/profile/{penname}/bookmarks";
     static final String ENDPOINT_PROFILE_PIC_UPDATE = "/user/{id}/upload_dp";
     static final String ENDPOINT_WRITE_COMMENTS = "/comment/publish";
-    static final String ENDPOINT_REPORT_STORY = "/reportStory";
+    static final String ENDPOINT_REPORT_STORY = "/report";
     static final String ENDPOINT_DRAFTS = "/profile/{penname}/drafts";
     static final String ENDPOINT_PROFILE_VISITOR_INFO = "/profile/{penname}/info";
 
