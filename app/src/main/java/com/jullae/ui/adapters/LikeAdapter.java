@@ -125,6 +125,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.LikeViewHolder
                         @Override
                         public void onResponse(BaseResponseModel response) {
                             NetworkUtils.parseResponse(TAG, response);
+                            if (AppDataManager.getInstance().getmUserProfile(null).getValue() != null)
+                                AppDataManager.getInstance().getmUserProfile(null).getValue().data.incrementFollowingCount();
                         }
 
                         @Override

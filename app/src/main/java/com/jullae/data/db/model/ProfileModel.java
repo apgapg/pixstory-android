@@ -30,6 +30,10 @@ public class ProfileModel extends BaseObservable {
         this.user_avatar = dpUrl;
     }
 
+    public ProfileModel() {
+
+    }
+
     @Bindable
     public boolean getUnread_notifications() {
         return unread_notifications;
@@ -95,32 +99,17 @@ public class ProfileModel extends BaseObservable {
         return follower_count;
     }
 
-    public void setFollower_count(String follower_count) {
-        this.follower_count = follower_count;
-        notifyPropertyChanged(BR.follower_count);
-    }
 
     @Bindable
-
     public String getFollowing_count() {
         return following_count;
     }
 
-    public void setFollowing_count(String following_count) {
-        this.following_count = following_count;
-        notifyPropertyChanged(BR.following_count);
-
-    }
 
     @Bindable
 
     public String getStories_count() {
         return stories_count;
-    }
-
-    public void setStories_count(String stories_count) {
-        this.stories_count = stories_count;
-        notifyPropertyChanged(BR.stories_count);
     }
 
     @Bindable
@@ -135,4 +124,10 @@ public class ProfileModel extends BaseObservable {
     }
 
 
+    public void incrementFollowingCount() {
+        int value = Integer.valueOf(this.following_count);
+        this.following_count = String.valueOf(value++);
+        notifyPropertyChanged(BR.following_count);
+
+    }
 }

@@ -1,5 +1,7 @@
 package com.jullae.data.db.model;
 
+import android.databinding.Observable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -30,4 +32,6 @@ public class ProfileMainModel {
     public ProfileModel getProfileModel() {
         return profileModel;
     }
+
+
 }

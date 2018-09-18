@@ -31,7 +31,9 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
 
     public void loadProfile(String penname) {
         checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
+
+        AppDataManager.getInstance().fetchSelfProfile(penname);
+       /* AppDataManager.getInstance().getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
             @Override
             public void onResponse(ProfileMainModel profileMainModel) {
                 NetworkUtils.parseResponse(TAG, profileMainModel);
@@ -47,7 +49,7 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
                     getMvpView().onProfileFetchFail();
                 }
             }
-        });
+        });*/
     }
 
     public void makeDpReq(File file) {
@@ -79,57 +81,6 @@ public class ProfileFragmentPresentor extends BasePresentor<ProfileFragmentView>
                 });
     }
 
-    public void getConversationList() {
-        checkViewAttached();
-        AppDataManager.getInstance().getmApiHelper().getConversationList().getAsObject(ConversationModel.class, new ParsedRequestListener<ConversationModel>() {
-
-            @Override
-            public void onResponse(ConversationModel conversationModel) {
-                if (isViewAttached()) {
-                    getMvpView().onConversationListFetchSuccess(conversationModel.getConversationList());
-                }
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                if (isViewAttached()) {
-                    getMvpView().onConversationListFetchFail();
-
-                }
-            }
-        });
-    }
-
-   /* public void updateProfile(final String name, final String bio, final ReqListener reqListener) {
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(bio)) {
-            checkViewAttached();
-            getMvpView().showProgressBar();
-            AppDataManager.getInstance().getmApiHelper().updateProfileReq(name, bio, AppDataManager.getInstance().getmSharedPrefsHelper().getKeyUserId(), imagefile)
-                    .getAsObject(BaseResponseModel.class, new ParsedRequestListener<BaseResponseModel>() {
-                        @Override
-                        public void onResponse(BaseResponseModel response) {
-                            NetworkUtils.parseResponse(TAG, response);
-                            AppDataManager.getInstance().getmSharedPrefsHelper().setKeyName(name);
-                            AppDataManager.getInstance().getmSharedPrefsHelper().setKeyBio(bio);
-                            if (isViewAttached()) {
-                                getMvpView().hideProgressBar();
-                                reqListener.onSuccess();
-                            }
-
-                        }
-
-                        @Override
-                        public void onError(ANError anError) {
-                            NetworkUtils.parseError(TAG, anError);
-                            if (isViewAttached()) {
-                                getMvpView().hideProgressBar();
-                                reqListener.onFail();
-                            }
-
-                        }
-                    });
-        }
-    }*/
 
     public boolean isEmailModeLogin() {
         Log.d(TAG, "isEmailModeLogin: " + AppDataManager.getInstance().getmSharedPrefsHelper().getKeyProvider());

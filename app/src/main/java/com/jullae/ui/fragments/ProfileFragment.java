@@ -1,6 +1,8 @@
 package com.jullae.ui.fragments;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +43,7 @@ import com.jullae.ui.home.HomeActivity;
 import com.jullae.ui.home.homeFeed.ProfileFragmentPresentor;
 import com.jullae.ui.home.homeFeed.freshfeed.ProfileFragmentView;
 import com.jullae.ui.home.profile.ProfileEditActivity;
+import com.jullae.ui.home.profile.UserProfileViewModel;
 import com.jullae.ui.home.profile.bookmarkTab.BookmarkTabFragment;
 import com.jullae.ui.home.profile.draftTab.DraftTabFragment;
 import com.jullae.ui.home.profile.message.ConversationAdapter;
@@ -52,6 +55,7 @@ import com.jullae.utils.Constants;
 import com.jullae.utils.DialogUtils;
 import com.jullae.utils.GlideUtils;
 import com.jullae.utils.MyProgressDialog;
+import com.jullae.utils.Resource;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -94,7 +98,14 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         }
     };
+    private UserProfileViewModel mViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(UserProfileViewModel.class);
+
+    }
 
     @Nullable
     @Override
@@ -105,6 +116,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             return view;
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        binding.setLifecycleOwner(this);
         view = binding.getRoot();
 
         appBar = view.findViewById(R.id.appbar);
@@ -116,8 +128,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             @Override
             public void onClick(View v) {
 
-                // showEditProfileDialog();
-
                 Intent i = new Intent(getContext(), ProfileEditActivity.class);
                 i.putExtra("name", mProfileModel.getName());
                 i.putExtra("bio", mProfileModel.getBio());
@@ -126,13 +136,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-
-       /* //user_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startImagePickActivity();
-            }
-        });*/
         binding.containerFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +172,7 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
                 mPresentor.loadProfile(mProfileModel.getPenname());
             }
         });
@@ -229,10 +233,22 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         super.onViewCreated(view, savedInstanceState);
         mPresentor.attachView(this);
         mProfileModel = mPresentor.getStaticUserData();
-
-
         binding.setProfileModel(mProfileModel);
-        mPresentor.loadProfile(mProfileModel.getPenname());
+        //  binding.setProfileModel(mViewModel.getmUserProfileModel(mProfileModel.getPenname()).getValue());
+
+        mViewModel.getmUserProfileModel(mProfileModel.getPenname()).observe(this, new Observer<Resource<ProfileModel>>() {
+            @Override
+            public void onChanged(@Nullable Resource<ProfileModel> profileModel) {
+                swipeRefreshLayout.setRefreshing(false);
+
+                if (profileModel.status != Resource.Status.ERROR) {
+                    ProfileFragment.this.onProfileFetchSuccess(profileModel.data);
+                } else ProfileFragment.this.onProfileFetchFail();
+
+            }
+        });
+        // binding.setProfileModel(mProfileModel);
+        //mPresentor.loadProfile(mProfileModel.getPenname());
         setupRefreshBroadcastListener();
 
     }
@@ -248,21 +264,11 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     @Override
     public void onProfileFetchSuccess(ProfileModel profileModel) {
         swipeRefreshLayout.setRefreshing(false);
-
-        mProfileModel.setFollower_count(profileModel.getFollower_count());
-        mProfileModel.setFollowing_count(profileModel.getFollowing_count());
-        mProfileModel.setStories_count(profileModel.getStories_count());
-        mProfileModel.setPictures_count(profileModel.getPictures_count());
-        mProfileModel.setUser_avatar(profileModel.getUser_avatar());
-        mProfileModel.setBio(profileModel.getBio());
+        ProfileFragment.this.mProfileModel = profileModel;
+        binding.setProfileModel(profileModel);
 
         if (getmContext() instanceof HomeActivity)
             ((HomeActivity) getmContext()).updateNotificationIcon(profileModel.getUnread_notifications());
-/*
-
-        pagerAdapter = new PagerAdapter(getChildFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-*/
 
         AppUtils.sendRefreshBroadcast(getmContext(), Constants.REFRESH_PROFILE1);
 
@@ -273,51 +279,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         swipeRefreshLayout.setRefreshing(false);
 
     }
-
-   /* private void showEditProfileDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getmContext());
-        View view = getmContext().getLayoutInflater().inflate(R.layout.dialog_edit_profile, null);
-        final EditText fieldName = view.findViewById(R.id.field_name);
-        final EditText fieldBio = view.findViewById(R.id.field_bio);
-
-        fieldName.setText(mProfileModel.getName());
-        fieldBio.setText(mProfileModel.getBio());
-        dialogBuilder.setView(view);
-
-        final AlertDialog dialog = dialogBuilder.create();
-        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-       *//* view.findViewById(R.id.text_update_profile).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresentor.updateProfile(fieldName.getText().toString().trim(), fieldBio.getText().toString(), new ReqListener() {
-                    @Override
-                    public void onSuccess() {
-                        dialog.dismiss();
-                        Toast.makeText(getmContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                    @Override
-                    public void onFail() {
-                        Toast.makeText(getmContext(), "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-            }
-        });*//*
-        dialog.show();
-    }
-
-    private void showConversationDialog() {
-        DialogUtils.showMessageDialog(getmContext());
-    }
-*/
 
     private void showPasswordChangeDialog() {
 
@@ -332,12 +293,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
         dialogBuilder.setView(view);
 
         final AlertDialog dialog = dialogBuilder.create();
-      /*  view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });*/
 
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override

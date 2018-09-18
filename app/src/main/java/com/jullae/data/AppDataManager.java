@@ -1,10 +1,17 @@
 package com.jullae.data;
 
 
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.jullae.data.db.model.ProfileMainModel;
+import com.jullae.data.db.model.ProfileModel;
 import com.jullae.data.network.ApiHelper;
 import com.jullae.data.prefs.SharedPrefsHelper;
+import com.jullae.utils.NetworkUtils;
+import com.jullae.utils.Resource;
 
 /**
  * Created by master on 7/4/18.
@@ -12,8 +19,11 @@ import com.jullae.data.prefs.SharedPrefsHelper;
 
 public class AppDataManager {
 
+    private static final String TAG = AppDataManager.class.getCanonicalName();
     private static AppDataManager uniqueInstance;
     private final ApiHelper mApiHelper;
+
+    private MutableLiveData<Resource<ProfileModel>> mUserProfile;
 
     private AppDataManager(Context context) {
 
@@ -45,5 +55,32 @@ public class AppDataManager {
 
     public ApiHelper getmApiHelper() {
         return mApiHelper;
+    }
+
+    public void fetchSelfProfile(final String penname) {
+
+        getmApiHelper().fetchVisitorProfileData(penname).getAsObject(ProfileMainModel.class, new ParsedRequestListener<ProfileMainModel>() {
+            @Override
+            public void onResponse(ProfileMainModel profileMainModel) {
+                NetworkUtils.parseResponse(TAG, profileMainModel);
+                mUserProfile.setValue(Resource.success(profileMainModel.getProfileModel()));
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+                mUserProfile.setValue(Resource.error(anError.getErrorBody(), new ProfileModel()));
+
+            }
+        });
+    }
+
+
+    public MutableLiveData<Resource<ProfileModel>> getmUserProfile(String penname) {
+        if (mUserProfile == null) {
+            mUserProfile = new MutableLiveData<>();
+            fetchSelfProfile(penname);
+        }
+        return mUserProfile;
     }
 }
