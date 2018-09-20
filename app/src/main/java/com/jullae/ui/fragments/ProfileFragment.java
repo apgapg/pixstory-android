@@ -104,7 +104,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = ViewModelProviders.of(getActivity()).get(UserProfileViewModel.class);
-
     }
 
     @Nullable
@@ -115,8 +114,11 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
                 ((ViewGroup) view.getParent()).removeView(view);
             return view;
         }
+        mPresentor = new ProfileFragmentPresentor();
+        mPresentor.attachView(this);
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
-        binding.setLifecycleOwner(this);
+
         view = binding.getRoot();
 
         appBar = view.findViewById(R.id.appbar);
@@ -177,7 +179,6 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
             }
         });
 
-        mPresentor = new ProfileFragmentPresentor();
 
         if (getmContext() instanceof ProfileVisitorActivity) {
             LinearLayout close_container = (LinearLayout) inflater.inflate(R.layout.close_button, (CoordinatorLayout) view.findViewById(R.id.rootview), false);
@@ -231,24 +232,17 @@ public class ProfileFragment extends BaseFragment implements ProfileFragmentView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresentor.attachView(this);
-        mProfileModel = mPresentor.getStaticUserData();
-        binding.setProfileModel(mProfileModel);
-        //  binding.setProfileModel(mViewModel.getmUserProfileModel(mProfileModel.getPenname()).getValue());
 
-        mViewModel.getmUserProfileModel(mProfileModel.getPenname()).observe(this, new Observer<Resource<ProfileModel>>() {
+        mViewModel.mUserProfile.observe(this, new Observer<Resource<ProfileModel>>() {
             @Override
             public void onChanged(@Nullable Resource<ProfileModel> profileModel) {
-                swipeRefreshLayout.setRefreshing(false);
-
                 if (profileModel.status != Resource.Status.ERROR) {
                     ProfileFragment.this.onProfileFetchSuccess(profileModel.data);
                 } else ProfileFragment.this.onProfileFetchFail();
 
             }
         });
-        // binding.setProfileModel(mProfileModel);
-        //mPresentor.loadProfile(mProfileModel.getPenname());
+
         setupRefreshBroadcastListener();
 
     }

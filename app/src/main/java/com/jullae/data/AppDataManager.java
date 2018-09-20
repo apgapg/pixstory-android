@@ -76,10 +76,11 @@ public class AppDataManager {
     }
 
 
-    public MutableLiveData<Resource<ProfileModel>> getmUserProfile(String penname) {
+    public MutableLiveData<Resource<ProfileModel>> getmUserProfile() {
         if (mUserProfile == null) {
             mUserProfile = new MutableLiveData<>();
-            fetchSelfProfile(penname);
+            mUserProfile.setValue(Resource.success(getmSharedPrefsHelper().getPrefsUserData()));
+            fetchSelfProfile(getmSharedPrefsHelper().getKeyPenname());
         }
         return mUserProfile;
     }

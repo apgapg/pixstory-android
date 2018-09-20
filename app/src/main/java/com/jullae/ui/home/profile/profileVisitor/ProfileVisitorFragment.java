@@ -148,6 +148,11 @@ public class ProfileVisitorFragment extends BaseFragment implements ProfileVisit
                     @Override
                     public void onResponse(BaseResponseModel response) {
                         NetworkUtils.parseResponse(TAG, response);
+                        if (mProfileModel.getIs_followed())
+                            AppDataManager.getInstance().getmUserProfile().getValue().data.incrementFollowingCount();
+                        else
+                            AppDataManager.getInstance().getmUserProfile().getValue().data.decrementFollowingCount();
+
                     }
 
                     @Override

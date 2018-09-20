@@ -2,6 +2,7 @@ package com.jullae.data.db.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.util.Log;
 
 import com.jullae.BR;
 
@@ -126,7 +127,15 @@ public class ProfileModel extends BaseObservable {
 
     public void incrementFollowingCount() {
         int value = Integer.valueOf(this.following_count);
-        this.following_count = String.valueOf(value++);
+        value=value+1;
+        this.following_count = String.valueOf(value);
+        notifyPropertyChanged(BR.following_count);
+
+    }
+    public void decrementFollowingCount() {
+        int value = Integer.valueOf(this.following_count);
+        value=value-1;
+        this.following_count = String.valueOf(value);
         notifyPropertyChanged(BR.following_count);
 
     }

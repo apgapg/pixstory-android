@@ -9,13 +9,13 @@ import com.jullae.utils.Resource;
 
 public class UserProfileViewModel extends ViewModel {
 
-   public UserProfileViewModel() {
+    public MutableLiveData<Resource<ProfileModel>> mUserProfile;
 
+
+    public UserProfileViewModel() {
+        mUserProfile = AppDataManager.getInstance().getmUserProfile();
     }
 
-    public MutableLiveData<Resource<ProfileModel>> getmUserProfileModel(String penname) {
-       return  AppDataManager.getInstance().getmUserProfile(penname);
 
 
-    }
 }
