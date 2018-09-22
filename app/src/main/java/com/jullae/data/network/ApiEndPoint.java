@@ -62,6 +62,8 @@ final class ApiEndPoint {
     static final String ENDPOINT_NOTIFICATION_READ_STATUS = "/user/{id}/read_notifications";
     static final String ENDPOINT_ADD_PROFILE_DETAILS = "/auth_misc/complete_account_setup";
 
+    static final String ENDPOINT_WRITESTORY_CATEGORY= "/story/categories";
+
 
     private ApiEndPoint() {
 

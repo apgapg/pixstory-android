@@ -76,6 +76,8 @@ dependencies {
     implementation project(path: ':krichtexteditor')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.2.61"
     compile project(path: ':hashtag-helper')
+    implementation 'com.nex3z:flow-layout:1.2.2'
+
 
 }
 

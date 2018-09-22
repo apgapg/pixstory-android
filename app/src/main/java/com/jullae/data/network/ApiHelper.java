@@ -62,6 +62,7 @@ import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPDATE_EDIT_STORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPDATE_PROFILE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_UPLOAD_PICTURE;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_VIEW_ALL_STORIES;
+import static com.jullae.data.network.ApiEndPoint.ENDPOINT_WRITESTORY_CATEGORY;
 import static com.jullae.data.network.ApiEndPoint.ENDPOINT_WRITE_COMMENTS;
 
 /**
@@ -653,6 +654,14 @@ Request Params: {"title": "Title", "content": "Text here", "picture_id": picture
         return AndroidNetworking.post(BASE_URL + ENDPOINT_DELETE_COMMENT)
                 .addHeaders(headers)
                 .addPathParameter("id", commentId)
+                .setPriority(Priority.MEDIUM)
+                .logReponseBody()
+                .build();
+    }
+
+    public ANRequest fetchWriteStoryCategory() {
+        return AndroidNetworking.get(BASE_URL + ENDPOINT_WRITESTORY_CATEGORY)
+                .addHeaders(headers)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();

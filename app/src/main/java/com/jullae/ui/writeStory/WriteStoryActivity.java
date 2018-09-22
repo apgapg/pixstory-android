@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ebolo.krichtexteditor.RichEditor;
@@ -14,13 +15,17 @@ import com.ebolo.krichtexteditor.fragments.KRichEditorFragment;
 import com.ebolo.krichtexteditor.fragments.Options;
 import com.ebolo.krichtexteditor.ui.widgets.EditorButton;
 import com.jullae.R;
+import com.jullae.data.db.model.WriteStoryCategoryItem;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.Constants;
+import com.jullae.utils.KeyboardUtils;
 import com.jullae.utils.MyProgressDialog;
+import com.nex3z.flowlayout.FlowLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class WriteStoryActivity extends AppCompatActivity implements WriteStoryView {
 
@@ -40,7 +45,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
         mPresentor = new WriteStoryPresentor();
         mPresentor.attachView(this);
-
+        mPresentor.loadCategories();
 
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +80,8 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                             @Override
                             public void run() {
                                 if (mPresentor.checkNonEmptyFields(field_title.getText().toString(), html)) {
-                                    showPublishDialog();
+                                    //showPublishDialog();
+                                    showCategoryScreen();
                                 }
                             }
                         });
@@ -156,6 +162,13 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                 .commit();
     }
 
+    private void showCategoryScreen() {
+
+        KeyboardUtils.hideKeyboard(WriteStoryActivity.this);
+        findViewById(R.id.category_view).setVisibility(View.VISIBLE);
+
+    }
+
     @Override
     protected void onDestroy() {
         mPresentor.detachView();
@@ -214,8 +227,27 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
     }
 
     @Override
+    public void onFetchCategories(List<WriteStoryCategoryItem> list) {
+        for (WriteStoryCategoryItem item : list) {
+            View child = View.inflate(WriteStoryActivity.this, R.layout.item_write_story_category, null);
+            ((TextView) child).setText(item.getName());
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPublishDialog();
+                }
+            });
+            ((FlowLayout) findViewById(R.id.flowLayout)).addView(child);
+
+        }
+
+    }
+
+    @Override
     public void onBackPressed() {
-        if (!TextUtils.isEmpty(field_title.getText().toString()) || !TextUtils.isEmpty(editorFragment.getEditor().getHtml())) {
+        if (findViewById(R.id.category_view).getVisibility() == View.VISIBLE)
+            findViewById(R.id.category_view).setVisibility(View.INVISIBLE);
+        else if (!TextUtils.isEmpty(field_title.getText().toString()) || !TextUtils.isEmpty(editorFragment.getEditor().getHtml())) {
             showExitDialog();
         } else super.onBackPressed();
     }

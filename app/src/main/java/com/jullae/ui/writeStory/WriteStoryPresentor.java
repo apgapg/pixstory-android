@@ -1,11 +1,14 @@
 package com.jullae.ui.writeStory;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.jullae.data.AppDataManager;
 import com.jullae.data.db.model.StoryResponseModel;
+import com.jullae.data.db.model.WriteStoryCategoryModel;
 import com.jullae.ui.base.BasePresentor;
 import com.jullae.ui.base.BaseResponseModel;
 import com.jullae.utils.NetworkUtils;
@@ -79,5 +82,25 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
                 }
             });
         }
+    }
+
+    public void loadCategories() {
+
+        checkViewAttached();
+        AppDataManager.getInstance().getmApiHelper().fetchWriteStoryCategory().getAsObject(WriteStoryCategoryModel.class, new ParsedRequestListener<WriteStoryCategoryModel>() {
+
+            @Override
+            public void onResponse(WriteStoryCategoryModel response) {
+                NetworkUtils.parseResponse(TAG, response);
+                if (isViewAttached())
+                    getMvpView().onFetchCategories(response.getCategoryItemList());
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                NetworkUtils.parseError(TAG, anError);
+
+            }
+        });
     }
 }
