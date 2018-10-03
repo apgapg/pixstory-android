@@ -14,15 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.jullae.R;
 import com.jullae.ui.base.BaseFragment;
-
-import java.util.Arrays;
 
 import static com.jullae.ui.loginscreen.LoginActivity.isUserSignedUp;
 import static com.jullae.utils.Constants.SHOW_LOGIN;
@@ -39,7 +35,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private TextView buttonSignUp;
     private int emailLoginMode = SHOW_LOGIN;
     private GoogleSignInClient mGoogleSignInClient;
-    private LoginButton loginButton;
+    private TextView loginButton;
 
     @Nullable
     @Override
@@ -57,7 +53,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         buttonLogin = view.findViewById(R.id.button_login);
         buttonSignUp = view.findViewById(R.id.sign_up);
 
-        buttonSignUp.getPaint().setUnderlineText(true);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +85,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
     private void setUpFacebookLogin() {
         loginButton = view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(EMAIL, "public_profile"));
-
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LoginActivity) getmContext()).setUpFbLogin();
+            }
+        });
 
     }
 
@@ -103,12 +102,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getmContext(), gso);
 
-        SignInButton signInButton = view.findViewById(R.id.sign_in_button);
+       /* SignInButton signInButton = view.findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.findViewById(R.id.sign_in_button).setOnClickListener(this);
+*/
 
-
-
+        view.findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
 
     private void updateUI(int mode) {
@@ -166,4 +165,5 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             mGoogleSignInClient.signOut();
         super.onDestroyView();
     }
+
 }

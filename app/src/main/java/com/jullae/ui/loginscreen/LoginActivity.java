@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
         showFragment(new LoginFragment(), false);
 
-        setUpFbLogin();
+        //setUpFbLogin();
 
 
     }
@@ -79,8 +79,10 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         } else return mPresentor.isUserLoggedIn();
     }
 
-    private void setUpFbLogin() {
+    public void setUpFbLogin() {
         callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override

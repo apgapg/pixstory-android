@@ -46,6 +46,12 @@ public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswo
         });
 
 
+        view.findViewById(R.id.text_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((LoginActivity) getmContext()).onBackPressed();
+            }
+        });
         return view;
     }
 

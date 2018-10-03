@@ -10,8 +10,8 @@
     <string name="loginGoogle">Sign in with Google</string>
     <string name="forgotPassword"><a style='text-decoration:none' href="#">Forgot Password?</a></string>
     <string name="Or">Or</string>
-    <string name="signUp">Dont have an account? <a style='text-decoration:none' href="#">Sign Up</a></string>
-    <string name="logIn">Already have an account? <a style='text-decoration:none' href="#">Log In</a></string>
+    <string name="signUp">Register here</string>
+    <string name="logIn">Login here</string>
     <string name="registerLogin">Already a member? <a style='text-decoration:none' href="#">Login</a></string>
     <string name="termsConditions">By signing in, you are agreeing to the Jullae terms of service and privacy policy</string>
 
