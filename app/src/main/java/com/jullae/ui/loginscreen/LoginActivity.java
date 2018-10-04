@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.jullae.R;
+import com.jullae.data.AppDataManager;
 import com.jullae.ui.home.HomeActivity;
 import com.jullae.utils.AppUtils;
 import com.jullae.utils.ErrorResponseModel;
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        AppDataManager.getInstance().getmSharedPrefsHelper().putinsharedprefBoolean("tut",true);
 
         mPresentor = new LoginActivityPresentor();
 

@@ -20,11 +20,11 @@ public class WriteStoryPresentor extends BasePresentor<WriteStoryView> {
     public WriteStoryPresentor() {
     }
 
-    public void sendStoryPublishReq(String title, String content, String picture_id) {
+    public void sendStoryPublishReq(String title, String content, String picture_id, String categoryId) {
         checkViewAttached();
 
         getMvpView().showProgressBar();
-        AppDataManager.getInstance().getmApiHelper().publishStory(title, content, picture_id).getAsObject(StoryResponseModel.class, new ParsedRequestListener<StoryResponseModel>() {
+        AppDataManager.getInstance().getmApiHelper().publishStory(title, content, picture_id,categoryId).getAsObject(StoryResponseModel.class, new ParsedRequestListener<StoryResponseModel>() {
 
             @Override
             public void onResponse(StoryResponseModel storyResponseModel) {

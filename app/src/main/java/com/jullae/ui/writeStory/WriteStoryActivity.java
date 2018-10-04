@@ -228,13 +228,13 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     @Override
     public void onFetchCategories(List<WriteStoryCategoryItem> list) {
-        for (WriteStoryCategoryItem item : list) {
+        for (final WriteStoryCategoryItem item : list) {
             View child = View.inflate(WriteStoryActivity.this, R.layout.item_write_story_category, null);
             ((TextView) child).setText(item.getName());
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPublishDialog();
+                    showPublishDialog(item.getId());
                 }
             });
             ((FlowLayout) findViewById(R.id.flowLayout)).addView(child);
@@ -280,7 +280,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
 
     }
 
-    private void showPublishDialog() {
+    private void showPublishDialog(final String categoryId) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setTitle("Publish Story?");
         builder1.setCancelable(true);
@@ -296,7 +296,7 @@ public class WriteStoryActivity extends AppCompatActivity implements WriteStoryV
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), html, picture_id);
+                                        mPresentor.sendStoryPublishReq(field_title.getText().toString().trim(), html, picture_id,categoryId);
 
                                     }
                                 });

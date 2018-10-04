@@ -29,7 +29,6 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-
             android:resource="@mipmap/ic_launcher" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -72,11 +71,7 @@
             android:name=".ui.loginscreen.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.storydetails.StoryDetailActivity"
@@ -126,14 +121,26 @@
         <activity
             android:name=".ui.editStory.EditStoryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.common.LikesActivity" />
-        <activity android:name=".ui.common.MessageListActivity" />
-        <activity android:name=".ui.home.profile.ProfileEditActivity" />
+        <activity android:name=".ui.common.LikesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.common.MessageListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.home.profile.ProfileEditActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.FollowersActivity"
             android:label="@string/title_activity_followers"
-            android:theme="@style/AppTheme"></activity>
-    </application>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.tut.TutorialActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>

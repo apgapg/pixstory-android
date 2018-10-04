@@ -400,13 +400,14 @@ public class ApiHelper {
 
     /*POST - /api/v1/story/publish
 Request Params: {"title": "Title", "content": "Text here", "picture_id": picture_id}*/
-    public ANRequest publishStory(String title, String content, String picture_id) {
+    public ANRequest publishStory(String title, String content, String picture_id, String categoryId) {
 
         return AndroidNetworking.post(BASE_URL + ENDPOINT_PUBLISH_STORY)
                 .addHeaders(headers)
                 .addBodyParameter("title", title)
                 .addBodyParameter("content", content)
                 .addBodyParameter("picture_id", picture_id)
+                .addBodyParameter("category_id", categoryId)
                 .setPriority(Priority.MEDIUM)
                 .logReponseBody()
                 .build();
